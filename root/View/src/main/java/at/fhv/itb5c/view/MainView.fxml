@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="-588.0" layoutY="-582.0" prefHeight="305.0" prefWidth="379.0" />
+   </children>
+   <center>
+      <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

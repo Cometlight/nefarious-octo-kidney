@@ -22,3 +22,10 @@ tmp/
 local.properties
 .settings/
 .loadpath
+
+# maven
+target/
+
+# object-db
+*.odb
+*.odb$

@@ -7,14 +7,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public final class SceneUtil {
+public final class StageUtil {
 
 	private static final String _relativPath = "../"; 
 	
 	public static <T> void loadScene(String fxmlPath, Object controller, Stage stage) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 
-		loader.setLocation(SceneUtil.class.getResource(_relativPath + fxmlPath));
+		loader.setLocation(StageUtil.class.getResource(_relativPath + fxmlPath));
 		loader.setController(controller);
 		
 		@SuppressWarnings("unchecked")
@@ -26,7 +26,7 @@ public final class SceneUtil {
 	
 	public static <T> void loadScene(String fxmlPath, Stage stage) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(SceneUtil.class.getResource(_relativPath + fxmlPath));
+		loader.setLocation(StageUtil.class.getResource(_relativPath + fxmlPath));
 		
 		@SuppressWarnings("unchecked")
 		T rootLayout = (T) loader.load();

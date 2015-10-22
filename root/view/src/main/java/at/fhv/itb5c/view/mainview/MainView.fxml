@@ -4,12 +4,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ToolBar?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+<BorderPane fx:id="_rootPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhv.itb5c.view.mainview.MainViewController">
    <children>
       <Pane layoutX="-588.0" layoutY="-582.0" prefHeight="305.0" prefWidth="379.0" />
    </children>
-   <center>
-      <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
-   </center>
-</BorderPane>
+   <top>
+   	<ToolBar>
+   		<Pane HBox.hgrow="ALWAYS"/>
+   		<Button fx:id="_loginButton" text="Login"  onMouseReleased="#LoginButtonReleasedHandler"/>
+   	</ToolBar>
+   </top>
+  </BorderPane>

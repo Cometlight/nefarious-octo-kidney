@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
-import at.fhv.itb5c.util.SceneUtil;
+import at.fhv.itb5c.util.StageUtil;
 import at.fhv.itb5c.view.login.LoginController;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -13,7 +13,6 @@ public class AppController {
 	
 	//todo move to a general path provider for each view(xml or something similar)
 	private static final String _relativMainViewPath = "view/mainview/MainView.fxml";
-	private static final String _relativLoginViewPath = "view/login/Login.fxml";
 	
 	private Stage _primaryStage;
 	
@@ -26,25 +25,12 @@ public class AppController {
 	}
 
 	private void loadMainStage() {
-		LoginController loginController = new LoginController();
-
-		loginController.addObserver(new Observer() {
-			public void update(Observable o, Object arg) {
-				try {
-					closeStage();			
-					SceneUtil.<BorderPane>loadScene(_relativMainViewPath, _primaryStage);
-					showStage();
-				} catch (IOException e) {
-					// todo add logging
-					e.printStackTrace();
-				}
-			}
-		});
-
 		try {
-			SceneUtil.<BorderPane>loadScene(_relativLoginViewPath, loginController, _primaryStage);
+			closeStage();			
+			StageUtil.<BorderPane>loadScene(_relativMainViewPath, _primaryStage);
+			showStage();
 		} catch (IOException e) {
-			// todo add logging
+			// TODO add logging
 			e.printStackTrace();
 		}
 	}

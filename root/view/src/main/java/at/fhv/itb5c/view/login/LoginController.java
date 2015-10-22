@@ -1,28 +1,25 @@
 package at.fhv.itb5c.view.login;
 
-import java.util.Observable;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
-public class LoginController extends Observable{
+public class LoginController {
+	
+	@FXML
+	BorderPane _rootPane;
+	
 	@FXML
 	private Button _loginButton;
-	
-	private boolean _isLoggedIn;
 
 	@FXML
 	public void LoginButton_OnMouseReleased_Button_Handler(MouseEvent event) {
 		
 		//todo login checks
 		
-		_isLoggedIn = true;
-		this.setChanged();
-		this.notifyObservers();	
+		((Stage)_rootPane.getScene().getWindow()).close();
 	}
 	
-	public boolean getIsLoggedIn() {
-		return _isLoggedIn;
-	}
 }

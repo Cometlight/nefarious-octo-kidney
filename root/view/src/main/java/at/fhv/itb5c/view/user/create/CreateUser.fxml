@@ -63,8 +63,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button id="..\..\..\css\BaseStile.css" minWidth="-Infinity" mnemonicParsing="false" text="Save" />
-                  <Button id="..\..\..\css\BaseStile.css" minWidth="-Infinity" mnemonicParsing="false" text="Cancel" GridPane.columnIndex="1" />
+                  <Button minWidth="-Infinity" mnemonicParsing="false" text="Save" onMouseReleased="#SaveButtonMouseReleasedEventHandler"/>
+                  <Button minWidth="-Infinity" mnemonicParsing="false" text="Cancel" GridPane.columnIndex="1" onMouseReleased="#CancleButtonMouseReleasedEventHandler" />
                </children>
             </GridPane>
          </children>

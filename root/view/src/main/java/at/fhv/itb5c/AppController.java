@@ -11,11 +11,7 @@ import at.fhv.itb5c.view.user.create.CreateUserController;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class AppController {
-	
-	//todo move to a general path provider for each view(xml or something similar)
-	private static final String _relativMainViewPath = "view/mainview/MainView.fxml";
-	
+public class AppController {	
 	private Stage _primaryStage;
 	
 	public void start(Stage stage) {

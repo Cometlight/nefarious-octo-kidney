@@ -36,15 +36,30 @@ public class CreateUserController {
 		_eMailTextField.textProperty().bindBidirectional(_userModel.getEMail());
 		_adressTextField.textProperty().bindBidirectional(_userModel.getAdress());
         _telephoneNumberTextField.textProperty().bindBidirectional(_userModel.getTelephonenumber());
-        
-
 	}
 
 	@FXML
 	public void SaveButtonMouseReleasedEventHandler(MouseEvent event) {
-		//validate (check manditory fields)
-		
-		//
+		if(MandatoryFieldsSet()) {
+			//Todo call an event that indicats that the creation is done and the MainViewController can open an detailed view
+			System.out.println("Valide");
+		}
+		else{
+			System.out.println("Not Valide");
+			//Todo add indication which fields are not valid
+		}
+	}
+	
+	private boolean MandatoryFieldsSet() {
+		//TODO: add Date of Birth, Gender, Role,
+		if((_userModel.getFirstName().getValue() != null) && (_userModel.getFirstName().getValue() != "") &&
+				(_userModel.getLastName().getValue() != null) && (_userModel.getFirstName().getValue() != "") &&
+				(_userModel.getAdress().getValue() != null) && (_userModel.getFirstName().getValue() != "")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	@FXML

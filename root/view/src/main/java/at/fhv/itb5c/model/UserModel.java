@@ -1,7 +1,5 @@
 package at.fhv.itb5c.model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -13,6 +11,8 @@ import javafx.beans.property.StringProperty;
 
 public class UserModel {
 	
+	//TODO Gender DateofBirth, TypeofSport, Membership Fee, Role
+		
 	private StringProperty _firstName;
 	private StringProperty _lastName;
 	private StringProperty _adress;

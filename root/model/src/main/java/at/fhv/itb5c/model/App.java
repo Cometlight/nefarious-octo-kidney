@@ -18,7 +18,7 @@ public class App
     public static void main( String[] args )
     {
     	User user = new User();
-    	user.setId(1);
+    	user.setId(4);
     	user.setFirstName("Daniel");
     	user.setLastName("Scheffknecht");
     	user.setGender(Gender.Male);
@@ -32,7 +32,7 @@ public class App
     	em.getTransaction().commit();
     	
     	em.getTransaction().begin();
-    	System.out.println(em.find(User.class, 1));
+    	System.out.println(em.find(User.class, 4));
     	em.getTransaction().commit();
     	
         System.out.println( "Hello World!" );

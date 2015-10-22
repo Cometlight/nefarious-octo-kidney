@@ -1,6 +1,8 @@
 package at.fhv.itb5c.model.entity;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
+import javax.persistence.Transient;
 
 @Entity
 public class User {
@@ -36,14 +41,27 @@ public class User {
 	@Column(name = "address", nullable = false)
 	private String _address;
 	
-	@Column(name = "dateOfBirth", nullable = false)
+	@Transient
 	private LocalDate _dateOfBirth;
+	
+	@Column(name = "dateOfBirth", nullable = false)
+	private Date _persistDateOfBirth;
 	
 	@Column(name = "membershipFee", nullable = true)
 	private double _membershipFee;
 
 	public User() {
-
+		
+	}
+	
+	@PrePersist
+	private void persist() {
+		_persistDateOfBirth = Date.from(_dateOfBirth.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	}
+	
+	@PostLoad
+	private void load() {
+		_dateOfBirth = _persistDateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
 	public long getId() {

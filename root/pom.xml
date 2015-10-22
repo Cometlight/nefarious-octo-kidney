@@ -9,6 +9,7 @@
 	<name>root</name>
 	<modules>
 		<module>model</module>
+		<module>communication-rmi</module>
 	</modules>
 	<repositories>
 		<repository>

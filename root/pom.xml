@@ -8,8 +8,7 @@
 	<name>root</name>
 	<modules>
 		<module>model</module>
-    <module>View</module>
-    <module>view</module>
+    	<module>view</module>
   </modules>
 	<repositories>
 		<repository>

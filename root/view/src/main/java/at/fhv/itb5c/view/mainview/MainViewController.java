@@ -3,12 +3,13 @@ package at.fhv.itb5c.view.mainview;
 import java.io.IOException;
 
 import at.fhv.itb5c.model.UserModel;
+import at.fhv.itb5c.util.RouteProvider;
 import at.fhv.itb5c.util.StageUtil;
+import at.fhv.itb5c.view.login.LoginController;
 import at.fhv.itb5c.view.user.create.CreateUserController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -31,18 +32,17 @@ public class MainViewController {
 	
 	@FXML
 	private Button _loginButton;
-	
-	private static final String _relativLoginViewPath = "view/login/Login.fxml";
 
 	@FXML
 	public void LoginMenueItemActionHandler(ActionEvent event) {
 		
+		//TODO: extract 
 		Stage loginStage = new Stage();
 		loginStage.initModality(Modality.WINDOW_MODAL);
 		loginStage.initOwner(_rootPane.getScene().getWindow());
 		
 		try {
-			StageUtil.loadScene(_relativLoginViewPath, loginStage);
+			StageUtil.loadScene(RouteProvider.getInstance().getRoot(LoginController.class), loginStage);
 		} catch (IOException e) {
 			// TODO add logging
 			e.printStackTrace();
@@ -62,15 +62,15 @@ public class MainViewController {
 		Tab userTab = new Tab();
 		FXMLLoader loader = new FXMLLoader();
 
-		loader.setLocation(this.getClass().getResource("../user/create/CreateUser.fxml"));
+		loader.setLocation(RouteProvider.getInstance().getRoot(CreateUserController.class));
 		CreateUserController createUserController = new CreateUserController(new UserModel());
 		loader.setController(createUserController);
 		try {
 			userTab.setText("Create User");
 			userTab.setContent(loader.load());
-			//userTab.setContent((Node)FXMLLoader.load(this.getClass().getResource("../user/create/CreateUser.fxml")));
+
 		} catch (IOException e) {
-			// TDOO add logging
+			// TODO add logging
 			e.printStackTrace();
 		}
 		createUserController.initialize();

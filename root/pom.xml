@@ -9,7 +9,7 @@
 	<modules>
 		<module>model</module>
     	<module>view</module>
-  </modules>
+  	</modules>
 	<repositories>
 		<repository>
 			<id>objectdb</id>

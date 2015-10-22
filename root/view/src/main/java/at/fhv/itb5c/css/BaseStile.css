@@ -1,0 +1,17 @@
+.label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Arial";
+    -fx-text-fill: black;
+}
+
+.label-header {
+    -fx-font-size: 32pt;
+    -fx-font-family: "Arial";
+    -fx-text-fill: black;
+}
+
+.button {
+	-fx-font-size: 9pt;
+	-fx-font-family: "Arial";
+    -fx-text-fill: black;
+}

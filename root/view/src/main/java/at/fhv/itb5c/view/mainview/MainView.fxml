@@ -5,15 +5,46 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 
 <BorderPane fx:id="_rootPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhv.itb5c.view.mainview.MainViewController">
-   <children>
-      <Pane layoutX="-588.0" layoutY="-582.0" prefHeight="305.0" prefWidth="379.0" />
-   </children>
-   <top>
-   	<ToolBar>
-   		<Pane HBox.hgrow="ALWAYS"/>
-   		<Button fx:id="_loginButton" text="Login"  onMouseReleased="#LoginButtonReleasedHandler"/>
-   	</ToolBar>
-   </top>
-  </BorderPane>
+	<children>
+		<Pane layoutX="-588.0" layoutY="-582.0" prefHeight="305.0" prefWidth="379.0" />
+	</children>
+	<top>
+      <GridPane alignment="TOP_CENTER">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                   <MenuItem mnemonicParsing="false" onAction="#LoginMenueItemActionHandler" text="Login" />
+                    <MenuItem mnemonicParsing="false" onAction="#CloseMenueItemActionHandler" text="Close" />
+                  </items>
+                </Menu>
+                 <Menu mnemonicParsing="false" text="Administrativ">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#CreateUserMenueItemActionHandler" text="Create User" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </GridPane> 
+	</top>
+   <center>
+      <TabPane fx:id="_mainTabView" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>

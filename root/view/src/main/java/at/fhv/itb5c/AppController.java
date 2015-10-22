@@ -1,11 +1,8 @@
 package at.fhv.itb5c;
 
 import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
 
 import at.fhv.itb5c.util.StageUtil;
-import at.fhv.itb5c.view.login.LoginController;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 

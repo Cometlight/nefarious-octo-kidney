@@ -10,6 +10,7 @@
 	<modules>
 		<module>model</module>
 		<module>communication-rmi</module>
+		<module>application</module>
 	</modules>
 	<repositories>
 		<repository>

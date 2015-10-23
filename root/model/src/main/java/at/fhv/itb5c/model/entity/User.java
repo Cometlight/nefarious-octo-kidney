@@ -3,25 +3,20 @@ package at.fhv.itb5c.model.entity;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
+import at.fhv.itb5c.model.validator.EmailValidator;
+
 @Entity
-public class User {
-	@Id
-	@Column(name = "ID", nullable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long _id;
-	
+public class User extends PersistableObject {
 	@Column(name = "firstName", nullable = false)
 	private String _firstName;
 	
@@ -49,6 +44,12 @@ public class User {
 	
 	@Column(name = "membershipFee", nullable = true)
 	private double _membershipFee;
+	
+	@Column(name = "roles", nullable = false)
+	private Set<UserRole> _roles;
+	
+	@Column(name = "typeOfSports", nullable = true)
+	private Set<TypeOfSport> _typeOfSports;
 
 	public User() {
 		
@@ -62,14 +63,6 @@ public class User {
 	@PostLoad
 	private void load() {
 		_dateOfBirth = _persistDateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-	}
-
-	public long getId() {
-		return _id;
-	}
-	
-	public void setId(long id) {
-		this._id = id;
 	}
 
 	public String getFirstName() {
@@ -92,8 +85,12 @@ public class User {
 		return _email;
 	}
 
-	public void setEmail(String email) {
-		this._email = email;
+	public boolean setEmail(String email) {
+		boolean validMail = EmailValidator.validate(email);
+		if(validMail) {
+			this._email = email;
+		}
+		return validMail;
 	}
 
 	public String getTelephoneNumber() {
@@ -134,6 +131,22 @@ public class User {
 
 	public void setMembershipFee(double membershipFee) {
 		this._membershipFee = membershipFee;
+	}
+	
+	public Set<UserRole> getRoles() {
+		return _roles;
+	}
+
+	public void setRoles(Set<UserRole> roles) {
+		_roles = roles;
+	}
+	
+	public Set<TypeOfSport> getTypeOfSports() {
+		return _typeOfSports;
+	}
+
+	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) {
+		_typeOfSports = typeOfSports;
 	}
 	
 	@Override

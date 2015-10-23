@@ -9,16 +9,12 @@ import javax.persistence.Persistence;
 import at.fhv.itb5c.model.entity.Gender;
 import at.fhv.itb5c.model.entity.User;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
     {
     	User user = new User();
-    	user.setId(4);
+    	user.setId(9);
     	user.setFirstName("Daniel");
     	user.setLastName("Scheffknecht");
     	user.setGender(Gender.Male);
@@ -32,7 +28,7 @@ public class App
     	em.getTransaction().commit();
     	
     	em.getTransaction().begin();
-    	System.out.println(em.find(User.class, 4));
+    	System.out.println(em.find(User.class, 9));
     	em.getTransaction().commit();
     	
         System.out.println( "Hello World!" );

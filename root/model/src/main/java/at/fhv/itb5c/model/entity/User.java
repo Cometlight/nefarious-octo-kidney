@@ -57,12 +57,16 @@ public class User extends PersistableObject {
 	
 	@PrePersist
 	private void persist() {
-		_persistDateOfBirth = Date.from(_dateOfBirth.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		if(_dateOfBirth != null) {
+			_persistDateOfBirth = Date.from(_dateOfBirth.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		}
 	}
 	
 	@PostLoad
 	private void load() {
-		_dateOfBirth = _persistDateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		if(_persistDateOfBirth != null) {
+			_dateOfBirth = _persistDateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		}
 	}
 
 	public String getFirstName() {
@@ -86,11 +90,16 @@ public class User extends PersistableObject {
 	}
 
 	public boolean setEmail(String email) {
-		boolean validMail = EmailValidator.validate(email);
-		if(validMail) {
-			this._email = email;
+		if(email == null) {
+			_email = null;
+			return true;
+		} else {
+			boolean validMail = EmailValidator.validate(email);
+			if(validMail) {
+				_email = email;
+			}
+			return validMail;
 		}
-		return validMail;
 	}
 
 	public String getTelephoneNumber() {
@@ -151,6 +160,6 @@ public class User extends PersistableObject {
 	
 	@Override
 	public String toString() {
-		return _firstName + " " + _lastName + "\n    " + _address + " -- " + _dateOfBirth.toString();
+		return _firstName + " " + _lastName + "\n    " + _address;
 	}
 }

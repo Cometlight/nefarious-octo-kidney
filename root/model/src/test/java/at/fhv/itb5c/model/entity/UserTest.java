@@ -80,6 +80,10 @@ public class UserTest {
 		
 		assertFalse(user.setEmail(emailInvalid9));
 		assertNotEquals(emailInvalid9, user.getEmail());
+		
+		// delete the email address from the user
+		assertTrue(user.setEmail(null));
+		assertEquals(null, user.getEmail());
 	}
 	
 	@Test

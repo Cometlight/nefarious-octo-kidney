@@ -10,6 +10,7 @@
 	<modules>
 		<module>model</module>
 		<module>communication-rmi</module>
+		<module>dto-interfaces</module>
 	</modules>
 	<repositories>
 		<repository>

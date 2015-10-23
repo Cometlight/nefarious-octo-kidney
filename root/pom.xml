@@ -9,6 +9,9 @@
 	<name>root</name>
 	<modules>
 		<module>model</module>
+		<module>communication-rmi</module>
+		<module>application</module>
+		<module>dto-interfaces</module>
 	</modules>
 	<repositories>
 		<repository>
@@ -18,7 +21,6 @@
 		</repository>
 	</repositories>
 	<dependencies>
-		
 	</dependencies>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>

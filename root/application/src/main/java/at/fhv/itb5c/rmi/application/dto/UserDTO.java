@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-package at.fhv.itb5c.rmi.application.dto;
 
-public class UserDTO {
-
-}
-=======
 package at.fhv.itb5c.rmi.application.dto;
 
 import at.fhv.itb5c.rmi.dto.interfaces.IUser;
@@ -14,4 +8,3 @@ public class UserDTO implements IUser {
 		
 	}
 }
->>>>>>> merge with dto module

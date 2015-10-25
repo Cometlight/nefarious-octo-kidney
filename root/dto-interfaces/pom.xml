@@ -5,6 +5,6 @@
     <artifactId>root</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>at.fhv.itb5c.dto-interfaces</groupId>
-  <artifactId>dto-interfaces</artifactId>
+  <groupId>at.fhv.itb5c.commons</groupId>
+  <artifactId>commons</artifactId>
 </project>

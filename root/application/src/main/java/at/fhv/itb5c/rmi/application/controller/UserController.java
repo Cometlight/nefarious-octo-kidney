@@ -1,7 +1,7 @@
 package at.fhv.itb5c.rmi.application.controller;
 
-import at.fhv.itb5c.rmi.dto.interfaces.IUser;
-import at.fhv.itb5c.rmi.dto.interfaces.IUserController;
+import at.fhv.itb5c.commons.dto.IUser;
+import at.fhv.itb5c.commons.dto.IUserController;
 
 public class UserController implements IUserController {
 	

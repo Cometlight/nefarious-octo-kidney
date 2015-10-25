@@ -1,4 +1,4 @@
-package at.fhv.itb5c.rmi.dto.interfaces;
+package at.fhv.itb5c.commons.dto;
 
 import java.rmi.Remote;
 import java.time.LocalDate;

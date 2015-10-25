@@ -3,10 +3,10 @@ package at.fhv.itb5c.rmi.application.dto;
 import java.time.LocalDate;
 import java.util.Set;
 
-import at.fhv.itb5c.rmi.dto.interfaces.IGender;
-import at.fhv.itb5c.rmi.dto.interfaces.ITypeOfSport;
-import at.fhv.itb5c.rmi.dto.interfaces.IUser;
-import at.fhv.itb5c.rmi.dto.interfaces.IUserRole;
+import at.fhv.itb5c.commons.dto.IGender;
+import at.fhv.itb5c.commons.dto.ITypeOfSport;
+import at.fhv.itb5c.commons.dto.IUser;
+import at.fhv.itb5c.commons.dto.IUserRole;
 
 public class UserDTO implements IUser {
 	//TODO replace interfaces with enums when merged with model branch

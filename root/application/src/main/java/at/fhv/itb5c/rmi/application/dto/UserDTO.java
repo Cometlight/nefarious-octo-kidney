@@ -3,6 +3,7 @@ package at.fhv.itb5c.rmi.application.dto;
 import java.time.LocalDate;
 import java.util.Set;
 
+<<<<<<< HEAD
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
@@ -11,10 +12,20 @@ import at.fhv.itb5c.commons.enums.UserRole;
 public class UserDTO implements IUser {
 	private long _id;
 	private long _version;
+=======
+import at.fhv.itb5c.commons.dto.IGender;
+import at.fhv.itb5c.commons.dto.ITypeOfSport;
+import at.fhv.itb5c.commons.dto.IUser;
+import at.fhv.itb5c.commons.dto.IUserRole;
+
+public class UserDTO implements IUser {
+	//TODO replace interfaces with enums when merged with model branch
+>>>>>>> 922f5f09da4959efe6d5538cf5360b5f5f0a790e
 	private String _firstName;
 	private String _lastName;
 	private String _email;
 	private String _telephoneNumber;
+<<<<<<< HEAD
 	private Gender _gender;
 	private String _address;
 	private LocalDate _dateOfBirth;
@@ -54,6 +65,27 @@ public class UserDTO implements IUser {
 
 	public void setVersion(long version) {
 		_version = version;
+=======
+	private IGender _gender;
+	private String _address;
+	private LocalDate _dateOfBirth;
+	private double _membershipFee;
+	private Set<IUserRole> _roles;
+	private Set<ITypeOfSport> _typeOfSports;
+	
+	//TODO: implement when merged with model branch
+	public UserDTO(IUser user) {
+		_firstName = user.getFirstName();
+		_lastName = user.getLastName();
+		_email = user.getEmail();
+		_telephoneNumber = user.getTelephoneNumber();
+		_gender = user.getGender();
+		_address = user.getAddress();
+		_dateOfBirth = user.getDateOfBirth();
+		_membershipFee = user.getMembershipFee();
+		_roles = user.getRoles();
+		_typeOfSports = user.getTypeOfSports();
+>>>>>>> 922f5f09da4959efe6d5538cf5360b5f5f0a790e
 	}
 
 	public String getFirstName() {
@@ -88,11 +120,19 @@ public class UserDTO implements IUser {
 		_telephoneNumber = telephoneNumber;
 	}
 
+<<<<<<< HEAD
 	public Gender getGender() {
 		return _gender;
 	}
 
 	public void setGender(Gender gender) {
+=======
+	public IGender getGender() {
+		return _gender;
+	}
+
+	public void setGender(IGender gender) {
+>>>>>>> 922f5f09da4959efe6d5538cf5360b5f5f0a790e
 		_gender = gender;
 	}
 
@@ -120,6 +160,7 @@ public class UserDTO implements IUser {
 		_membershipFee = membershipFee;
 	}
 
+<<<<<<< HEAD
 	public Set<UserRole> getRoles() {
 		return _roles;
 	}
@@ -133,6 +174,21 @@ public class UserDTO implements IUser {
 	}
 
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) {
+=======
+	public Set<IUserRole> getRoles() {
+		return _roles;
+	}
+
+	public void setRoles(Set<IUserRole> roles) {
+		_roles = roles;
+	}
+
+	public Set<ITypeOfSport> getTypeOfSports() {
+		return _typeOfSports;
+	}
+
+	public void setTypeOfSports(Set<ITypeOfSport> typeOfSports) {
+>>>>>>> 922f5f09da4959efe6d5538cf5360b5f5f0a790e
 		_typeOfSports = typeOfSports;
 	}
 }

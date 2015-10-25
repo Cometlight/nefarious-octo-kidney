@@ -4,6 +4,10 @@ import java.rmi.Remote;
 import java.time.LocalDate;
 import java.util.Set;
 
+import at.fhv.itb5c.commons.enums.Gender;
+import at.fhv.itb5c.commons.enums.TypeOfSport;
+import at.fhv.itb5c.commons.enums.UserRole;
+
 // Remote interface for RMI
 public interface IUser extends Remote {
 	public String getFirstName();
@@ -22,9 +26,9 @@ public interface IUser extends Remote {
 
 	public void setTelephoneNumber(String telephoneNumber);
 
-	public IGender getGender();
+	public Gender getGender();
 
-	public void setGender(IGender gender);
+	public void setGender(Gender gender);
 
 	public String getAddress();
 
@@ -38,11 +42,15 @@ public interface IUser extends Remote {
 
 	public void setMembershipFee(double membershipFee);
 
-	public Set<IUserRole> getRoles();
+	public Set<UserRole> getRoles();
 
-	public void setRoles(Set<IUserRole> roles);
+	public void setRoles(Set<UserRole> roles);
 
-	public Set<ITypeOfSport> getTypeOfSports();
+	public Set<TypeOfSport> getTypeOfSports();
 
-	public void setTypeOfSports(Set<ITypeOfSport> typeOfSports);
+	public void setTypeOfSports(Set<TypeOfSport> typeOfSports);
+
+	public long getId();
+
+	public long getVersion();
 }

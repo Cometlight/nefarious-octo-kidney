@@ -10,9 +10,14 @@
 	<artifactId>application</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>at.fhv.itb5c.dto-interfaces</groupId>
-			<artifactId>dto-interfaces</artifactId>
+			<groupId>at.fhv.itb5c.commons</groupId>
+			<artifactId>commons</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>at.fhv.itb5c.model</groupId>
+			<artifactId>model</artifactId>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

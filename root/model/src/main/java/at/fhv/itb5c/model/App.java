@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import at.fhv.itb5c.model.entity.Gender;
+import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.model.entity.User;
 
 public class App 

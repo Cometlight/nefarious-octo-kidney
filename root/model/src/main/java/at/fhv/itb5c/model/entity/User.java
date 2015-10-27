@@ -13,6 +13,9 @@ import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
+import at.fhv.itb5c.commons.enums.Gender;
+import at.fhv.itb5c.commons.enums.TypeOfSport;
+import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.model.validator.EmailValidator;
 
 @Entity

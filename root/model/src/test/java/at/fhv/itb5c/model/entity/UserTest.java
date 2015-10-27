@@ -8,6 +8,10 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import at.fhv.itb5c.commons.enums.Gender;
+import at.fhv.itb5c.commons.enums.TypeOfSport;
+import at.fhv.itb5c.commons.enums.UserRole;
+
 public class UserTest {
 	
 	@Test

@@ -5,8 +5,14 @@ import at.fhv.itb5c.model.entity.User;
 
 public class UserConverter {
 	public static IUser toDTO(User user){
+		// shit in - shit out
+		if(user==null){
+			return null;
+		}
+		
+		// convert
 		UserDTO userdto = new UserDTO();
-		userdto.setId(user.getId());
+		userdto.setId(user.getId()); // id is needed for jpa to identify the object
 		userdto.setVersion(user.getVersion());
 		userdto.setFirstName(user.getFirstName());
 		userdto.setLastName(user.getLastName());
@@ -22,8 +28,14 @@ public class UserConverter {
 	}
 	
 	public static User toEntity(IUser userdto){
+		// shit in - shit out
+		if(userdto==null){
+			return null;
+		}
+		
+		// convert
 		User user = new User();
-		user.setId(userdto.getId());
+		user.setId(userdto.getId()); // id is needed for jpa to identify the object
 		user.setVersion(userdto.getVersion());
 		user.setFirstName(userdto.getFirstName());
 		user.setLastName(userdto.getLastName());

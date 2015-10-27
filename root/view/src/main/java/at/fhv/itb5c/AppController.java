@@ -7,7 +7,7 @@ import at.fhv.itb5c.util.RouteProvider;
 import at.fhv.itb5c.util.StageUtil;
 import at.fhv.itb5c.view.login.LoginController;
 import at.fhv.itb5c.view.mainview.MainViewController;
-import at.fhv.itb5c.view.user.create.CreateUserViewController;
+import at.fhv.itb5c.view.user.UserViewController;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -26,7 +26,7 @@ public class AppController {
 	
 	private void initializeRouteMapping() {
 		try {
-			RouteProvider.getInstance().addRoot(CreateUserViewController.class, "at/fhv/itb5c/view/user/create/CreateUser.fxml");
+			RouteProvider.getInstance().addRoot(UserViewController.class, "at/fhv/itb5c/view/user/UserView.fxml");
 			RouteProvider.getInstance().addRoot(MainViewController.class, "at/fhv/itb5c/view/mainview/MainView.fxml");
 			RouteProvider.getInstance().addRoot(LoginController.class, "at/fhv/itb5c/view/login/Login.fxml");
 			

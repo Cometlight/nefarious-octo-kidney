@@ -1,22 +1,32 @@
-package at.fhv.itb5c.view.user.create;
+package at.fhv.itb5c.view.user;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.text.DecimalFormat;
+
 import org.controlsfx.control.CheckListView;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.model.UserModel;
+import at.fhv.itb5c.util.PanelClosable;
+import at.fhv.itb5c.util.PanelCloseHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 
-public class CreateUserViewController {
+public class UserViewController implements PanelClosable, Closeable{
+	
+	@FXML
+	private BorderPane _borderPane;
 	
 	@FXML
 	private TextField _firstNameTextField;
@@ -48,9 +58,12 @@ public class CreateUserViewController {
 	@FXML
 	private ComboBox<UserRole> _roleComboBox;
 	
+	@FXML
+	private Pane _controlPane;
+	
 	private UserModel _userModel;
 	
-	public CreateUserViewController(UserModel userModel) {
+	public UserViewController(UserModel userModel) {
 		_userModel = userModel;
 	}
 	
@@ -73,6 +86,17 @@ public class CreateUserViewController {
         
         _memebershipFeeTextBox.textProperty().bindBidirectional(_userModel.getMemberShipFee().asObject(), new DecimalFormat());
         _roleComboBox.setItems(FXCollections.observableArrayList(UserRole.values()));
+        
+        //load controls based on state
+        FXMLLoader loader = new FXMLLoader();
+		loader.setController(new NewUserViewControllsController(this));
+		loader.setLocation(this.getClass().getResource("UserViewSaveControlls.fxml"));
+		try {
+			_controlPane.getChildren().add(loader.load());
+		} catch (IOException e) {
+			//todo handle error
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML
@@ -91,15 +115,16 @@ public class CreateUserViewController {
 		}
 	}
 
-	@FXML
-	public void saveButtonMouseReleasedEventHandler(MouseEvent event) {
+	private PanelCloseHandler _panelCloseHandler;
+	
+	@Override
+	public void setPanelCloseHandler(PanelCloseHandler panelCloseHandler) {
+		_panelCloseHandler = panelCloseHandler;
+	}
+
+	public void saveModel() {
 		if(MandatoryFieldsSet()) {
-			//Todo deligat to an CreateUserController that deligates to rmi
-			System.out.println("Valide");
-		}
-		else{
-			System.out.println("Not Valide");
-			//Todo add indication which fields are not valid
+			//Todo close
 		}
 	}
 	
@@ -118,12 +143,7 @@ public class CreateUserViewController {
 		}
 	}
 
-	@FXML
-	public void cancleButtonMouseReleasedEventHandler(MouseEvent event) {
-		//open popup to ask if the changes should be thrown away
-		
-		//register callback for yes now
-		
-		//act accordingle
+	public void close() {
+		_panelCloseHandler.close();
 	}
 }

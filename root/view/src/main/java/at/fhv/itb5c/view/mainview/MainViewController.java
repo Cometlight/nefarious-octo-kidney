@@ -3,17 +3,17 @@ package at.fhv.itb5c.view.mainview;
 import java.io.IOException;
 
 import at.fhv.itb5c.model.UserModel;
+import at.fhv.itb5c.util.PanelCloseHandler;
 import at.fhv.itb5c.util.RouteProvider;
 import at.fhv.itb5c.util.StageUtil;
 import at.fhv.itb5c.view.login.LoginController;
-import at.fhv.itb5c.view.user.create.CreateUserViewController;
+import at.fhv.itb5c.view.user.UserViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -28,7 +28,7 @@ public class MainViewController {
 	BorderPane _rootPane;
 	
 	@FXML
-	TabPane _mainTabView;
+	Pane _mainPanel;
 	
 	@FXML
 	private Button _loginButton;
@@ -59,21 +59,28 @@ public class MainViewController {
 	
 	@FXML
 	public void CreateUserMenueItemActionHandler(ActionEvent event) {
-		Tab userTab = new Tab();
 		FXMLLoader loader = new FXMLLoader();
 
-		loader.setLocation(RouteProvider.getInstance().getRoot(CreateUserViewController.class));
-		CreateUserViewController createUserController = new CreateUserViewController(new UserModel());
-		loader.setController(createUserController);
+		loader.setLocation(RouteProvider.getInstance().getRoot(UserViewController.class));
+		UserViewController userViewController = new UserViewController(new UserModel());
+		userViewController.setPanelCloseHandler(new PanelCloseHandler() {
+			
+			@Override
+			public void close() {
+				_mainPanel.getChildren().clear();
+			}
+		});
+		loader.setController(userViewController);
+		
+		
 		try {
-			userTab.setText("Create User");
-			userTab.setContent(loader.load());
-
+			_mainPanel.getChildren().add(loader.load());
+			_mainPanel.autosize();
+			
 		} catch (IOException e) {
 			// TODO add logging
 			e.printStackTrace();
 		}
-		createUserController.initialize();
-		_mainTabView.getTabs().add(userTab);
+		userViewController.initialize();
 	}
 }

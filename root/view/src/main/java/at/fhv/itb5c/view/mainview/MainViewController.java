@@ -6,7 +6,7 @@ import at.fhv.itb5c.model.UserModel;
 import at.fhv.itb5c.util.RouteProvider;
 import at.fhv.itb5c.util.StageUtil;
 import at.fhv.itb5c.view.login.LoginController;
-import at.fhv.itb5c.view.user.create.CreateUserController;
+import at.fhv.itb5c.view.user.create.CreateUserViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,8 +62,8 @@ public class MainViewController {
 		Tab userTab = new Tab();
 		FXMLLoader loader = new FXMLLoader();
 
-		loader.setLocation(RouteProvider.getInstance().getRoot(CreateUserController.class));
-		CreateUserController createUserController = new CreateUserController(new UserModel());
+		loader.setLocation(RouteProvider.getInstance().getRoot(CreateUserViewController.class));
+		CreateUserViewController createUserController = new CreateUserViewController(new UserModel());
 		loader.setController(createUserController);
 		try {
 			userTab.setText("Create User");

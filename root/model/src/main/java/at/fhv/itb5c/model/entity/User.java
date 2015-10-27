@@ -1,37 +1,168 @@
 package at.fhv.itb5c.model.entity;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
+import javax.persistence.Transient;
+
+import at.fhv.itb5c.commons.enums.Gender;
+import at.fhv.itb5c.commons.enums.TypeOfSport;
+import at.fhv.itb5c.commons.enums.UserRole;
+import at.fhv.itb5c.model.validator.EmailValidator;
 
 @Entity
-public class User {
-	@Id
-	@Column(name = "USERID", nullable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long _id;
-	@Column(name = "NAME", nullable = false)
-	private String _name;
+public class User extends PersistableObject {
+	@Column(name = "firstName", nullable = false)
+	private String _firstName;
+	
+	@Column(name = "lastName", nullable = false)
+	private String _lastName;
+	
+	@Column(name = "email", nullable = true)
+	private String _email;
+	
+	@Column(name = "telephoneNumber", nullable = true)
+	private String _telephoneNumber;
+	
+	@Column(name = "gender", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Gender _gender;
+	
+	@Column(name = "address", nullable = false)
+	private String _address;
+	
+	@Transient
+	private LocalDate _dateOfBirth;
+	
+	@Column(name = "dateOfBirth", nullable = false)
+	private Date _persistDateOfBirth;
+	
+	@Column(name = "membershipFee", nullable = true)
+	private double _membershipFee;
+	
+	@Column(name = "roles", nullable = false)
+	private Set<UserRole> _roles;
+	
+	@Column(name = "typeOfSports", nullable = true)
+	private Set<TypeOfSport> _typeOfSports;
 
 	public User() {
-
-	}
-
-	public long getId() {
-		return _id;
+		
 	}
 	
-	public void setId(long id) {
-		this._id = id;
-	}
-
-	public String getName() {
-		return _name;
+	@PrePersist
+	private void persist() {
+		if(_dateOfBirth != null) {
+			_persistDateOfBirth = Date.from(_dateOfBirth.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		}
 	}
 	
-	public void setName(String name) {
-		_name = name;
+	@PostLoad
+	private void load() {
+		if(_persistDateOfBirth != null) {
+			_dateOfBirth = _persistDateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		}
+	}
+
+	public String getFirstName() {
+		return _firstName;
+	}
+	
+	public void setFirstName(String firstName) {
+		_firstName = firstName;
+	}
+
+	public String getLastName() {
+		return _lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this._lastName = lastName;
+	}
+
+	public String getEmail() {
+		return _email;
+	}
+
+	public boolean setEmail(String email) {
+		if(email == null) {
+			_email = null;
+			return true;
+		} else {
+			boolean validMail = EmailValidator.validate(email);
+			if(validMail) {
+				_email = email;
+			}
+			return validMail;
+		}
+	}
+
+	public String getTelephoneNumber() {
+		return _telephoneNumber;
+	}
+
+	public void setTelephoneNumber(String telephoneNumber) {
+		this._telephoneNumber = telephoneNumber;
+	}
+
+	public Gender getGender() {
+		return _gender;
+	}
+
+	public void setGender(Gender gender) {
+		this._gender = gender;
+	}
+
+	public String getAddress() {
+		return _address;
+	}
+
+	public void setAddress(String address) {
+		this._address = address;
+	}
+
+	public LocalDate getDateOfBirth() {
+		return _dateOfBirth;
+	}
+
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this._dateOfBirth = dateOfBirth;
+	}
+
+	public double getMembershipFee() {
+		return _membershipFee;
+	}
+
+	public void setMembershipFee(double membershipFee) {
+		this._membershipFee = membershipFee;
+	}
+	
+	public Set<UserRole> getRoles() {
+		return _roles;
+	}
+
+	public void setRoles(Set<UserRole> roles) {
+		_roles = roles;
+	}
+	
+	public Set<TypeOfSport> getTypeOfSports() {
+		return _typeOfSports;
+	}
+
+	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) {
+		_typeOfSports = typeOfSports;
+	}
+	
+	@Override
+	public String toString() {
+		return _firstName + " " + _lastName + "\n    " + _address;
 	}
 }

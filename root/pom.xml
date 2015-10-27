@@ -9,7 +9,10 @@
 	<modules>
 		<module>model</module>
     	<module>view</module>
-  	</modules>
+		<module>communication-rmi</module>
+		<module>application</module>
+		<module>commons</module>
+	</modules>
 	<repositories>
 		<repository>
 			<id>objectdb</id>
@@ -17,18 +20,6 @@
 			<url>http://m2.objectdb.com</url>
 		</repository>
 	</repositories>
-	<dependencies>
-		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>persistence-api</artifactId>
-			<version>1.0.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.objectdb</groupId>
-			<artifactId>objectdb</artifactId>
-			<version>2.6.0</version>
-		</dependency>
-	</dependencies>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>

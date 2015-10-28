@@ -1,7 +1,9 @@
 package at.fhv.itb5c.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 
+import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
@@ -11,6 +13,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /*
@@ -22,7 +25,7 @@ import javafx.collections.ObservableList;
 public class UserModel {
 	private StringProperty _firstName;
 	private StringProperty _lastName;
-	private StringProperty _adress;
+	private StringProperty _address;
 	private StringProperty _eMail;
 	private StringProperty _telephonenumber;
 	private Gender _gender;
@@ -30,19 +33,35 @@ public class UserModel {
 	private ObservableList<TypeOfSport> _typeOfSports;
 	private DoubleProperty _membershipFee;
 	private UserRole _userRole;
-
-	public UserModel() {
+	
+	private IUserRMI _rmiUser;
+	
+	@SuppressWarnings("unchecked")
+	public UserModel(IUserRMI user) {
 		_firstName = new SimpleStringProperty();
 		_lastName = new SimpleStringProperty();
-		_adress = new SimpleStringProperty();
+		_address = new SimpleStringProperty();
 		_telephonenumber = new SimpleStringProperty();
 		_eMail = new SimpleStringProperty();
 		_birthDate = new SimpleObjectProperty<>();
 		_membershipFee = new SimpleDoubleProperty();
+		
+		_firstName.setValue(user.getFirstName());
+		_lastName.setValue(user.getLastName());
+		_address.setValue(user.getAddress());
+		_eMail.setValue(user.getEmail());
+		_telephonenumber.setValue(user.getTelephoneNumber());
+		_gender = user.getGender();
+		_birthDate.setValue(user.getDateOfBirth());
+		_typeOfSports = (ObservableList<TypeOfSport>) FXCollections.observableSet(user.getTypeOfSports());
+		_membershipFee.setValue(user.getMembershipFee());
+		
+		//TODO: user rework to set
+		//_userRole = user.getRoles();
 	}
 	
 	public void setFirstName(StringProperty firstName) {
-		//set into actual class
+		_rmiUser.setFirstName(firstName.getValue());
 		_firstName = firstName;
 	}
 	
@@ -55,15 +74,17 @@ public class UserModel {
 	}
 
 	public void setLastName(StringProperty lastName) {
+		_rmiUser.setLastName(lastName.getValue());
 		_lastName = lastName;
 	}
 
 	public StringProperty getAdress() {
-		return _adress;
+		return _address;
 	}
 
 	public void setAdress(StringProperty adress) {
-		_adress = adress;
+		_rmiUser.setAddress(adress.getValue());
+		_address = adress;
 	}
 
 	public StringProperty getTelephonenumber() {
@@ -71,6 +92,7 @@ public class UserModel {
 	}
 
 	public void setTelephonenumber(StringProperty telephonenumber) {
+		_rmiUser.setTelephoneNumber(telephonenumber.getValue());
 		_telephonenumber = telephonenumber;
 	}
 
@@ -79,10 +101,12 @@ public class UserModel {
 	}
 
 	public void setEMail(StringProperty eMail) {
+		_rmiUser.setEmail(eMail.getValue());
 		_eMail = eMail;
 	}
 
 	public void setGender(Gender gender) {
+		_rmiUser.setGender(gender);
 		_gender = gender;
 	}
 	
@@ -91,6 +115,7 @@ public class UserModel {
 	}
 	
 	public void setBirthDate(ObjectProperty<LocalDate> birthDate) {
+		_rmiUser.setDateOfBirth(birthDate.getValue());
 		_birthDate = birthDate;
 	}
 	
@@ -103,6 +128,7 @@ public class UserModel {
 	}
 	
 	public void setTypeOfSports(ObservableList<TypeOfSport> typeOfSports) {
+		_rmiUser.setTypeOfSports(new HashSet<>(typeOfSports));
 		_typeOfSports = typeOfSports;
 	}
 	
@@ -111,6 +137,7 @@ public class UserModel {
 	}
 	
 	public void setMemberShipfee(DoubleProperty membershipFee) {
+		_rmiUser.setMembershipFee(membershipFee.doubleValue());
 		_membershipFee = membershipFee;
 	}
 	
@@ -119,6 +146,11 @@ public class UserModel {
 	}
 	
 	public void setUserRole(UserRole userRole) {
+		//TODO: when reworked gui to support list of roles
 		_userRole = userRole;
+	}
+	
+	public IUserRMI getRMIUser() {
+		return _rmiUser;
 	}
 }

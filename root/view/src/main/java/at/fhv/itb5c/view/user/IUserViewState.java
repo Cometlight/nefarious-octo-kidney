@@ -2,7 +2,7 @@ package at.fhv.itb5c.view.user;
 
 import java.net.URL;
 
-public interface UserViewState {
+public interface IUserViewState {
 	
 	public String getTitel();
 

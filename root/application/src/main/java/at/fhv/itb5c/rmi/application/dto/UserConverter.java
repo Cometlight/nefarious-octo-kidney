@@ -5,7 +5,7 @@ import at.fhv.itb5c.model.entity.User;
 
 public class UserConverter {
 	public static IUser toDTO(User user){
-		// shit in - shit out
+		// null in - null out
 		if(user==null){
 			return null;
 		}
@@ -28,7 +28,7 @@ public class UserConverter {
 	}
 	
 	public static User toEntity(IUser userdto){
-		// shit in - shit out
+		// null in - null out
 		if(userdto==null){
 			return null;
 		}

@@ -44,7 +44,13 @@ public class TestRMI {
 		
 		// new user method
 		System.out.println("Request new user dto ...");
-		Object userObj = userFactory.createUser();
+		Object userObj = null;
+		try {
+			userObj = userFactory.createUser();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		IUserRMI newUser = (IUserRMI) userObj;
 		System.out.println("... received new user dto from UserFactory");
 		
@@ -64,7 +70,12 @@ public class TestRMI {
 		Set<TypeOfSport> sports = new LinkedHashSet<TypeOfSport>();
 		sports.add(TypeOfSport.Soccer);
 		newUser.setTypeOfSports(sports);
-		userFactory.save(newUser);
+		try {
+			userFactory.save(newUser);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("... new user dto saved");
 	}
 }

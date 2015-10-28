@@ -48,4 +48,3 @@ public class NewUserViewControllsController implements UserViewState {
 		_userViewController.setDisable(false);
 	}
 }
-

@@ -7,13 +7,12 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import at.fhv.itb5c.commons.dto.IUser;
-import at.fhv.itb5c.commons.dto.IUserFactory;
 import at.fhv.itb5c.commons.dto.rmi.IUserFactoryRMI;
 
 public class UserFactoryStub extends UnicastRemoteObject implements IUserFactoryRMI, RMIStub {
 	private static final long serialVersionUID = 1L;
 
-	private IUserFactory _userFactory;
+	private IUserFactoryRMI _userFactory;
 
 	protected UserFactoryStub() throws RemoteException {
 		super();
@@ -21,19 +20,30 @@ public class UserFactoryStub extends UnicastRemoteObject implements IUserFactory
 
 	@Override
 	public IUser createUser() {
-		return _userFactory.createUser();
+		try {
+			return _userFactory.createUser();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public void save(IUser user) {
-		_userFactory.save(user);
+		try {
+			_userFactory.save(user);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void init(String host, int port){
 		Object obj;
 		try {
 			obj = Naming.lookup("rmi://" + host + ":" + port + "/UserFactory");
-			_userFactory = (IUserFactory) obj;
+			_userFactory = (IUserFactoryRMI) obj;
 		} catch (MalformedURLException | NotBoundException | RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -3,12 +3,14 @@ package at.fhv.itb5c.rmi.server;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.dto.IUserFactory;
 import at.fhv.itb5c.commons.dto.rmi.IUserFactoryRMI;
 
-public class UserFactoryServant implements IUserFactory, RMIServant {
+public class UserFactoryServant extends UnicastRemoteObject implements IUserFactory, RMIServant {
+	private static final long serialVersionUID = 1L;
 	private IUserFactoryRMI _userFactory;
 
 	protected UserFactoryServant() throws RemoteException {
@@ -18,23 +20,12 @@ public class UserFactoryServant implements IUserFactory, RMIServant {
 
 	@Override
 	public IUser createUser() {
-		try {
-			return _userFactory.createUser();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+		return _userFactory.createUser();
 	}
 
 	@Override
 	public void save(IUser user) {
-		try {
-			_userFactory.save(user);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		_userFactory.save(user);
 	}
 
 	@Override

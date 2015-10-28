@@ -10,20 +10,19 @@ public class PersistenceFacade {
 	private static final String DEFAULT_DBFILENAME = "persistence.odb";
 
 	private static PersistenceFacade _instance;
-	private static EntityManagerFactory _entityManagerFactory;
-	private static EntityManager _entityManager;
-	private static String _persistenceUnitName = DEFAULT_DBFILENAME;
+	private EntityManagerFactory _entityManagerFactory;
+	private EntityManager _entityManager;
+	private String _persistenceUnitName = DEFAULT_DBFILENAME;
 
 	private PersistenceFacade() {
-		// Singleton
+		_entityManagerFactory = Persistence.createEntityManagerFactory(_persistenceUnitName);
+		// _entityManager needs to stay open for lazy loading to work
+		_entityManager = _entityManagerFactory.createEntityManager();
 	}
 
 	public static PersistenceFacade getInstance() {
 		if (_instance == null) {
 			_instance = new PersistenceFacade();
-			_entityManagerFactory = Persistence.createEntityManagerFactory(_persistenceUnitName);
-			// _entityManager needs to stay open for lazy loading to work
-			_entityManager = _entityManagerFactory.createEntityManager();
 		}
 
 		return _instance;
@@ -39,7 +38,7 @@ public class PersistenceFacade {
 	 * @param persistenceUnitName
 	 *            the filename of the database
 	 */
-	public static void setPersistenceUnitName(String persistenceUnitName) {
+	public void setPersistenceUnitName(String persistenceUnitName) {
 		if (persistenceUnitName == null) {
 			return;
 		}
@@ -53,7 +52,7 @@ public class PersistenceFacade {
 		_entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnitName);
 	}
 
-	public static void shutdown() {
+	public void shutdown() {
 		if(_instance != null) {
 			_entityManagerFactory.close(); // Closes all EntityManagers as well
 			_entityManagerFactory = null;

@@ -60,14 +60,14 @@ public class User extends PersistableObject {
 	
 	@PrePersist
 	private void persist() {
-		if(_dateOfBirth != null) {
+		if (_dateOfBirth != null) {
 			_persistDateOfBirth = Date.from(_dateOfBirth.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		}
 	}
-	
+
 	@PostLoad
 	private void load() {
-		if(_persistDateOfBirth != null) {
+		if (_persistDateOfBirth != null) {
 			_dateOfBirth = _persistDateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		}
 	}

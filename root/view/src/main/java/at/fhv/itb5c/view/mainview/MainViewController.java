@@ -34,7 +34,7 @@ public class MainViewController {
 	private Button _loginButton;
 
 	@FXML
-	public void LoginMenueItemActionHandler(ActionEvent event) {
+	public void loginMenueItemActionHandler(ActionEvent event) {
 		
 		//TODO: extract 
 		Stage loginStage = new Stage();
@@ -52,13 +52,13 @@ public class MainViewController {
 	}
 	
 	@FXML
-	public void CloseMenueItemActionHandler(ActionEvent event) {
+	public void closeMenueItemActionHandler(ActionEvent event) {
 		// TODO close resources etc . . .
 		((Stage)_rootPane.getScene().getWindow()).close(); 
 	}
 	
 	@FXML
-	public void CreateUserMenueItemActionHandler(ActionEvent event) {
+	public void createUserMenueItemActionHandler(ActionEvent event) {
 		FXMLLoader loader = new FXMLLoader();
 
 		loader.setLocation(RouteProvider.getInstance().getRoot(UserViewController.class));

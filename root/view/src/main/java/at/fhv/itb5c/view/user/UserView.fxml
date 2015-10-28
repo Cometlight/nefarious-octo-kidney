@@ -56,19 +56,6 @@
             <TextField fx:id="_firstNameTextField" GridPane.columnIndex="3" />
             <CheckListView fx:id="_typeOfSportCheckListView" GridPane.columnIndex="3" GridPane.rowIndex="7" />
             <Pane fx:id="_controlPane" GridPane.columnIndex="5" GridPane.rowIndex="9" />
-            <!-- <GridPane GridPane.columnIndex="5" GridPane.rowIndex="9">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button minWidth="-Infinity" mnemonicParsing="false" onMouseReleased="#saveButtonMouseReleasedEventHandler" text="Save" />
-                  <Button minWidth="-Infinity" mnemonicParsing="false" onMouseReleased="#cancleButtonMouseReleasedEventHandler" text="Cancel" GridPane.columnIndex="1" />
-               </children>
-            </GridPane> -->
          </children>
       </GridPane>
    </center>

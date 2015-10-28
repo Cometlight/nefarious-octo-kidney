@@ -27,13 +27,13 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                   <MenuItem mnemonicParsing="false" onAction="#LoginMenueItemActionHandler" text="Login" />
-                    <MenuItem mnemonicParsing="false" onAction="#CloseMenueItemActionHandler" text="Close" />
+                   <MenuItem mnemonicParsing="false" onAction="#loginMenueItemActionHandler" text="Login" />
+                    <MenuItem mnemonicParsing="false" onAction="#closeMenueItemActionHandler" text="Close" />
                   </items>
                 </Menu>
                  <Menu mnemonicParsing="false" text="Administrativ">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#CreateUserMenueItemActionHandler" text="Create User" />
+                    <MenuItem mnemonicParsing="false" onAction="#createUserMenueItemActionHandler" text="Create User" />
                   </items>
                 </Menu>
               </menus>

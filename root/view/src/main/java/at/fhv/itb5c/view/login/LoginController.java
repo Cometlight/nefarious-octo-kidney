@@ -15,7 +15,7 @@ public class LoginController {
 	private Button _loginButton;
 
 	@FXML
-	public void LoginButton_OnMouseReleased_Button_Handler(MouseEvent event) {
+	public void loginButtonOnMouseReleasedButtonHandler(MouseEvent event) {
 		
 		//todo login checks
 		

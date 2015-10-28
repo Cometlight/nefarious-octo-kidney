@@ -1,14 +1,14 @@
-package at.fhv.itb5c.rmi.application.controller;
+package at.fhv.itb5c.application.controller;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import at.fhv.itb5c.application.dto.UserConverter;
+import at.fhv.itb5c.application.dto.UserDTO;
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.dto.IUserFactory;
 import at.fhv.itb5c.model.entity.User;
-import at.fhv.itb5c.rmi.application.dto.UserConverter;
-import at.fhv.itb5c.rmi.application.dto.UserDTO;
 
 public class UserFactoryImpl implements IUserFactory {
 

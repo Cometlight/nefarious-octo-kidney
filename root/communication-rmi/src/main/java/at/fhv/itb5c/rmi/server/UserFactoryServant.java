@@ -5,9 +5,9 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import at.fhv.itb5c.application.controller.UserFactoryImpl;
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.dto.IUserFactory;
-import at.fhv.itb5c.rmi.application.controller.UserFactoryImpl;
 
 public class UserFactoryServant extends UnicastRemoteObject implements IUserFactory, RMIServant {
 	private UserFactoryImpl _userFactory;

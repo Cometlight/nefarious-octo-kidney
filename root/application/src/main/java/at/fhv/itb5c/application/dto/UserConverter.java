@@ -1,4 +1,4 @@
-package at.fhv.itb5c.rmi.application.dto;
+package at.fhv.itb5c.application.dto;
 
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.model.entity.User;

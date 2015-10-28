@@ -1,4 +1,4 @@
-package at.fhv.itb5c.rmi.application.dto;
+package at.fhv.itb5c.application.dto;
 
 import java.time.LocalDate;
 import java.util.Set;

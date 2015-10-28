@@ -9,6 +9,9 @@
 	<name>root</name>
 	<modules>
 		<module>model</module>
+		<module>communication-rmi</module>
+		<module>application</module>
+		<module>commons</module>
 	</modules>
 	<repositories>
 		<repository>
@@ -17,9 +20,6 @@
 			<url>http://m2.objectdb.com</url>
 		</repository>
 	</repositories>
-	<dependencies>
-		
-	</dependencies>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>

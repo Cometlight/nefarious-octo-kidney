@@ -29,7 +29,7 @@ public abstract class PersistableObject {
 		return _version;
 	}
 
-	protected void setVersion(long version) {
+	public void setVersion(long version) {
 		_version = version;
 	}
 }

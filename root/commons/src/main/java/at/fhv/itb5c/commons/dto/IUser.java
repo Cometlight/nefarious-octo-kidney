@@ -1,6 +1,5 @@
 package at.fhv.itb5c.commons.dto;
 
-import java.rmi.Remote;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -9,7 +8,7 @@ import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 
 // Remote interface for RMI
-public interface IUser extends Remote {
+public interface IUser {
 	public String getFirstName();
 
 	public void setFirstName(String firstName);

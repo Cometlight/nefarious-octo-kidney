@@ -8,13 +8,14 @@ import java.rmi.server.UnicastRemoteObject;
 import at.fhv.itb5c.application.controller.UserFactoryImpl;
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.dto.IUserFactory;
+import at.fhv.itb5c.commons.dto.rmi.IUserFactoryRMI;
 
 public class UserFactoryServant extends UnicastRemoteObject implements IUserFactory, RMIServant {
-	private UserFactoryImpl _userFactory;
+	private IUserFactoryRMI _userFactory;
 	
 	protected UserFactoryServant() throws RemoteException {
 		super();
-		_userFactory = new UserFactoryImpl();
+		_userFactory = (IUserFactoryRMI) new UserFactoryImpl();
 	}
 
 	private static final long serialVersionUID = 1L;

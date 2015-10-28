@@ -27,11 +27,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
-/*
- * TODO:
- * 		change role to a list 
- */
-
 public class UserViewController implements PanelClosable, Closeable {
 	@FXML
 	private Label _titelLabel;
@@ -168,9 +163,9 @@ public class UserViewController implements PanelClosable, Closeable {
 		_panelCloseHandler.close();
 	}
 
-	private Map<ViewState, IUserViewState> _userViewStates;
+	private Map<ViewState, UserViewState> _userViewStates;
 
-	public IUserViewState getState(ViewState identifier) {
+	public UserViewState getState(ViewState identifier) {
 		if (_userViewStates.containsKey(identifier)) {
 			return _userViewStates.get(identifier);
 		} else {
@@ -179,7 +174,7 @@ public class UserViewController implements PanelClosable, Closeable {
 	}
 
 	public void setState(ViewState nextState) {
-		IUserViewState userViewState = getState(nextState);
+		UserViewState userViewState = getState(nextState);
 
 		if (userViewState != null) {
 			FXMLLoader loader = new FXMLLoader();

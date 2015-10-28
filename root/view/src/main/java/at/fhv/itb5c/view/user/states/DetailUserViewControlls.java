@@ -3,11 +3,11 @@ package at.fhv.itb5c.view.user.states;
 import java.net.URL;
 
 import at.fhv.itb5c.view.user.UserViewController;
-import at.fhv.itb5c.view.user.IUserViewState;
+import at.fhv.itb5c.view.user.UserViewState;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
-public class DetailUserViewControlls  implements IUserViewState {
+public class DetailUserViewControlls  implements UserViewState {
 	private UserViewController _userViewController;
 	private URL _controlsFXMLURL;
 	

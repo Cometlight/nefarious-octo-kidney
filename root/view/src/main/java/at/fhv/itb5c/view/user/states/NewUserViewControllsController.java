@@ -4,11 +4,11 @@ import java.net.URL;
 
 import at.fhv.itb5c.view.user.UserViewController;
 import at.fhv.itb5c.view.user.UserViewController.ViewState;
-import at.fhv.itb5c.view.user.IUserViewState;
+import at.fhv.itb5c.view.user.UserViewState;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
-public class NewUserViewControllsController implements IUserViewState {
+public class NewUserViewControllsController implements UserViewState {
 	
 	private UserViewController _userViewController;
 	private String _titel;
@@ -48,3 +48,4 @@ public class NewUserViewControllsController implements IUserViewState {
 		_userViewController.setDisable(false);
 	}
 }
+

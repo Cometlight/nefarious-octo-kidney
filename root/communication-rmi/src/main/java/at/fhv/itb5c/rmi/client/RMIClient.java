@@ -2,7 +2,7 @@ package at.fhv.itb5c.rmi.client;
 
 import java.rmi.RemoteException;
 
-import at.fhv.itb5c.commons.dto.IUserFactory;
+import at.fhv.itb5c.commons.dto.rmi.IUserFactoryRMI;
 
 public class RMIClient {
 	private static RMIClient _client;
@@ -23,7 +23,7 @@ public class RMIClient {
 		return _client;
 	}
 	
-	public IUserFactory getUserFactory() {
+	public IUserFactoryRMI getUserFactory() {
 		if (_userFactoryStub == null) {
 			try {
 				_userFactoryStub = new UserFactoryStub();

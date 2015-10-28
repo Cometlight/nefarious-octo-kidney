@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.io.File;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +22,10 @@ public class PersistenceFacadeTest {
 	@After
 	public void tearDown() throws Exception {
 		PersistenceFacade.shutdown();
+		File file = new File(DBFILE);
+		if(file.exists()) {
+			file.delete();
+		}
 	}
 
 	@Test

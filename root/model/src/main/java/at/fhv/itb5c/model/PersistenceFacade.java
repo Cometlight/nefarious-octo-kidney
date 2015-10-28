@@ -12,7 +12,7 @@ public class PersistenceFacade {
 	private static PersistenceFacade _instance;
 	private EntityManagerFactory _entityManagerFactory;
 	private EntityManager _entityManager;
-	private String _persistenceUnitName = DEFAULT_DBFILENAME;
+	private static String _persistenceUnitName = DEFAULT_DBFILENAME;
 
 	private PersistenceFacade() {
 		_entityManagerFactory = Persistence.createEntityManagerFactory(_persistenceUnitName);
@@ -38,7 +38,7 @@ public class PersistenceFacade {
 	 * @param persistenceUnitName
 	 *            the filename of the database
 	 */
-	public void setPersistenceUnitName(String persistenceUnitName) {
+	public static void setPersistenceUnitName(String persistenceUnitName) {
 		if (persistenceUnitName == null) {
 			return;
 		}
@@ -49,14 +49,12 @@ public class PersistenceFacade {
 			shutdown();
 		}
 
-		_entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnitName);
+		_instance = new PersistenceFacade();
 	}
 
-	public void shutdown() {
+	public static void shutdown() {
 		if(_instance != null) {
-			_entityManagerFactory.close(); // Closes all EntityManagers as well
-			_entityManagerFactory = null;
-			_entityManager = null;
+			_instance._entityManagerFactory.close(); // Closes all EntityManagers as well
 			_instance = null;
 		}
 	}

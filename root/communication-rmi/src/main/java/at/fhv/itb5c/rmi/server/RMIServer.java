@@ -2,6 +2,7 @@ package at.fhv.itb5c.rmi.server;
 
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class RMIServer {
@@ -10,6 +11,7 @@ public class RMIServer {
 	private static final int _port = 1337;
 
 	public static void main(String args[]) {
+		_servants = new LinkedList<RMIServant>();
 		try {
 			// add servants to server
 			_servants.add(new UserFactoryServant());

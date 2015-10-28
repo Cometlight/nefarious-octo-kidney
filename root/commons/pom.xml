@@ -7,4 +7,5 @@
   </parent>
   <groupId>at.fhv.itb5c.commons</groupId>
   <artifactId>commons</artifactId>
+  <name>commons</name>
 </project>

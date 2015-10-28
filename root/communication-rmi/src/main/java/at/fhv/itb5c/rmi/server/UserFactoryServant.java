@@ -10,14 +10,13 @@ import at.fhv.itb5c.commons.dto.IUserFactory;
 import at.fhv.itb5c.commons.dto.rmi.IUserFactoryRMI;
 
 public class UserFactoryServant extends UnicastRemoteObject implements IUserFactory, RMIServant {
+	private static final long serialVersionUID = 1L;
 	private IUserFactoryRMI _userFactory;
-	
+
 	protected UserFactoryServant() throws RemoteException {
 		super();
 		_userFactory = (IUserFactoryRMI) new UserFactoryImplRMI();
 	}
-
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	public IUser createUser() {
@@ -31,6 +30,6 @@ public class UserFactoryServant extends UnicastRemoteObject implements IUserFact
 
 	@Override
 	public void init(String host, int port) throws RemoteException, MalformedURLException {
-		Naming.rebind("rmi://"+host+":"+port+"/UserFactory", _userFactory);
+		Naming.rebind("rmi://" + host + ":" + port + "/UserFactory", _userFactory);
 	}
 }

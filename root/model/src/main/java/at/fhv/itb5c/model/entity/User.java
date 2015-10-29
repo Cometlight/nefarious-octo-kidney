@@ -175,7 +175,7 @@ public class User extends PersistableObject {
 
 	public void setDepartment(Department department) {
 		_department = department;
-		_departmentId = department.getId();
+		_departmentId = department == null ? null : department.getId();
 	}
 
 	@Override

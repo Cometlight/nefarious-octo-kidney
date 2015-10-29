@@ -32,7 +32,8 @@ public class UserFactoryImpl implements IUserFactory, ILogger {
 			
 			user = UserConverter.toDTO(userEntity);
 			
-			log.info("user with id " + userEntity.getId() + " saved");
+			log.debug("user with id " + userEntity.getId() + " saved.");
+			log.debug(userEntity);
 		}
 	}
 }

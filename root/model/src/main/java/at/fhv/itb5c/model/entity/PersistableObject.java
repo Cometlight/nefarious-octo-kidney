@@ -12,24 +12,24 @@ public abstract class PersistableObject {
 	@Id
 	@Column(name = "ID", nullable = false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long _id;
+	private Long _id;
 
 	@Version
-	private long _version;
+	private Long _version;
 
-	public long getId() {
+	public Long getId() {
 		return _id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		_id = id;
 	}
 
-	public long getVersion() {
+	public Long getVersion() {
 		return _version;
 	}
 
-	public void setVersion(long version) {
+	public void setVersion(Long version) {
 		_version = version;
 	}
 }

@@ -3,12 +3,11 @@ package at.fhv.itb5c.view.user;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
-import at.fhv.itb5c.model.UserModel;
 import at.fhv.itb5c.rmi.client.RMIClient;
-import at.fhv.itb5c.util.AlertUtil;
-import at.fhv.itb5c.util.PanelCloseHandler;
-import at.fhv.itb5c.util.RouteProvider;
 import at.fhv.itb5c.view.user.UserViewController.UserViewState;
+import at.fhv.itb5c.view.util.AlertUtil;
+import at.fhv.itb5c.view.util.PanelCloseHandler;
+import at.fhv.itb5c.view.util.RouteProvider;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 

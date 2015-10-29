@@ -1,12 +1,12 @@
-package at.fhv.itb5c;
+package at.fhv.itb5c.view;
 
 import java.io.IOException;
 
-import at.fhv.itb5c.util.RouteProvider;
-import at.fhv.itb5c.util.StageUtil;
 import at.fhv.itb5c.view.login.LoginController;
 import at.fhv.itb5c.view.mainview.MainViewController;
 import at.fhv.itb5c.view.user.UserViewController;
+import at.fhv.itb5c.view.util.RouteProvider;
+import at.fhv.itb5c.view.util.StageUtil;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 

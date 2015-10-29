@@ -5,19 +5,19 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import org.controlsfx.control.CheckListView;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
-import at.fhv.itb5c.model.UserModel;
 import at.fhv.itb5c.rmi.client.RMIClient;
-import at.fhv.itb5c.util.AlertUtil;
-import at.fhv.itb5c.util.PanelClosable;
-import at.fhv.itb5c.util.PanelCloseHandler;
 import at.fhv.itb5c.view.user.states.DetailUserViewControlls;
 import at.fhv.itb5c.view.user.states.NewUserViewControllsController;
+import at.fhv.itb5c.view.util.AlertUtil;
+import at.fhv.itb5c.view.util.PanelClosable;
+import at.fhv.itb5c.view.util.PanelCloseHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
@@ -100,34 +100,33 @@ public class UserViewController implements PanelClosable, Closeable {
 
 		_typeOfSportCheckListView.setItems(FXCollections.observableArrayList(TypeOfSport.values()));
 
-		//TODO(san7985)
-		/*for (TypeOfSport typeofSport : _userModel.getTypeOfSports()) {
+		for (TypeOfSport typeofSport : _userModel.getTypeOfSports()) {
 			_typeOfSportCheckListView.getCheckModel().check(typeofSport);
 		}
 
 		_typeOfSportCheckListView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<TypeOfSport>() {
 			@Override
 			public void onChanged(javafx.collections.ListChangeListener.Change<? extends TypeOfSport> c) {
-				_userModel.setTypeOfSports(_typeOfSportCheckListView.getCheckModel().getCheckedItems());
+				_userModel.setTypeOfSports(FXCollections.observableSet(new HashSet<TypeOfSport>(_typeOfSportCheckListView.getCheckModel().getCheckedItems())));
 			}
-		});*/
+		});
 
 		_memebershipFeeTextBox.textProperty().bindBidirectional(_userModel.getMemberShipFee().asObject(),
 				new DecimalFormat());
 
 		_userRoleCheckListView.setItems(FXCollections.observableArrayList(UserRole.values()));
 
-		//TODO(san7985)
-		/*for (UserRole userRole : _userModel.getUserRoles()) {
+
+		for (UserRole userRole : _userModel.getUserRoles()) {
 			_userRoleCheckListView.getCheckModel().check(userRole);
 		}
 
 		_userRoleCheckListView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<UserRole>() {
 			@Override
 			public void onChanged(javafx.collections.ListChangeListener.Change<? extends UserRole> c) {
-				_userModel.setUserRoles(_userRoleCheckListView.getCheckModel().getCheckedItems());
+				_userModel.setUserRoles(FXCollections.observableSet(new HashSet<UserRole>( _userRoleCheckListView.getCheckModel().getCheckedItems())));
 			}
-		});*/
+		});
 		setState(_initialiseState);
 	}
 
@@ -164,8 +163,8 @@ public class UserViewController implements PanelClosable, Closeable {
 		if ((_userModel.getFirstName().getValue() != null) && (_userModel.getFirstName().getValue() != "")
 				&& (_userModel.getLastName().getValue() != null) && (_userModel.getFirstName().getValue() != "")
 				&& (_userModel.getAdress().getValue() != null) && (_userModel.getFirstName().getValue() != "")
-				&& (_userModel.getBirthDate().getValue() != null) && (_userModel.getGender() != null))
-			/*TODO(san7985) && (_userModel.getUserRoles().size() > 0) )*/ {
+				&& (_userModel.getBirthDate().getValue() != null) && (_userModel.getGender() != null)
+				&& (_userModel.getUserRoles().size() > 0)) {
 			return true;
 		} else {
 			return false;

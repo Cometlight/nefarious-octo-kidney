@@ -8,6 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.dto.rmi.IUserFactoryRMI;
+import at.fhv.itb5c.commons.dto.rmi.IUserFactoryRMI;
 
 public class UserFactoryStub extends UnicastRemoteObject implements IUserFactoryRMI, RMIStub {
 	private static final long serialVersionUID = 1L;

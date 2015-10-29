@@ -44,6 +44,9 @@ public class User extends PersistableObject {
 
 	@Column(name = "dateOfBirth", nullable = false)
 	private Date _persistDateOfBirth;
+	
+	@Column(name = "membershipFee", nullable = true)
+	private double _membershipFee;
 
 	@Column(name = "membershipFeePaid", nullable = true)
 	private boolean _membershipFeePaid;
@@ -144,6 +147,14 @@ public class User extends PersistableObject {
 		this._dateOfBirth = dateOfBirth;
 	}
 
+	public double getMembershipFee() {
+		return _membershipFee;
+	}
+
+	public void setMembershipFee(double membershipFee) {
+		this._membershipFee = membershipFee;
+	}
+	
 	public boolean getMembershipFeePaid() {
 		return _membershipFeePaid;
 	}

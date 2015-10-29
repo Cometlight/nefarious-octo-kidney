@@ -59,7 +59,7 @@ public class FindUsersTest {
   public void tearDown() throws Exception {
     PersistenceFacade.shutdown();
     File file = new File(DBFILE);
-    if(file.exists()) {
+    if (file.exists()) {
       file.delete();
     }
   }

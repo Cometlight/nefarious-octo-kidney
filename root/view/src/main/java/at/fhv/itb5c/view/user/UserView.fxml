@@ -46,7 +46,6 @@
             <Label text="Membership Fee" GridPane.rowIndex="8" />
             <Label text="Role" GridPane.rowIndex="9" />
             <DatePicker fx:id="_birthdayDatePicker" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-            <ComboBox fx:id="_roleComboBox" onAction="#roleComboBoxOnActionEventHandler" GridPane.columnIndex="3" GridPane.rowIndex="9" />
             <TextField fx:id="_memebershipFeeTextBox" GridPane.columnIndex="3" GridPane.rowIndex="8" />
             <ComboBox fx:id="_genderComboBox" onAction="#genderComboBoxOnActionEventHandler" GridPane.columnIndex="3" GridPane.rowIndex="5" />
             <TextField fx:id="_eMailTextField" GridPane.columnIndex="3" GridPane.rowIndex="4" />
@@ -54,8 +53,9 @@
             <TextField fx:id="_adressTextField" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <TextField fx:id="_lastNameTextField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <TextField fx:id="_firstNameTextField" GridPane.columnIndex="3" />
-            <CheckListView fx:id="_typeOfSportCheckListView" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+            <CheckListView fx:id="_typeOfSportCheckListView" prefHeight="75.0" GridPane.columnIndex="3" GridPane.rowIndex="7" />
             <Pane fx:id="_controlPane" GridPane.columnIndex="5" GridPane.rowIndex="9" />
+            <CheckListView fx:id="_userRoleCheckListView" maxHeight="75.0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
          </children>
       </GridPane>
    </center>

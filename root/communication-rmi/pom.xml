@@ -9,6 +9,7 @@
 	<groupId>at.fhv.itb5c.rmi</groupId>
 	<artifactId>communication-rmi</artifactId>
 	<name>communnication-rmi</name>
+	<version>0.0.1-SNAPSHOT</version>
 	<dependencies>
 		<dependency>
 			<groupId>at.fhv.itb5c.application</groupId>

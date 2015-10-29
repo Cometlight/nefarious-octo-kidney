@@ -22,14 +22,14 @@ public class UserFactoryRMI extends UnicastRemoteObject implements IUserFactoryR
 
 	@Override
 	public IUserRMI createUser() {
-		log.info("new user requested");
+		log.debug("new user requested");
 		IUser user = _factory.createUser();
 		return UserConverterRMI.toRMI(user);
 	}
 
 	@Override
 	public void save(IUser user) {
-		log.info("saving user");
+		log.debug("saving user");
 		_factory.save(UserConverterRMI.toRMI(user));
 	}
 	

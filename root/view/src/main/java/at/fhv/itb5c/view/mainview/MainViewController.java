@@ -1,18 +1,12 @@
 package at.fhv.itb5c.view.mainview;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
-
-import at.fhv.itb5c.model.UserModel;
-import at.fhv.itb5c.rmi.client.RMIClient;
-import at.fhv.itb5c.util.PanelCloseHandler;
 import at.fhv.itb5c.util.RouteProvider;
 import at.fhv.itb5c.util.StageUtil;
 import at.fhv.itb5c.view.login.LoginController;
-import at.fhv.itb5c.view.user.UserViewController;
+import at.fhv.itb5c.view.user.UserViewFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -33,7 +27,7 @@ public class MainViewController {
 	@FXML
 	public void loginMenueItemActionHandler(ActionEvent event) throws IOException {
 
-		//TODO: replace with controlfx login view
+		//TODO(san7985): replace with controlfx login view
 		Stage loginStage = new Stage();
 		loginStage.initModality(Modality.WINDOW_MODAL);
 		loginStage.initOwner(_rootPane.getScene().getWindow());
@@ -45,36 +39,11 @@ public class MainViewController {
 
 	@FXML
 	public void closeMenueItemActionHandler(ActionEvent event) {
-		// TODO close resources etc . . .
 		((Stage) _rootPane.getScene().getWindow()).close();
 	}
 
 	@FXML
-	public void createUserMenueItemActionHandler(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader();
-
-		loader.setLocation(RouteProvider.getInstance().getRoot(UserViewController.class));
-		UserViewController userViewController;
-
-		try {
-			//TODO: replace with factory
-			userViewController = new UserViewController(
-					new UserModel(RMIClient.getRMIClient().getUserFactory().createUser()));
-			userViewController.setPanelCloseHandler(new PanelCloseHandler() {
-
-				@Override
-				public void close() {
-					_mainPanel.getChildren().clear();
-				}
-			});
-			loader.setController(userViewController);
-
-			_mainPanel.getChildren().add(loader.load());
-			_mainPanel.autosize();
-
-			userViewController.initialize();
-		} catch (RemoteException e1) {
-			// TODO: handel can not connect
-		}
+	public void createUserMenueItemActionHandler(ActionEvent event) throws IOException {				
+		UserViewFactory.CreateNewUserView(_mainPanel, at.fhv.itb5c.view.user.UserViewController.UserViewState.newState);
 	}
 }

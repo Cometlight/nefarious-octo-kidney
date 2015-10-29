@@ -33,7 +33,7 @@ public class DetailUserViewControlls  implements IUserViewState {
 	
 	@FXML 
 	public void modifyButtonMouseReleasedEventHandler(MouseEvent mouseEvent) {
-		//TODO: switch to modifie view
+		//TODO(san7985): switch to modifie view
 	}
 	
 	@FXML 

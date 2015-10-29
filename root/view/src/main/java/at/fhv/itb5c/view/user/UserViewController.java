@@ -13,6 +13,7 @@ import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.model.UserModel;
 import at.fhv.itb5c.rmi.client.RMIClient;
+import at.fhv.itb5c.util.AlertUtil;
 import at.fhv.itb5c.util.PanelClosable;
 import at.fhv.itb5c.util.PanelCloseHandler;
 import at.fhv.itb5c.view.user.states.DetailUserViewControlls;
@@ -71,29 +72,25 @@ public class UserViewController implements PanelClosable, Closeable {
 
 	private UserModel _userModel;
 
-	public enum ViewState {
-		newState("newState"), detailState("detailState"), modifieState("modifieState");
-
-		private final String _name;
-
-		private ViewState(String name) {
-			_name = name;
-		}
-
-		public String toString() {
-			return _name;
-		}
+	public enum UserViewState {
+		newState, 
+		detailState, 
+		modifieState
 	}
+	
+	private UserViewState _initialiseState;
 
-	public UserViewController(UserModel userModel) {
+	//TODO(san7985): add the state to the constructur
+	public UserViewController(UserModel userModel, UserViewState initialiseState) {
 		_userModel = userModel;
 		_userViewStates = new HashMap<>();
 
-		_userViewStates.put(ViewState.newState, new NewUserViewControllsController(this));
-		_userViewStates.put(ViewState.detailState, new DetailUserViewControlls(this));
+		_userViewStates.put(UserViewState.newState, new NewUserViewControllsController(this));
+		_userViewStates.put(UserViewState.detailState, new DetailUserViewControlls(this));
+		_initialiseState = initialiseState;
 	}
 
-	public void initialize() {
+	public void initialize() throws IOException {
 		_firstNameTextField.textProperty().bindBidirectional(_userModel.getFirstName());
 		_lastNameTextField.textProperty().bindBidirectional(_userModel.getLastName());
 		_eMailTextField.textProperty().bindBidirectional(_userModel.getEMail());
@@ -103,11 +100,11 @@ public class UserViewController implements PanelClosable, Closeable {
 		_birthdayDatePicker.valueProperty().bindBidirectional(_userModel.getBirthDate());
 
 		_typeOfSportCheckListView.setItems(FXCollections.observableArrayList(TypeOfSport.values()));
-		
-		for(TypeOfSport typeofSport : _userModel.getTypeOfSports()) {
+
+		for (TypeOfSport typeofSport : _userModel.getTypeOfSports()) {
 			_typeOfSportCheckListView.getCheckModel().check(typeofSport);
 		}
-		
+
 		_typeOfSportCheckListView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<TypeOfSport>() {
 			@Override
 			public void onChanged(javafx.collections.ListChangeListener.Change<? extends TypeOfSport> c) {
@@ -119,18 +116,18 @@ public class UserViewController implements PanelClosable, Closeable {
 				new DecimalFormat());
 
 		_userRoleCheckListView.setItems(FXCollections.observableArrayList(UserRole.values()));
-		
-		for(UserRole userRole : _userModel.getUserRoles()) {
+
+		for (UserRole userRole : _userModel.getUserRoles()) {
 			_userRoleCheckListView.getCheckModel().check(userRole);
 		}
-		
+
 		_userRoleCheckListView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<UserRole>() {
 			@Override
 			public void onChanged(javafx.collections.ListChangeListener.Change<? extends UserRole> c) {
 				_userModel.setUserRoles(_userRoleCheckListView.getCheckModel().getCheckedItems());
 			}
 		});
-		setState(ViewState.newState);
+		setState(_initialiseState);
 	}
 
 	@FXML
@@ -152,7 +149,7 @@ public class UserViewController implements PanelClosable, Closeable {
 			try {
 				RMIClient.getRMIClient().getUserFactory().save(_userModel.getRMIUser());
 			} catch (RemoteException e) {
-				//TODO: can not connect 
+				AlertUtil.ConnectionAlert();
 				return false;
 			}
 			return true;
@@ -178,9 +175,9 @@ public class UserViewController implements PanelClosable, Closeable {
 		_panelCloseHandler.close();
 	}
 
-	private Map<ViewState, IUserViewState> _userViewStates;
+	private Map<UserViewState, IUserViewState> _userViewStates;
 
-	public IUserViewState getState(ViewState identifier) {
+	public IUserViewState getState(UserViewState identifier) {
 		if (_userViewStates.containsKey(identifier)) {
 			return _userViewStates.get(identifier);
 		} else {
@@ -188,7 +185,7 @@ public class UserViewController implements PanelClosable, Closeable {
 		}
 	}
 
-	public void setState(ViewState nextState) {
+	public void setState(UserViewState nextState) throws IOException {
 		IUserViewState userViewState = getState(nextState);
 
 		if (userViewState != null) {
@@ -197,14 +194,9 @@ public class UserViewController implements PanelClosable, Closeable {
 			loader.setLocation(userViewState.getControlsFXML());
 			_titelLabel.setText(userViewState.getTitel());
 
-			try {
-				_controlPane.getChildren().clear();
-				_controlPane.getChildren().add(loader.load());
-				userViewState.activate();
-			} catch (IOException e) {
-				// TODO handle error
-				e.printStackTrace();
-			}
+			_controlPane.getChildren().clear();
+			_controlPane.getChildren().add(loader.load());
+			userViewState.activate();
 		}
 	}
 

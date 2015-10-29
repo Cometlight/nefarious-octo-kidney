@@ -67,7 +67,7 @@ public class UserViewController implements PanelClosable, Closeable {
 	private TextField _memebershipFeeTextBox;
 
 	@FXML
-	private ComboBox<UserRole> _roleComboBox;
+	private CheckListView<UserRole> _userRoleCheckListView;
 
 	@FXML
 	private Pane _controlPane;
@@ -75,9 +75,7 @@ public class UserViewController implements PanelClosable, Closeable {
 	private UserModel _userModel;
 
 	public enum ViewState {
-		newState("newState"), 
-		detailState("detailState"), 
-		modifieState("modifieState");
+		newState("newState"), detailState("detailState"), modifieState("modifieState");
 
 		private final String _name;
 
@@ -117,8 +115,18 @@ public class UserViewController implements PanelClosable, Closeable {
 
 		_memebershipFeeTextBox.textProperty().bindBidirectional(_userModel.getMemberShipFee().asObject(),
 				new DecimalFormat());
-		_roleComboBox.setItems(FXCollections.observableArrayList(UserRole.values()));
 
+		_userRoleCheckListView.setItems(FXCollections.observableArrayList(UserRole.values()));
+		
+		
+		
+		_userRoleCheckListView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<UserRole>() {
+			@Override
+			public void onChanged(javafx.collections.ListChangeListener.Change<? extends UserRole> c) {
+				_userModel.setUserRoles(_userRoleCheckListView.getCheckModel().getCheckedItems());
+			}
+
+		});
 		setState(ViewState.newState);
 	}
 
@@ -126,13 +134,6 @@ public class UserViewController implements PanelClosable, Closeable {
 	public void genderComboBoxOnActionEventHandler(ActionEvent event) {
 		if (_genderComboBox.getValue() != null) {
 			_userModel.setGender(_genderComboBox.getValue());
-		}
-	}
-
-	@FXML
-	public void roleComboBoxOnActionEventHandler(ActionEvent event) {
-		if (_roleComboBox.getValue() != null) {
-			_userModel.setUserRole(_roleComboBox.getValue());
 		}
 	}
 
@@ -157,7 +158,7 @@ public class UserViewController implements PanelClosable, Closeable {
 				&& (_userModel.getLastName().getValue() != null) && (_userModel.getFirstName().getValue() != "")
 				&& (_userModel.getAdress().getValue() != null) && (_userModel.getFirstName().getValue() != "")
 				&& (_userModel.getBirthDate().getValue() != null) && (_userModel.getGender() != null)
-				&& (_userModel.getUserRole() != null)) {
+				&& (_userModel.getUserRoles().size() > 0)) {
 			return true;
 		} else {
 			return false;
@@ -208,7 +209,7 @@ public class UserViewController implements PanelClosable, Closeable {
 		_birthdayDatePicker.setDisable(isDisabled);
 		_typeOfSportCheckListView.setDisable(isDisabled);
 		_memebershipFeeTextBox.setDisable(isDisabled);
-		_roleComboBox.setDisable(isDisabled);
+		_userRoleCheckListView.setDisable(isDisabled);
 	}
 
 	public UserModel getUserModel() {

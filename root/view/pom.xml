@@ -33,5 +33,10 @@
 			<artifactId>model</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>at.fhv.itb5c.rmi</groupId>
+			<artifactId>communication-rmi</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -148,7 +148,7 @@ public class PersistenceFacade {
 		}
 	}
 
-	public List<User> findUsers(String firstName, String lastName, Long department, Boolean membershipFeePaid) {
+	public List<User> findUsers(String firstName, String lastName, Long departmentId, Boolean membershipFeePaid) {
 		List<User> resultSet;
 
 		CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
@@ -167,8 +167,8 @@ public class PersistenceFacade {
 			predicates.add(cb.like(cb.lower(root.get("_lastName")), "%" + lastName.toLowerCase() + "%"));
 		}
 
-		if (department != null) {
-			predicates.add(cb.equal(root.get("_department"), department));
+		if (departmentId != null) {
+			predicates.add(cb.equal(root.get("_departmentId"), departmentId));
 		}
 		
 		if (membershipFeePaid != null) {

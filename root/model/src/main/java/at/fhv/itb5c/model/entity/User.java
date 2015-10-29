@@ -22,45 +22,49 @@ import at.fhv.itb5c.model.validator.EmailValidator;
 public class User extends PersistableObject {
 	@Column(name = "firstName", nullable = false)
 	private String _firstName;
-	
+
 	@Column(name = "lastName", nullable = false)
 	private String _lastName;
-	
+
 	@Column(name = "email", nullable = true)
 	private String _email;
-	
+
 	@Column(name = "telephoneNumber", nullable = true)
 	private String _telephoneNumber;
-	
+
 	@Column(name = "gender", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Gender _gender;
-	
+
 	@Column(name = "address", nullable = false)
 	private String _address;
-	
+
 	@Transient
 	private LocalDate _dateOfBirth;
-	
+
 	@Column(name = "dateOfBirth", nullable = false)
 	private Date _persistDateOfBirth;
-	
+
 	@Column(name = "membershipFeePaid", nullable = true)
 	private boolean _membershipFeePaid;
-	
+
 	@Column(name = "roles", nullable = false)
 	private Set<UserRole> _roles;
-	
+
 	@Column(name = "typeOfSports", nullable = true)
 	private Set<TypeOfSport> _typeOfSports;
-	
+
 	@Column(name = "department", nullable = true)
 	private Department _department;
 
+	@Transient
+	private Long _departmentId; // needed for search; may be refactored if the
+								// need arises
+
 	public User() {
-		
+
 	}
-	
+
 	@PrePersist
 	private void persist() {
 		if (_dateOfBirth != null) {
@@ -73,12 +77,13 @@ public class User extends PersistableObject {
 		if (_persistDateOfBirth != null) {
 			_dateOfBirth = _persistDateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		}
+		_departmentId = _department.getId();
 	}
 
 	public String getFirstName() {
 		return _firstName;
 	}
-	
+
 	public void setFirstName(String firstName) {
 		_firstName = firstName;
 	}
@@ -96,12 +101,12 @@ public class User extends PersistableObject {
 	}
 
 	public boolean setEmail(String email) {
-		if(email == null) {
+		if (email == null) {
 			_email = null;
 			return true;
 		} else {
 			boolean validMail = EmailValidator.validate(email);
-			if(validMail) {
+			if (validMail) {
 				_email = email;
 			}
 			return validMail;
@@ -147,7 +152,7 @@ public class User extends PersistableObject {
 	public void setMembershipFeePaid(boolean membershipFeePaid) {
 		this._membershipFeePaid = membershipFeePaid;
 	}
-	
+
 	public Set<UserRole> getRoles() {
 		return _roles;
 	}
@@ -155,7 +160,7 @@ public class User extends PersistableObject {
 	public void setRoles(Set<UserRole> roles) {
 		_roles = roles;
 	}
-	
+
 	public Set<TypeOfSport> getTypeOfSports() {
 		return _typeOfSports;
 	}
@@ -163,15 +168,16 @@ public class User extends PersistableObject {
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) {
 		_typeOfSports = typeOfSports;
 	}
-	
+
 	public Department getDepartment() {
 		return _department;
 	}
 
 	public void setDepartment(Department department) {
 		_department = department;
+		_departmentId = department.getId();
 	}
-	
+
 	@Override
 	public String toString() {
 		return _firstName + " " + _lastName + "\n    " + _address;

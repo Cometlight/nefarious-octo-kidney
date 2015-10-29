@@ -8,7 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.dto.rmi.IUserFactoryRMI;
-import at.fhv.itb5c.commons.dto.rmi.IUserFactoryRMI;
+import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 
 public class UserFactoryStub extends UnicastRemoteObject implements IUserFactoryRMI, RMIStub {
 	private static final long serialVersionUID = 1L;
@@ -20,27 +20,16 @@ public class UserFactoryStub extends UnicastRemoteObject implements IUserFactory
 	}
 
 	@Override
-	public IUser createUser() {
-		try {
-			return _userFactory.createUser();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+	public IUserRMI createUser() throws RemoteException {
+		return _userFactory.createUser();
 	}
 
 	@Override
-	public void save(IUser user) {
-		try {
-			_userFactory.save(user);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void save(IUser user) throws RemoteException {
+		_userFactory.save((IUserRMI) user);
 	}
-	
-	public void init(String host, int port){
+
+	public void init(String host, int port) {
 		Object obj;
 		try {
 			obj = Naming.lookup("rmi://" + host + ":" + port + "/UserFactory");

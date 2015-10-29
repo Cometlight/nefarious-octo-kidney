@@ -32,7 +32,7 @@ public class UserModel {
 	private ObjectProperty<LocalDate> _birthDate;
 	private ObservableList<TypeOfSport> _typeOfSports;
 	private DoubleProperty _membershipFee;
-	private UserRole _userRole;
+	private ObservableList<UserRole> _userRoles;
 	
 	private IUserRMI _rmiUser;
 	
@@ -56,8 +56,10 @@ public class UserModel {
 		_typeOfSports = (ObservableList<TypeOfSport>) FXCollections.observableSet(user.getTypeOfSports());
 		_membershipFee.setValue(user.getMembershipFee());
 		
-		//TODO: user rework to set
-		//_userRole = user.getRoles();
+	}
+	
+	public IUserRMI getRMIUser() {
+		return _rmiUser;
 	}
 	
 	public void setFirstName(StringProperty firstName) {
@@ -141,16 +143,11 @@ public class UserModel {
 		_membershipFee = membershipFee;
 	}
 	
-	public UserRole getUserRole() {
-		return _userRole;
+	public ObservableList<UserRole> getUserRoles() {
+		return _userRoles;
 	}
 	
-	public void setUserRole(UserRole userRole) {
-		//TODO: when reworked gui to support list of roles
-		_userRole = userRole;
-	}
-	
-	public IUserRMI getRMIUser() {
-		return _rmiUser;
+	public void setUserRoles(ObservableList<UserRole> userRoles) {
+		_userRoles = userRoles;
 	}
 }

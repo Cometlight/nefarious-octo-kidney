@@ -20,69 +20,65 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainViewController {
-	
+
 	@FXML
 	BorderPane _rootPane;
-	
+
 	@FXML
 	Pane _mainPanel;
-	
+
 	@FXML
 	private Button _loginButton;
 
 	@FXML
 	public void loginMenueItemActionHandler(ActionEvent event) {
-		
-		//TODO: extract 
+
+		// TODO: extract
 		Stage loginStage = new Stage();
 		loginStage.initModality(Modality.WINDOW_MODAL);
 		loginStage.initOwner(_rootPane.getScene().getWindow());
-		
+
 		try {
 			StageUtil.loadScene(RouteProvider.getInstance().getRoot(LoginController.class), loginStage);
 		} catch (IOException e) {
 			// TODO add logging
 			e.printStackTrace();
 		}
-		
+
 		loginStage.show();
 	}
-	
+
 	@FXML
 	public void closeMenueItemActionHandler(ActionEvent event) {
 		// TODO close resources etc . . .
-		((Stage)_rootPane.getScene().getWindow()).close(); 
+		((Stage) _rootPane.getScene().getWindow()).close();
 	}
-	
+
 	@FXML
-	public void createUserMenueItemActionHandler(ActionEvent event) {
+	public void createUserMenueItemActionHandler(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 
 		loader.setLocation(RouteProvider.getInstance().getRoot(UserViewController.class));
 		UserViewController userViewController;
+		
 		try {
-			userViewController = new UserViewController(new UserModel(RMIClient.getRMIClient().getUserFactory().createUser()));
+			userViewController = new UserViewController(
+					new UserModel(RMIClient.getRMIClient().getUserFactory().createUser()));
 			userViewController.setPanelCloseHandler(new PanelCloseHandler() {
-				
+
 				@Override
 				public void close() {
 					_mainPanel.getChildren().clear();
 				}
 			});
 			loader.setController(userViewController);
-			
-			
-			try {
-				_mainPanel.getChildren().add(loader.load());
-				_mainPanel.autosize();
-				
-			} catch (IOException e) {
-				// TODO add logging
-				e.printStackTrace();
-			}
+
+			_mainPanel.getChildren().add(loader.load());
+			_mainPanel.autosize();
+
 			userViewController.initialize();
 		} catch (RemoteException e1) {
-			//TODO: handel cant connect
+			// TODO: handel can not connect
 		}
 	}
 }

@@ -77,5 +77,19 @@ public class PersistenceFacadeTest {
 		obj = PersistenceFacade.getInstance().getById(TestObj.class, 4l);
 		assertNull(obj);
 	}
+	
+	@Test
+	public void testVersioning() {
+		TestObj obj = new TestObj(42);
+		obj.setId(5l);
+		assertEquals(null, obj.getVersion());
+		
+		obj = PersistenceFacade.getInstance().saveOrUpdate(obj);
+		assertEquals(1l, obj.getVersion().longValue());
+		
+		obj.setValue(1337);
+		obj = PersistenceFacade.getInstance().saveOrUpdate(obj);
+		assertEquals(2l, obj.getVersion().longValue());
+	}
 
 }

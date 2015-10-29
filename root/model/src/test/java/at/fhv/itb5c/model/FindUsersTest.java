@@ -107,6 +107,12 @@ public class FindUsersTest {
   }
 
   @Test
+  public void testDepartmentFirstNameLastNameMembershipFeePaid() {
+    List<User> result = PersistenceFacade.getInstance().findUsers("Max", "er", 5l, true);
+    assertEquals(1, result.size());
+  }
+
+  @Test
   public void testMemebershipFeePaid() {
     List<User> result = PersistenceFacade.getInstance().findUsers(null, null, null, true);
     assertEquals(3, result.size());

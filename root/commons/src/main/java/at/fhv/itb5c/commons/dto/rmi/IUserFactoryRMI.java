@@ -7,6 +7,8 @@ import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.dto.IUserFactory;
 
 public interface IUserFactoryRMI extends Remote, IUserFactory {
-	public IUser createUser() throws RemoteException;
+	@Override
+	public IUserRMI createUser() throws RemoteException;
+	@Override
 	public void save(IUser user) throws RemoteException;
 }

@@ -6,6 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 import at.fhv.itb5c.application.controller.UserFactoryImpl;
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.dto.rmi.IUserFactoryRMI;
+import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 
 public class UserFactoryImplRMI extends UnicastRemoteObject implements IUserFactoryRMI {
 	private static final long serialVersionUID = 1L;
@@ -17,12 +18,12 @@ public class UserFactoryImplRMI extends UnicastRemoteObject implements IUserFact
 	}
 
 	@Override
-	public IUser createUser() {
-		return _factory.createUser();
+	public IUserRMI createUser() {
+		return (IUserRMI) _factory.createUser();
 	}
 
 	@Override
 	public void save(IUser user) {
-		_factory.save(user);
+		_factory.save((IUserRMI) user);
 	}
 }

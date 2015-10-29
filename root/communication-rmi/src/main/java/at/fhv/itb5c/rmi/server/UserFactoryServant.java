@@ -20,12 +20,23 @@ public class UserFactoryServant extends UnicastRemoteObject implements IUserFact
 
 	@Override
 	public IUser createUser() {
-		return _userFactory.createUser();
+		try {
+			return _userFactory.createUser();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public void save(IUser user) {
-		_userFactory.save(user);
+		try {
+			_userFactory.save(user);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

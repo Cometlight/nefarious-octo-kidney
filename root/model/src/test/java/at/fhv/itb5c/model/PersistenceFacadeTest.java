@@ -6,10 +6,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.io.File;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import at.fhv.itb5c.model.entity.User;
 
 public class PersistenceFacadeTest {
 	private static final String DBFILE = "testdb.odb";
@@ -90,6 +93,22 @@ public class PersistenceFacadeTest {
 		obj.setValue(1337);
 		obj = PersistenceFacade.getInstance().saveOrUpdate(obj);
 		assertEquals(2l, obj.getVersion().longValue());
+	}
+	
+	@Test
+	public void testFindUser() {
+		User user = new User();
+		user.setFirstName("Max");
+		user.setLastName("Mustermann");
+		
+		PersistenceFacade.getInstance().saveOrUpdate(user);
+		
+		
+		List<User> result = PersistenceFacade.getInstance().findUsers("Max", null, null, null);
+		
+		for(User u : result) {
+			System.out.println(u.getFirstName());
+		}
 	}
 
 }

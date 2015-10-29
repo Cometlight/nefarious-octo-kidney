@@ -80,7 +80,6 @@ public class UserViewController implements PanelClosable, Closeable {
 	
 	private UserViewState _initialiseState;
 
-	//TODO(san7985): add the state to the constructur
 	public UserViewController(UserModel userModel, UserViewState initialiseState) {
 		_userModel = userModel;
 		_userViewStates = new HashMap<>();

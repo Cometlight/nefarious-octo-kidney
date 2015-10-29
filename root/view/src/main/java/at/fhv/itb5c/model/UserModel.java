@@ -1,5 +1,6 @@
 package at.fhv.itb5c.model;
 
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.HashSet;
 
@@ -7,6 +8,7 @@ import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
+import at.fhv.itb5c.util.AlertUtil;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -32,7 +34,7 @@ public class UserModel {
 	private IUserRMI _rmiUser;
 	
 	@SuppressWarnings("unchecked")
-	public UserModel(IUserRMI user) {
+	private UserModel(IUserRMI user) throws RemoteException {
 		_firstName = new SimpleStringProperty();
 		_lastName = new SimpleStringProperty();
 		_address = new SimpleStringProperty();
@@ -53,11 +55,15 @@ public class UserModel {
 		
 	}
 	
+	public static UserModel createUserModel(IUserRMI user) throws RemoteException {
+		return new UserModel(user);
+	}
+	
 	public IUserRMI getRMIUser() {
 		return _rmiUser;
 	}
 	
-	public void setFirstName(StringProperty firstName) {
+	public void setFirstName(StringProperty firstName) throws RemoteException {
 		_rmiUser.setFirstName(firstName.getValue());
 		_firstName = firstName;
 	}
@@ -71,7 +77,12 @@ public class UserModel {
 	}
 
 	public void setLastName(StringProperty lastName) {
-		_rmiUser.setLastName(lastName.getValue());
+		try {
+			_rmiUser.setLastName(lastName.getValue());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		_lastName = lastName;
 	}
 
@@ -80,7 +91,12 @@ public class UserModel {
 	}
 
 	public void setAdress(StringProperty adress) {
-		_rmiUser.setAddress(adress.getValue());
+		try {
+			_rmiUser.setAddress(adress.getValue());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		_address = adress;
 	}
 
@@ -89,7 +105,12 @@ public class UserModel {
 	}
 
 	public void setTelephonenumber(StringProperty telephonenumber) {
-		_rmiUser.setTelephoneNumber(telephonenumber.getValue());
+		try {
+			_rmiUser.setTelephoneNumber(telephonenumber.getValue());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		_telephonenumber = telephonenumber;
 	}
 
@@ -98,12 +119,20 @@ public class UserModel {
 	}
 
 	public void setEMail(StringProperty eMail) {
-		_rmiUser.setEmail(eMail.getValue());
+		try {
+			_rmiUser.setEmail(eMail.getValue());
+		} catch (RemoteException e) {
+			AlertUtil.ConnectionAlert();
+		}
 		_eMail = eMail;
 	}
 
 	public void setGender(Gender gender) {
-		_rmiUser.setGender(gender);
+		try {
+			_rmiUser.setGender(gender);
+		} catch (RemoteException e) {
+			AlertUtil.ConnectionAlert();
+		}
 		_gender = gender;
 	}
 	
@@ -112,7 +141,11 @@ public class UserModel {
 	}
 	
 	public void setBirthDate(ObjectProperty<LocalDate> birthDate) {
-		_rmiUser.setDateOfBirth(birthDate.getValue());
+		try {
+			_rmiUser.setDateOfBirth(birthDate.getValue());
+		} catch (RemoteException e) {
+			AlertUtil.ConnectionAlert();
+		}
 		_birthDate = birthDate;
 	}
 	
@@ -125,7 +158,11 @@ public class UserModel {
 	}
 	
 	public void setTypeOfSports(ObservableList<TypeOfSport> typeOfSports) {
-		_rmiUser.setTypeOfSports(new HashSet<>(typeOfSports));
+		try {
+			_rmiUser.setTypeOfSports(new HashSet<>(typeOfSports));
+		} catch (RemoteException e) {
+			AlertUtil.ConnectionAlert();
+		}
 		_typeOfSports = typeOfSports;
 	}
 	
@@ -134,7 +171,11 @@ public class UserModel {
 	}
 	
 	public void setMemberShipfee(DoubleProperty membershipFee) {
-		_rmiUser.setMembershipFee(membershipFee.doubleValue());
+		try {
+			_rmiUser.setMembershipFee(membershipFee.doubleValue());
+		} catch (RemoteException e) {
+			AlertUtil.ConnectionAlert();
+		}
 		_membershipFee = membershipFee;
 	}
 	

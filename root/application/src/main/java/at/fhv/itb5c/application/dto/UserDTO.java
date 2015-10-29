@@ -1,6 +1,7 @@
 package at.fhv.itb5c.application.dto;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 import at.fhv.itb5c.commons.dto.IUser;
@@ -23,6 +24,8 @@ public class UserDTO implements IUser {
 	private Set<TypeOfSport> _typeOfSports;
 	
 	public UserDTO() {
+		_roles = new HashSet<UserRole>();
+		_typeOfSports = new HashSet<TypeOfSport>();
 	}
 
 	public UserDTO(String firstName, String lastName, String email, String telephoneNumber, Gender gender,

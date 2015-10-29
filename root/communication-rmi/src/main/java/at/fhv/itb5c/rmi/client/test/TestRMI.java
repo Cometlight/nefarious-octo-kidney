@@ -56,8 +56,8 @@ public class TestRMI {
 		
 		// save user method
 		System.out.println("Save new user dto ...");
-		System.out.println("");
 		try {
+			System.out.println("ID must be null: " + newUser.getId());
 			newUser.setFirstName("Daniel");
 			newUser.setLastName("Integration");
 			newUser.setAddress("Teststraße 7a, 6800 Feldkirch");
@@ -79,6 +79,7 @@ public class TestRMI {
 		
 		try {
 			userFactory.save(newUser);
+			System.out.println("ID must not be null: " + newUser.getId());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

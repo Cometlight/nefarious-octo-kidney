@@ -138,4 +138,12 @@ public class UserDTO implements IUser {
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) {
 		_typeOfSports = typeOfSports;
 	}
+
+	@Override
+	public String toString() {
+		return "UserDTO [_id=" + _id + ", _version=" + _version + ", _firstName=" + _firstName + ", _lastName="
+				+ _lastName + ", _email=" + _email + ", _telephoneNumber=" + _telephoneNumber + ", _gender=" + _gender
+				+ ", _address=" + _address + ", _dateOfBirth=" + _dateOfBirth + ", _membershipFee=" + _membershipFee
+				+ ", _roles=" + _roles + ", _typeOfSports=" + _typeOfSports + "]";
+	}
 }

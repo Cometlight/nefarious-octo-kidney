@@ -8,9 +8,10 @@ import at.fhv.itb5c.application.dto.UserConverter;
 import at.fhv.itb5c.application.dto.UserDTO;
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.dto.IUserFactory;
+import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.entity.User;
 
-public class UserFactoryImpl implements IUserFactory {
+public class UserFactoryImpl implements IUserFactory, ILogger {
 
 	@Override
 	public IUser createUser() {
@@ -28,6 +29,11 @@ public class UserFactoryImpl implements IUserFactory {
 			em.getTransaction().begin();
 			em.persist(userEntity);
 			em.getTransaction().commit();
+			
+			user = UserConverter.toDTO(userEntity);
+			
+			log.debug("user with id " + userEntity.getId() + " saved.");
+			log.debug(userEntity);
 		}
 	}
 }

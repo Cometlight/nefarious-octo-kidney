@@ -1,4 +1,4 @@
-package at.fhv.itb5c.model;
+package at.fhv.itb5c.view.user;
 
 import java.rmi.RemoteException;
 import java.time.LocalDate;
@@ -8,7 +8,7 @@ import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
-import at.fhv.itb5c.util.AlertUtil;
+import at.fhv.itb5c.view.util.AlertUtil;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -16,8 +16,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
+import javafx.collections.ObservableSet;
 
 public class UserModel {
 	private StringProperty _firstName;
@@ -27,10 +26,10 @@ public class UserModel {
 	private StringProperty _telephonenumber;
 	private Gender _gender;
 	private ObjectProperty<LocalDate> _birthDate;
-	private ObservableList<TypeOfSport> _typeOfSports;
+	private ObservableSet<TypeOfSport> _typeOfSports;
 	private DoubleProperty _membershipFee;
-	private ObservableList<UserRole> _userRoles;
-	
+	private ObservableSet<UserRole> _userRoles;
+
 	private IUserRMI _rmiUser;
 	
 	private UserModel(IUserRMI user) throws RemoteException {
@@ -49,9 +48,9 @@ public class UserModel {
 		_telephonenumber.setValue(user.getTelephoneNumber());
 		_gender = user.getGender();
 		_birthDate.setValue(user.getDateOfBirth());
-		//_typeOfSports = (ObservableList<TypeOfSport>) FXCollections.observableSet(user.getTypeOfSports());
+		_typeOfSports = (ObservableSet <TypeOfSport>) FXCollections.observableSet(user.getTypeOfSports());
 		_membershipFee.setValue(user.getMembershipFee());	
-		//_userRoles = (ObservableList<UserRole>) FXCollections.observableSet(user.getRoles());
+		_userRoles = (ObservableSet<UserRole>) FXCollections.observableSet(user.getRoles());
 		
 		_rmiUser = user;
 	}
@@ -61,16 +60,20 @@ public class UserModel {
 	}
 	
 	public IUserRMI getRMIUser() {
-		return _rmiUser;
-	}
-	
-	public void setFirstName(StringProperty firstName) {
 		try {
-			_rmiUser.setFirstName(firstName.getValue());
+			_rmiUser.setFirstName(_firstName.getValue());
+			_rmiUser.setLastName(_lastName.getValue());
+			_rmiUser.setAddress(_address.getValue());
+			_rmiUser.setTelephoneNumber(_telephonenumber.getValue());
+			_rmiUser.setEmail(_eMail.getValue());
+			_rmiUser.setDateOfBirth(_birthDate.getValue());
+			_rmiUser.setMembershipFee(_membershipFee.getValue());
+			
 		} catch (RemoteException e) {
 			AlertUtil.ConnectionAlert();
 		}
-		_firstName = firstName;
+		
+		return _rmiUser;
 	}
 	
 	public StringProperty getFirstName() {
@@ -81,52 +84,16 @@ public class UserModel {
 		return _lastName;
 	}
 
-	public void setLastName(StringProperty lastName) {
-		try {
-			_rmiUser.setLastName(lastName.getValue());
-		} catch (RemoteException e) {
-			AlertUtil.ConnectionAlert();
-		}
-		_lastName = lastName;
-	}
-
 	public StringProperty getAdress() {
 		return _address;
-	}
-
-	public void setAdress(StringProperty adress) {
-		try {
-			_rmiUser.setAddress(adress.getValue());
-		} catch (RemoteException e) {
-			AlertUtil.ConnectionAlert();
-		}
-		_address = adress;
 	}
 
 	public StringProperty getTelephonenumber() {
 		return _telephonenumber;
 	}
 
-	public void setTelephonenumber(StringProperty telephonenumber) {
-		try {
-			_rmiUser.setTelephoneNumber(telephonenumber.getValue());
-		} catch (RemoteException e) {
-			AlertUtil.ConnectionAlert();
-		}
-		_telephonenumber = telephonenumber;
-	}
-
 	public StringProperty getEMail() {
 		return _eMail;
-	}
-
-	public void setEMail(StringProperty eMail) {
-		try {
-			_rmiUser.setEmail(eMail.getValue());
-		} catch (RemoteException e) {
-			AlertUtil.ConnectionAlert();
-		}
-		_eMail = eMail;
 	}
 
 	public void setGender(Gender gender) {
@@ -142,24 +109,15 @@ public class UserModel {
 		return _gender;
 	}
 	
-	public void setBirthDate(ObjectProperty<LocalDate> birthDate) {
-		try {
-			_rmiUser.setDateOfBirth(birthDate.getValue());
-		} catch (RemoteException e) {
-			AlertUtil.ConnectionAlert();
-		}
-		_birthDate = birthDate;
-	}
-	
 	public ObjectProperty<LocalDate> getBirthDate() {
 		return _birthDate;
 	}
 	
-	public ObservableList<TypeOfSport> getTypeOfSports() {
+	public ObservableSet<TypeOfSport> getTypeOfSports() {
 		return _typeOfSports;
 	}
 	
-	public void setTypeOfSports(ObservableList<TypeOfSport> typeOfSports) {
+	public void setTypeOfSports(ObservableSet<TypeOfSport> typeOfSports) {
 		try {
 			_rmiUser.setTypeOfSports(new HashSet<>(typeOfSports));
 		} catch (RemoteException e) {
@@ -172,20 +130,16 @@ public class UserModel {
 		return _membershipFee;
 	}
 	
-	public void setMemberShipfee(DoubleProperty membershipFee) {
-		try {
-			_rmiUser.setMembershipFee(membershipFee.doubleValue());
-		} catch (RemoteException e) {
-			AlertUtil.ConnectionAlert();
-		}
-		_membershipFee = membershipFee;
-	}
-	
-	public ObservableList<UserRole> getUserRoles() {
+	public ObservableSet<UserRole> getUserRoles() {
 		return _userRoles;
 	}
 	
-	public void setUserRoles(ObservableList<UserRole> userRoles) {
+	public void setUserRoles(ObservableSet<UserRole> userRoles) {
+		try {
+			_rmiUser.setRoles(new HashSet<>(userRoles));
+		} catch (RemoteException e) {
+			AlertUtil.ConnectionAlert();
+		}
 		_userRoles = userRoles;
 	}
 }

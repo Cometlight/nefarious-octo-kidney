@@ -1,4 +1,4 @@
-package at.fhv.itb5c.util;
+package at.fhv.itb5c.view.util;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

@@ -1,4 +1,4 @@
-package at.fhv.itb5c.util;
+package at.fhv.itb5c.view.util;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class RouteProvider {
 	}
 
 	public void addRoot(Object controller, String route) {
-		_rootMapping.put(controller, this.getClass().getResource("../../../../" + route));
+		_rootMapping.put(controller, this.getClass().getResource("../../../../../" + route));
 	}
 
 	public URL getRoot(Object controller) {

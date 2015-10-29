@@ -9,7 +9,7 @@ import at.fhv.itb5c.logging.ILogger;
 
 public class RMIServer implements ILogger{
 	private static List<RMIServant> _servants;
-	private static final String _host = "localhost";
+	private static final String _host = "ec2-52-10-208-136.us-west-2.compute.amazonaws.com";
 	private static final int _port = 1337;
 
 	public static void main(String args[]) {

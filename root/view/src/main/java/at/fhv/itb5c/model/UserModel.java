@@ -33,7 +33,6 @@ public class UserModel {
 	
 	private IUserRMI _rmiUser;
 	
-	@SuppressWarnings("unchecked")
 	private UserModel(IUserRMI user) throws RemoteException {
 		_firstName = new SimpleStringProperty();
 		_lastName = new SimpleStringProperty();
@@ -50,9 +49,11 @@ public class UserModel {
 		_telephonenumber.setValue(user.getTelephoneNumber());
 		_gender = user.getGender();
 		_birthDate.setValue(user.getDateOfBirth());
-		_typeOfSports = (ObservableList<TypeOfSport>) FXCollections.observableSet(user.getTypeOfSports());
-		_membershipFee.setValue(user.getMembershipFee());
+		//_typeOfSports = (ObservableList<TypeOfSport>) FXCollections.observableSet(user.getTypeOfSports());
+		_membershipFee.setValue(user.getMembershipFee());	
+		//_userRoles = (ObservableList<UserRole>) FXCollections.observableSet(user.getRoles());
 		
+		_rmiUser = user;
 	}
 	
 	public static UserModel createUserModel(IUserRMI user) throws RemoteException {
@@ -63,8 +64,12 @@ public class UserModel {
 		return _rmiUser;
 	}
 	
-	public void setFirstName(StringProperty firstName) throws RemoteException {
-		_rmiUser.setFirstName(firstName.getValue());
+	public void setFirstName(StringProperty firstName) {
+		try {
+			_rmiUser.setFirstName(firstName.getValue());
+		} catch (RemoteException e) {
+			AlertUtil.ConnectionAlert();
+		}
 		_firstName = firstName;
 	}
 	
@@ -80,8 +85,7 @@ public class UserModel {
 		try {
 			_rmiUser.setLastName(lastName.getValue());
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertUtil.ConnectionAlert();
 		}
 		_lastName = lastName;
 	}
@@ -94,8 +98,7 @@ public class UserModel {
 		try {
 			_rmiUser.setAddress(adress.getValue());
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertUtil.ConnectionAlert();
 		}
 		_address = adress;
 	}
@@ -108,8 +111,7 @@ public class UserModel {
 		try {
 			_rmiUser.setTelephoneNumber(telephonenumber.getValue());
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertUtil.ConnectionAlert();
 		}
 		_telephonenumber = telephonenumber;
 	}

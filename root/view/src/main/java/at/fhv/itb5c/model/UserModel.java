@@ -16,11 +16,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/*
- * TODO: 
- * 	set the values of a User if its set in the constructor
- * 	use setters to set values in the User
- */
 
 public class UserModel {
 	private StringProperty _firstName;

@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class AppController {
 	private Stage _primaryStage;
 
-	public void start(Stage stage) {
+	public void start(Stage stage) throws IOException {
 		initializeRouteMapping();
 
 		stage.setTitle("Hallo User");
@@ -29,16 +29,11 @@ public class AppController {
 		RouteProvider.getInstance().addRoot(LoginController.class, "at/fhv/itb5c/view/login/Login.fxml");
 	}
 
-	private void loadMainStage() {
-		try {
+	private void loadMainStage() throws IOException {
 			closeStage();
 			StageUtil.<BorderPane> loadScene(RouteProvider.getInstance().getRoot(MainViewController.class),
 					_primaryStage);
 			showStage();
-		} catch (IOException e) {
-			// TODO add logging
-			e.printStackTrace();
-		}
 	}
 
 	private void showStage() {

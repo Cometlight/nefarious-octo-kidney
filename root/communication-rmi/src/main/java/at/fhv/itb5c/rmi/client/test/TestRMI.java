@@ -5,7 +5,7 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -56,6 +56,7 @@ public class TestRMI {
 		
 		// save user method
 		System.out.println("Save new user dto ...");
+		System.out.println("");
 		try {
 			newUser.setFirstName("Daniel");
 			newUser.setLastName("Integration");
@@ -64,11 +65,11 @@ public class TestRMI {
 			newUser.setEmail("test@case.com");
 			newUser.setGender(Gender.Male);
 			newUser.setMembershipFee(15.9);
-			Set<UserRole> roles = new LinkedHashSet<UserRole>();
+			Set<UserRole> roles = new HashSet<UserRole>();
 			roles.add(UserRole.Admin);
 			newUser.setRoles(roles);
 			newUser.setTelephoneNumber("+43 664 874379");
-			Set<TypeOfSport> sports = new LinkedHashSet<TypeOfSport>();
+			Set<TypeOfSport> sports = new HashSet<TypeOfSport>();
 			sports.add(TypeOfSport.Soccer);
 			newUser.setTypeOfSports(sports);
 		} catch (RemoteException e1) {

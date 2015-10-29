@@ -34,6 +34,7 @@
                  <Menu mnemonicParsing="false" text="Administrativ">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#createUserMenueItemActionHandler" text="Create User" />
+                    <MenuItem onAction="#searchUserMenueItemActionHandler" text="Search User"/>
                   </items>
                 </Menu>
               </menus>

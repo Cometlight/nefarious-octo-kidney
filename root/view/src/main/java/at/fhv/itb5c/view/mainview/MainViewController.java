@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import at.fhv.itb5c.view.login.LoginController;
 import at.fhv.itb5c.view.user.UserViewFactory;
+import at.fhv.itb5c.view.usersearch.SearchUserViewFactory;
 import at.fhv.itb5c.view.util.RouteProvider;
 import at.fhv.itb5c.view.util.StageUtil;
 import javafx.event.ActionEvent;
@@ -42,5 +43,10 @@ public class MainViewController {
 	@FXML
 	public void createUserMenueItemActionHandler(ActionEvent event) throws IOException {				
 		UserViewFactory.CreateNewUserView(_mainPanel, at.fhv.itb5c.view.user.UserViewController.UserViewState.newState);
+	}
+	
+	@FXML
+	public void searchUserMenueItemActionHandler(ActionEvent event) throws IOException {
+		SearchUserViewFactory.CreateNewUserView(_mainPanel);
 	}
 }

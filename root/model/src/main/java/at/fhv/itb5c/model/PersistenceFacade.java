@@ -2,7 +2,6 @@ package at.fhv.itb5c.model;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,8 +11,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.Metamodel;
 
 import at.fhv.itb5c.model.entity.PersistableObject;
 import at.fhv.itb5c.model.entity.User;
@@ -163,11 +160,11 @@ public class PersistenceFacade {
 		List<Predicate> predicates = new LinkedList<>();
 
 		if (firstName != null) {
-			predicates.add(cb.like(root.get("_firstName"), "%" + firstName + "%"));
+			predicates.add(cb.like(cb.lower(root.get("_firstName")), "%" + firstName.toLowerCase() + "%"));
 		}
 
 		if (lastName != null) {
-			predicates.add(cb.like(root.get("_lastName"), "%" + lastName + "%"));
+			predicates.add(cb.like(cb.lower(root.get("_lastName")), "%" + lastName.toLowerCase() + "%"));
 		}
 
 		if (department != null) {

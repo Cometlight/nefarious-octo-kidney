@@ -45,14 +45,17 @@ public class User extends PersistableObject {
 	@Column(name = "dateOfBirth", nullable = false)
 	private Date _persistDateOfBirth;
 	
-	@Column(name = "membershipFee", nullable = true)
-	private double _membershipFee;
+	@Column(name = "membershipFeePaid", nullable = true)
+	private boolean _membershipFeePaid;
 	
 	@Column(name = "roles", nullable = false)
 	private Set<UserRole> _roles;
 	
 	@Column(name = "typeOfSports", nullable = true)
 	private Set<TypeOfSport> _typeOfSports;
+	
+	@Column(name = "department", nullable = true)
+	private Department _department;
 
 	public User() {
 		
@@ -137,12 +140,12 @@ public class User extends PersistableObject {
 		this._dateOfBirth = dateOfBirth;
 	}
 
-	public double getMembershipFee() {
-		return _membershipFee;
+	public boolean getMembershipFeePaid() {
+		return _membershipFeePaid;
 	}
 
-	public void setMembershipFee(double membershipFee) {
-		this._membershipFee = membershipFee;
+	public void setMembershipFeePaid(boolean membershipFeePaid) {
+		this._membershipFeePaid = membershipFeePaid;
 	}
 	
 	public Set<UserRole> getRoles() {
@@ -159,6 +162,14 @@ public class User extends PersistableObject {
 
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) {
 		_typeOfSports = typeOfSports;
+	}
+	
+	public Department getDepartment() {
+		return _department;
+	}
+
+	public void setDepartment(Department department) {
+		_department = department;
 	}
 	
 	@Override

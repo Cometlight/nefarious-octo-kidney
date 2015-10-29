@@ -128,11 +128,11 @@ public class UserTest {
 	}
 	
 	@Test
-	public void testMembershipFee() {
-		final double membershipFee = 42;
+	public void testMembershipFeePaid() {
+		final boolean membershipFeePaid = true;
 		User user = new User();
-		user.setMembershipFee(membershipFee);
-		assertEquals(membershipFee, user.getMembershipFee(), 0.01d);
+		user.setMembershipFeePaid(membershipFeePaid);
+		assertEquals(membershipFeePaid, user.getMembershipFeePaid());
 	}
 	
 	@Test
@@ -155,6 +155,15 @@ public class UserTest {
 		assertEquals(2, user.getTypeOfSports().size());
 		assertTrue(user.getTypeOfSports().contains(TypeOfSport.Soccer));
 		assertTrue(user.getTypeOfSports().contains(TypeOfSport.Tennis));
+	}
+	
+	@Test
+	public void testDepartment() {
+		final Department department = new Department();
+		department.setName("Soccer 01");
+		User user = new User();
+		user.setDepartment(department);
+		assertEquals(department, user.getDepartment());
 	}
 
 }

@@ -31,19 +31,14 @@ public class MainViewController {
 	private Button _loginButton;
 
 	@FXML
-	public void loginMenueItemActionHandler(ActionEvent event) {
+	public void loginMenueItemActionHandler(ActionEvent event) throws IOException {
 
-		// TODO: extract
+		//TODO: replace with controlfx login view
 		Stage loginStage = new Stage();
 		loginStage.initModality(Modality.WINDOW_MODAL);
 		loginStage.initOwner(_rootPane.getScene().getWindow());
 
-		try {
-			StageUtil.loadScene(RouteProvider.getInstance().getRoot(LoginController.class), loginStage);
-		} catch (IOException e) {
-			// TODO add logging
-			e.printStackTrace();
-		}
+		StageUtil.loadScene(RouteProvider.getInstance().getRoot(LoginController.class), loginStage);
 
 		loginStage.show();
 	}
@@ -60,8 +55,9 @@ public class MainViewController {
 
 		loader.setLocation(RouteProvider.getInstance().getRoot(UserViewController.class));
 		UserViewController userViewController;
-		
+
 		try {
+			//TODO: replace with factory
 			userViewController = new UserViewController(
 					new UserModel(RMIClient.getRMIClient().getUserFactory().createUser()));
 			userViewController.setPanelCloseHandler(new PanelCloseHandler() {

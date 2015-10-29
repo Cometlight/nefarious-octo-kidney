@@ -2,6 +2,7 @@ package at.fhv.itb5c.view.user;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,7 @@ import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.model.UserModel;
+import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.util.PanelClosable;
 import at.fhv.itb5c.util.PanelCloseHandler;
 import at.fhv.itb5c.view.user.states.DetailUserViewControlls;
@@ -26,11 +28,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-
-/*
- * TODO:
- * 		change role to a list 
- */
 
 public class UserViewController implements PanelClosable, Closeable {
 	@FXML
@@ -106,6 +103,11 @@ public class UserViewController implements PanelClosable, Closeable {
 		_birthdayDatePicker.valueProperty().bindBidirectional(_userModel.getBirthDate());
 
 		_typeOfSportCheckListView.setItems(FXCollections.observableArrayList(TypeOfSport.values()));
+		
+		for(TypeOfSport typeofSport : _userModel.getTypeOfSports()) {
+			_typeOfSportCheckListView.getCheckModel().check(typeofSport);
+		}
+		
 		_typeOfSportCheckListView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<TypeOfSport>() {
 			@Override
 			public void onChanged(javafx.collections.ListChangeListener.Change<? extends TypeOfSport> c) {
@@ -118,14 +120,15 @@ public class UserViewController implements PanelClosable, Closeable {
 
 		_userRoleCheckListView.setItems(FXCollections.observableArrayList(UserRole.values()));
 		
-		
+		for(UserRole userRole : _userModel.getUserRoles()) {
+			_userRoleCheckListView.getCheckModel().check(userRole);
+		}
 		
 		_userRoleCheckListView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<UserRole>() {
 			@Override
 			public void onChanged(javafx.collections.ListChangeListener.Change<? extends UserRole> c) {
 				_userModel.setUserRoles(_userRoleCheckListView.getCheckModel().getCheckedItems());
 			}
-
 		});
 		setState(ViewState.newState);
 	}
@@ -146,6 +149,12 @@ public class UserViewController implements PanelClosable, Closeable {
 
 	public boolean saveModel() {
 		if (mandatoryFieldsSet()) {
+			try {
+				RMIClient.getRMIClient().getUserFactory().save(_userModel.getRMIUser());
+			} catch (RemoteException e) {
+				//TODO: can not connect 
+				return false;
+			}
 			return true;
 		} else {
 			return false;

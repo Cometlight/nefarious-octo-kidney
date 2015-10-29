@@ -1,8 +1,10 @@
 package at.fhv.itb5c.view.mainview;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 
 import at.fhv.itb5c.model.UserModel;
+import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.util.PanelCloseHandler;
 import at.fhv.itb5c.util.RouteProvider;
 import at.fhv.itb5c.util.StageUtil;
@@ -16,11 +18,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-/*
- * TODO:
- * 	create general loader for an fxml
- */
 
 public class MainViewController {
 	
@@ -62,25 +59,30 @@ public class MainViewController {
 		FXMLLoader loader = new FXMLLoader();
 
 		loader.setLocation(RouteProvider.getInstance().getRoot(UserViewController.class));
-		UserViewController userViewController = new UserViewController(new UserModel());
-		userViewController.setPanelCloseHandler(new PanelCloseHandler() {
-			
-			@Override
-			public void close() {
-				_mainPanel.getChildren().clear();
-			}
-		});
-		loader.setController(userViewController);
-		
-		
+		UserViewController userViewController;
 		try {
-			_mainPanel.getChildren().add(loader.load());
-			_mainPanel.autosize();
+			userViewController = new UserViewController(new UserModel(RMIClient.getRMIClient().getUserFactory().createUser()));
+			userViewController.setPanelCloseHandler(new PanelCloseHandler() {
+				
+				@Override
+				public void close() {
+					_mainPanel.getChildren().clear();
+				}
+			});
+			loader.setController(userViewController);
 			
-		} catch (IOException e) {
-			// TODO add logging
-			e.printStackTrace();
+			
+			try {
+				_mainPanel.getChildren().add(loader.load());
+				_mainPanel.autosize();
+				
+			} catch (IOException e) {
+				// TODO add logging
+				e.printStackTrace();
+			}
+			userViewController.initialize();
+		} catch (RemoteException e1) {
+			//TODO: handel cant connect
 		}
-		userViewController.initialize();
 	}
 }

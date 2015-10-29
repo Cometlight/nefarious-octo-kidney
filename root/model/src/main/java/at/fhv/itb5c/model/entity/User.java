@@ -57,7 +57,7 @@ public class User extends PersistableObject {
 	@Column(name = "department", nullable = true)
 	private Department _department;
 
-	@Transient
+	@Column(name = "departmentId", nullable = true)
 	private Long _departmentId; // needed for search; may be refactored if the
 								// need arises
 
@@ -77,7 +77,6 @@ public class User extends PersistableObject {
 		if (_persistDateOfBirth != null) {
 			_dateOfBirth = _persistDateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		}
-		_departmentId = _department.getId();
 	}
 
 	public String getFirstName() {

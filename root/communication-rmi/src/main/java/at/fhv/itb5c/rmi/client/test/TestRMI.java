@@ -56,20 +56,26 @@ public class TestRMI {
 		
 		// save user method
 		System.out.println("Save new user dto ...");
-		newUser.setFirstName("Daniel");
-		newUser.setLastName("Integration");
-		newUser.setAddress("Teststraße 7a, 6800 Feldkirch");
-		newUser.setDateOfBirth(LocalDate.now());
-		newUser.setEmail("test@case.com");
-		newUser.setGender(Gender.Male);
-		newUser.setMembershipFee(15.9);
-		Set<UserRole> roles = new LinkedHashSet<UserRole>();
-		roles.add(UserRole.Admin);
-		newUser.setRoles(roles);
-		newUser.setTelephoneNumber("+43 664 874379");
-		Set<TypeOfSport> sports = new LinkedHashSet<TypeOfSport>();
-		sports.add(TypeOfSport.Soccer);
-		newUser.setTypeOfSports(sports);
+		try {
+			newUser.setFirstName("Daniel");
+			newUser.setLastName("Integration");
+			newUser.setAddress("Teststraße 7a, 6800 Feldkirch");
+			newUser.setDateOfBirth(LocalDate.now());
+			newUser.setEmail("test@case.com");
+			newUser.setGender(Gender.Male);
+			newUser.setMembershipFee(15.9);
+			Set<UserRole> roles = new LinkedHashSet<UserRole>();
+			roles.add(UserRole.Admin);
+			newUser.setRoles(roles);
+			newUser.setTelephoneNumber("+43 664 874379");
+			Set<TypeOfSport> sports = new LinkedHashSet<TypeOfSport>();
+			sports.add(TypeOfSport.Soccer);
+			newUser.setTypeOfSports(sports);
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		try {
 			userFactory.save(newUser);
 		} catch (RemoteException e) {

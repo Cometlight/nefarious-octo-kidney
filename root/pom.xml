@@ -12,6 +12,7 @@
 		<module>communication-rmi</module>
 		<module>application</module>
 		<module>commons</module>
+		<module>logging</module>
 	</modules>
 	<repositories>
 		<repository>

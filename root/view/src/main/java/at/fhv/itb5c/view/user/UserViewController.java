@@ -100,7 +100,8 @@ public class UserViewController implements PanelClosable, Closeable {
 
 		_typeOfSportCheckListView.setItems(FXCollections.observableArrayList(TypeOfSport.values()));
 
-		for (TypeOfSport typeofSport : _userModel.getTypeOfSports()) {
+		//TODO(san7985)
+		/*for (TypeOfSport typeofSport : _userModel.getTypeOfSports()) {
 			_typeOfSportCheckListView.getCheckModel().check(typeofSport);
 		}
 
@@ -109,14 +110,15 @@ public class UserViewController implements PanelClosable, Closeable {
 			public void onChanged(javafx.collections.ListChangeListener.Change<? extends TypeOfSport> c) {
 				_userModel.setTypeOfSports(_typeOfSportCheckListView.getCheckModel().getCheckedItems());
 			}
-		});
+		});*/
 
 		_memebershipFeeTextBox.textProperty().bindBidirectional(_userModel.getMemberShipFee().asObject(),
 				new DecimalFormat());
 
 		_userRoleCheckListView.setItems(FXCollections.observableArrayList(UserRole.values()));
 
-		for (UserRole userRole : _userModel.getUserRoles()) {
+		//TODO(san7985)
+		/*for (UserRole userRole : _userModel.getUserRoles()) {
 			_userRoleCheckListView.getCheckModel().check(userRole);
 		}
 
@@ -125,7 +127,7 @@ public class UserViewController implements PanelClosable, Closeable {
 			public void onChanged(javafx.collections.ListChangeListener.Change<? extends UserRole> c) {
 				_userModel.setUserRoles(_userRoleCheckListView.getCheckModel().getCheckedItems());
 			}
-		});
+		});*/
 		setState(_initialiseState);
 	}
 
@@ -162,8 +164,8 @@ public class UserViewController implements PanelClosable, Closeable {
 		if ((_userModel.getFirstName().getValue() != null) && (_userModel.getFirstName().getValue() != "")
 				&& (_userModel.getLastName().getValue() != null) && (_userModel.getFirstName().getValue() != "")
 				&& (_userModel.getAdress().getValue() != null) && (_userModel.getFirstName().getValue() != "")
-				&& (_userModel.getBirthDate().getValue() != null) && (_userModel.getGender() != null)
-				&& (_userModel.getUserRoles().size() > 0)) {
+				&& (_userModel.getBirthDate().getValue() != null) && (_userModel.getGender() != null))
+			/*TODO(san7985) && (_userModel.getUserRoles().size() > 0) )*/ {
 			return true;
 		} else {
 			return false;

@@ -7,7 +7,6 @@ import at.fhv.itb5c.view.login.LoginController;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -20,9 +19,6 @@ public class MainViewController {
 
 	@FXML
 	Pane _mainPanel;
-
-	@FXML
-	private Button _loginButton;
 
 	@FXML
 	public void loginMenueItemActionHandler(ActionEvent event) throws IOException {

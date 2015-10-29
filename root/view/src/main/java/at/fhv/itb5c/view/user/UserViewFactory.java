@@ -21,7 +21,7 @@ public class UserViewFactory {
 		UserViewController userViewController;
 
 		try {
-			userViewController = new UserViewController(new UserModel(RMIClient.getRMIClient().getUserFactory().createUser()), initializeState);
+			userViewController = new UserViewController(UserModel.createUserModel(RMIClient.getRMIClient().getUserFactory().createUser()), initializeState);
 			userViewController.setPanelCloseHandler(new PanelCloseHandler() {
 
 				@Override

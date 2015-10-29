@@ -7,7 +7,7 @@ import at.fhv.itb5c.commons.dto.rmi.IUserFactoryRMI;
 public class RMIClient {
 	private static RMIClient _client;
 	
-	private String _host = "localhost";
+	private String _host = "ec2-52-10-208-136.us-west-2.compute.amazonaws.com";
 	private int _port = 1337;
 	
 	private UserFactoryStub _userFactoryStub;

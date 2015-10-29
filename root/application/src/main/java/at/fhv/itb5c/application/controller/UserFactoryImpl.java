@@ -28,6 +28,8 @@ public class UserFactoryImpl implements IUserFactory {
 			em.getTransaction().begin();
 			em.persist(userEntity);
 			em.getTransaction().commit();
+			
+			user = UserConverter.toDTO(userEntity);
 		}
 	}
 }

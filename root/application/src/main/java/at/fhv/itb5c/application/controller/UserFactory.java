@@ -20,16 +20,19 @@ public class UserFactory implements IUserFactory, ILogger {
 	}
 
 	public IUser save(IUser user) {
-		if (user != null) {
-			User userEntity = UserConverter.toEntity(user);
-
-			userEntity = PersistenceFacade.getInstance().saveOrUpdate(userEntity);
+		User userEntity = UserConverter.toEntity(user);
+		
+		if (userEntity != null) {
+			try{
+				userEntity = PersistenceFacade.getInstance().saveOrUpdate(userEntity);
+			} catch (Exception e) {
+				log.error(e.getMessage());
+			}
 
 			user = UserConverter.toDTO(userEntity);
 
-			log.debug("user with id " + userEntity.getId() + " saved.");
-			log.debug(user);
-
+			log.debug("user saved " + user);
+			
 			return user;
 		}
 

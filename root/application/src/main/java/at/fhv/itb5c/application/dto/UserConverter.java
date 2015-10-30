@@ -52,6 +52,7 @@ public class UserConverter implements ILogger {
 			user.setTypeOfSports(userdto.getTypeOfSports());
 		} catch (Exception e) {
 			log.error(e.getMessage());
+			return null;
 		} 
 		return user;
 	}

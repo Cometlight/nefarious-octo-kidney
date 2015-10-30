@@ -31,6 +31,7 @@ public class RMIClient implements ILogger {
 				_userFactoryStub.init(_host, _port);
 			} catch (RemoteException e) {
 				log.error(e.getMessage());
+				return null;
 			}
 		}
 		return _userFactoryStub;

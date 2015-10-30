@@ -32,6 +32,7 @@ public class UserConverterRMI implements ILogger {
 				userrmi.setTypeOfSports(user.getTypeOfSports());
 			} catch (Exception e) {
 				log.error(e.getMessage());
+				return null;
 			}
 
 		}
@@ -58,6 +59,7 @@ public class UserConverterRMI implements ILogger {
 				user.setTypeOfSports(userrmi.getTypeOfSports());
 			} catch (Exception e) {
 				log.error(e.getMessage());
+				return null;
 			}
 		}
 

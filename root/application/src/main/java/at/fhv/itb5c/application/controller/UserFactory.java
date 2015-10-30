@@ -27,6 +27,7 @@ public class UserFactory implements IUserFactory, ILogger {
 				userEntity = PersistenceFacade.getInstance().saveOrUpdate(userEntity);
 			} catch (Exception e) {
 				log.error(e.getMessage());
+				return null;
 			}
 
 			user = UserConverter.toDTO(userEntity);

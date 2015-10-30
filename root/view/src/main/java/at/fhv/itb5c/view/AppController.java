@@ -5,9 +5,10 @@ import java.io.IOException;
 import at.fhv.itb5c.view.login.LoginController;
 import at.fhv.itb5c.view.mainview.MainViewController;
 import at.fhv.itb5c.view.user.UserViewController;
+import at.fhv.itb5c.view.user.states.DetailUserViewControlls;
+import at.fhv.itb5c.view.user.states.NewUserViewControllsController;
 import at.fhv.itb5c.view.usersearch.SearchUserController;
 import at.fhv.itb5c.view.util.RouteProvider;
-import at.fhv.itb5c.view.util.StageUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,6 +30,9 @@ public class AppController {
 
 	private void initializeRouteMapping() {
 		RouteProvider.getInstance().add(UserViewController.class, "/view/fxml/UserView.fxml");
+		RouteProvider.getInstance().add(DetailUserViewControlls.class, "/view/fxml/DetailUserViewControlls.fxml");
+		RouteProvider.getInstance().add(NewUserViewControllsController.class, "/view/fxml/NewUserViewControlls.fxml");
+		
 		RouteProvider.getInstance().add(MainViewController.class, "/view/fxml/MainView.fxml");
 		RouteProvider.getInstance().add(LoginController.class, "/view/fxml/Login.fxml");
 		RouteProvider.getInstance().add(SearchUserController.class, "/view/fxml/SearchUserView.fxml");

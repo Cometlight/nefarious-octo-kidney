@@ -25,6 +25,8 @@ public class UserConverter implements ILogger {
 		userdto.setMembershipFee(user.getMembershipFee());
 		userdto.setRoles(user.getRoles());
 		userdto.setTypeOfSports(user.getTypeOfSports());
+		userdto.setMembershipFeePaid(user.getMembershipFeePaid());
+		userdto.setDepartment(DepartmentConverter.toDTO(user.getDepartment()));
 		return userdto;
 	}
 	
@@ -50,6 +52,8 @@ public class UserConverter implements ILogger {
 			user.setMembershipFee(userdto.getMembershipFee());
 			user.setRoles(userdto.getRoles());
 			user.setTypeOfSports(userdto.getTypeOfSports());
+			user.setMembershipFeePaid(userdto.getMembershipFeePaid());
+			user.setDepartment(DepartmentConverter.toEntity(userdto.getDepartment()));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return null;

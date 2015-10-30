@@ -5,6 +5,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.util.Set;
 
+import at.fhv.itb5c.commons.dto.IDepartment;
+import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
@@ -25,6 +27,8 @@ public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 	private double _membershipFee;
 	private Set<UserRole> _roles;
 	private Set<TypeOfSport> _typeOfSports;
+	private IDepartmentRMI _department;
+	private boolean _membershipFeePaid;
 
 	protected UserRMI() throws RemoteException {
 		super();
@@ -150,4 +154,23 @@ public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 		_version = version;
 	}
 
+	@Override
+	public boolean getMembershipFeePaid() throws RemoteException {
+		return _membershipFeePaid;
+	}
+
+	@Override
+	public void setMembershipFeePaid(boolean membershipFeePaid) throws RemoteException {
+		_membershipFeePaid = membershipFeePaid;
+	}
+
+	@Override
+	public IDepartmentRMI getDepartment() throws RemoteException {
+		return _department;
+	}
+
+	@Override
+	public void setDepartment(IDepartment department) throws RemoteException {
+		_department = DepartmentConverterRMI.toRMI(department);
+	}
 }

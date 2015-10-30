@@ -13,22 +13,25 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/*Todo(san7985)
+ *	opimice rmi by loading factories at the beginning
+ */
+
 public class AppController {
 	private Stage _primaryStage;
 
 	public void start(Stage stage) throws IOException {
-		initializeRouteMapping();
+		initializeGeneralRouteMapping();
 
-		stage.setTitle("Hallo User");
+		stage.setTitle("Enterprise Application Project");
 		this._primaryStage = stage;
 
 		loadMainStage();
 		showStage();
 	}
 
-	private void initializeRouteMapping() {
-		RouteProvider.getInstance().add(UserViewController.class, "/view/fxml/UserView.fxml");
-		
+	private void initializeGeneralRouteMapping() {
+		RouteProvider.getInstance().add(UserViewController.class, "/view/fxml/user/UserView.fxml");	
 		RouteProvider.getInstance().add(MainViewController.class, "/view/fxml/MainView.fxml");
 		RouteProvider.getInstance().add(LoginController.class, "/view/fxml/Login.fxml");
 		RouteProvider.getInstance().add(SearchUserController.class, "/view/fxml/SearchUserView.fxml");
@@ -36,8 +39,6 @@ public class AppController {
 
 	private void loadMainStage() throws IOException {
 			closeStage();
-			/*StageUtil.<BorderPane> loadScene(RouteProvider.getInstance().getRoot(MainViewController.class),
-					_primaryStage);*/
 			
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(RouteProvider.getInstance().get(MainViewController.class));

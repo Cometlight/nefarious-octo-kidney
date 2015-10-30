@@ -81,14 +81,16 @@ public class UserViewController implements PanelClosable, Closeable {
 	}
 	
 	private UserViewState _initialiseState;
-
+	
+	static {
+		RouteProvider.getInstance().add(DetailUserViewControlls.class, "/view/fxml/user/DetailUserViewControlls.fxml");
+		RouteProvider.getInstance().add(NewUserViewControllsController.class, "/view/fxml/user/NewUserViewControlls.fxml");
+		RouteProvider.getInstance().add(ModifyUserViewControlls.class, "/view/fxml/user/ModifyUserViewControlls.fxml");
+	}
+	
 	public UserViewController(UserModel userModel, UserViewState initialiseState) {
 		_userModel = userModel;
 		_userViewStates = new HashMap<>();
-		
-		RouteProvider.getInstance().add(DetailUserViewControlls.class, "/view/fxml/DetailUserViewControlls.fxml");
-		RouteProvider.getInstance().add(NewUserViewControllsController.class, "/view/fxml/NewUserViewControlls.fxml");
-		RouteProvider.getInstance().add(ModifyUserViewControlls.class, "/view/fxml/ModifyUserViewControlls.fxml");
 		
 		_userViewStates.put(UserViewState.newState, new NewUserViewControllsController(this));
 		_userViewStates.put(UserViewState.detailState, new DetailUserViewControlls(this));

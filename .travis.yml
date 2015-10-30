@@ -1,5 +1,8 @@
 language: java
-script: "mvn -f root/pom.xml test"
+script: 
+  - "mvn -f root/pom.xml clean install"
+  - "mvn -f root/communication-rmi/pom.xml clean compile assembly:single"
+  - "mvn -f root/view/pom.xml clean compile assembly:single"
 jdk:
   - oraclejdk8
 

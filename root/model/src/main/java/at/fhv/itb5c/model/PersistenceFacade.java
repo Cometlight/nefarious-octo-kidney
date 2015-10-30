@@ -1,10 +1,19 @@
 package at.fhv.itb5c.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import at.fhv.itb5c.model.entity.PersistableObject;
+import at.fhv.itb5c.model.entity.User;
 
 public class PersistenceFacade {
 	private static final String DEFAULT_DBFILENAME = "persistence.odb";
@@ -42,7 +51,7 @@ public class PersistenceFacade {
 		if (persistenceUnitName == null) {
 			return;
 		}
-		
+
 		_persistenceUnitName = persistenceUnitName;
 
 		if (_instance != null) {
@@ -53,8 +62,10 @@ public class PersistenceFacade {
 	}
 
 	public static void shutdown() {
-		if(_instance != null) {
-			_instance._entityManagerFactory.close(); // Closes all EntityManagers as well
+		if (_instance != null) {
+			_instance._entityManagerFactory.close(); // Closes all
+														// EntityManagers as
+														// well
 			_instance = null;
 		}
 	}
@@ -137,4 +148,38 @@ public class PersistenceFacade {
 		}
 	}
 
+	public List<User> findUsers(String firstName, String lastName, Long departmentId, Boolean membershipFeePaid) {
+		List<User> resultSet;
+
+		CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<User> query = cb.createQuery(User.class);
+		Root<User> root = query.from(User.class);
+		query.select(root);
+
+		List<Predicate> predicates = new LinkedList<>();
+
+		if (firstName != null) {
+			predicates.add(cb.like(cb.lower(root.get("_firstName")), "%" + firstName.toLowerCase() + "%"));
+		}
+
+		if (lastName != null) {
+			predicates.add(cb.like(cb.lower(root.get("_lastName")), "%" + lastName.toLowerCase() + "%"));
+		}
+
+		if (departmentId != null) {
+			predicates.add(cb.equal(root.get("_departmentId"), departmentId));
+		}
+		
+		if (membershipFeePaid != null) {
+			predicates.add(cb.equal(root.get("_membershipFeePaid"), membershipFeePaid));
+		}
+
+		query.where(predicates.toArray(new Predicate[predicates.size()]));
+
+		TypedQuery<User> typedQuery = _entityManager.createQuery(query);
+		resultSet = typedQuery.getResultList();
+
+		return resultSet;
+	}
 }

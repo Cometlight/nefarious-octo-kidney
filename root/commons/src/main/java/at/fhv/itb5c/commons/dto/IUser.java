@@ -53,7 +53,7 @@ public interface IUser {
 
 	public long getVersion() throws Exception;
 
-	public void setId(long id);
+	public void setId(long id) throws Exception;
 
-	public void setVersion(long version);
+	public void setVersion(long version) throws Exception;
 }

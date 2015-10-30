@@ -141,12 +141,12 @@ public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 	}
 
 	@Override
-	public void setId(long id) {
+	public void setId(long id) throws RemoteException {
 		_id = id;
 	}
 
 	@Override
-	public void setVersion(long version) {
+	public void setVersion(long version) throws RemoteException {
 		_version = version;
 	}
 

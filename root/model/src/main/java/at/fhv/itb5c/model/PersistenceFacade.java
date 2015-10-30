@@ -43,9 +43,9 @@ public class PersistenceFacade implements ILogger {
 	 * Sets the database file. If this facade is already connected to a
 	 * database, the connection is closed and the facade connects to the
 	 * persistenceUnitName specified.
-	 * 
+	 *
 	 * @see #DEFAULT_DBFILENAME
-	 * 
+	 *
 	 * @param persistenceUnitName
 	 *            the filename of the database
 	 */
@@ -74,7 +74,7 @@ public class PersistenceFacade implements ILogger {
 
 	/**
 	 * Retrieves an object stored in the database by its id.
-	 * 
+	 *
 	 * @param clazz
 	 *            the entity class of the object to be retrieved
 	 * @param id
@@ -101,12 +101,12 @@ public class PersistenceFacade implements ILogger {
 	/**
 	 * If obj is not stored in the database yet, it is persisted. If obj already
 	 * exists in the database, it is updated.
-	 * 
+	 *
 	 * @param obj
 	 *            the object to persist
 	 * @return reference to updated persisted object (with incremented version
 	 *         number). Returns null if obj was null.
-	 * 
+	 *
 	 * @throws Exception
 	 *             thrown if save or update failed
 	 */
@@ -135,7 +135,7 @@ public class PersistenceFacade implements ILogger {
 
 	/**
 	 * Removes obj from the database.
-	 * 
+	 *
 	 * @param obj
 	 *            the object to be removed
 	 * @return true if obj was successfully deleted, false otherwise (incl. if
@@ -156,11 +156,22 @@ public class PersistenceFacade implements ILogger {
 		}
 		return true;
 	}
-	
-	public List<? extends PersistableObject> getAll(Class clazz){
-		// TODO implement
-	    return null;
-	}
+
+    /**
+     * Gets a list of all objects of the specified type.
+     * @return a list of objects or null if there was an error.
+     */
+    public <T> List<T> getAll(Class<T> clazz) {
+        if (clazz == null) {
+            return null;
+        }
+        try {
+            TypedQuery<T> query = _entityManager.createQuery("SELECT o from " + clazz.getSimpleName() + " o", clazz);
+            return query.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
 	public List<User> findUsers(String firstName, String lastName, Long departmentId, Boolean membershipFeePaid) {
 		List<User> resultSet;

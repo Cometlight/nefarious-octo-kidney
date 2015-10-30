@@ -15,10 +15,10 @@ public class DepartmentFactory implements IDepartmentFactory {
 	@Override
 	public List<IDepartment> getAllDepartments() throws Exception {
 		// TODO Auto-generated method stub
-		List<Department> depts = (List<Department>) PersistenceFacade.getInstance().getAll(IDepartment.class);
+		List<IDepartment> depts = (List<IDepartment>) PersistenceFacade.getInstance().getAll(IDepartment.class);
 		List<IDepartment> deptsNew = new LinkedList<IDepartment>();
-		for(Department dept : depts){
-			deptsNew.add(DepartmentConverter.toDTO(dept));
+		for(IDepartment dept : depts){
+			deptsNew.add(DepartmentConverter.toDTO((Department)dept));
 		}
 		return deptsNew;
 	}

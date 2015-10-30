@@ -76,7 +76,7 @@ public class TestRMI {
 		}
 		
 		try {
-			userFactory.save(newUser);
+			newUser = userFactory.save(newUser);
 			System.out.println("ID must not be null: " + newUser.getId());
 		} catch (RemoteException e) {
 			e.printStackTrace();

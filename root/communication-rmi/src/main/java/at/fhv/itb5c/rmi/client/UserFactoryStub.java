@@ -39,7 +39,9 @@ public class UserFactoryStub extends UnicastRemoteObject implements IUserFactory
 
 	@Override
 	public IUserRMI save(IUser user) throws RemoteException {
-		return _userFactory.save((IUserRMI) user);
+		IUserRMI saveUser = _userFactory.save((IUserRMI) user);
+		log.debug("saved user id = " + saveUser.getId());
+		return saveUser;
 	}
 
 	@Override

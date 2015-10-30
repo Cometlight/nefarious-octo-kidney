@@ -52,4 +52,8 @@ public interface IUser {
 	public long getId() throws Exception;
 
 	public long getVersion() throws Exception;
+
+	public void setId(long id);
+
+	public void setVersion(long version);
 }

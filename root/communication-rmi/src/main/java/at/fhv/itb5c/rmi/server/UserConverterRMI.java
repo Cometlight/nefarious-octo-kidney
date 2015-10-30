@@ -18,6 +18,8 @@ public class UserConverterRMI implements ILogger {
 
 		if (user != null) {
 			try {
+				userrmi.setId(user.getId());
+				userrmi.setVersion(user.getVersion());
 				userrmi.setAddress(user.getAddress());
 				userrmi.setDateOfBirth(user.getDateOfBirth());
 				userrmi.setEmail(user.getEmail());
@@ -42,6 +44,8 @@ public class UserConverterRMI implements ILogger {
 
 		if (userrmi != null) {
 			try {
+				user.setId(userrmi.getId());
+				user.setVersion(userrmi.getVersion());
 				user.setAddress(userrmi.getAddress());
 				user.setDateOfBirth(userrmi.getDateOfBirth());
 				user.setEmail(userrmi.getEmail());

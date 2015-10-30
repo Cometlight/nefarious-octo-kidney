@@ -54,4 +54,8 @@ public interface IUserRMI extends Remote, IUser {
 	public long getId() throws RemoteException;
 
 	public long getVersion() throws RemoteException;
+
+	public void setId(long id);
+
+	public void setVersion(long version);
 }

@@ -6,13 +6,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.io.File;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import at.fhv.itb5c.model.entity.User;
 
 public class PersistenceFacadeTest {
 	private static final String DBFILE = "testdb.odb";
@@ -40,7 +37,11 @@ public class PersistenceFacadeTest {
 	public void testGetById() {
 		TestObj obj = new TestObj(42);
 		obj.setId(2l);
-		PersistenceFacade.getInstance().saveOrUpdate(obj);
+		try {
+			PersistenceFacade.getInstance().saveOrUpdate(obj);
+		} catch (Exception e) {
+			assertNull("This exception should not be thrown", e);
+		}
 
 		obj = PersistenceFacade.getInstance().getById(TestObj.class, 2l);
 		assertNotNull(obj);
@@ -51,7 +52,7 @@ public class PersistenceFacadeTest {
 	}
 
 	@Test
-	public void testSaveOrUpdate() {
+	public void testSaveOrUpdate() throws Exception {
 		TestObj obj = new TestObj(42);
 		obj.setId(3l);
 		PersistenceFacade.getInstance().saveOrUpdate(obj);
@@ -68,7 +69,7 @@ public class PersistenceFacadeTest {
 	}
 
 	@Test
-	public void testDelete() {
+	public void testDelete() throws Exception {
 		TestObj obj = new TestObj(42);
 		obj.setId(4l);
 		PersistenceFacade.getInstance().saveOrUpdate(obj);
@@ -82,7 +83,7 @@ public class PersistenceFacadeTest {
 	}
 
 	@Test
-	public void testVersioning() {
+	public void testVersioning() throws Exception {
 		TestObj obj = new TestObj(42);
 		obj.setId(5l);
 		assertEquals(null, obj.getVersion());

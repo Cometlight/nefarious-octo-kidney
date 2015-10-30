@@ -1,9 +1,6 @@
 package at.fhv.itb5c.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.io.File;
 import java.util.List;
@@ -12,8 +9,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import at.fhv.itb5c.model.entity.User;
 import at.fhv.itb5c.model.entity.Department;
+import at.fhv.itb5c.model.entity.User;
 
 
 public class FindUsersTest {
@@ -31,15 +28,15 @@ public class FindUsersTest {
     this.addUser("MaXimo", "Maxer", tennis);
   }
 
-  private User addUser(String firstName, String lastName) {
+  private User addUser(String firstName, String lastName) throws Exception {
     return this.addUser(firstName, lastName, null);
   }
 
-  private User addUser(String firstName, String lastName, Department department) {
+  private User addUser(String firstName, String lastName, Department department) throws Exception {
     return this.addUser(firstName, lastName, department, false);
   }
 
-  private User addUser(String firstName, String lastName, Department department, boolean membershipFeePaid) {
+  private User addUser(String firstName, String lastName, Department department, boolean membershipFeePaid) throws Exception {
     User user = new User();
     user.setFirstName(firstName);
     user.setLastName(lastName);
@@ -48,7 +45,7 @@ public class FindUsersTest {
     return PersistenceFacade.getInstance().saveOrUpdate(user);
   }
 
-  private Department addDepartment(String name, Long id) {
+  private Department addDepartment(String name, Long id) throws Exception {
     Department dept = new Department();
     dept.setName(name);
     dept.setId(id);

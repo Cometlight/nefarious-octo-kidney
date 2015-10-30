@@ -12,10 +12,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.entity.PersistableObject;
 import at.fhv.itb5c.model.entity.User;
 
-public class PersistenceFacade {
+public class PersistenceFacade implements ILogger {
 	private static final String DEFAULT_DBFILENAME = "persistence.odb";
 
 	private static PersistenceFacade _instance;
@@ -103,9 +104,12 @@ public class PersistenceFacade {
 	 * @param obj
 	 *            the object to persist
 	 * @return reference to updated persisted object (with incremented version
-	 *         number)
+	 *         number). Returns null if obj was null.
+	 * 
+	 * @throws Exception
+	 *             thrown if save or update failed
 	 */
-	public <T extends PersistableObject> T saveOrUpdate(T obj) {
+	public <T extends PersistableObject> T saveOrUpdate(T obj) throws Exception {
 		if (obj == null) {
 			return null;
 		}
@@ -123,7 +127,7 @@ public class PersistenceFacade {
 
 			_entityManager.getTransaction().commit();
 		} catch (Exception e) {
-			return null;
+			throw e;
 		}
 		return obj;
 	}
@@ -133,10 +137,12 @@ public class PersistenceFacade {
 	 * 
 	 * @param obj
 	 *            the object to be removed
+	 * @return true if obj was successfully deleted, false otherwise (incl. if
+	 *         obj is null)
 	 */
-	public void delete(PersistableObject obj) {
+	public boolean delete(PersistableObject obj) {
 		if (obj == null) {
-			return;
+			return false;
 		}
 
 		try {
@@ -144,8 +150,10 @@ public class PersistenceFacade {
 			_entityManager.remove(obj);
 			_entityManager.getTransaction().commit();
 		} catch (Exception e) {
-			return;
+			log.warn("Failed to delete " + obj, e);
+			return false;
 		}
+		return true;
 	}
 
 	public List<User> findUsers(String firstName, String lastName, Long departmentId, Boolean membershipFeePaid) {
@@ -170,7 +178,7 @@ public class PersistenceFacade {
 		if (departmentId != null) {
 			predicates.add(cb.equal(root.get("_departmentId"), departmentId));
 		}
-		
+
 		if (membershipFeePaid != null) {
 			predicates.add(cb.equal(root.get("_membershipFeePaid"), membershipFeePaid));
 		}

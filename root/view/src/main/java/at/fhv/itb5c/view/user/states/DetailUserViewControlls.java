@@ -1,8 +1,10 @@
 package at.fhv.itb5c.view.user.states;
 
+import java.io.IOException;
 import java.net.URL;
 
 import at.fhv.itb5c.view.user.UserViewController;
+import at.fhv.itb5c.view.user.UserViewController.UserViewState;
 import at.fhv.itb5c.view.util.RouteProvider;
 import at.fhv.itb5c.view.user.IUserViewState;
 import javafx.fxml.FXML;
@@ -33,8 +35,8 @@ public class DetailUserViewControlls  implements IUserViewState {
 	}
 	
 	@FXML 
-	public void modifyButtonMouseReleasedEventHandler(MouseEvent mouseEvent) {
-		//TODO(san7985): switch to modifie view
+	public void modifyButtonMouseReleasedEventHandler(MouseEvent mouseEvent) throws IOException {
+		_userViewController.setState(UserViewState.modifieState);
 	}
 	
 	@FXML 

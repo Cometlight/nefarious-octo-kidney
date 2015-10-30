@@ -14,10 +14,12 @@ import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.user.states.DetailUserViewControlls;
+import at.fhv.itb5c.view.user.states.ModifyUserViewControlls;
 import at.fhv.itb5c.view.user.states.NewUserViewControllsController;
 import at.fhv.itb5c.view.util.AlertUtil;
 import at.fhv.itb5c.view.util.PanelClosable;
 import at.fhv.itb5c.view.util.PanelCloseHandler;
+import at.fhv.itb5c.view.util.RouteProvider;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
@@ -83,9 +85,14 @@ public class UserViewController implements PanelClosable, Closeable {
 	public UserViewController(UserModel userModel, UserViewState initialiseState) {
 		_userModel = userModel;
 		_userViewStates = new HashMap<>();
-
+		
+		RouteProvider.getInstance().add(DetailUserViewControlls.class, "/view/fxml/DetailUserViewControlls.fxml");
+		RouteProvider.getInstance().add(NewUserViewControllsController.class, "/view/fxml/NewUserViewControlls.fxml");
+		RouteProvider.getInstance().add(ModifyUserViewControlls.class, "/view/fxml/ModifyUserViewControlls.fxml");
+		
 		_userViewStates.put(UserViewState.newState, new NewUserViewControllsController(this));
 		_userViewStates.put(UserViewState.detailState, new DetailUserViewControlls(this));
+		_userViewStates.put(UserViewState.modifieState, new ModifyUserViewControlls(this));
 		_initialiseState = initialiseState;
 	}
 
@@ -147,7 +154,7 @@ public class UserViewController implements PanelClosable, Closeable {
 	public boolean saveModel() {
 		if (mandatoryFieldsSet()) {
 			try {
-				RMIClient.getRMIClient().getUserFactory().save(_userModel.getRMIUser());
+				_userModel.setIUserRMI(RMIClient.getRMIClient().getUserFactory().save(_userModel.getRMIUser()));
 			} catch (RemoteException e) {
 				AlertUtil.ConnectionAlert();
 				return false;
@@ -197,6 +204,7 @@ public class UserViewController implements PanelClosable, Closeable {
 			_controlPane.getChildren().clear();
 			_controlPane.getChildren().add(loader.load());
 			userViewState.activate();
+			_borderPane.requestFocus();
 		}
 	}
 

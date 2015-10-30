@@ -14,9 +14,9 @@ import javafx.scene.layout.Pane;
 public class UserViewFactory {
 	
 	public static void CreateNewUserView(Pane paneToPlaceIn, UserViewState initializeState) throws IOException {
+		paneToPlaceIn.getChildren().clear();
 		FXMLLoader loader = new FXMLLoader();
-
-		loader.setLocation(RouteProvider.getInstance().getRoot(UserViewController.class));
+		loader.setLocation(RouteProvider.getInstance().get(UserViewController.class));
 		UserViewController userViewController;
 
 		try {

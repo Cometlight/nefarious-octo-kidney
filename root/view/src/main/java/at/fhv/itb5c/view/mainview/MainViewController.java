@@ -30,7 +30,7 @@ public class MainViewController {
 		loginStage.initModality(Modality.WINDOW_MODAL);
 		loginStage.initOwner(_rootPane.getScene().getWindow());
 
-		StageUtil.loadScene(RouteProvider.getInstance().getRoot(LoginController.class), loginStage);
+		StageUtil.loadScene(RouteProvider.getInstance().get(LoginController.class), loginStage);
 
 		loginStage.show();
 	}

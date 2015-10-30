@@ -20,11 +20,11 @@ public class RouteProvider {
 		return _instance;
 	}
 
-	public void addRoot(Object controller, String route) {
-		_rootMapping.put(controller, this.getClass().getResource("../../../../../" + route));
+	public void add(Object controller, String route) {
+		_rootMapping.put(controller, this.getClass().getResource(route));
 	}
 
-	public URL getRoot(Object controller) {
+	public URL get(Object controller) {
 		if (!_rootMapping.containsKey(controller)) {
 			return null;
 		} else {

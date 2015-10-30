@@ -5,8 +5,12 @@ import java.io.IOException;
 import at.fhv.itb5c.view.login.LoginController;
 import at.fhv.itb5c.view.mainview.MainViewController;
 import at.fhv.itb5c.view.user.UserViewController;
+import at.fhv.itb5c.view.usersearch.SearchUserController;
 import at.fhv.itb5c.view.util.RouteProvider;
 import at.fhv.itb5c.view.util.StageUtil;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -24,15 +28,26 @@ public class AppController {
 	}
 
 	private void initializeRouteMapping() {
-		RouteProvider.getInstance().addRoot(UserViewController.class, "at/fhv/itb5c/view/user/UserView.fxml");
-		RouteProvider.getInstance().addRoot(MainViewController.class, "at/fhv/itb5c/view/mainview/MainView.fxml");
-		RouteProvider.getInstance().addRoot(LoginController.class, "at/fhv/itb5c/view/login/Login.fxml");
+		RouteProvider.getInstance().add(UserViewController.class, "/view/fxml/UserView.fxml");
+		RouteProvider.getInstance().add(MainViewController.class, "/view/fxml/MainView.fxml");
+		RouteProvider.getInstance().add(LoginController.class, "/view/fxml/Login.fxml");
+		RouteProvider.getInstance().add(SearchUserController.class, "/view/fxml/SearchUserView.fxml");
 	}
 
 	private void loadMainStage() throws IOException {
 			closeStage();
-			StageUtil.<BorderPane> loadScene(RouteProvider.getInstance().getRoot(MainViewController.class),
-					_primaryStage);
+			/*StageUtil.<BorderPane> loadScene(RouteProvider.getInstance().getRoot(MainViewController.class),
+					_primaryStage);*/
+			
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(RouteProvider.getInstance().get(MainViewController.class));
+			loader.setController(new MainViewController());
+			BorderPane rootLayout = (BorderPane) loader.load();
+
+			Scene scene = new Scene((Parent)rootLayout);
+			_primaryStage.setScene(scene); 
+			_primaryStage.setScene(scene);
+			
 			showStage();
 	}
 

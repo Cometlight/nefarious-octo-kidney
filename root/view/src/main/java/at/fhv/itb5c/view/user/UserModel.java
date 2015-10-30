@@ -56,7 +56,11 @@ public class UserModel {
 	}
 	
 	public static UserModel createUserModel(IUserRMI user) throws RemoteException {
-		return new UserModel(user);
+		if(user != null) {
+			return new UserModel(user);
+		} else{
+			return null;
+		}
 	}
 	
 	public IUserRMI getRMIUser() {

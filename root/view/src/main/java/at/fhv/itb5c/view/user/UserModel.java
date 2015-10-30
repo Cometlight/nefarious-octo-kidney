@@ -122,11 +122,15 @@ public class UserModel {
 	}
 	
 	public void setTypeOfSports(ObservableSet<TypeOfSport> typeOfSports) {
+		if(typeOfSports == null) {
+			return;
+		}
+		
 		try {
 			_rmiUser.setTypeOfSports(new HashSet<>(typeOfSports));
 		} catch (RemoteException e) {
 			AlertUtil.ConnectionAlert();
-		}
+		} 
 		_typeOfSports = typeOfSports;
 	}
 	
@@ -139,11 +143,16 @@ public class UserModel {
 	}
 	
 	public void setUserRoles(ObservableSet<UserRole> userRoles) {
+		if(userRoles == null) {
+			return;
+		}
+		
 		try {
 			_rmiUser.setRoles(new HashSet<>(userRoles));
 		} catch (RemoteException e) {
 			AlertUtil.ConnectionAlert();
-		}
+		} 
+		
 		_userRoles = userRoles;
 	}
 }

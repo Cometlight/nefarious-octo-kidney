@@ -7,7 +7,7 @@ import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 
-// Remote interface for RMI
+// Remote interface for User
 public interface IUser {
 	public String getFirstName() throws Exception;
 

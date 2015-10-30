@@ -33,3 +33,7 @@ target/
 # eclipse
 .project
 .classpath
+
+#logfile
+log/
+logs/

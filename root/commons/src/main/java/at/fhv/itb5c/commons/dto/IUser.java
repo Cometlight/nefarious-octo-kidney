@@ -7,49 +7,53 @@ import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 
-// Remote interface for RMI
+// Remote interface for User
 public interface IUser {
-	public String getFirstName();
+	public String getFirstName() throws Exception;
 
-	public void setFirstName(String firstName);
+	public void setFirstName(String firstName) throws Exception;
 
-	public String getLastName();
+	public String getLastName() throws Exception;
 
-	public void setLastName(String lastName);
+	public void setLastName(String lastName) throws Exception;
 
-	public String getEmail();
+	public String getEmail() throws Exception;
 
-	public void setEmail(String email);
+	public void setEmail(String email) throws Exception;
 
-	public String getTelephoneNumber();
+	public String getTelephoneNumber() throws Exception;
 
-	public void setTelephoneNumber(String telephoneNumber);
+	public void setTelephoneNumber(String telephoneNumber) throws Exception;
 
-	public Gender getGender();
+	public Gender getGender() throws Exception;
 
-	public void setGender(Gender gender);
+	public void setGender(Gender gender) throws Exception;
 
-	public String getAddress();
+	public String getAddress() throws Exception;
 
-	public void setAddress(String address);
+	public void setAddress(String address) throws Exception;
 
-	public LocalDate getDateOfBirth();
+	public LocalDate getDateOfBirth() throws Exception;
 
-	public void setDateOfBirth(LocalDate dateOfBirth);
+	public void setDateOfBirth(LocalDate dateOfBirth) throws Exception;
 
-	public double getMembershipFee();
+	public double getMembershipFee() throws Exception;
 
-	public void setMembershipFee(double membershipFee);
+	public void setMembershipFee(double membershipFee) throws Exception;
 
-	public Set<UserRole> getRoles();
+	public Set<UserRole> getRoles() throws Exception;
 
-	public void setRoles(Set<UserRole> roles);
+	public void setRoles(Set<UserRole> roles) throws Exception;
 
-	public Set<TypeOfSport> getTypeOfSports();
+	public Set<TypeOfSport> getTypeOfSports() throws Exception;
 
-	public void setTypeOfSports(Set<TypeOfSport> typeOfSports);
+	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) throws Exception;
 
-	public long getId();
+	public long getId() throws Exception;
 
-	public long getVersion();
+	public long getVersion() throws Exception;
+
+	public void setId(long id) throws Exception;
+
+	public void setVersion(long version) throws Exception;
 }

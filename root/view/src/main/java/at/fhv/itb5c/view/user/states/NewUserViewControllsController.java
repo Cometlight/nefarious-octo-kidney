@@ -1,14 +1,15 @@
 package at.fhv.itb5c.view.user.states;
 
+import java.io.IOException;
 import java.net.URL;
 
 import at.fhv.itb5c.view.user.UserViewController;
-import at.fhv.itb5c.view.user.UserViewController.ViewState;
-import at.fhv.itb5c.view.user.UserViewState;
+import at.fhv.itb5c.view.user.UserViewController.UserViewState;
+import at.fhv.itb5c.view.user.IUserViewState;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
-public class NewUserViewControllsController implements UserViewState {
+public class NewUserViewControllsController implements IUserViewState {
 	
 	private UserViewController _userViewController;
 	private String _titel;
@@ -21,10 +22,10 @@ public class NewUserViewControllsController implements UserViewState {
 	}	
 	
 	@FXML 
-	public void saveButtonMouseReleasedEventHandler(MouseEvent mouseEvent) {
+	public void saveButtonMouseReleasedEventHandler(MouseEvent mouseEvent) throws IOException {
 		boolean saved = _userViewController.saveModel();
 		if(saved) {
-			_userViewController.setState(ViewState.detailState);
+			_userViewController.setState(UserViewState.detailState);
 		}
 	}
 	

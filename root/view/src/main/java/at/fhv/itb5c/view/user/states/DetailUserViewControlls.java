@@ -3,11 +3,11 @@ package at.fhv.itb5c.view.user.states;
 import java.net.URL;
 
 import at.fhv.itb5c.view.user.UserViewController;
-import at.fhv.itb5c.view.user.UserViewState;
+import at.fhv.itb5c.view.user.IUserViewState;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
-public class DetailUserViewControlls  implements UserViewState {
+public class DetailUserViewControlls  implements IUserViewState {
 	private UserViewController _userViewController;
 	private URL _controlsFXMLURL;
 	
@@ -33,7 +33,7 @@ public class DetailUserViewControlls  implements UserViewState {
 	
 	@FXML 
 	public void modifyButtonMouseReleasedEventHandler(MouseEvent mouseEvent) {
-		//TODO: switch to modifie view
+		//TODO(san7985): switch to modifie view
 	}
 	
 	@FXML 

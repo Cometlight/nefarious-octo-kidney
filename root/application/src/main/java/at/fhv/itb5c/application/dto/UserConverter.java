@@ -1,9 +1,10 @@
 package at.fhv.itb5c.application.dto;
 
 import at.fhv.itb5c.commons.dto.IUser;
+import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.entity.User;
 
-public class UserConverter {
+public class UserConverter implements ILogger {
 	public static IUser toDTO(User user){
 		// null in - null out
 		if(user==null){
@@ -35,18 +36,24 @@ public class UserConverter {
 		
 		// convert
 		User user = new User();
-		user.setId(userdto.getId()); // id is needed for jpa to identify the object
-		user.setVersion(userdto.getVersion());
-		user.setFirstName(userdto.getFirstName());
-		user.setLastName(userdto.getLastName());
-		user.setEmail(userdto.getEmail());
-		user.setTelephoneNumber(userdto.getTelephoneNumber());
-		user.setGender(userdto.getGender());
-		user.setAddress(userdto.getAddress());
-		user.setDateOfBirth(userdto.getDateOfBirth());
-		user.setMembershipFee(userdto.getMembershipFee());
-		user.setRoles(userdto.getRoles());
-		user.setTypeOfSports(userdto.getTypeOfSports());
+		try {
+			// id is needed for jpa to identify the object
+			user.setId(userdto.getId());
+			user.setVersion(userdto.getVersion());
+			user.setFirstName(userdto.getFirstName());
+			user.setLastName(userdto.getLastName());
+			user.setEmail(userdto.getEmail());
+			user.setTelephoneNumber(userdto.getTelephoneNumber());
+			user.setGender(userdto.getGender());
+			user.setAddress(userdto.getAddress());
+			user.setDateOfBirth(userdto.getDateOfBirth());
+			user.setMembershipFee(userdto.getMembershipFee());
+			user.setRoles(userdto.getRoles());
+			user.setTypeOfSports(userdto.getTypeOfSports());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return null;
+		} 
 		return user;
 	}
 }

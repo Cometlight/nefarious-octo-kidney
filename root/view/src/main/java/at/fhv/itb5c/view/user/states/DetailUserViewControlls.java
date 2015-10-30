@@ -3,6 +3,7 @@ package at.fhv.itb5c.view.user.states;
 import java.net.URL;
 
 import at.fhv.itb5c.view.user.UserViewController;
+import at.fhv.itb5c.view.util.RouteProvider;
 import at.fhv.itb5c.view.user.IUserViewState;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
@@ -13,7 +14,7 @@ public class DetailUserViewControlls  implements IUserViewState {
 	
 	public DetailUserViewControlls(UserViewController userViewController) {
 		_userViewController = userViewController;
-		_controlsFXMLURL = this.getClass().getResource("DetailUserViewControlls.fxml");
+		_controlsFXMLURL =  RouteProvider.getInstance().get(this.getClass());
 	}
 	
 	@Override

@@ -6,6 +6,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -82,5 +83,15 @@ public class TestRMI {
 			e.printStackTrace();
 		}
 		System.out.println("... new user dto saved");
+		
+		// search user
+		System.out.println("Searching for user ...");
+		LinkedList<IUserRMI> result = null;
+		try {
+			result = (LinkedList<IUserRMI>) userFactory.findUsers("Daniel", "Integration", null, null);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		System.out.println("... " + result.size() + " results found");
 	}
 }

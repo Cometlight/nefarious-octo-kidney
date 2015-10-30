@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -154,6 +155,11 @@ public class PersistenceFacade implements ILogger {
 			return false;
 		}
 		return true;
+	}
+	
+	public List<? extends PersistableObject> getAll(Class clazz){
+		// TODO implement
+	    return null;
 	}
 
 	public List<User> findUsers(String firstName, String lastName, Long departmentId, Boolean membershipFeePaid) {

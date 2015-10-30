@@ -1,6 +1,7 @@
 package at.fhv.itb5c.application.controller;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotEquals;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -55,12 +56,11 @@ public class UserFactoryTest {
 	@Test
 	public void test() {
 		// ID needs to be set after save
-		// TODO no ID set ...
-		/*try {
+		try {
 			assertNotEquals(0, _newUser.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 
 		// search with firstname
 		assertTrue("firstname search", !_factory.findUsers("Daniel", null, null, null).isEmpty());

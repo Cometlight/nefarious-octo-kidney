@@ -23,7 +23,7 @@ public class UserFactory implements IUserFactory, ILogger {
 		if (user != null) {
 			User userEntity = UserConverter.toEntity(user);
 
-			PersistenceFacade.getInstance().saveOrUpdate(userEntity);
+			userEntity = PersistenceFacade.getInstance().saveOrUpdate(userEntity);
 
 			user = UserConverter.toDTO(userEntity);
 

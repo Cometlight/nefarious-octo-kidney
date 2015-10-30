@@ -48,7 +48,6 @@ public class TestRMI {
 		try {
 			userObj = userFactory.createUser();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		IUserRMI newUser = (IUserRMI) userObj;
@@ -73,7 +72,6 @@ public class TestRMI {
 			sports.add(TypeOfSport.Soccer);
 			newUser.setTypeOfSports(sports);
 		} catch (RemoteException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -81,7 +79,6 @@ public class TestRMI {
 			userFactory.save(newUser);
 			System.out.println("ID must not be null: " + newUser.getId());
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("... new user dto saved");

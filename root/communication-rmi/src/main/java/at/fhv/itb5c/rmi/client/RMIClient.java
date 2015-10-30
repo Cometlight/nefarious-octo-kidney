@@ -30,8 +30,7 @@ public class RMIClient implements ILogger {
 				_userFactoryStub = new UserFactoryStub();
 				_userFactoryStub.init(_host, _port);
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.getMessage());
 			}
 		}
 		return _userFactoryStub;

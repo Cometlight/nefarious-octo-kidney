@@ -11,13 +11,12 @@ import at.fhv.itb5c.model.entity.Department;
 
 public class DepartmentFactory implements IDepartmentFactory {
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<IDepartment> getAllDepartments() throws Exception {
 		// TODO Auto-generated method stub
-		List<IDepartment> depts = (List<IDepartment>) PersistenceFacade.getInstance().getAll(IDepartment.class);
+		List<Department> depts = (List<Department>) PersistenceFacade.getInstance().getAll(Department.class);
 		List<IDepartment> deptsNew = new LinkedList<IDepartment>();
-		for(IDepartment dept : depts){
+		for(Department dept : depts){
 			deptsNew.add(DepartmentConverter.toDTO((Department)dept));
 		}
 		return deptsNew;

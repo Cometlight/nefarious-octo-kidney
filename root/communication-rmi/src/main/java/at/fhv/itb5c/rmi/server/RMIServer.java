@@ -5,12 +5,13 @@ import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
 
+import at.fhv.itb5c.commons.property.PropertyManager;
 import at.fhv.itb5c.logging.ILogger;
 
 public class RMIServer implements ILogger{
 	private static List<RMIServant> _servants;
-	private static final String _host = "ec2-52-10-208-136.us-west-2.compute.amazonaws.com";
-	private static final int _port = 1337;
+	private static final String _host = PropertyManager.getInstance().getProperty("at.fhv.itb5c.rmi.host");
+	private static final String _port = PropertyManager.getInstance().getProperty("at.fhv.itb5c.rmi.port");
 
 	public static void main(String args[]) {
 		log.info("Starting RMI server ...");

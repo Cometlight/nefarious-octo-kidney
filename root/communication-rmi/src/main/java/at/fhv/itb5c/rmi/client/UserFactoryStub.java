@@ -22,7 +22,7 @@ public class UserFactoryStub extends UnicastRemoteObject implements IUserFactory
 	}
 	
 	@Override
-	public void init(String host, int port) {
+	public void init(String host, String port) {
 		Object obj;
 		try {
 			obj = Naming.lookup("rmi://" + host + ":" + port + "/UserFactory");

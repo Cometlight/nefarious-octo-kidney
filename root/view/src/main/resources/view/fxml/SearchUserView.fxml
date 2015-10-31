@@ -56,10 +56,10 @@
                         <Label text="LastName" GridPane.rowIndex="1" />
                         <Label text="Date of Birth" GridPane.rowIndex="2" />
                         <Label text="Membership Fee" GridPane.rowIndex="3" />
-                        <TextField GridPane.columnIndex="2" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <CheckBox mnemonicParsing="false" text="Paid" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <TextField fx:id="_firstNameTextField" GridPane.columnIndex="2" />
+                        <TextField fx:id="_lastNameTextField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <CheckBox fx:id="_paidCheckBox" mnemonicParsing="false" text="Paid" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <DatePicker fx:id="_dateOfBirthDatePicker" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                      </children>
                      <padding>
                         <Insets left="10.0" right="10.0" />

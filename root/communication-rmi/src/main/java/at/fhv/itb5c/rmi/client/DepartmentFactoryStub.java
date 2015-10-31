@@ -20,7 +20,7 @@ public class DepartmentFactoryStub extends UnicastRemoteObject implements IDepar
 	}
 
 	@Override
-	public void init(String host, int port) {
+	public void init(String host, String port) {
 		Object obj;
 		try {
 			obj = Naming.lookup("rmi://" + host + ":" + port + "/DepartmentFactory");

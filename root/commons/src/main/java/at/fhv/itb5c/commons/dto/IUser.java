@@ -56,4 +56,12 @@ public interface IUser {
 	public void setId(long id) throws Exception;
 
 	public void setVersion(long version) throws Exception;
+
+	public boolean getMembershipFeePaid() throws Exception;
+
+	public void setMembershipFeePaid(boolean membershipFeePaid) throws Exception;
+
+	public IDepartment getDepartment() throws Exception;
+
+	public void setDepartment(IDepartment department) throws Exception;
 }

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import at.fhv.itb5c.commons.dto.IDepartment;
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
@@ -22,6 +23,8 @@ public class UserDTO implements IUser {
 	private double _membershipFee;
 	private Set<UserRole> _roles;
 	private Set<TypeOfSport> _typeOfSports;
+	private boolean _membershipFeePaid;
+	private DepartmentDTO _department;
 	
 	public UserDTO() {
 		_roles = new HashSet<UserRole>();
@@ -137,6 +140,22 @@ public class UserDTO implements IUser {
 
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) {
 		_typeOfSports = typeOfSports;
+	}
+
+	public boolean getMembershipFeePaid() {
+		return _membershipFeePaid;
+	}
+
+	public void setMembershipFeePaid(boolean membershipFeePaid) {
+		_membershipFeePaid = membershipFeePaid;
+	}
+
+	public IDepartment getDepartment() {
+		return _department;
+	}
+
+	public void setDepartment(IDepartment department) {
+		_department = (DepartmentDTO) department;
 	}
 
 	@Override

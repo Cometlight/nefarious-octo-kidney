@@ -1,27 +1,32 @@
 package at.fhv.itb5c.view.usersearch;
 
-import java.time.LocalDate;
-
+import at.fhv.itb5c.commons.dto.IUser;
+import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+/*
+ * TODO:
+ * 	add property for selected department
+ */
 
 public class SearchUserModel {
 
 	private StringProperty _firstName;
 	private StringProperty _lastName;
-	private ObjectProperty<LocalDate> _dateOfBirth;
 	private BooleanProperty _isPaid;
+	private ObservableList<IUserRMI> _searchResult;
 	
 	public SearchUserModel() 
 	{
 		_firstName = new SimpleStringProperty();
 		_lastName = new SimpleStringProperty();
-		_dateOfBirth = new SimpleObjectProperty<>();
 		_isPaid = new SimpleBooleanProperty();
+		_searchResult = FXCollections.observableArrayList();
 	}
 	
 	public StringProperty getFirstName() {
@@ -32,11 +37,11 @@ public class SearchUserModel {
 		return _lastName;
 	}
 	
-	public ObjectProperty<LocalDate> getDateOfBirth() {
-		return _dateOfBirth;
-	}
-	
 	public BooleanProperty getIsPaid() {
 		return _isPaid;
+	}
+	
+	public ObservableList<IUserRMI> getSearchResult() {
+		return _searchResult;
 	}
 }

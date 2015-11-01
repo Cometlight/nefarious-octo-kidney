@@ -20,6 +20,7 @@ public class RMIServer implements ILogger{
 		try {
 			// add servants to server
 			_servants.add(new UserFactoryRMI());
+			_servants.add(new DepartmentFactoryRMI());
 
 			// startup server by initializing all servants
 			log.info("... initializing RMI servants ...");

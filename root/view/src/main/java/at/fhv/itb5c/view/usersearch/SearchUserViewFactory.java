@@ -2,15 +2,17 @@ package at.fhv.itb5c.view.usersearch;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+
 import at.fhv.itb5c.view.util.AlertUtil;
+import at.fhv.itb5c.view.util.IViewFactory;
 import at.fhv.itb5c.view.util.PanelCloseHandler;
 import at.fhv.itb5c.view.util.RouteProvider;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 
-public final class SearchUserViewFactory {
+public final class SearchUserViewFactory implements IViewFactory {
 	
-	public static void CreateNewUserView(Pane paneToPlaceIn) throws IOException{
+	public void create(Pane paneToPlaceIn) throws IOException {
 		paneToPlaceIn.getChildren().clear();
 		FXMLLoader loader = new FXMLLoader();
 
@@ -20,6 +22,11 @@ public final class SearchUserViewFactory {
 			@Override
 			public void close() {
 				paneToPlaceIn.getChildren().clear();
+			}
+
+			@Override
+			public void closeNext(IViewFactory viewFactory) throws IOException {
+				viewFactory.create(paneToPlaceIn);
 			}
 		});
 			

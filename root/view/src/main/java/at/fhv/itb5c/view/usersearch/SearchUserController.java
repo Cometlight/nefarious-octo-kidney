@@ -1,12 +1,13 @@
 package at.fhv.itb5c.view.usersearch;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.List;
 
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.rmi.client.RMIClient;
-import at.fhv.itb5c.rmi.server.UserRMI;
-import at.fhv.itb5c.view.user.UserModel;
+import at.fhv.itb5c.view.user.UserViewController.UserViewState;
+import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.util.AlertUtil;
 import at.fhv.itb5c.view.util.PanelClosable;
 import at.fhv.itb5c.view.util.PanelCloseHandler;
@@ -21,6 +22,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+
+/*TODO(san7985)
+ * 	open detail user view after clicking a row
+ */
 
 public class SearchUserController implements PanelClosable{
 	
@@ -38,7 +43,8 @@ public class SearchUserController implements PanelClosable{
 	
 	private PanelCloseHandler _panelCloseHandler;
 	private SearchUserModel _searchUserModel;
-	
+
+
 	public SearchUserController() {
 		_searchUserModel = new SearchUserModel();
 	}
@@ -54,7 +60,17 @@ public class SearchUserController implements PanelClosable{
 		initializeTable();
 	}
 	
-	public void initializeTable() {
+	private void showUser(IUserRMI selectedUser) {
+		try {
+			_panelCloseHandler.closeNext(new UserViewFactory(UserViewState.detailState, selectedUser));
+		} catch (IOException e) {
+			//TODO(san7985): critical error handling
+		}
+	}
+	
+	public void initializeTable() {	
+		_searchResultTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showUser(newValue));
+		
 		_firstNameTableColumn.setCellValueFactory( new Callback<TableColumn.CellDataFeatures<IUserRMI,String>, ObservableValue<String>>() {
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<IUserRMI, String> param) {

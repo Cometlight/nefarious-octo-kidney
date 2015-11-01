@@ -2,6 +2,7 @@ package at.fhv.itb5c.view.mainview;
 
 import java.io.IOException;
 
+import at.fhv.itb5c.view.user.UserViewController.UserViewState;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.usersearch.SearchUserViewFactory;
 import javafx.event.ActionEvent;
@@ -24,12 +25,12 @@ public class MainViewController {
 	}
 
 	@FXML
-	public void createUserMenueItemActionHandler(ActionEvent event) throws IOException {				
-		UserViewFactory.CreateNewUserView(_mainPanel, at.fhv.itb5c.view.user.UserViewController.UserViewState.newState);
+	public void createUserMenueItemActionHandler(ActionEvent event) throws IOException {	
+		new UserViewFactory(UserViewState.newState).create(_mainPanel);
 	}
 	
 	@FXML
 	public void searchUserMenueItemActionHandler(ActionEvent event) throws IOException {
-		SearchUserViewFactory.CreateNewUserView(_mainPanel);
+		new SearchUserViewFactory().create(_mainPanel);
 	}
 }

@@ -1,8 +1,6 @@
 package at.fhv.itb5c.view.mainview;
 
 import java.io.IOException;
-
-import at.fhv.itb5c.view.login.LoginController;
 import at.fhv.itb5c.view.user.UserViewController.UserViewState;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.usersearch.SearchUserViewFactory;
@@ -26,8 +24,8 @@ public class MainViewController {
 	}
 
 	@FXML
-	public void createUserMenueItemActionHandler(ActionEvent event) throws IOException {	
-		new UserViewFactory(UserViewState.newState).create(_mainPanel);
+	public void addUserMenueItemActionHandler(ActionEvent event) throws IOException {	
+		new UserViewFactory(UserViewState.addState).create(_mainPanel);
 	}
 	
 	@FXML

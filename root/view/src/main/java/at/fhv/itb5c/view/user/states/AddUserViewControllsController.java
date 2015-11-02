@@ -10,15 +10,15 @@ import at.fhv.itb5c.view.user.IUserViewState;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
-public class NewUserViewControllsController implements IUserViewState {
+public class AddUserViewControllsController implements IUserViewState {
 	
 	private UserViewController _userViewController;
 	private String _titel;
 	private URL _controlsFXMLURL;
 	
-	public NewUserViewControllsController(UserViewController userViewController) {
+	public AddUserViewControllsController(UserViewController userViewController) {
 		_userViewController = userViewController;
-		_titel = "Create New User";
+		_titel = "Add User";
 		_controlsFXMLURL = RouteProvider.getInstance().get(this.getClass());
 	}	
 	

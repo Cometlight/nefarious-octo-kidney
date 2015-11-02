@@ -11,6 +11,8 @@ public class UserConverter implements ILogger {
 			return null;
 		}
 		
+		log.debug("Before Converting User Object Model2DTO: " + user);
+		
 		// convert
 		UserDTO userdto = new UserDTO();
 		userdto.setId(user.getId()); // id is needed for jpa to identify the object
@@ -27,6 +29,9 @@ public class UserConverter implements ILogger {
 		userdto.setTypeOfSports(user.getTypeOfSports());
 		userdto.setMembershipFeePaid(user.getMembershipFeePaid());
 		userdto.setDepartment(DepartmentConverter.toDTO(user.getDepartment()));
+		
+		log.debug("After Converting User Object Model2DTO: " + userdto);
+		
 		return userdto;
 	}
 	
@@ -58,6 +63,9 @@ public class UserConverter implements ILogger {
 			log.error(e.getMessage());
 			return null;
 		} 
+		
+		log.debug("Converting User Object DTO2Model: " + user);
+		
 		return user;
 	}
 }

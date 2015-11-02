@@ -29,6 +29,8 @@ public class AppController {
 	
 	public void start(Stage stage) throws IOException {
 		stage.setTitle("Enterprise Application Project");
+		stage.setMinHeight(600);
+		stage.setMinWidth(800);
 		this._primaryStage = stage;
 
 		loadMainStage();

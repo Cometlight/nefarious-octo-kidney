@@ -36,7 +36,7 @@ public class UserViewFactory implements IViewFactory {
 
 		try {
 			UserModel userModel;
-			if(_userViewState == UserViewState.newState) {
+			if(_userViewState == UserViewState.addState) {
 				userModel = UserModel.createUserModel(RMIClient.getRMIClient().getUserFactory().createUser());
 			}
 			else {

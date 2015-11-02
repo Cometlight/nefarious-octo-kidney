@@ -24,6 +24,7 @@ public class UserFactory implements IUserFactory, ILogger {
 		
 		if (userEntity != null) {
 			try{
+				log.debug("DateOfBirth before save " + userEntity.getDateOfBirth());
 				userEntity = PersistenceFacade.getInstance().saveOrUpdate(userEntity);
 				log.debug("DateOfBirth after save " + userEntity.getDateOfBirth());
 			} catch (Exception e) {

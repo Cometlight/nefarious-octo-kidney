@@ -11,6 +11,7 @@ import org.junit.Test;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
+import at.fhv.itb5c.model.PersistenceFacade;
 
 public class UserTest {
 
@@ -175,4 +176,89 @@ public class UserTest {
 		assertEquals(department, user.getDepartment());
 	}
 
+	@Test
+	public void testSaveOrUpdate() {
+		// save a new user
+		User newUser = new User();
+		newUser.setFirstName("Daniel");
+		newUser.setLastName("Integration");
+		newUser.setAddress("Teststraße 7a, 6800 Feldkirch");
+		newUser.setDateOfBirth(LocalDate.now());
+		newUser.setEmail("test@case.com");
+		newUser.setGender(Gender.Male);
+		newUser.setMembershipFee(15.9);
+		Set<UserRole> roles = new HashSet<UserRole>();
+		roles.add(UserRole.Admin);
+		newUser.setRoles(roles);
+		newUser.setTelephoneNumber("+43 664 874379");
+		Set<TypeOfSport> sports = new HashSet<TypeOfSport>();
+		sports.add(TypeOfSport.Soccer);
+		newUser.setTypeOfSports(sports);
+		newUser.setMembershipFeePaid(true);
+		// Department dept = new Department();
+		// dept.setName("Daniel's Dept");
+		// newUser.setDepartment(dept);
+		User returningUser = null;
+		try {
+			returningUser = PersistenceFacade.getInstance().saveOrUpdate(newUser);
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}
+
+		// check returned user
+		assertNotNull(returningUser);
+		assertEquals(newUser.getAddress(), returningUser.getAddress());
+		assertEquals(newUser.getFirstName(), returningUser.getFirstName());
+		assertEquals(newUser.getLastName(), returningUser.getLastName());
+		assertEquals(newUser.getDateOfBirth(), returningUser.getDateOfBirth());
+		assertEquals(newUser.getEmail(), returningUser.getEmail());
+		assertEquals(newUser.getGender(), returningUser.getGender());
+		assertEquals(Double.doubleToLongBits(newUser.getMembershipFee()),
+				Double.doubleToLongBits(returningUser.getMembershipFee()));
+		assertEquals(newUser.getRoles(), returningUser.getRoles());
+		assertEquals(newUser.getTypeOfSports(), returningUser.getTypeOfSports());
+		assertEquals(newUser.getMembershipFeePaid(), returningUser.getMembershipFeePaid());
+		assertEquals(newUser.getDepartment(), returningUser.getDepartment());
+
+		// update the user
+		newUser.setFirstName("Daniel2");
+		newUser.setLastName("Integration2");
+		newUser.setAddress("Teststraße 7a, 6800 Feldkirch2");
+		newUser.setDateOfBirth(LocalDate.now());
+		newUser.setEmail("test2@case.com");
+		newUser.setGender(Gender.Male);
+		newUser.setMembershipFee(15.9);
+		roles.clear();
+		newUser.setRoles(roles);
+		newUser.setTelephoneNumber("+43 664 8743792");
+		sports.clear();
+		sports.add(TypeOfSport.Tennis);
+		newUser.setTypeOfSports(sports);
+		newUser.setMembershipFeePaid(false);
+		// Department dept = new Department();
+		// dept.setName("Daniel's Dept");
+		// newUser.setDepartment(dept);
+		try {
+			returningUser = PersistenceFacade.getInstance().saveOrUpdate(newUser);
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}
+
+		// check returned user
+		assertNotNull(returningUser);
+		assertEquals(newUser.getAddress(), returningUser.getAddress());
+		assertEquals(newUser.getFirstName(), returningUser.getFirstName());
+		assertEquals(newUser.getLastName(), returningUser.getLastName());
+		assertEquals(newUser.getDateOfBirth(), returningUser.getDateOfBirth());
+		assertEquals(newUser.getEmail(), returningUser.getEmail());
+		assertEquals(newUser.getGender(), returningUser.getGender());
+		assertEquals(Double.doubleToLongBits(newUser.getMembershipFee()),
+				Double.doubleToLongBits(returningUser.getMembershipFee()));
+		assertEquals(newUser.getRoles(), returningUser.getRoles());
+		assertEquals(newUser.getTypeOfSports(), returningUser.getTypeOfSports());
+		assertEquals(newUser.getMembershipFeePaid(), returningUser.getMembershipFeePaid());
+		assertEquals(newUser.getDepartment(), returningUser.getDepartment());
+	}
 }

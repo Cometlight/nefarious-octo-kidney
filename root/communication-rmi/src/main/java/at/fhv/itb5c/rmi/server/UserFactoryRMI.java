@@ -38,7 +38,8 @@ public class UserFactoryRMI extends UnicastRemoteObject implements IUserFactoryR
 	@Override
 	public IUserRMI save(IUser user) {
 		log.debug("saving user");
-		IUserRMI saveUser = UserConverterRMI.toRMI(_factory.save(UserConverterRMI.toRMI(user)));
+		IUserRMI userrmi = (IUserRMI) user;
+		IUserRMI saveUser = UserConverterRMI.toRMI(_factory.save(UserConverterRMI.toDTO(userrmi)));
 		log.debug("saved user: " + saveUser);
 
 		return saveUser;	

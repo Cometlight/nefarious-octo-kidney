@@ -119,7 +119,7 @@ public class PersistenceFacade implements ILogger {
 			// setting the id explicitly, the auto generated id starts with 1.
 			_entityManager.getTransaction().begin();
 
-			if (obj.getId() == 0) { // This is a new entity
+			if (obj.getId() == null) { // This is a new entity
 				_entityManager.persist(obj);
 			} else { // Old entity that should be updated
 				obj = _entityManager.merge(obj);

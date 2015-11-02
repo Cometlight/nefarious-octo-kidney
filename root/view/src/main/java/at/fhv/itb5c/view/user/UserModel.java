@@ -41,6 +41,18 @@ public class UserModel {
 		_birthDate = new SimpleObjectProperty<>();
 		_membershipFee = new SimpleDoubleProperty();
 		
+		setIUserRMI(user);
+	}
+	
+	public static UserModel createUserModel(IUserRMI user) throws RemoteException {
+		if(user != null) {
+			return new UserModel(user);
+		} else{
+			return null;
+		}
+	}
+	
+	public void setIUserRMI(IUserRMI user) throws RemoteException {
 		_firstName.setValue(user.getFirstName());
 		_lastName.setValue(user.getLastName());
 		_address.setValue(user.getAddress());
@@ -53,14 +65,6 @@ public class UserModel {
 		_userRoles = (ObservableSet<UserRole>) FXCollections.observableSet(user.getRoles());
 		
 		_rmiUser = user;
-	}
-	
-	public static UserModel createUserModel(IUserRMI user) throws RemoteException {
-		if(user != null) {
-			return new UserModel(user);
-		} else{
-			return null;
-		}
 	}
 	
 	public IUserRMI getRMIUser() {

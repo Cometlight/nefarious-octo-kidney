@@ -38,6 +38,8 @@ public class UserConverterRMI implements ILogger {
 			}
 
 		}
+		
+		log.debug("Converting User Object DTO2RMI: " + userrmi);
 
 		return userrmi;
 	}
@@ -66,6 +68,8 @@ public class UserConverterRMI implements ILogger {
 				return null;
 			}
 		}
+		
+		log.debug("Converting User Object RMI2DTO: " + user);
 
 		return user;
 	}

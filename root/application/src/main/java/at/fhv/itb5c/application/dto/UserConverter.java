@@ -27,6 +27,9 @@ public class UserConverter implements ILogger {
 		userdto.setTypeOfSports(user.getTypeOfSports());
 		userdto.setMembershipFeePaid(user.getMembershipFeePaid());
 		userdto.setDepartment(DepartmentConverter.toDTO(user.getDepartment()));
+		
+		log.debug("Converting User Object Model2DTO: " + userdto);
+		
 		return userdto;
 	}
 	
@@ -58,6 +61,9 @@ public class UserConverter implements ILogger {
 			log.error(e.getMessage());
 			return null;
 		} 
+		
+		log.debug("Converting User Object DTO2Model: " + user);
+		
 		return user;
 	}
 }

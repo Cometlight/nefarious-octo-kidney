@@ -24,7 +24,7 @@ public class DepartmentFactoryRMI extends UnicastRemoteObject implements IDepart
 
 	@Override
 	public void init(String host, String port) throws RemoteException, MalformedURLException {
-		log.info("... initializing UserFactoryRMI");
+		log.info("... initializing DepartmentFactoryRMI");
 		Naming.rebind("rmi://" + host + ":" + port + "/DepartmentFactory", this);
 	}
 

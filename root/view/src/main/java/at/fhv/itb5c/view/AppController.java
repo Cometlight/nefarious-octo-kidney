@@ -20,21 +20,19 @@ import javafx.stage.Stage;
 public class AppController {
 	private Stage _primaryStage;
 
+	static {
+		RouteProvider.getInstance().add(UserViewController.class, "/view/fxml/user/UserView.fxml");	
+		RouteProvider.getInstance().add(MainViewController.class, "/view/fxml/MainView.fxml");
+		RouteProvider.getInstance().add(LoginController.class, "/view/fxml/Login.fxml");
+		RouteProvider.getInstance().add(SearchUserController.class, "/view/fxml/SearchUserView.fxml");
+	}
+	
 	public void start(Stage stage) throws IOException {
-		initializeGeneralRouteMapping();
-
 		stage.setTitle("Enterprise Application Project");
 		this._primaryStage = stage;
 
 		loadMainStage();
 		showStage();
-	}
-
-	private void initializeGeneralRouteMapping() {
-		RouteProvider.getInstance().add(UserViewController.class, "/view/fxml/user/UserView.fxml");	
-		RouteProvider.getInstance().add(MainViewController.class, "/view/fxml/MainView.fxml");
-		RouteProvider.getInstance().add(LoginController.class, "/view/fxml/Login.fxml");
-		RouteProvider.getInstance().add(SearchUserController.class, "/view/fxml/SearchUserView.fxml");
 	}
 
 	private void loadMainStage() throws IOException {

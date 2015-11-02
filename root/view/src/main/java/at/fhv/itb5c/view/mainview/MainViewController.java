@@ -19,19 +19,6 @@ public class MainViewController {
 	Pane _mainPanel;
 
 	@FXML
-	public void loginMenueItemActionHandler(ActionEvent event) throws IOException {
-
-		//TODO(san7985): replace with controlfx login view
-		/*Stage loginStage = new Stage();
-		loginStage.initModality(Modality.WINDOW_MODAL);
-		loginStage.initOwner(_rootPane.getScene().getWindow());
-
-		StageUtil.loadScene(RouteProvider.getInstance().get(LoginController.class), loginStage);
-
-		loginStage.show();*/
-	}
-
-	@FXML
 	public void closeMenueItemActionHandler(ActionEvent event) {
 		((Stage) _rootPane.getScene().getWindow()).close();
 	}

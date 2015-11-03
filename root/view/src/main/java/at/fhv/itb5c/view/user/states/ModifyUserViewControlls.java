@@ -7,6 +7,7 @@ import at.fhv.itb5c.view.user.IUserViewState;
 import at.fhv.itb5c.view.user.UserViewController;
 import at.fhv.itb5c.view.user.UserViewController.UserViewState;
 import at.fhv.itb5c.view.util.RouteProvider;
+import at.fhv.itb5c.view.util.popup.DataModificationPopUp;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
@@ -39,8 +40,9 @@ public class ModifyUserViewControlls implements IUserViewState {
 	public void saveButtonMouseReleasedEventHandler(MouseEvent mouseEvent) throws IOException {
 		boolean saved = _userViewController.saveModel();
 		if(saved) {
+			DataModificationPopUp.dataSavedPopUp("Your changes were saved!");
 			_userViewController.setState(UserViewState.detailState);
-		}
+		} 
 	}
 	
 	@FXML 

@@ -16,10 +16,10 @@ import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.user.states.DetailUserViewControlls;
 import at.fhv.itb5c.view.user.states.ModifyUserViewControlls;
 import at.fhv.itb5c.view.user.states.AddUserViewControllsController;
-import at.fhv.itb5c.view.util.AlertUtil;
-import at.fhv.itb5c.view.util.PanelClosable;
-import at.fhv.itb5c.view.util.PanelCloseHandler;
 import at.fhv.itb5c.view.util.RouteProvider;
+import at.fhv.itb5c.view.util.interfaces.PanelClosable;
+import at.fhv.itb5c.view.util.interfaces.PanelCloseHandler;
+import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
@@ -139,7 +139,7 @@ public class UserViewController implements PanelClosable, Closeable {
 			try {
 				_userModel.setIUserRMI(RMIClient.getRMIClient().getUserFactory().save(_userModel.getRMIUser()));
 			} catch (RemoteException e) {
-				AlertUtil.ConnectionAlert();
+				ErrorPopUp.connectionError();
 				return false;
 			}
 			return true;

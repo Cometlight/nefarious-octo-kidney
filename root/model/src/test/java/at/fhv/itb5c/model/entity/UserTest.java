@@ -54,6 +54,8 @@ public class UserTest {
 		final String emailValid1 = "robert.codd@hotmail.com";
 		final String emailValid2 = "rd@students.fhv.at";
 		final String emailValid3 = "r-d.421@1-2.de";
+		
+		final String emailValid4 = "äöüßÄÖÜ@äöüßÄÜß.at";
 
 		final String emailInvalid1 = "robert";
 		final String emailInvalid2 = "robert@.com";
@@ -66,7 +68,7 @@ public class UserTest {
 														// end with dot
 		final String emailInvalid8 = "robert@codd@gmail.com";
 		final String emailInvalid9 = "robert@aol.1a"; // no numbers in tld
-
+		
 		User user = new User();
 
 		assertTrue(user.setEmail(emailValid1));
@@ -77,6 +79,9 @@ public class UserTest {
 
 		assertTrue(user.setEmail(emailValid3));
 		assertEquals(emailValid3, user.getEmail());
+		
+		assertTrue(user.setEmail(emailValid4));
+		assertEquals(emailValid4, user.getEmail());
 
 		assertFalse(user.setEmail(emailInvalid1));
 		assertNotEquals(emailInvalid1, user.getEmail());

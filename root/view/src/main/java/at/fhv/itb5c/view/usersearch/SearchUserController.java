@@ -3,7 +3,7 @@ package at.fhv.itb5c.view.usersearch;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.List;
-
+import org.controlsfx.control.StatusBar;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.rmi.client.RMIClient;
@@ -18,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -27,28 +28,18 @@ import javafx.util.Callback;
 
 public class SearchUserController implements PanelClosable {
 
-	@FXML
-	private TextField _firstNameTextField;
-	@FXML
-	private TextField _lastNameTextField;
-	@FXML
-	private CheckBox _paidCheckBox;
-	@FXML
-	private ComboBox<IDepartmentRMI> _departmentsCombobox;
-
-	@FXML
-	private TableView<IUserRMI> _searchResultTableView;
-	@FXML
-	private TableColumn<IUserRMI, String> _firstNameTableColumn;
-	@FXML
-	private TableColumn<IUserRMI, String> _lastNameTableColumn;
-	@FXML
-	private TableColumn<IUserRMI, String> _addressTableColumn;
-	@FXML
-	private TableColumn<IUserRMI, String> _dateOfBirthTableColumn;
-	@FXML
-	private TableColumn<IUserRMI, String> _membershipFeeTableColumn;
-
+	@FXML private TextField _firstNameTextField;
+	@FXML private TextField _lastNameTextField;
+	@FXML private CheckBox _paidCheckBox;
+	@FXML private ComboBox<IDepartmentRMI> _departmentsCombobox;
+	@FXML private TableView<IUserRMI> _searchResultTableView;
+	@FXML private TableColumn<IUserRMI, String> _firstNameTableColumn;
+	@FXML private TableColumn<IUserRMI, String> _lastNameTableColumn;
+	@FXML private TableColumn<IUserRMI, String> _addressTableColumn;
+	@FXML private TableColumn<IUserRMI, String> _dateOfBirthTableColumn;
+	@FXML private TableColumn<IUserRMI, String> _membershipFeeTableColumn;
+	@FXML private Label _searchResultCountLable;
+	
 	private PanelCloseHandler _panelCloseHandler;
 	private SearchUserModel _searchUserModel;
 
@@ -200,6 +191,8 @@ public class SearchUserController implements PanelClosable {
 						_searchUserModel.getIsPaid().getValue());
 			}
 
+			_searchResultCountLable.setText(Integer.toString(users.size()));
+			
 			_searchUserModel.getSearchResult().clear();
 			_searchUserModel.getSearchResult().addAll(users);
 		} catch (RemoteException e) {

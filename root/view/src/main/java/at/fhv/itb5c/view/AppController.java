@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 /*Todo(san7985)
  *	opimice rmi by loading factories at the beginning
+ *	add loggin when exceptions are thrown
  */
 
 public class AppController {

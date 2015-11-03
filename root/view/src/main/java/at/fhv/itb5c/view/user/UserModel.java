@@ -85,6 +85,8 @@ public class UserModel {
 				_rmiUser.setTypeOfSports(new HashSet<>(_typeOfSports));
 			}
 		} catch (RemoteException e) {
+			//TODO(san7985) logging
+			e.printStackTrace();
 			ErrorPopUp.connectionError();
 		}
 

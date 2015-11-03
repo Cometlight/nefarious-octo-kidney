@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
@@ -14,7 +15,6 @@ import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.rmi.client.RMIClient;
-import junit.framework.Assert;
 
 public class User {
 	
@@ -55,7 +55,7 @@ public class User {
 			assertEquals(savedUser.getDepartment(), user.getDepartment());
 			
 		} catch (RemoteException e) {
-			Assert.fail(e.getStackTrace().toString());
+			Assert.assertEquals(true, false);
 		}
 	}
 

@@ -74,6 +74,7 @@ public class TestRMI {
 		try {
 			newUser = userFactory.save(newUser);
 			System.out.println("ID must not be null: " + newUser.getId());
+			System.out.println("Birthdate must not be null: " + newUser.getDateOfBirth());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

@@ -23,7 +23,7 @@ public class UserFactoryRMI extends UnicastRemoteObject implements IUserFactoryR
 	}
 	
 	@Override
-	public void init(String host, int port) throws RemoteException, MalformedURLException {
+	public void init(String host, String port) throws RemoteException, MalformedURLException {
 		log.info("... initializing UserFactoryRMI");
 		Naming.rebind("rmi://" + host + ":" + port + "/UserFactory", this);
 	}
@@ -38,7 +38,8 @@ public class UserFactoryRMI extends UnicastRemoteObject implements IUserFactoryR
 	@Override
 	public IUserRMI save(IUser user) {
 		log.debug("saving user");
-		IUserRMI saveUser = UserConverterRMI.toRMI(_factory.save(UserConverterRMI.toRMI(user)));
+		IUserRMI userrmi = (IUserRMI) user;
+		IUserRMI saveUser = UserConverterRMI.toRMI(_factory.save(UserConverterRMI.toDTO(userrmi)));
 		log.debug("saved user: " + saveUser);
 
 		return saveUser;	

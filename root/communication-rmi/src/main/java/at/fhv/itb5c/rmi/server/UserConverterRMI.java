@@ -30,12 +30,16 @@ public class UserConverterRMI implements ILogger {
 				userrmi.setRoles(user.getRoles());
 				userrmi.setTelephoneNumber(user.getTelephoneNumber());
 				userrmi.setTypeOfSports(user.getTypeOfSports());
+				userrmi.setMembershipFeePaid(user.getMembershipFeePaid());
+				userrmi.setDepartment(user.getDepartment());
 			} catch (Exception e) {
 				log.error(e.getMessage());
 				return null;
 			}
 
 		}
+		
+		log.debug("Converting User Object DTO2RMI: " + userrmi);
 
 		return userrmi;
 	}
@@ -57,11 +61,15 @@ public class UserConverterRMI implements ILogger {
 				user.setRoles(userrmi.getRoles());
 				user.setTelephoneNumber(userrmi.getTelephoneNumber());
 				user.setTypeOfSports(userrmi.getTypeOfSports());
+				user.setMembershipFeePaid(userrmi.getMembershipFeePaid());
+				user.setDepartment(userrmi.getDepartment());
 			} catch (Exception e) {
 				log.error(e.getMessage());
 				return null;
 			}
 		}
+		
+		log.debug("Converting User Object RMI2DTO: " + user);
 
 		return user;
 	}

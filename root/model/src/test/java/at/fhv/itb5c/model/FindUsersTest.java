@@ -28,7 +28,8 @@ public class FindUsersTest {
     this.addUser("MaXimo", "Maxer", tennis);
   }
 
-  private User addUser(String firstName, String lastName) throws Exception {
+  @SuppressWarnings("unused")
+private User addUser(String firstName, String lastName) throws Exception {
     return this.addUser(firstName, lastName, null);
   }
 

@@ -15,11 +15,11 @@ import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.user.states.DetailUserViewControlls;
 import at.fhv.itb5c.view.user.states.ModifyUserViewControlls;
-import at.fhv.itb5c.view.user.states.NewUserViewControllsController;
-import at.fhv.itb5c.view.util.AlertUtil;
-import at.fhv.itb5c.view.util.PanelClosable;
-import at.fhv.itb5c.view.util.PanelCloseHandler;
+import at.fhv.itb5c.view.user.states.AddUserViewControllsController;
 import at.fhv.itb5c.view.util.RouteProvider;
+import at.fhv.itb5c.view.util.interfaces.PanelClosable;
+import at.fhv.itb5c.view.util.interfaces.PanelCloseHandler;
+import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
@@ -33,49 +33,26 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 public class UserViewController implements PanelClosable, Closeable {
-	@FXML
-	private Label _titelLabel;
-
-	@FXML
-	private BorderPane _borderPane;
-
-	@FXML
-	private TextField _firstNameTextField;
-
-	@FXML
-	private TextField _lastNameTextField;
-
-	@FXML
-	private TextField _adressTextField;
-
-	@FXML
-	private TextField _eMailTextField;
-
-	@FXML
-	private TextField _telephoneNumberTextField;
-
-	@FXML
-	private ComboBox<Gender> _genderComboBox;
-
-	@FXML
-	private DatePicker _birthdayDatePicker;
-
-	@FXML
-	private CheckListView<TypeOfSport> _typeOfSportCheckListView;
-
-	@FXML
-	private TextField _memebershipFeeTextBox;
-
-	@FXML
-	private CheckListView<UserRole> _userRoleCheckListView;
-
-	@FXML
-	private Pane _controlPane;
+	
+	@FXML private Label _titelLabel;
+	@FXML private BorderPane _borderPane;
+	@FXML private TextField _firstNameTextField;
+	@FXML private TextField _lastNameTextField;
+	@FXML private TextField _adressTextField;
+	@FXML private TextField _eMailTextField;
+	@FXML private TextField _telephoneNumberTextField;
+	@FXML private ComboBox<Gender> _genderComboBox;
+	@FXML private DatePicker _birthdayDatePicker;
+	@FXML private CheckListView<TypeOfSport> _typeOfSportCheckListView;
+	@FXML private TextField _memebershipFeeTextBox;
+	@FXML private CheckListView<UserRole> _userRoleCheckListView;
+	@FXML private Pane _controlPane;
+	@FXML private Label _errorField;
 
 	private UserModel _userModel;
 
 	public enum UserViewState {
-		newState, 
+		addState, 
 		detailState, 
 		modifieState
 	}
@@ -84,7 +61,7 @@ public class UserViewController implements PanelClosable, Closeable {
 	
 	static {
 		RouteProvider.getInstance().add(DetailUserViewControlls.class, "/view/fxml/user/DetailUserViewControlls.fxml");
-		RouteProvider.getInstance().add(NewUserViewControllsController.class, "/view/fxml/user/NewUserViewControlls.fxml");
+		RouteProvider.getInstance().add(AddUserViewControllsController.class, "/view/fxml/user/AddUserViewControlls.fxml");
 		RouteProvider.getInstance().add(ModifyUserViewControlls.class, "/view/fxml/user/ModifyUserViewControlls.fxml");
 	}
 	
@@ -92,7 +69,7 @@ public class UserViewController implements PanelClosable, Closeable {
 		_userModel = userModel;
 		_userViewStates = new HashMap<>();
 		
-		_userViewStates.put(UserViewState.newState, new NewUserViewControllsController(this));
+		_userViewStates.put(UserViewState.addState, new AddUserViewControllsController(this));
 		_userViewStates.put(UserViewState.detailState, new DetailUserViewControlls(this));
 		_userViewStates.put(UserViewState.modifieState, new ModifyUserViewControlls(this));
 		_initialiseState = initialiseState;
@@ -102,9 +79,10 @@ public class UserViewController implements PanelClosable, Closeable {
 		_firstNameTextField.textProperty().bindBidirectional(_userModel.getFirstName());
 		_lastNameTextField.textProperty().bindBidirectional(_userModel.getLastName());
 		_eMailTextField.textProperty().bindBidirectional(_userModel.getEMail());
-		_adressTextField.textProperty().bindBidirectional(_userModel.getAdress());
+		_adressTextField.textProperty().bindBidirectional(_userModel.getAddress());
 		_telephoneNumberTextField.textProperty().bindBidirectional(_userModel.getTelephonenumber());
 		_genderComboBox.setItems(FXCollections.observableArrayList(Gender.values()));
+		_genderComboBox.setValue(_userModel.getGender());
 		_birthdayDatePicker.valueProperty().bindBidirectional(_userModel.getBirthDate());
 
 		_typeOfSportCheckListView.setItems(FXCollections.observableArrayList(TypeOfSport.values()));
@@ -136,6 +114,9 @@ public class UserViewController implements PanelClosable, Closeable {
 				_userModel.setUserRoles(FXCollections.observableSet(new HashSet<UserRole>( _userRoleCheckListView.getCheckModel().getCheckedItems())));
 			}
 		});
+		
+		_errorField.setVisible(false);
+		
 		setState(_initialiseState);
 	}
 
@@ -158,7 +139,7 @@ public class UserViewController implements PanelClosable, Closeable {
 			try {
 				_userModel.setIUserRMI(RMIClient.getRMIClient().getUserFactory().save(_userModel.getRMIUser()));
 			} catch (RemoteException e) {
-				AlertUtil.ConnectionAlert();
+				ErrorPopUp.connectionError();
 				return false;
 			}
 			return true;
@@ -170,12 +151,13 @@ public class UserViewController implements PanelClosable, Closeable {
 	private boolean mandatoryFieldsSet() {
 		// refactor to validater -> string not empty validator ...
 		if ((_userModel.getFirstName().getValue() != null) && (_userModel.getFirstName().getValue() != "")
-				&& (_userModel.getLastName().getValue() != null) && (_userModel.getFirstName().getValue() != "")
-				&& (_userModel.getAdress().getValue() != null) && (_userModel.getFirstName().getValue() != "")
-				&& (_userModel.getBirthDate().getValue() != null) && (_userModel.getGender() != null)
+				&& (_userModel.getLastName().getValue() != null) && (_userModel.getLastName().getValue() != "")
+				&& (_userModel.getAddress().getValue() != null) && (_userModel.getAddress().getValue() != "")
+				&& (_userModel.getBirthDate().getValue() != null) && (_userModel.getBirthDate() != null)
 				&& (_userModel.getUserRoles().size() > 0)) {
 			return true;
 		} else {
+			_errorField.setVisible(true);
 			return false;
 		}
 	}
@@ -205,8 +187,10 @@ public class UserViewController implements PanelClosable, Closeable {
 
 			_controlPane.getChildren().clear();
 			_controlPane.getChildren().add(loader.load());
-			userViewState.activate();
 			_borderPane.requestFocus();
+			_errorField.setVisible(false);
+			
+			userViewState.activate();
 		}
 	}
 

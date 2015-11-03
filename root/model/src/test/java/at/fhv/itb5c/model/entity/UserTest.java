@@ -2,17 +2,36 @@ package at.fhv.itb5c.model.entity;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
+import at.fhv.itb5c.model.PersistenceFacade;
 
 public class UserTest {
+	private static final String DBFILE = "testdb.odb";
+
+	@Before
+	public void setUp() throws Exception {
+		PersistenceFacade.setPersistenceUnitName(DBFILE);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PersistenceFacade.shutdown();
+		File file = new File(DBFILE);
+		if(file.exists()) {
+			file.delete();
+		}
+	}
 
 	@Test
 	public void testFirstName() {
@@ -35,6 +54,8 @@ public class UserTest {
 		final String emailValid1 = "robert.codd@hotmail.com";
 		final String emailValid2 = "rd@students.fhv.at";
 		final String emailValid3 = "r-d.421@1-2.de";
+		
+		final String emailValid4 = "äöüßÄÖÜ@äöüßÄÜß.at";
 
 		final String emailInvalid1 = "robert";
 		final String emailInvalid2 = "robert@.com";
@@ -47,7 +68,7 @@ public class UserTest {
 														// end with dot
 		final String emailInvalid8 = "robert@codd@gmail.com";
 		final String emailInvalid9 = "robert@aol.1a"; // no numbers in tld
-
+		
 		User user = new User();
 
 		assertTrue(user.setEmail(emailValid1));
@@ -58,6 +79,9 @@ public class UserTest {
 
 		assertTrue(user.setEmail(emailValid3));
 		assertEquals(emailValid3, user.getEmail());
+		
+		assertTrue(user.setEmail(emailValid4));
+		assertEquals(emailValid4, user.getEmail());
 
 		assertFalse(user.setEmail(emailInvalid1));
 		assertNotEquals(emailInvalid1, user.getEmail());
@@ -175,4 +199,89 @@ public class UserTest {
 		assertEquals(department, user.getDepartment());
 	}
 
+	@Test
+	public void testSaveOrUpdate() {
+		// save a new user
+		User newUser = new User();
+		newUser.setFirstName("Daniel");
+		newUser.setLastName("Integration");
+		newUser.setAddress("Teststraße 7a, 6800 Feldkirch");
+		newUser.setDateOfBirth(LocalDate.now());
+		newUser.setEmail("test@case.com");
+		newUser.setGender(Gender.Male);
+		newUser.setMembershipFee(15.9);
+		Set<UserRole> roles = new HashSet<UserRole>();
+		roles.add(UserRole.Admin);
+		newUser.setRoles(roles);
+		newUser.setTelephoneNumber("+43 664 874379");
+		Set<TypeOfSport> sports = new HashSet<TypeOfSport>();
+		sports.add(TypeOfSport.Soccer);
+		newUser.setTypeOfSports(sports);
+		newUser.setMembershipFeePaid(true);
+		// Department dept = new Department();
+		// dept.setName("Daniel's Dept");
+		// newUser.setDepartment(dept);
+		User returningUser = null;
+		try {
+			returningUser = PersistenceFacade.getInstance().saveOrUpdate(newUser);
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}
+
+		// check returned user
+		assertNotNull(returningUser);
+		assertEquals(newUser.getAddress(), returningUser.getAddress());
+		assertEquals(newUser.getFirstName(), returningUser.getFirstName());
+		assertEquals(newUser.getLastName(), returningUser.getLastName());
+		assertEquals(newUser.getDateOfBirth(), returningUser.getDateOfBirth());
+		assertEquals(newUser.getEmail(), returningUser.getEmail());
+		assertEquals(newUser.getGender(), returningUser.getGender());
+		assertEquals(Double.doubleToLongBits(newUser.getMembershipFee()),
+				Double.doubleToLongBits(returningUser.getMembershipFee()));
+		assertEquals(newUser.getRoles(), returningUser.getRoles());
+		assertEquals(newUser.getTypeOfSports(), returningUser.getTypeOfSports());
+		assertEquals(newUser.getMembershipFeePaid(), returningUser.getMembershipFeePaid());
+		assertEquals(newUser.getDepartment(), returningUser.getDepartment());
+
+		// update the user
+		newUser.setFirstName("Daniel2");
+		newUser.setLastName("Integration2");
+		newUser.setAddress("Teststraße 7a, 6800 Feldkirch2");
+		newUser.setDateOfBirth(LocalDate.now());
+		newUser.setEmail("test2@case.com");
+		newUser.setGender(Gender.Male);
+		newUser.setMembershipFee(15.9);
+		roles.clear();
+		newUser.setRoles(roles);
+		newUser.setTelephoneNumber("+43 664 8743792");
+		sports.clear();
+		sports.add(TypeOfSport.Tennis);
+		newUser.setTypeOfSports(sports);
+		newUser.setMembershipFeePaid(false);
+		// Department dept = new Department();
+		// dept.setName("Daniel's Dept");
+		// newUser.setDepartment(dept);
+		try {
+			returningUser = PersistenceFacade.getInstance().saveOrUpdate(newUser);
+		} catch (Exception e) {
+			e.printStackTrace();
+			assertTrue(false);
+		}
+
+		// check returned user
+		assertNotNull(returningUser);
+		assertEquals(newUser.getAddress(), returningUser.getAddress());
+		assertEquals(newUser.getFirstName(), returningUser.getFirstName());
+		assertEquals(newUser.getLastName(), returningUser.getLastName());
+		assertEquals(newUser.getDateOfBirth(), returningUser.getDateOfBirth());
+		assertEquals(newUser.getEmail(), returningUser.getEmail());
+		assertEquals(newUser.getGender(), returningUser.getGender());
+		assertEquals(Double.doubleToLongBits(newUser.getMembershipFee()),
+				Double.doubleToLongBits(returningUser.getMembershipFee()));
+		assertEquals(newUser.getRoles(), returningUser.getRoles());
+		assertEquals(newUser.getTypeOfSports(), returningUser.getTypeOfSports());
+		assertEquals(newUser.getMembershipFeePaid(), returningUser.getMembershipFeePaid());
+		assertEquals(newUser.getDepartment(), returningUser.getDepartment());
+	}
 }

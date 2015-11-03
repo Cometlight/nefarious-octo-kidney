@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.Set;
 
+import at.fhv.itb5c.commons.dto.IDepartment;
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
@@ -51,11 +52,19 @@ public interface IUserRMI extends Remote, IUser {
 
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) throws RemoteException;
 
-	public long getId() throws RemoteException;
+	public Long getId() throws RemoteException;
 
-	public long getVersion() throws RemoteException;
+	public Long getVersion() throws RemoteException;
 
-	public void setId(long id) throws RemoteException;
+	public void setId(Long id) throws RemoteException;
 
-	public void setVersion(long version) throws RemoteException;
+	public void setVersion(Long version) throws RemoteException;
+	
+	public boolean getMembershipFeePaid() throws RemoteException;
+
+	public void setMembershipFeePaid(boolean membershipFeePaid) throws RemoteException;
+
+	public IDepartmentRMI getDepartment() throws RemoteException;
+	
+	public void setDepartment(IDepartment department) throws RemoteException;
 }

@@ -1,8 +1,5 @@
 package at.fhv.itb5c.rmi.client.test;
 
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -10,15 +7,19 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Set;
 
+import at.fhv.itb5c.commons.dto.rmi.IDepartmentFactoryRMI;
+import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserFactoryRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
+import at.fhv.itb5c.rmi.client.RMIClient;
 
 public class TestRMI {
 	// ec2-52-10-208-136.us-west-2.compute.amazonaws.com
 	// 1337
+	private static RMIClient _client = RMIClient.getRMIClient();
 
 	public static void main(String[] args) {
 		String host;
@@ -30,19 +31,13 @@ public class TestRMI {
 		System.out.println("Port:");
 		port = sc.nextInt();
 		sc.close();
-		
+
 		// Testing UserFactory
-		//--------------------
+		// --------------------
 		System.out.println("lookup UserFactory on " + host + " at port " + port + " ...");
-		Object userFactoryObj = null;
-		try {
-			userFactoryObj = Naming.lookup("rmi://" + host + ":" + port + "/UserFactory");
-		} catch (MalformedURLException | RemoteException | NotBoundException e) {
-			e.printStackTrace();
-		}
-		IUserFactoryRMI userFactory = (IUserFactoryRMI) userFactoryObj;
+		IUserFactoryRMI userFactory = _client.getUserFactory();;
 		System.out.println("... got UserFactory");
-		
+
 		// new user method
 		System.out.println("Request new user dto ...");
 		Object userObj = null;
@@ -53,7 +48,7 @@ public class TestRMI {
 		}
 		IUserRMI newUser = (IUserRMI) userObj;
 		System.out.println("... received new user dto from UserFactory");
-		
+
 		// save user method
 		System.out.println("Save new user dto ...");
 		try {
@@ -75,15 +70,16 @@ public class TestRMI {
 		} catch (RemoteException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		try {
 			newUser = userFactory.save(newUser);
 			System.out.println("ID must not be null: " + newUser.getId());
+			System.out.println("Birthdate must not be null: " + newUser.getDateOfBirth());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 		System.out.println("... new user dto saved");
-		
+
 		// search user
 		System.out.println("Searching for user ...");
 		LinkedList<IUserRMI> result = null;
@@ -93,5 +89,22 @@ public class TestRMI {
 			e.printStackTrace();
 		}
 		System.out.println("... " + result.size() + " results found");
+
+		// Testing DepartmentFactory
+		// --------------------
+		System.out.println("lookup DepartmentFactory on " + host + " at port " + port + " ...");
+		IDepartmentFactoryRMI departmentFactory = _client.getDepartmentFactory();
+		System.out.println("... got DepartmentFactory");
+		
+		// get all departments
+		System.out.println("Retrieving all departments ...");
+		LinkedList<IDepartmentRMI> depts = null;
+		try {
+			depts = (LinkedList<IDepartmentRMI>) departmentFactory.getAllDepartments();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		System.out.println(depts.size() + " departments received");
+		
 	}
 }

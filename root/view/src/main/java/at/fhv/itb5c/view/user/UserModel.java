@@ -8,7 +8,7 @@ import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
-import at.fhv.itb5c.view.util.AlertUtil;
+import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -31,7 +31,7 @@ public class UserModel {
 	private ObservableSet<UserRole> _userRoles;
 
 	private IUserRMI _rmiUser;
-	
+
 	private UserModel(IUserRMI user) throws RemoteException {
 		_firstName = new SimpleStringProperty();
 		_lastName = new SimpleStringProperty();
@@ -40,19 +40,20 @@ public class UserModel {
 		_eMail = new SimpleStringProperty();
 		_birthDate = new SimpleObjectProperty<>();
 		_membershipFee = new SimpleDoubleProperty();
-		
+
 		setIUserRMI(user);
 	}
-	
+
 	public static UserModel createUserModel(IUserRMI user) throws RemoteException {
-		if(user != null) {
+		if (user != null) {
 			return new UserModel(user);
-		} else{
+		} else {
 			return null;
 		}
 	}
-	
+
 	public void setIUserRMI(IUserRMI user) throws RemoteException {
+		_rmiUser = user;
 		_firstName.setValue(user.getFirstName());
 		_lastName.setValue(user.getLastName());
 		_address.setValue(user.getAddress());
@@ -60,13 +61,11 @@ public class UserModel {
 		_telephonenumber.setValue(user.getTelephoneNumber());
 		_gender = user.getGender();
 		_birthDate.setValue(user.getDateOfBirth());
-		_typeOfSports = (ObservableSet <TypeOfSport>) FXCollections.observableSet(user.getTypeOfSports());
-		_membershipFee.setValue(user.getMembershipFee());	
+		_typeOfSports = (ObservableSet<TypeOfSport>) FXCollections.observableSet(user.getTypeOfSports());
+		_membershipFee.setValue(user.getMembershipFee());
 		_userRoles = (ObservableSet<UserRole>) FXCollections.observableSet(user.getRoles());
-		
-		_rmiUser = user;
 	}
-	
+
 	public IUserRMI getRMIUser() {
 		try {
 			_rmiUser.setFirstName(_firstName.getValue());
@@ -76,23 +75,33 @@ public class UserModel {
 			_rmiUser.setEmail(_eMail.getValue());
 			_rmiUser.setDateOfBirth(_birthDate.getValue());
 			_rmiUser.setMembershipFee(_membershipFee.getValue());
+			_rmiUser.setGender(_gender);
 			
+			if (_userRoles != null) {
+				_rmiUser.setRoles(new HashSet<>(_userRoles));
+			}
+
+			if (_typeOfSports != null) {
+				_rmiUser.setTypeOfSports(new HashSet<>(_typeOfSports));
+			}
 		} catch (RemoteException e) {
-			AlertUtil.ConnectionAlert();
+			//TODO(san7985) logging
+			e.printStackTrace();
+			ErrorPopUp.connectionError();
 		}
-		
+
 		return _rmiUser;
 	}
-	
+
 	public StringProperty getFirstName() {
 		return _firstName;
 	}
-	
+
 	public StringProperty getLastName() {
 		return _lastName;
 	}
 
-	public StringProperty getAdress() {
+	public StringProperty getAddress() {
 		return _address;
 	}
 
@@ -105,58 +114,34 @@ public class UserModel {
 	}
 
 	public void setGender(Gender gender) {
-		try {
-			_rmiUser.setGender(gender);
-		} catch (RemoteException e) {
-			AlertUtil.ConnectionAlert();
-		}
 		_gender = gender;
 	}
-	
+
 	public Gender getGender() {
 		return _gender;
 	}
-	
+
 	public ObjectProperty<LocalDate> getBirthDate() {
 		return _birthDate;
 	}
-	
+
 	public ObservableSet<TypeOfSport> getTypeOfSports() {
 		return _typeOfSports;
 	}
-	
+
 	public void setTypeOfSports(ObservableSet<TypeOfSport> typeOfSports) {
-		if(typeOfSports == null) {
-			return;
-		}
-		
-		try {
-			_rmiUser.setTypeOfSports(new HashSet<>(typeOfSports));
-		} catch (RemoteException e) {
-			AlertUtil.ConnectionAlert();
-		} 
 		_typeOfSports = typeOfSports;
 	}
-	
+
 	public DoubleProperty getMemberShipFee() {
 		return _membershipFee;
 	}
-	
+
 	public ObservableSet<UserRole> getUserRoles() {
 		return _userRoles;
 	}
-	
+
 	public void setUserRoles(ObservableSet<UserRole> userRoles) {
-		if(userRoles == null) {
-			return;
-		}
-		
-		try {
-			_rmiUser.setRoles(new HashSet<>(userRoles));
-		} catch (RemoteException e) {
-			AlertUtil.ConnectionAlert();
-		} 
-		
 		_userRoles = userRoles;
 	}
 }

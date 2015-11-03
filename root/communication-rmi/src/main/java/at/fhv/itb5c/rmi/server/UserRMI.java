@@ -5,6 +5,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.util.Set;
 
+import at.fhv.itb5c.commons.dto.IDepartment;
+import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
@@ -13,8 +15,8 @@ import at.fhv.itb5c.commons.enums.UserRole;
 public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 	private static final long serialVersionUID = 1L;
 	
-	private long _id;
-	private long _version;
+	private Long _id;
+	private Long _version;
 	private String _firstName;
 	private String _lastName;
 	private String _email;
@@ -25,6 +27,8 @@ public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 	private double _membershipFee;
 	private Set<UserRole> _roles;
 	private Set<TypeOfSport> _typeOfSports;
+	private IDepartmentRMI _department;
+	private boolean _membershipFeePaid;
 
 	protected UserRMI() throws RemoteException {
 		super();
@@ -131,23 +135,42 @@ public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 	}
 
 	@Override
-	public long getId() throws RemoteException {
+	public Long getId() throws RemoteException {
 		return _id;
 	}
 
 	@Override
-	public long getVersion() throws RemoteException {
+	public Long getVersion() throws RemoteException {
 		return _version;
 	}
 
 	@Override
-	public void setId(long id) throws RemoteException {
+	public void setId(Long id) throws RemoteException {
 		_id = id;
 	}
 
 	@Override
-	public void setVersion(long version) throws RemoteException {
+	public void setVersion(Long version) throws RemoteException {
 		_version = version;
 	}
 
+	@Override
+	public boolean getMembershipFeePaid() throws RemoteException {
+		return _membershipFeePaid;
+	}
+
+	@Override
+	public void setMembershipFeePaid(boolean membershipFeePaid) throws RemoteException {
+		_membershipFeePaid = membershipFeePaid;
+	}
+
+	@Override
+	public IDepartmentRMI getDepartment() throws RemoteException {
+		return _department;
+	}
+
+	@Override
+	public void setDepartment(IDepartment department) throws RemoteException {
+		_department = DepartmentConverterRMI.toRMI(department);
+	}
 }

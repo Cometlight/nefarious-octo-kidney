@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 /*Todo(san7985)
  *	opimice rmi by loading factories at the beginning
+ *	add loggin when exceptions are thrown
  */
 
 public class AppController {
@@ -29,6 +30,8 @@ public class AppController {
 	
 	public void start(Stage stage) throws IOException {
 		stage.setTitle("Enterprise Application Project");
+		stage.setMinHeight(600);
+		stage.setMinWidth(800);
 		this._primaryStage = stage;
 
 		loadMainStage();

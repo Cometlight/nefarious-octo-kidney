@@ -190,6 +190,11 @@ public class User extends PersistableObject {
 
 	@Override
 	public String toString() {
-		return _firstName + " " + _lastName + "\n    " + _address;
+		return "User [_firstName=" + _firstName + ", _lastName=" + _lastName + ", _email=" + _email
+				+ ", _telephoneNumber=" + _telephoneNumber + ", _gender=" + _gender + ", _address=" + _address
+				+ ", _dateOfBirth=" + _dateOfBirth + ", _persistDateOfBirth=" + _persistDateOfBirth
+				+ ", _membershipFee=" + _membershipFee + ", _membershipFeePaid=" + _membershipFeePaid + ", _roles="
+				+ _roles + ", _typeOfSports=" + _typeOfSports + ", _department=" + _department + ", _departmentId="
+				+ _departmentId + "]";
 	}
 }

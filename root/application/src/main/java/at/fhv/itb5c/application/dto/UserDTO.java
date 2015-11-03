@@ -4,14 +4,15 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import at.fhv.itb5c.commons.dto.IDepartment;
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 
 public class UserDTO implements IUser {
-	private long _id;
-	private long _version;
+	private Long _id;
+	private Long _version;
 	private String _firstName;
 	private String _lastName;
 	private String _email;
@@ -22,6 +23,8 @@ public class UserDTO implements IUser {
 	private double _membershipFee;
 	private Set<UserRole> _roles;
 	private Set<TypeOfSport> _typeOfSports;
+	private boolean _membershipFeePaid;
+	private DepartmentDTO _department;
 	
 	public UserDTO() {
 		_roles = new HashSet<UserRole>();
@@ -43,19 +46,19 @@ public class UserDTO implements IUser {
 		_typeOfSports = typeOfSports;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return _id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		_id = id;
 	}
 
-	public long getVersion() {
+	public Long getVersion() {
 		return _version;
 	}
 
-	public void setVersion(long version) {
+	public void setVersion(Long version) {
 		_version = version;
 	}
 
@@ -137,6 +140,22 @@ public class UserDTO implements IUser {
 
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) {
 		_typeOfSports = typeOfSports;
+	}
+
+	public boolean getMembershipFeePaid() {
+		return _membershipFeePaid;
+	}
+
+	public void setMembershipFeePaid(boolean membershipFeePaid) {
+		_membershipFeePaid = membershipFeePaid;
+	}
+
+	public IDepartment getDepartment() {
+		return _department;
+	}
+
+	public void setDepartment(IDepartment department) {
+		_department = (DepartmentDTO) department;
 	}
 
 	@Override

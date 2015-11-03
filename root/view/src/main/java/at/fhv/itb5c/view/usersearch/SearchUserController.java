@@ -9,9 +9,9 @@ import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.user.UserViewController.UserViewState;
 import at.fhv.itb5c.view.user.UserViewFactory;
-import at.fhv.itb5c.view.util.AlertUtil;
-import at.fhv.itb5c.view.util.PanelClosable;
-import at.fhv.itb5c.view.util.PanelCloseHandler;
+import at.fhv.itb5c.view.util.interfaces.PanelClosable;
+import at.fhv.itb5c.view.util.interfaces.PanelCloseHandler;
+import at.fhv.itb5c.view.util.popup.AlertPopUp;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -66,7 +66,7 @@ public class SearchUserController implements PanelClosable {
 			_departmentsCombobox.setItems(
 					FXCollections.observableList(RMIClient.getRMIClient().getDepartmentFactory().getAllDepartments()));
 		} catch (RemoteException e) {
-			AlertUtil.ConnectionAlert();
+			AlertPopUp.ConnectionAlert();
 		}
 		_departmentsCombobox.valueProperty().bindBidirectional(_searchUserModel.getDepartment());
 
@@ -97,7 +97,7 @@ public class SearchUserController implements PanelClosable {
 								value = "";
 							}
 						} catch (RemoteException e) {
-							AlertUtil.ConnectionAlert();
+							AlertPopUp.ConnectionAlert();
 							value = "ERROR";
 						}
 
@@ -117,7 +117,7 @@ public class SearchUserController implements PanelClosable {
 								value = "";
 							}
 						} catch (RemoteException e) {
-							AlertUtil.ConnectionAlert();
+							AlertPopUp.ConnectionAlert();
 							value = "ERROR";
 						}
 
@@ -137,7 +137,7 @@ public class SearchUserController implements PanelClosable {
 								value = "";
 							}
 						} catch (RemoteException e) {
-							AlertUtil.ConnectionAlert();
+							AlertPopUp.ConnectionAlert();
 							value = "ERROR";
 						}
 
@@ -157,7 +157,7 @@ public class SearchUserController implements PanelClosable {
 								value = "";
 							}
 						} catch (RemoteException e) {
-							AlertUtil.ConnectionAlert();
+							AlertPopUp.ConnectionAlert();
 							value = "ERROR";
 						}
 
@@ -178,7 +178,7 @@ public class SearchUserController implements PanelClosable {
 								value = "No";
 							}
 						} catch (RemoteException e) {
-							AlertUtil.ConnectionAlert();
+							AlertPopUp.ConnectionAlert();
 							value = "ERROR";
 						}
 
@@ -203,7 +203,7 @@ public class SearchUserController implements PanelClosable {
 			_searchUserModel.getSearchResult().clear();
 			_searchUserModel.getSearchResult().addAll(users);
 		} catch (RemoteException e) {
-			AlertUtil.ConnectionAlert();
+			AlertPopUp.ConnectionAlert();
 		}
 	}
 

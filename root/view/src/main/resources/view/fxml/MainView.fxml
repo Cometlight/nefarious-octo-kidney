@@ -30,7 +30,7 @@
                     <MenuItem mnemonicParsing="false" onAction="#closeMenueItemActionHandler" text="Close" />
                   </items>
                 </Menu>
-                 <Menu mnemonicParsing="false" text="Administrativ">
+                 <Menu mnemonicParsing="false" text="Administrative">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#addUserMenueItemActionHandler" text="Add User" />
                     <MenuItem onAction="#searchUserMenueItemActionHandler" text="Search User"/>

@@ -1,13 +1,13 @@
 package at.fhv.itb5c.commons.dto;
 
 public interface IDepartment {
-	public void setId(long id) throws Exception;
+	public void setId(Long id) throws Exception;
 
-	public long getId() throws Exception;
+	public Long getId() throws Exception;
 
-	public void setVersion(long version) throws Exception;
+	public void setVersion(Long version) throws Exception;
 
-	public long getVersion() throws Exception;
+	public Long getVersion() throws Exception;
 
 	public void setName(String name) throws Exception;
 

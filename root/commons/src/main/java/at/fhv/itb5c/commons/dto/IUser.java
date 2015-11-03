@@ -49,13 +49,13 @@ public interface IUser {
 
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) throws Exception;
 
-	public long getId() throws Exception;
+	public Long getId() throws Exception;
 
-	public long getVersion() throws Exception;
+	public Long getVersion() throws Exception;
 
-	public void setId(long id) throws Exception;
+	public void setId(Long id) throws Exception;
 
-	public void setVersion(long version) throws Exception;
+	public void setVersion(Long version) throws Exception;
 
 	public boolean getMembershipFeePaid() throws Exception;
 

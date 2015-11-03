@@ -3,27 +3,27 @@ package at.fhv.itb5c.application.dto;
 import at.fhv.itb5c.commons.dto.IDepartment;
 
 public class DepartmentDTO implements IDepartment {
-	private long _id;
-	private long _version;
+	private Long _id;
+	private Long _version;
 	private String _name;
 
 	@Override
-	public void setId(long id) throws Exception {
+	public void setId(Long id) throws Exception {
 		_id = id;
 	}
 
 	@Override
-	public long getId() throws Exception {
+	public Long getId() throws Exception {
 		return _id;
 	}
 
 	@Override
-	public void setVersion(long version) throws Exception {
+	public void setVersion(Long version) throws Exception {
 		_version = version;
 	}
 
 	@Override
-	public long getVersion() throws Exception {
+	public Long getVersion() throws Exception {
 		return _version;
 	}
 

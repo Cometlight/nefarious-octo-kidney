@@ -15,8 +15,8 @@ import at.fhv.itb5c.commons.enums.UserRole;
 public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 	private static final long serialVersionUID = 1L;
 	
-	private long _id;
-	private long _version;
+	private Long _id;
+	private Long _version;
 	private String _firstName;
 	private String _lastName;
 	private String _email;
@@ -135,22 +135,22 @@ public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 	}
 
 	@Override
-	public long getId() throws RemoteException {
+	public Long getId() throws RemoteException {
 		return _id;
 	}
 
 	@Override
-	public long getVersion() throws RemoteException {
+	public Long getVersion() throws RemoteException {
 		return _version;
 	}
 
 	@Override
-	public void setId(long id) throws RemoteException {
+	public void setId(Long id) throws RemoteException {
 		_id = id;
 	}
 
 	@Override
-	public void setVersion(long version) throws RemoteException {
+	public void setVersion(Long version) throws RemoteException {
 		_version = version;
 	}
 

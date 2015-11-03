@@ -62,7 +62,7 @@ public class UserFactoryTest {
 		assertNotNull(_user);
 		// ID needs to be set after save
 		try {
-			assertNotEquals(0, _user.getId());
+			assertNotEquals(null, _user.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

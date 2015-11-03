@@ -43,11 +43,7 @@ public class UserConverter implements ILogger {
 		User user = new User();
 		try {
 			// id is needed for jpa to identify the object
-			if(userdto.getId() == 0){
-				user.setId(null);
-			} else {
-				user.setId(userdto.getId());
-			}
+			user.setId(userdto.getId());
 			user.setVersion(userdto.getVersion());
 			user.setFirstName(userdto.getFirstName());
 			user.setLastName(userdto.getLastName());

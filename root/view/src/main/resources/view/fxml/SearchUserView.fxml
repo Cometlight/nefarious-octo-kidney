@@ -18,6 +18,7 @@
 				<RowConstraints vgrow="SOMETIMES" />
 				<RowConstraints vgrow="SOMETIMES" />
 				<RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
 			</rowConstraints>
 			<children>
 				<TableView fx:id="_searchResultTableView" GridPane.rowIndex="2">
@@ -74,8 +75,19 @@
 								<RowConstraints vgrow="SOMETIMES" />
 							</rowConstraints>
 							<children>
-								<Button mnemonicParsing="false" onMouseReleased="#cancelButtonOnMouseReleasedEventHandler" text="Cancel" />
-								<Button mnemonicParsing="false" onMouseReleased="#searchButtonOnReleasedEventHandler" text="Search" GridPane.columnIndex="1" />
+                        <GridPane>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" />
+                              <ColumnConstraints hgrow="SOMETIMES" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+      								<Button mnemonicParsing="false" onMouseReleased="#cancelButtonOnMouseReleasedEventHandler" text="Cancel" />
+      								<Button mnemonicParsing="false" onMouseReleased="#searchButtonOnReleasedEventHandler" text="Search" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
 							</children>
 						</GridPane>
 					</children>
@@ -83,6 +95,12 @@
 				<Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 				<Label styleClass="label-header" stylesheets="@../css/BaseStile.css" text="Search User" />
 				<Separator minHeight="5.0" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+            <FlowPane GridPane.rowIndex="3">
+               <children>
+                  <Label text="Search Result: " />
+                  <Label fx:id="_searchResultCountLable" />
+               </children>
+            </FlowPane>
 			</children>
 		</GridPane>
 	</children>

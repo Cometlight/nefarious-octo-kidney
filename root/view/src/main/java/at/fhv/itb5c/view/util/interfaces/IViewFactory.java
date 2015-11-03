@@ -1,4 +1,4 @@
-package at.fhv.itb5c.view.util;
+package at.fhv.itb5c.view.util.interfaces;
 
 import java.io.IOException;
 import javafx.scene.layout.Pane;

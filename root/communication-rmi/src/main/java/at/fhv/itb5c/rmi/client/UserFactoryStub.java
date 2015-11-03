@@ -39,8 +39,9 @@ public class UserFactoryStub extends UnicastRemoteObject implements IUserFactory
 
 	@Override
 	public IUserRMI save(IUser user) throws RemoteException {
+		log.debug("Befor save -> " + userToSTring(user));
 		IUserRMI saveUser = _userFactory.save((IUserRMI) user);
-		log.debug("saved user: " + saveUser);
+		log.debug("After save -> " + userToSTring(saveUser));
 		return saveUser;
 	}
 
@@ -48,5 +49,16 @@ public class UserFactoryStub extends UnicastRemoteObject implements IUserFactory
 	public List<IUserRMI> findUsers(String firstName, String lastName, Long departmentId, Boolean membershipFeePaid)
 			throws RemoteException {
 		return _userFactory.findUsers(firstName, lastName, departmentId, membershipFeePaid);
+	}
+	
+	private String userToSTring(IUser user) {
+		try {
+			return "UserDTO [_id=" + user.getId() + ", _version=" + user.getVersion() + ", _firstName=" + user.getFirstName() + ", _lastName="
+					+ user.getLastName() + ", _email=" + user.getEmail() + ", _telephoneNumber=" + user.getTelephoneNumber() + ", _gender=" + user.getGender()
+					+ ", _address=" + user.getAddress() + ", _dateOfBirth=" + user.getDateOfBirth() + ", _membershipFee=" + user.getMembershipFee()
+					+ ", _roles=" + user.getRoles() + ", _typeOfSports=" + user.getTypeOfSports() + "]";
+		} catch (Exception e) {
+			return e.getStackTrace().toString();
+		}
 	}
 }

@@ -52,13 +52,13 @@ public interface IUserRMI extends Remote, IUser {
 
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) throws RemoteException;
 
-	public long getId() throws RemoteException;
+	public Long getId() throws RemoteException;
 
-	public long getVersion() throws RemoteException;
+	public Long getVersion() throws RemoteException;
 
-	public void setId(long id) throws RemoteException;
+	public void setId(Long id) throws RemoteException;
 
-	public void setVersion(long version) throws RemoteException;
+	public void setVersion(Long version) throws RemoteException;
 	
 	public boolean getMembershipFeePaid() throws RemoteException;
 

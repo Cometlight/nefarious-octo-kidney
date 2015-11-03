@@ -11,8 +11,8 @@ import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 
 public class UserDTO implements IUser {
-	private long _id;
-	private long _version;
+	private Long _id;
+	private Long _version;
 	private String _firstName;
 	private String _lastName;
 	private String _email;
@@ -46,19 +46,19 @@ public class UserDTO implements IUser {
 		_typeOfSports = typeOfSports;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return _id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		_id = id;
 	}
 
-	public long getVersion() {
+	public Long getVersion() {
 		return _version;
 	}
 
-	public void setVersion(long version) {
+	public void setVersion(Long version) {
 		_version = version;
 	}
 

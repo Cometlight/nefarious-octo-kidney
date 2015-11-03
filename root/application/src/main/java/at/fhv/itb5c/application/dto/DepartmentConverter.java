@@ -31,11 +31,7 @@ public class DepartmentConverter implements ILogger {
 		Department department = new Department();
 		
 		try {
-			if(departmentdto.getId() == 0){
-				department.setId(null);
-			} else {
-				department.setId(departmentdto.getId());
-			}
+			department.setId(departmentdto.getId());
 			department.setVersion(departmentdto.getVersion());
 			department.setName(departmentdto.getName());
 		} catch (Exception e) {

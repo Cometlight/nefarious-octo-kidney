@@ -119,7 +119,6 @@ private User addUser(String firstName, String lastName) throws Exception {
   @Test
   public void testMemebershipFeeNotPaid() {
     List<User> result = PersistenceFacade.getInstance().findUsers(null, null, null, false);
-    result.forEach(user -> System.out.println(user));
     assertEquals(2, result.size());
   }
 

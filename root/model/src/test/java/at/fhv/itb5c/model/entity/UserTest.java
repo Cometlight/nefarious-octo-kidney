@@ -2,10 +2,13 @@ package at.fhv.itb5c.model.entity;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import at.fhv.itb5c.commons.enums.Gender;
@@ -14,6 +17,21 @@ import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.model.PersistenceFacade;
 
 public class UserTest {
+	private static final String DBFILE = "testdb.odb";
+
+	@Before
+	public void setUp() throws Exception {
+		PersistenceFacade.setPersistenceUnitName(DBFILE);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PersistenceFacade.shutdown();
+		File file = new File(DBFILE);
+		if(file.exists()) {
+			file.delete();
+		}
+	}
 
 	@Test
 	public void testFirstName() {

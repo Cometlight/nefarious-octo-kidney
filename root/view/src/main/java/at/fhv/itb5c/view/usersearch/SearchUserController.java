@@ -3,7 +3,6 @@ package at.fhv.itb5c.view.usersearch;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.List;
-import org.controlsfx.control.StatusBar;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.rmi.client.RMIClient;

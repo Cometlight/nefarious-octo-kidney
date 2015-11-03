@@ -10,7 +10,7 @@ import at.fhv.itb5c.view.user.UserViewController.UserViewState;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.util.interfaces.PanelClosable;
 import at.fhv.itb5c.view.util.interfaces.PanelCloseHandler;
-import at.fhv.itb5c.view.util.popup.AlertPopUp;
+import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -56,7 +56,7 @@ public class SearchUserController implements PanelClosable {
 			_departmentsCombobox.setItems(
 					FXCollections.observableList(RMIClient.getRMIClient().getDepartmentFactory().getAllDepartments()));
 		} catch (RemoteException e) {
-			AlertPopUp.ConnectionAlert();
+			ErrorPopUp.connectionError();
 		}
 		_departmentsCombobox.valueProperty().bindBidirectional(_searchUserModel.getDepartment());
 
@@ -64,17 +64,17 @@ public class SearchUserController implements PanelClosable {
 	}
 
 	private void showUser(IUserRMI selectedUser) {
-		try {
-			_panelCloseHandler.closeNext(new UserViewFactory(UserViewState.detailState, selectedUser));
-		} catch (IOException e) {
-			// TODO(san7985): critical error handling
-		}
+			try {
+				_panelCloseHandler.closeNext(new UserViewFactory(UserViewState.detailState, selectedUser));
+			} catch (IOException e) {
+				ErrorPopUp.criticalSystemError();
+			}
 	}
 
 	public void initializeTable() {
 		_searchResultTableView.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showUser(newValue));
-
+		
 		_firstNameTableColumn.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<IUserRMI, String>, ObservableValue<String>>() {
 					@Override
@@ -87,7 +87,7 @@ public class SearchUserController implements PanelClosable {
 								value = "";
 							}
 						} catch (RemoteException e) {
-							AlertPopUp.ConnectionAlert();
+							ErrorPopUp.connectionError();
 							value = "ERROR";
 						}
 
@@ -107,7 +107,7 @@ public class SearchUserController implements PanelClosable {
 								value = "";
 							}
 						} catch (RemoteException e) {
-							AlertPopUp.ConnectionAlert();
+							ErrorPopUp.connectionError();
 							value = "ERROR";
 						}
 
@@ -127,7 +127,7 @@ public class SearchUserController implements PanelClosable {
 								value = "";
 							}
 						} catch (RemoteException e) {
-							AlertPopUp.ConnectionAlert();
+							ErrorPopUp.connectionError();
 							value = "ERROR";
 						}
 
@@ -147,7 +147,7 @@ public class SearchUserController implements PanelClosable {
 								value = "";
 							}
 						} catch (RemoteException e) {
-							AlertPopUp.ConnectionAlert();
+							ErrorPopUp.connectionError();
 							value = "ERROR";
 						}
 
@@ -168,7 +168,7 @@ public class SearchUserController implements PanelClosable {
 								value = "No";
 							}
 						} catch (RemoteException e) {
-							AlertPopUp.ConnectionAlert();
+							ErrorPopUp.connectionError();
 							value = "ERROR";
 						}
 
@@ -195,7 +195,7 @@ public class SearchUserController implements PanelClosable {
 			_searchUserModel.getSearchResult().clear();
 			_searchUserModel.getSearchResult().addAll(users);
 		} catch (RemoteException e) {
-			AlertPopUp.ConnectionAlert();
+			ErrorPopUp.connectionError();
 		}
 	}
 

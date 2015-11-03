@@ -9,7 +9,7 @@ import at.fhv.itb5c.view.user.UserViewController.UserViewState;
 import at.fhv.itb5c.view.util.RouteProvider;
 import at.fhv.itb5c.view.util.interfaces.IViewFactory;
 import at.fhv.itb5c.view.util.interfaces.PanelCloseHandler;
-import at.fhv.itb5c.view.util.popup.AlertPopUp;
+import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 
@@ -65,7 +65,7 @@ public class UserViewFactory implements IViewFactory {
 			userViewController.initialize();
 			
 		} catch (RemoteException e1) {
-			AlertPopUp.ConnectionAlert();
+			ErrorPopUp.connectionError();
 		}
 	}
 }

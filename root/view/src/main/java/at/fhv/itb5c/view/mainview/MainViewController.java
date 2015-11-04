@@ -1,6 +1,5 @@
 package at.fhv.itb5c.view.mainview;
 
-import java.awt.Button;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
@@ -8,9 +7,12 @@ import at.fhv.itb5c.view.user.UserViewController.UserViewState;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
+import at.fhv.itb5c.view.department.DepartmentViewFactory;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.usersearch.SearchUserViewFactory;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -53,6 +55,20 @@ public class MainViewController implements ILogger{
 				return new DepartmentListView();
 			}
 		});
+		_departmentsListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<IDepartmentRMI>() {
+
+			@Override
+			public void changed(ObservableValue<? extends IDepartmentRMI> observable, IDepartmentRMI oldValue,
+					IDepartmentRMI newValue) {
+				try {
+					System.out.println(newValue.getName());
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
 	}
 	
 	@FXML
@@ -71,9 +87,9 @@ public class MainViewController implements ILogger{
 	}
 	
 	@FXML
-	public void departmentListViewOnMouseClick(MouseEvent mouseEvent) {
+	public void departmentListViewOnMouseClick(MouseEvent mouseEvent) throws IOException {
 		if((mouseEvent.getClickCount()) == 2) {
-			//TODO: open department view
+			new DepartmentViewFactory().create(_mainPanel);
 		}
 	}
 	

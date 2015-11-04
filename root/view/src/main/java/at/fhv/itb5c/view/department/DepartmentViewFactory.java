@@ -1,16 +1,24 @@
 package at.fhv.itb5c.view.department;
 
 import java.io.IOException;
-
+import at.fhv.itb5c.view.util.RouteProvider;
 import at.fhv.itb5c.view.util.interfaces.IViewFactory;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 
 public class DepartmentViewFactory implements IViewFactory{
 
+	static {
+		RouteProvider.getInstance().add(DepartmentViewController.class, "/view/fxml/department/view.fxml");	
+	}
+	
 	@Override
 	public void create(Pane paneToPlaceIn) throws IOException {
-		// TODO Auto-generated method stub
-		
+		paneToPlaceIn.getChildren().clear();
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(RouteProvider.getInstance().get(DepartmentViewController.class));
+		loader.setController(new DepartmentViewController());
+		loader.load();
 	}
 
 }

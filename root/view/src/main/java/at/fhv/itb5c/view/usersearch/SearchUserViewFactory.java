@@ -46,9 +46,4 @@ public final class SearchUserViewFactory implements IViewFactory {
 		
 		searchUserController.initialize();
 	}
-
-	@Override
-	public Pane create() {
-		throw new UnsupportedOperationException();
-	}
 }

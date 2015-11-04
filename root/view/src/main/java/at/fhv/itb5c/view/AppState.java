@@ -1,8 +1,10 @@
 package at.fhv.itb5c.view;
 
+import java.util.Observable;
+
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 
-public class AppState {
+public class AppState extends Observable {
 	public IUserRMI _user;
 	
 	private static AppState _instanze;
@@ -20,5 +22,7 @@ public class AppState {
 	
 	public void setLoggedInUser(IUserRMI user) {
 		_user = user;
+		setChanged();
+		notifyObservers();
 	}
 }

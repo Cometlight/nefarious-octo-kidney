@@ -72,9 +72,4 @@ public class UserViewFactory implements IViewFactory {
 			ErrorPopUp.connectionError();
 		}
 	}
-
-	@Override
-	public Pane create() {
-		throw new UnsupportedOperationException();
-	}
 }

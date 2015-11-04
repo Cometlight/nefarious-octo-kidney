@@ -1,4 +1,4 @@
-package at.fhv.itb5c.view.mainview;
+package at.fhv.itb5c.view.login;
 
 import java.io.IOException;
 
@@ -8,19 +8,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
-public class MainViewFactory implements IPanelAndViewFactory{
+public class LoginViewFactory implements IPanelAndViewFactory {
 
 	static {
-		RouteProvider.getInstance().add(MainViewController.class, "/view/fxml/MainView.fxml");
+		RouteProvider.getInstance().add(LoginController.class, "/view/fxml/Login.fxml");
 	}
 
 	@Override
 	public Pane create() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(RouteProvider.getInstance().get(MainViewController.class));
-		loader.setController(new MainViewController());
+		loader.setLocation(RouteProvider.getInstance().get(LoginController.class));
+		loader.setController(new LoginController());
 		BorderPane rootLayout = (BorderPane) loader.load();
 		
 		return  rootLayout;
 	}
+
 }

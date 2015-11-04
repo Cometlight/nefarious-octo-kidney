@@ -13,19 +13,34 @@
             <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="simple-heading" text="Add Team" />
             <HBox spacing="14.0">
                <children>
-                  <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="170.0" styleClass="simple-label" text="Name" />
+                  <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="170.0" text="Name">
+                     <styleClass>
+                        <String fx:value="simple-label" />
+                        <String fx:value="simple-subtle" />
+                     </styleClass>
+                  </Label>
                   <TextField fx:id="_teamNameInput" maxWidth="1.7976931348623157E308" promptText="Team Name" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="14.0">
                <children>
-                  <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="170.0" styleClass="simple-label" text="League" />
+                  <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="170.0" text="League">
+                     <styleClass>
+                        <String fx:value="simple-label" />
+                        <String fx:value="simple-subtle" />
+                     </styleClass>
+                  </Label>
                   <ComboBox fx:id="_leagueChoice" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Choose League" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="14.0">
                <children>
-                  <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="170.0" styleClass="simple-label" text="Coach" />
+                  <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="170.0" text="Coach">
+                     <styleClass>
+                        <String fx:value="simple-label" />
+                        <String fx:value="simple-subtle" />
+                     </styleClass>
+                  </Label>
                   <TextField fx:id="_userSearchInput" maxWidth="1.7976931348623157E308" onAction="#_onSearchInputChange" promptText="Search Users" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>

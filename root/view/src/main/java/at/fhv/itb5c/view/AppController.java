@@ -3,18 +3,15 @@ package at.fhv.itb5c.view;
 import java.io.IOException;
 
 import at.fhv.itb5c.view.login.LoginController;
-import at.fhv.itb5c.view.mainview.MainViewController;
 import at.fhv.itb5c.view.mainview.MainViewFactory;
-import at.fhv.itb5c.view.user.UserViewController;
-import at.fhv.itb5c.view.usersearch.SearchUserController;
 import at.fhv.itb5c.view.util.RouteProvider;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /*Todo(san7985)
+ *  abstract factories
  *	opimice rmi by loading factories at the beginning
  *	add loggin when exceptions are thrown
  */
@@ -23,10 +20,7 @@ public class AppController {
 	private Stage _primaryStage;
 
 	static {
-		RouteProvider.getInstance().add(UserViewController.class, "/view/fxml/user/UserView.fxml");	
-		RouteProvider.getInstance().add(MainViewController.class, "/view/fxml/MainView.fxml");
 		RouteProvider.getInstance().add(LoginController.class, "/view/fxml/Login.fxml");
-		RouteProvider.getInstance().add(SearchUserController.class, "/view/fxml/SearchUserView.fxml");
 	}
 	
 	public void start(Stage stage) throws IOException {
@@ -40,20 +34,10 @@ public class AppController {
 	}
 
 	private void loadMainStage() throws IOException {
-			closeStage();
-			
-			BorderPane rootLayout = new BorderPane();
-			new MainViewFactory().create(rootLayout);
-			rootLayout.autosize();
-			
-			/*FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(RouteProvider.getInstance().get(MainViewController.class));
-			loader.setController(new MainViewController());
-			BorderPane rootLayout = (BorderPane) loader.load();
-*/
-			Scene scene = new Scene((Parent)rootLayout);
-			_primaryStage.setScene(scene); 
-			
+			closeStage();	
+			Pane rootPane = new MainViewFactory().create();
+			Scene scene = new Scene((Parent)rootPane);
+			_primaryStage.setScene(scene); 		
 			showStage();
 	}
 

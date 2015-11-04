@@ -12,6 +12,10 @@ import javafx.scene.layout.Pane;
 
 public final class SearchUserViewFactory implements IViewFactory {
 	
+	static {
+		RouteProvider.getInstance().add(SearchUserController.class, "/view/fxml/SearchUserView.fxml");
+	}
+	
 	public void create(Pane paneToPlaceIn) throws IOException {
 		paneToPlaceIn.getChildren().clear();
 		FXMLLoader loader = new FXMLLoader();
@@ -41,5 +45,10 @@ public final class SearchUserViewFactory implements IViewFactory {
 		}
 		
 		searchUserController.initialize();
+	}
+
+	@Override
+	public Pane create() {
+		throw new UnsupportedOperationException();
 	}
 }

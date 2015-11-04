@@ -14,8 +14,8 @@ import javafx.scene.input.MouseEvent;
 
 public class LoginController implements ILogger{
 	
-	@FXML TextField _usernameInput;
-	@FXML PasswordField _passwordInput;
+	@FXML private TextField _usernameInput;
+	@FXML private PasswordField _passwordInput;
 	
 	private LoginModel _loginModel;
 	

@@ -5,7 +5,6 @@ import java.io.IOException;
 import at.fhv.itb5c.view.util.RouteProvider;
 import at.fhv.itb5c.view.util.interfaces.IPanelAndViewFactory;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 public class LoginViewFactory implements IPanelAndViewFactory {

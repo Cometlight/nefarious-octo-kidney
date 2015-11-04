@@ -19,7 +19,7 @@ public class LoginViewFactory implements IPanelAndViewFactory {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(RouteProvider.getInstance().get(LoginController.class));
 		loader.setController(new LoginController());
-		BorderPane rootLayout = (BorderPane) loader.load();
+		Pane rootLayout = (Pane) loader.load();
 		
 		return  rootLayout;
 	}

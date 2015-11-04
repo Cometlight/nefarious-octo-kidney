@@ -21,7 +21,13 @@ public class LoginController implements ILogger{
 		try {
 			//TODO(san7985) replace with rmi functionality for checking the login
 			IUserRMI _loggedInUser = RMIClient.getRMIClient().getUserFactory().createUser();
-			AppState.getInstance().setLoggedInUser(_loggedInUser);
+			
+			if(_loggedInUser == null) {
+				ErrorPopUp.invalideLoginCredentials();
+			} else {
+				AppState.getInstance().setLoggedInUser(_loggedInUser);
+			}
+			
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();

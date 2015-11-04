@@ -16,28 +16,32 @@
 	<top>
       <GridPane alignment="TOP_CENTER">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints vgrow="SOMETIMES" />
             <RowConstraints vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <MenuBar>
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#closeMenueItemActionHandler" text="Close" />
-                  </items>
-                </Menu>
-                 <Menu mnemonicParsing="false" text="Administrative">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#addUserMenueItemActionHandler" text="Add User" />
-                    <MenuItem onAction="#searchUserMenueItemActionHandler" text="Search User"/>
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
+            <HBox>
+               <children>
+                  <MenuBar>
+                    <menus>
+                      <Menu mnemonicParsing="false" text="File">
+                        <items>
+                          <MenuItem mnemonicParsing="false" onAction="#closeMenueItemActionHandler" text="Close" />
+                        </items>
+                      </Menu>
+                       <Menu mnemonicParsing="false" text="Administrative">
+                        <items>
+                          <MenuItem mnemonicParsing="false" onAction="#addUserMenueItemActionHandler" text="Add User" />
+                          <MenuItem onAction="#searchUserMenueItemActionHandler" text="Search User" />
+                        </items>
+                      </Menu>
+                    </menus>
+                  </MenuBar>
+               </children>
+            </HBox>
          </children>
       </GridPane> 
 	</top>

@@ -14,6 +14,10 @@ public final class ErrorPopUp {
 		generalError("Critical System Error", "The System encountered a critical error. Please contact the system administrator.");
 	}
 	
+	public static void invalideLoginCredentials() {
+		generalError("Login Failed", "Your login credentials are invalide");
+	}
+	
 	public static void generalError(String titel, String headerText) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle(titel);

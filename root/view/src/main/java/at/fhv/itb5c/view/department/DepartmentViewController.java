@@ -6,29 +6,26 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.event.ActionEvent;
 
-public class DepartmentViewController {
+public class DepartmentViewController {	
+    @FXML private Label _departmentNameLabel;
+    @FXML private Label _headLabel;
+    @FXML private ListView<?> _teamList;
+    @FXML private Button _addTeamButton;
+    @FXML private ListView<?> _tournamentList;
+    @FXML private Label _typeOfSportLabel;
+    @FXML private Button _addTournamentButton;
 
+    private DepartmentViewModel _departmentViewModel;
+    
+    public DepartmentViewController(DepartmentViewModel departmentViewModel) {
+    	_departmentViewModel = departmentViewModel;
+    }
+    
     @FXML
-    private Label _departmentNameLabel;
-
-    @FXML
-    private Label _headLabel;
-
-    @FXML
-    private ListView<?> _teamList;
-
-    @FXML
-    private Button _addTeamButton;
-
-    @FXML
-    private ListView<?> _tournamentList;
-
-    @FXML
-    private Label _typeOfSportLabel;
-
-    @FXML
-    private Button _addTournamentButton;
-
+    public void initialize() {
+    	_departmentNameLabel.textProperty().bind(_departmentViewModel.getDepartmentName());
+    }
+    
     @FXML
     void _onAddTeamButtonClick(ActionEvent event) {
 

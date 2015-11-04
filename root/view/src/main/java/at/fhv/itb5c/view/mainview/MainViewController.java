@@ -55,20 +55,6 @@ public class MainViewController implements ILogger{
 				return new DepartmentListView();
 			}
 		});
-		_departmentsListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<IDepartmentRMI>() {
-
-			@Override
-			public void changed(ObservableValue<? extends IDepartmentRMI> observable, IDepartmentRMI oldValue,
-					IDepartmentRMI newValue) {
-				try {
-					System.out.println(newValue.getName());
-				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-		});
 	}
 	
 	@FXML
@@ -88,14 +74,14 @@ public class MainViewController implements ILogger{
 	
 	@FXML
 	public void departmentListViewOnMouseClick(MouseEvent mouseEvent) throws IOException {
-		if((mouseEvent.getClickCount()) == 2) {
-			new DepartmentViewFactory().create(_mainPanel);
-		}
+		_departmentsListView.getFocusModel().focus(_departmentsListView.getSelectionModel().getSelectedIndex());
+		new DepartmentViewFactory(_departmentsListView.getSelectionModel().getSelectedItem()).create(_mainPanel);
 	}
 	
 	private class DepartmentListView extends ListCell<IDepartmentRMI> {
 		@Override
 		protected void updateItem(IDepartmentRMI item, boolean empty) {
+			super.updateItem(item, empty);
 			if((item != null) && (!empty)) {
 				try {
 					setText(item.getName());
@@ -106,7 +92,6 @@ public class MainViewController implements ILogger{
 			}
 		}
 	}
-	
 	
 	//TODO: remove when test values are in the db
 	private class DummyDepartment implements IDepartmentRMI {

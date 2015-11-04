@@ -18,6 +18,10 @@ public class UserViewFactory implements IViewFactory {
 	private UserViewState _userViewState;
 	private IUserRMI _user;
 	
+	static{
+		RouteProvider.getInstance().add(UserViewController.class, "/view/fxml/user/UserView.fxml");	
+	}
+	
 	public UserViewFactory(UserViewState userViewState) {
 		_userViewState = userViewState;
 	}
@@ -67,5 +71,10 @@ public class UserViewFactory implements IViewFactory {
 		} catch (RemoteException e1) {
 			ErrorPopUp.connectionError();
 		}
+	}
+
+	@Override
+	public Pane create() {
+		throw new UnsupportedOperationException();
 	}
 }

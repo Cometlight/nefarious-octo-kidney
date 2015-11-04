@@ -5,4 +5,6 @@ import javafx.scene.layout.Pane;
 
 public interface IViewFactory {
 	void create(Pane paneToPlaceIn) throws IOException;
+	
+	Pane create() throws IOException;
 }

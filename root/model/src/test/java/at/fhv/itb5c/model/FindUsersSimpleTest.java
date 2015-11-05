@@ -18,6 +18,7 @@ public class FindUsersSimpleTest {
     @Before
     public void setUp() throws Exception {
         DatabaseTestUtility.deleteDatabaseFile(DBFILE);
+        PersistenceFacade.setPersistenceUnitName(DBFILE);
         addUser("Daniel", "Griesser");
         addUser("Daniel", "Scheffknecht");
         addUser("Prachi", "Mishra");
@@ -43,27 +44,18 @@ public class FindUsersSimpleTest {
     @Test
     public void testFirstNameSearch() {
         List<User> result = PersistenceFacade.getInstance().findUsersSimple("Dan");
-        for (User u : result) {
-            System.out.println(u);
-        }
         assertEquals(2, result.size());
     }
 
     @Test
     public void testLastNameSearch() {
         List<User> result = PersistenceFacade.getInstance().findUsersSimple("Sche");
-        for (User u : result) {
-            System.out.println(u);
-        }
         assertEquals(2, result.size());
     }
 
     @Test
     public void testWholeNameSearch() {
         List<User> result = PersistenceFacade.getInstance().findUsersSimple("Ang");
-        for (User u : result) {
-            System.out.println(u);
-        }
         assertEquals(2, result.size());
     }
 

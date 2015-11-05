@@ -12,19 +12,19 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public class LoginController implements ILogger {
 
-	@FXML
-	private TextField _usernameInput;
-	@FXML
-	private PasswordField _passwordInput;
-
+public class LoginController implements ILogger{
+	
+	@FXML TextField _usernameInput;
+	@FXML PasswordField _passwordInput;
+	
 	private LoginModel _loginModel;
-
+	
 	public LoginController() {
 		_loginModel = new LoginModel();
 	}
 
+	@FXML
 	public void initialize() {
 		_usernameInput.textProperty().bindBidirectional(_loginModel.getUserName());
 		_passwordInput.textProperty().bindBidirectional(_loginModel.getPassword());

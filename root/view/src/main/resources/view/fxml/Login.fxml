@@ -35,6 +35,7 @@
                   <HBox fillHeight="false" spacing="14.0">
                      <children>
                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseReleased="#onSignInMouseReleassedHandler" styleClass="simple-green" text="Sign In" HBox.hgrow="ALWAYS">
+
                            <HBox.margin>
                               <Insets left="40.0" right="40.0" />
                            </HBox.margin>

@@ -18,30 +18,45 @@ public class Match extends PersistableObject {
 	private Team _teamTwo;
 	@Column(name = "startDate", nullable = false)
 	private Date _persistStartDate;
+	@Column(name = "result", nullable = false)
+	private String _result;
 	@Transient
 	private LocalDate _startDate;
-	
-	public Match(){
-		
+
+	public Match() {
+
 	}
-	
+
 	public Team getTeamOne() {
 		return _teamOne;
 	}
+
 	public void setTeamOne(Team teamOne) {
 		_teamOne = teamOne;
 	}
+
 	public Team getTeamTwo() {
 		return _teamTwo;
 	}
+
 	public void setTeamTwo(Team teamTwo) {
 		_teamTwo = teamTwo;
 	}
+
 	public LocalDate getStartDate() {
 		return _startDate;
 	}
+
 	public void setStartDate(LocalDate startDate) {
 		_startDate = startDate;
+	}
+
+	public String getResult() {
+		return _result;
+	}
+
+	public void setResult(String result) {
+		_result = result;
 	}
 
 	@PrePersist

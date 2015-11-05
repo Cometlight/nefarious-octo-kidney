@@ -41,6 +41,7 @@ public class MatchPersistenceTest {
 		teamTwo.setTypeOfSport(TypeOfSport.Soccer);
 		_match.setTeamTwo(teamTwo);
 		_match.setStartDate(LocalDate.now().plusMonths(2));
+		_match.setResult("H 5:7 G");
 		PersistenceFacade.getInstance().saveOrUpdate(teamOne);
 		PersistenceFacade.getInstance().saveOrUpdate(teamTwo);
 		_matchPersist = PersistenceFacade.getInstance().saveOrUpdate(_match);
@@ -57,6 +58,7 @@ public class MatchPersistenceTest {
 		assertEquals(_matchPersist.getStartDate(), _match.getStartDate());
 		assertEquals(_matchPersist.getTeamOne(), _match.getTeamOne());
 		assertEquals(_matchPersist.getTeamTwo(), _match.getTeamTwo());
+		assertEquals(_matchPersist.getResult(), _match.getResult());
 	}
 
 }

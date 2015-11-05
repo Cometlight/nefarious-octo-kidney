@@ -92,5 +92,4 @@ public class Tournament extends PersistableObject {
 			_date = _persistDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		}
 	}
-	
 }

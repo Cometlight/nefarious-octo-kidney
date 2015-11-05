@@ -57,5 +57,4 @@ public class Match extends PersistableObject {
 			_startDate = _persistStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		}
 	}
-	
 }

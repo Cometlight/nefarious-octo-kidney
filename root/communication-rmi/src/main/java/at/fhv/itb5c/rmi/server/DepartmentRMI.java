@@ -69,6 +69,4 @@ public class DepartmentRMI extends UnicastRemoteObject implements IDepartmentRMI
 	public IUserRMI getHead() throws RemoteException {
 		return _head;
 	}
-
-
 }

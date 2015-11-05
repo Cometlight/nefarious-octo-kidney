@@ -24,7 +24,7 @@ public class TeamConverter implements ILogger {
 			teamDTO.setTypeOfSport(team.getTypeOfSport());
 			teamDTO.setDepartment(DepartmentConverter.toDTO(team.getDepartment()));
 			teamDTO.setCoach(UserConverter.toDTO(team.getCoach()));
-			teamDTO.setLeague(team.getLeague());
+			teamDTO.setLeague(LeagueConverter.toDTO(team.getLeague()));
 
 			// Converts each user in the set to an IUser by utilizing the
 			// UserConverter
@@ -51,7 +51,7 @@ public class TeamConverter implements ILogger {
 			team.setTypeOfSport(iteam.getTypeOfSport());
 			team.setDepartment(DepartmentConverter.toEntity(iteam.getDepartment()));
 			team.setCoach(UserConverter.toEntity(iteam.getCoach()));
-			team.setLeague(iteam.getLeague());
+			team.setLeague(LeagueConverter.toEntity(iteam.getLeague()));
 
 			Set<User> members = iteam.getMembers().stream().map(UserConverter::toEntity).collect(Collectors.toSet());
 			team.setMembers(members);

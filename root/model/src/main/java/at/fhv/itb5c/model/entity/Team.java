@@ -26,11 +26,11 @@ public class Team extends PersistableObject {
 	private User _coach;
 
 	@Column(name = "league", nullable = true)
-	private int _league;
+	private League _league;
 
-//	@Column(name = "leagueId", nullable = true) TODO when "League" is exisiting
-//	private Long _leagueId; // needed for search; may be refactored if the need
-//							// arises
+	@Column(name = "leagueId", nullable = true)
+	private Long _leagueId; // needed for search; may be refactored if the need
+							// arises
 
 	@Column(name = "members", nullable = true)
 	private Set<User> _members;
@@ -68,13 +68,13 @@ public class Team extends PersistableObject {
 		_coach = coach;
 	}
 
-	public int getLeague() {
+	public League getLeague() {
 		return _league;
 	}
 
-	public void setLeague(int league) {
+	public void setLeague(League league) {
 		_league = league;
-//		_leagueId = league == null ? null : league.getId();	TODO when League is existing
+		_leagueId = league == null ? null : league.getId();
 	}
 
 	public Set<User> getMembers() {

@@ -56,4 +56,10 @@ public class UserFactory implements IUserFactory, ILogger {
 
 		return userDTO;
 	}
+
+	@Override
+	public IUser login(String username, String password) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

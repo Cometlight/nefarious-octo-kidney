@@ -61,4 +61,10 @@ public class UserFactoryStub extends UnicastRemoteObject implements IUserFactory
 			return e.getStackTrace().toString();
 		}
 	}
+
+	@Override
+	public IUserRMI login(String username, String password) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

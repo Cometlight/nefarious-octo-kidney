@@ -59,4 +59,10 @@ public class UserFactoryRMI extends UnicastRemoteObject implements IUserFactoryR
 		
 		return userRMI;
 	}
+
+	@Override
+	public IUserRMI login(String username, String password) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

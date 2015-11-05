@@ -7,4 +7,8 @@ public interface IUserFactory {
 	public IUser createUser() throws Exception;
 	public IUser save(IUser user) throws Exception;
 	public List<? extends IUser> findUsers(String firstName, String lastName, Long departmentId, Boolean membershipFeePaid) throws Exception;
+	/**
+	 * Returns the user after successful login, otherwise null.
+	 */
+	public IUser login(String username, String password) throws Exception;
 }

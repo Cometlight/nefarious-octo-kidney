@@ -12,8 +12,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.entity.PersistableObject;
+import at.fhv.itb5c.model.entity.Team;
 import at.fhv.itb5c.model.entity.User;
 
 public class PersistenceFacade implements ILogger {
@@ -204,6 +206,41 @@ public class PersistenceFacade implements ILogger {
 		TypedQuery<User> typedQuery = _entityManager.createQuery(query);
 		resultSet = typedQuery.getResultList();
 
+		return resultSet;
+	}
+	
+	public List<Team> findTeams(String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId) {
+		List<Team> resultSet;
+		
+		CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<Team> query = cb.createQuery(Team.class);
+		Root<Team> root = query.from(Team.class);
+		query.select(root);
+		
+		List<Predicate> predicates = new LinkedList<>();
+		
+		if (name != null) {
+			predicates.add(cb.like(cb.lower(root.get("_name")), "%" + name.toLowerCase() + "%"));
+		}
+		
+		if (typeOfSport != null) {
+			predicates.add(cb.equal(root.get("_typeOfSport"), typeOfSport));
+		}
+		
+		if (departmentId != null) {
+			predicates.add(cb.equal(root.get("_departmentId"), departmentId));
+		}
+		
+		if (leagueId != null) {
+			predicates.add(cb.equal(root.get("_leagueId"), leagueId));
+		}
+		
+		query.where(predicates.toArray(new Predicate[predicates.size()]));
+		
+		TypedQuery<Team> typedQuery = _entityManager.createQuery(query);
+		resultSet = typedQuery.getResultList();
+		
 		return resultSet;
 	}
 }

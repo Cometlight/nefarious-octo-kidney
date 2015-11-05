@@ -17,6 +17,8 @@ public class DepartmentConverterRMI implements ILogger {
 			deptRMI.setId(dept.getId());
 			deptRMI.setVersion(dept.getVersion());
 			deptRMI.setName(dept.getName());
+			deptRMI.setTypeOfSport(dept.getTypeOfSport());
+			deptRMI.setHead(dept.getHead());
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -33,7 +35,9 @@ public class DepartmentConverterRMI implements ILogger {
 			dept = new DepartmentDTO();
 			dept.setId(deptRMI.getId());
 			dept.setVersion(deptRMI.getVersion());
-			dept.setName(dept.getName());
+			dept.setName(deptRMI.getName());
+			dept.setTypeOfSport(deptRMI.getTypeOfSport());
+			dept.setHead(deptRMI.getHead());
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}

@@ -59,7 +59,6 @@ public class UserFactory implements IUserFactory, ILogger {
 
 	@Override
 	public IUser login(String username, String password) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return createUser(); //TODO: remove when connection to ldap is implemented
 	}
 }

@@ -4,17 +4,27 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import at.fhv.itb5c.commons.dto.IDepartment;
+import at.fhv.itb5c.commons.dto.IUser;
+import at.fhv.itb5c.commons.enums.TypeOfSport;
 
 public interface IDepartmentRMI extends IDepartment, Remote {
-	public void setId(Long id) throws RemoteException;
+	void setId(Long id) throws RemoteException;
 
-	public Long getId() throws RemoteException;
+	Long getId() throws RemoteException;
 
-	public void setVersion(Long version) throws RemoteException;
+	void setVersion(Long version) throws RemoteException;
 
-	public Long getVersion() throws RemoteException;
+	Long getVersion() throws RemoteException;
 
-	public void setName(String name) throws RemoteException;
+	void setName(String name) throws RemoteException;
 
-	public String getName() throws RemoteException;
+	String getName() throws RemoteException;
+	
+	void setTypeOfSport(TypeOfSport typeOfSport) throws RemoteException;
+	
+	TypeOfSport getTypeOfSport() throws RemoteException;
+	
+	void setHead(IUser head) throws RemoteException;
+	
+	IUserRMI getHead() throws RemoteException;
 }

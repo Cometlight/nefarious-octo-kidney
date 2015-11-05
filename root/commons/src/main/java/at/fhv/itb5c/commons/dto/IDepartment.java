@@ -1,15 +1,25 @@
 package at.fhv.itb5c.commons.dto;
 
+import at.fhv.itb5c.commons.enums.TypeOfSport;
+
 public interface IDepartment {
-	public void setId(Long id) throws Exception;
+	void setId(Long id) throws Exception;
 
-	public Long getId() throws Exception;
+	Long getId() throws Exception;
 
-	public void setVersion(Long version) throws Exception;
+	void setVersion(Long version) throws Exception;
 
-	public Long getVersion() throws Exception;
+	Long getVersion() throws Exception;
 
-	public void setName(String name) throws Exception;
+	void setName(String name) throws Exception;
 
-	public String getName() throws Exception;
+	String getName() throws Exception;
+	
+	TypeOfSport getTypeOfSport() throws Exception;
+
+	void setTypeOfSport(TypeOfSport typeOfSport) throws Exception;
+
+	IUser getHead() throws Exception;
+
+	void setHead(IUser head) throws Exception;
 }

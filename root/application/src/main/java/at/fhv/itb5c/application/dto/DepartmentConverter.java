@@ -16,6 +16,8 @@ public class DepartmentConverter implements ILogger {
 			departmentdto.setId(department.getId());
 			departmentdto.setVersion(department.getVersion());
 			departmentdto.setName(department.getName());
+			departmentdto.setTypeOfSport(department.getTypeOfSport());
+			departmentdto.setHead(UserConverter.toDTO(department.getHead()));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -34,6 +36,8 @@ public class DepartmentConverter implements ILogger {
 			department.setId(departmentdto.getId());
 			department.setVersion(departmentdto.getVersion());
 			department.setName(departmentdto.getName());
+			department.setTypeOfSport(departmentdto.getTypeOfSport());
+			department.setHead(UserConverter.toEntity(departmentdto.getHead()));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}

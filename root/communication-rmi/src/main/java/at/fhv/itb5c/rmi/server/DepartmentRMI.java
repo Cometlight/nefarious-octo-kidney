@@ -69,5 +69,4 @@ public class DepartmentRMI extends UnicastRemoteObject implements IDepartmentRMI
 	public void setTypeOfSport(TypeOfSport typeOfSport) throws RemoteException {
 		_typeOfSport = typeOfSport;
 	}
-
 }

@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import at.fhv.itb5c.commons.dto.IDepartment;
+import at.fhv.itb5c.commons.dto.ILeague;
 import at.fhv.itb5c.commons.dto.ITeam;
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
@@ -15,7 +16,7 @@ public class TeamDTO implements ITeam {
 	private TypeOfSport _typeOfSport;
 	private IDepartment _department;
 	private IUser _coach;
-	private int _league;
+	private ILeague _league;
 	private Set<IUser> _members;
 
 	public Long getId() {
@@ -75,12 +76,12 @@ public class TeamDTO implements ITeam {
 	}
 
 	@Override
-	public int getLeague() {
+	public ILeague getLeague() {
 		return _league;
 	}
 
 	@Override
-	public void setLeague(int league) {
+	public void setLeague(ILeague league) {
 		this._league = league;
 	}
 

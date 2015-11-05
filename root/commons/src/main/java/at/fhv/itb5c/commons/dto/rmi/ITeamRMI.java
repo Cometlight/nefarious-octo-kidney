@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.Set;
 
 import at.fhv.itb5c.commons.dto.IDepartment;
+import at.fhv.itb5c.commons.dto.ILeague;
 import at.fhv.itb5c.commons.dto.ITeam;
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
@@ -28,9 +29,9 @@ public interface ITeamRMI extends Remote, ITeam {
 	IUser getCoach() throws RemoteException;
 	void setCoach(IUser coach) throws RemoteException;
 
-	int getLeague() throws RemoteException;
-	void setLeague(int league) throws RemoteException;
+	ILeagueRMI getLeague() throws RemoteException;
+	void setLeague(ILeague league) throws RemoteException;
 
-	Set<IUser> getMembers() throws RemoteException;
+	Set<IUserRMI> getMembers() throws RemoteException;
 	void setMembers(Set<IUser> members) throws RemoteException;
 }

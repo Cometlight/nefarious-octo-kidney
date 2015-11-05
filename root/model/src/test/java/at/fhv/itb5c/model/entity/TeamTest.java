@@ -71,7 +71,8 @@ public class TeamTest {
 	@Test
 	public void testLeague() {
 		Team team = new Team();
-		final int league = 42;
+		final League league = new League();
+		// TODO set values
 		
 		team.setLeague(league);
 		

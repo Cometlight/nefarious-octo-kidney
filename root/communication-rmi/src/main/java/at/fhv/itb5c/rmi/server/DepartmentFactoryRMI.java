@@ -35,12 +35,26 @@ public class DepartmentFactoryRMI extends UnicastRemoteObject implements IDepart
 			depts = _factory.getAllDepartments();
 		} catch (Exception e) {
 			log.error(e.getMessage());
+			return null;
 		}
-		List<IDepartmentRMI> deptsNew = new LinkedList<IDepartmentRMI>();
+		List<IDepartmentRMI> deptsNew = new LinkedList<>();
 		for(IDepartment dept : depts){
 			deptsNew.add(DepartmentConverterRMI.toRMI(dept));
 		}
 		return deptsNew;
+	}
+
+	@Override
+	public IDepartment getDepartment(Long id) throws Exception {
+		IDepartment department = null;
+		
+		try {
+			department = _factory.getDepartment(id);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		
+		return department;
 	}
 
 }

@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
+import at.fhv.itb5c.commons.dto.IDepartment;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentFactoryRMI;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.logging.ILogger;
@@ -33,6 +34,11 @@ public class DepartmentFactoryStub extends UnicastRemoteObject implements IDepar
 	@Override
 	public List<IDepartmentRMI> getAllDepartments() throws RemoteException {
 		return _departmentFactory.getAllDepartments();
+	}
+
+	@Override
+	public IDepartment getDepartment(Long id) throws Exception {
+		return _departmentFactory.getDepartment(id);
 	}
 
 }

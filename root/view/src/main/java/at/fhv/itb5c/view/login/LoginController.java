@@ -38,7 +38,7 @@ public class LoginController implements ILogger{
 					.login(_loginModel.getUserName().getValue(), _loginModel.getPassword().getValue());
 
 			if (_loggedInUser == null) {
-				ErrorPopUp.invalideLoginCredentials();
+				ErrorPopUp.invalidLoginCredentials();
 			} else {
 				AppState.getInstance().setLoggedInUser(_loggedInUser);
 			}

@@ -8,8 +8,8 @@ import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.user.UserViewController.UserViewState;
 import at.fhv.itb5c.view.user.UserViewFactory;
-import at.fhv.itb5c.view.util.interfaces.PanelClosable;
-import at.fhv.itb5c.view.util.interfaces.PanelCloseHandler;
+import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
+import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -25,7 +25,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
-public class SearchUserController implements PanelClosable {
+public class SearchUserController implements IPanelClosable {
 
 	@FXML private TextField _firstNameTextField;
 	@FXML private TextField _lastNameTextField;
@@ -39,7 +39,7 @@ public class SearchUserController implements PanelClosable {
 	@FXML private TableColumn<IUserRMI, String> _membershipFeeTableColumn;
 	@FXML private Label _searchResultCountLable;
 	
-	private PanelCloseHandler _panelCloseHandler;
+	private IPanelCloseHandler _panelCloseHandler;
 	private SearchUserModel _searchUserModel;
 
 	public SearchUserController() {
@@ -205,7 +205,7 @@ public class SearchUserController implements PanelClosable {
 	}
 
 	@Override
-	public void setPanelCloseHandler(PanelCloseHandler panelCloseHandler) {
+	public void setPanelCloseHandler(IPanelCloseHandler panelCloseHandler) {
 		_panelCloseHandler = panelCloseHandler;
 	}
 }

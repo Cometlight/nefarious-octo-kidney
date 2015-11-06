@@ -2,8 +2,6 @@ package at.fhv.itb5c.view.mainview;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-
-import at.fhv.itb5c.view.user.UserViewController.UserViewState;
 import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
@@ -14,8 +12,6 @@ import at.fhv.itb5c.view.department.DepartmentViewFactory;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.usersearch.SearchUserViewFactory;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -67,7 +63,7 @@ public class MainViewController implements ILogger{
 
 	@FXML
 	public void addUserMenueItemActionHandler(ActionEvent event) throws IOException {	
-		new UserViewFactory(UserViewState.addState).create(_mainPanel);
+		new UserViewFactory().create(_mainPanel);
 	}
 	
 	@FXML
@@ -142,8 +138,10 @@ public class MainViewController implements ILogger{
 
 		@Override
 		public IUserRMI getHead() throws RemoteException {
-			// TODO Auto-generated method stub
-			return null;
+			IUserRMI userRmi = RMIClient.getRMIClient().getUserFactory().createUser();
+			userRmi.setFirstName("Fabian");
+			userRmi.setLastName("Salzgeber");
+			return userRmi;
 		}
 
 		@Override
@@ -154,8 +152,7 @@ public class MainViewController implements ILogger{
 
 		@Override
 		public TypeOfSport getTypeOfSport() throws RemoteException {
-			// TODO Auto-generated method stub
-			return null;
+			return TypeOfSport.Soccer;
 		}
 
 		@Override
@@ -163,6 +160,5 @@ public class MainViewController implements ILogger{
 			// TODO Auto-generated method stub
 			
 		}
-		
 	}
 }

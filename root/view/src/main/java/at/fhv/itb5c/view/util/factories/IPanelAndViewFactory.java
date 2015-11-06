@@ -1,4 +1,4 @@
-package at.fhv.itb5c.view.util.interfaces;
+package at.fhv.itb5c.view.util.factories;
 
 import java.io.IOException;
 

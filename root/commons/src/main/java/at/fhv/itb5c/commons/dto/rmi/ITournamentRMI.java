@@ -41,10 +41,10 @@ public interface ITournamentRMI extends Remote, ITournament {
 	void setHomeTeam(ITeam homeTeam) throws RemoteException;
 
 	@Override
-	Set<ITeamRMI> getGuestTeams() throws RemoteException;
+	Set<String> getGuestTeams() throws RemoteException;
 
 	@Override
-	void setGuestTeams(Set<ITeam> guestTeams) throws RemoteException;
+	void setGuestTeams(Set<String> guestTeams) throws RemoteException;
 
 	@Override
 	LocalDate getDate() throws RemoteException;

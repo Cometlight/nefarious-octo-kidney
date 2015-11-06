@@ -11,20 +11,23 @@ public interface IMatch {
 
 	Long getVersion() throws Exception;
 
-	ITeam getTeamOne() throws Exception;
+	Object getTeamOne() throws Exception;
 
-	void setTeamOne(ITeam teamOne) throws Exception;
+	void setTeamOne(Object teamOne) throws Exception;
 
-	ITeam getTeamTwo() throws Exception;
+	Object getTeamTwo() throws Exception;
 
-	void setTeamTwo(ITeam teamTwo) throws Exception;
+	void setTeamTwo(Object teamTwo) throws Exception;
 
 	LocalDate getStartDate() throws Exception;
 
 	void setStartDate(LocalDate startDate) throws Exception;
 
-	String getResult() throws Exception;
+	Integer getResultOne() throws Exception;
 
-	void setResult(String result) throws Exception;
+	void setResultOne(Integer result) throws Exception;
 
+	Integer getResultTwo() throws Exception;
+
+	void setResultTwo(Integer result) throws Exception;
 }

@@ -13,13 +13,15 @@ import javax.persistence.Transient;
 @Entity
 public class Match extends PersistableObject {
 	@Column(name = "teamOne", nullable = false)
-	private Team _teamOne;
+	private Object _teamOne;
 	@Column(name = "teamTwo", nullable = false)
-	private Team _teamTwo;
+	private Object _teamTwo;
 	@Column(name = "startDate", nullable = false)
 	private Date _persistStartDate;
-	@Column(name = "result", nullable = false)
-	private String _result;
+	@Column(name = "resultTeamOne", nullable = false)
+	private Integer _resultTeamOne;
+	@Column(name = "resultTeamTwo", nullable = false)
+	private Integer _resultTeamTwo;
 	@Transient
 	private LocalDate _startDate;
 
@@ -27,19 +29,19 @@ public class Match extends PersistableObject {
 
 	}
 
-	public Team getTeamOne() {
+	public Object getTeamOne() {
 		return _teamOne;
 	}
 
-	public void setTeamOne(Team teamOne) {
+	public void setTeamOne(Object teamOne) {
 		_teamOne = teamOne;
 	}
 
-	public Team getTeamTwo() {
+	public Object getTeamTwo() {
 		return _teamTwo;
 	}
 
-	public void setTeamTwo(Team teamTwo) {
+	public void setTeamTwo(Object teamTwo) {
 		_teamTwo = teamTwo;
 	}
 
@@ -51,12 +53,20 @@ public class Match extends PersistableObject {
 		_startDate = startDate;
 	}
 
-	public String getResult() {
-		return _result;
+	public Integer getResultTeamOne() {
+		return _resultTeamOne;
 	}
 
-	public void setResult(String result) {
-		_result = result;
+	public void setResultTeamOne(Integer resultTeamOne) {
+		_resultTeamOne = resultTeamOne;
+	}
+
+	public Integer getResultTeamTwo() {
+		return _resultTeamTwo;
+	}
+
+	public void setResultTeamTwo(Integer resultTeamTwo) {
+		_resultTeamTwo = resultTeamTwo;
 	}
 
 	@PrePersist

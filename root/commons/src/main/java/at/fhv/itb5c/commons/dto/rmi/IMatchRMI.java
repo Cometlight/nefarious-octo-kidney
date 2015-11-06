@@ -5,7 +5,6 @@ import java.rmi.RemoteException;
 import java.time.LocalDate;
 
 import at.fhv.itb5c.commons.dto.IMatch;
-import at.fhv.itb5c.commons.dto.ITeam;
 
 public interface IMatchRMI extends Remote, IMatch {
 	@Override
@@ -21,16 +20,16 @@ public interface IMatchRMI extends Remote, IMatch {
 	Long getVersion() throws RemoteException;
 
 	@Override
-	ITeamRMI getTeamOne() throws RemoteException;
+	Object getTeamOne() throws RemoteException;
 
 	@Override
-	void setTeamOne(ITeam teamOne) throws RemoteException;
+	void setTeamOne(Object teamOne) throws RemoteException;
 
 	@Override
-	ITeamRMI getTeamTwo() throws RemoteException;
+	Object getTeamTwo() throws RemoteException;
 
 	@Override
-	void setTeamTwo(ITeam teamTwo) throws RemoteException;
+	void setTeamTwo(Object teamTwo) throws RemoteException;
 
 	@Override
 	LocalDate getStartDate() throws RemoteException;
@@ -39,8 +38,14 @@ public interface IMatchRMI extends Remote, IMatch {
 	void setStartDate(LocalDate startDate) throws RemoteException;
 
 	@Override
-	String getResult() throws RemoteException;
+	Integer getResultOne() throws Exception;
 
 	@Override
-	void setResult(String result) throws RemoteException;
+	void setResultOne(Integer result) throws Exception;
+
+	@Override
+	Integer getResultTwo() throws Exception;
+
+	@Override
+	void setResultTwo(Integer result) throws Exception;
 }

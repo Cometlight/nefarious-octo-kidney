@@ -56,7 +56,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>at.fhv.itb5c.rmi.server.RMIServer</mainClass>
+							<mainClass>at.fhv.itb5c.model.testdata.CreateTestData</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

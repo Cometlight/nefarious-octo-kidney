@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 
 import at.fhv.itb5c.view.user.UserViewController.UserViewState;
+import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
+import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
+import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.department.DepartmentViewFactory;
@@ -135,6 +138,30 @@ public class MainViewController implements ILogger{
 		@Override
 		public String getName() throws RemoteException {
 			return _name;
+		}
+
+		@Override
+		public IUserRMI getHead() throws RemoteException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void setHead(IUser head) throws RemoteException {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public TypeOfSport getTypeOfSport() throws RemoteException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void setTypeOfSport(TypeOfSport typeOfSport) throws RemoteException {
+			// TODO Auto-generated method stub
+			
 		}
 		
 	}

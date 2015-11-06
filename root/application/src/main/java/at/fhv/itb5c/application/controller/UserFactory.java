@@ -56,4 +56,9 @@ public class UserFactory implements IUserFactory, ILogger {
 
 		return userDTO;
 	}
+
+	@Override
+	public IUser login(String username, String password) throws Exception {
+		return createUser(); //TODO: remove when connection to ldap is implemented
+	}
 }

@@ -23,7 +23,7 @@
             <RowConstraints vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <MenuBar>
+            <MenuBar GridPane.hgrow="ALWAYS">
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
@@ -33,7 +33,7 @@
                  <Menu mnemonicParsing="false" text="Administrative">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#addUserMenueItemActionHandler" text="Add User" />
-                    <MenuItem onAction="#searchUserMenueItemActionHandler" text="Search User"/>
+                    <MenuItem onAction="#searchUserMenueItemActionHandler" text="Search User" />
                   </items>
                 </Menu>
               </menus>

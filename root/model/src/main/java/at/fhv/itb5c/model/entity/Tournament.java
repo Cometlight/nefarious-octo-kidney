@@ -22,7 +22,7 @@ public class Tournament extends PersistableObject {
 	@Column(name = "homeTeam", nullable = false)
 	private Team _homeTeam;
 	@Column(name = "guestTeams", nullable = false)
-	private Set<Team> _guestTeams;
+	private Set<String> _guestTeams;
 	@Column(name = "matches", nullable = false)
 	private Set<Match> _matches;
 	@Transient
@@ -55,11 +55,11 @@ public class Tournament extends PersistableObject {
 		_homeTeam = homeTeam;
 	}
 
-	public Set<Team> getGuestTeams() {
+	public Set<String> getGuestTeams() {
 		return _guestTeams;
 	}
 
-	public void setGuestTeams(Set<Team> guestTeams) {
+	public void setGuestTeams(Set<String> guestTeams) {
 		_guestTeams = guestTeams;
 	}
 

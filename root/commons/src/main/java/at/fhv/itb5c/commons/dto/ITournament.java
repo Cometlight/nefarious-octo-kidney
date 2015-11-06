@@ -24,9 +24,9 @@ public interface ITournament {
 
 	void setHomeTeam(ITeam homeTeam) throws Exception;
 
-	Set<? extends ITeam> getGuestTeams() throws Exception;
+	Set<String> getGuestTeams() throws Exception;
 
-	void setGuestTeams(Set<ITeam> guestTeams) throws Exception;
+	void setGuestTeams(Set<String> guestTeams) throws Exception;
 
 	LocalDate getDate() throws Exception;
 

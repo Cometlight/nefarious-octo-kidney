@@ -7,11 +7,11 @@ import javafx.stage.Modality;
 public final class ErrorPopUp {
 	
 	public static void connectionError() {
-		generalError("Connection Error.", "Could not connect to the Severer! Try to login again and contact the system administrator.");
+		generalError("Connection Error.", "Could not connect to the Sever! Try to login again and contact the system administrator.");
 	}
 	
 	public static void criticalSystemError() {
-		generalError("Critical System Error.", "The System encountered a critical error. Please contact the system administrator.");
+		generalError("Critical System Error.", "The system encountered a critical error. Please contact the system administrator.");
 	}
 	
 	public static void invalidLoginCredentials() {

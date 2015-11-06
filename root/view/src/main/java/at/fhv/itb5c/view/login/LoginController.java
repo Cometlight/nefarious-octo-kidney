@@ -31,7 +31,7 @@ public class LoginController implements ILogger{
 	}
 
 	@FXML
-	public void onSignInMouseReleassedHandler(MouseEvent event) {
+	public void onSignInMouseReleasedHandler(MouseEvent event) {
 		try {
 
 			IUserRMI _loggedInUser = RMIClient.getRMIClient().getUserFactory()

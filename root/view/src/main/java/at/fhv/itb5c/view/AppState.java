@@ -7,13 +7,13 @@ import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 public class AppState extends Observable {
 	public IUserRMI _user;
 	
-	private static AppState _instanze;
+	private static AppState _instance;
 	public static AppState getInstance() {
-		if(_instanze == null) {
-			_instanze = new AppState();
+		if(_instance == null) {
+			_instance = new AppState();
 		}
 		
-		return _instanze;
+		return _instance;
 	}
 	
 	public IUserRMI getLoggedInUser() {

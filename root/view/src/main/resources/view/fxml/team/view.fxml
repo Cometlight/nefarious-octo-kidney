@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/simple.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="14.0" stylesheets="@../../css/simple.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="_teamNameLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="simple-heading" text="_teamNameLabel" />
+            <HBox spacing="14.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="170.0" text="League">
+                     <styleClass>
+                        <String fx:value="simple-label" />
+                        <String fx:value="simple-subtle" />
+                     </styleClass></Label>
+                  <Label fx:id="_leagueLabel" styleClass="simple-label" text="_leagueLabel" />
+               </children>
+            </HBox>
+            <HBox spacing="14.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="170.0" text="Coach">
+                     <styleClass>
+                        <String fx:value="simple-label" />
+                        <String fx:value="simple-subtle" />
+                     </styleClass></Label>
+                  <Label fx:id="_coachLabel" styleClass="simple-label" text="_coachLabel" />
+               </children>
+            </HBox>
+            <HBox spacing="14.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="170.0" styleClass="simple-label" />
+                  <Button fx:id="_editButton" mnemonicParsing="false" onAction="#_onEditButtonClick" styleClass="simple-blue" text="Edit" />
+                  <Button fx:id="_cancelButton" mnemonicParsing="false" onAction="#_onCancelButtonClick" styleClass="simple-red" text="Cancel" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

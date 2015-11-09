@@ -16,4 +16,6 @@ public interface IUserFactoryRMI extends Remote, IUserFactory {
 	public List<IUserRMI> findUsers(String firstName, String lastName, Long departmentId, Boolean membershipFeePaid) throws RemoteException;
 	@Override
 	public IUserRMI login(String username, String password) throws RemoteException;
+	@Override
+	public List<IUserRMI> findUsersSimple(String name) throws RemoteException;
 }

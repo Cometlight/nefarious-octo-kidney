@@ -3,6 +3,7 @@ package at.fhv.itb5c.rmi.client;
 import java.rmi.RemoteException;
 
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentFactoryRMI;
+import at.fhv.itb5c.commons.dto.rmi.ITeamFactoryRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserFactoryRMI;
 import at.fhv.itb5c.commons.property.PropertyManager;
 import at.fhv.itb5c.logging.ILogger;
@@ -15,6 +16,7 @@ public class RMIClient implements ILogger {
 	
 	private UserFactoryStub _userFactoryStub;
 	private DepartmentFactoryStub _departmentFactoryStub;
+	private TeamFactoryStub _teamFactoryStub;
 	
 	private RMIClient(){
 		
@@ -51,5 +53,18 @@ public class RMIClient implements ILogger {
 			}
 		}
 		return _departmentFactoryStub;
+	}
+	
+	public ITeamFactoryRMI getTeamFactory() {
+		if (_teamFactoryStub == null) {
+			try {
+				_teamFactoryStub = new TeamFactoryStub();
+				_teamFactoryStub.init(_host, _port);
+			} catch (RemoteException e) {
+				log.error(e.getMessage());
+				return null;
+			}
+		}
+		return _teamFactoryStub;
 	}
 }

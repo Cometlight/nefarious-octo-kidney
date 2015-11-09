@@ -3,20 +3,17 @@ package at.fhv.itb5c.rmi.server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import at.fhv.itb5c.commons.dto.IUser;
-import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
+import at.fhv.itb5c.commons.dto.rmi.ILeagueRMI;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 
-public class DepartmentRMI extends UnicastRemoteObject implements IDepartmentRMI {
+public class LeagueRMI extends UnicastRemoteObject implements ILeagueRMI {
 	private static final long serialVersionUID = 1L;
 	private Long _id;
 	private Long _version;
 	private String _name;
-	private IUserRMI _head;
 	private TypeOfSport _typeOfSport;
-
-	protected DepartmentRMI() throws RemoteException {
+	
+	protected LeagueRMI() throws RemoteException {
 		super();
 	}
 
@@ -51,22 +48,12 @@ public class DepartmentRMI extends UnicastRemoteObject implements IDepartmentRMI
 	}
 
 	@Override
-	public IUserRMI getHead() throws RemoteException {
-		return _head;
-	}
-
-	@Override
-	public void setHead(IUser head) throws RemoteException {
-		_head = (IUserRMI) head;
+	public void setTypeOfSport(TypeOfSport typeOfSport) throws RemoteException {
+		_typeOfSport = typeOfSport;
 	}
 
 	@Override
 	public TypeOfSport getTypeOfSport() throws RemoteException {
 		return _typeOfSport;
-	}
-
-	@Override
-	public void setTypeOfSport(TypeOfSport typeOfSport) throws RemoteException {
-		_typeOfSport = typeOfSport;
 	}
 }

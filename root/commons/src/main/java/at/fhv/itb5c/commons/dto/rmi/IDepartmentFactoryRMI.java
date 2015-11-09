@@ -7,5 +7,6 @@ import java.util.List;
 import at.fhv.itb5c.commons.dto.IDepartmentFactory;
 
 public interface IDepartmentFactoryRMI extends IDepartmentFactory, Remote {
-	public List<IDepartmentRMI> getAllDepartments() throws RemoteException;
+	@Override
+	List<IDepartmentRMI> getAllDepartments() throws RemoteException;
 }

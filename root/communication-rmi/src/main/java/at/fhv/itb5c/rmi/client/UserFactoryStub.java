@@ -51,6 +51,11 @@ public class UserFactoryStub extends UnicastRemoteObject implements IUserFactory
 		return _userFactory.findUsers(firstName, lastName, departmentId, membershipFeePaid);
 	}
 	
+	@Override
+	public List<IUserRMI> findUsersSimple(String name) throws RemoteException {
+		return _userFactory.findUsersSimple(name);
+	}
+	
 	private String userToSTring(IUser user) {
 		try {
 			return "UserDTO [_id=" + user.getId() + ", _version=" + user.getVersion() + ", _firstName=" + user.getFirstName() + ", _lastName="

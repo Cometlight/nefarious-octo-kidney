@@ -56,4 +56,18 @@ public class UserFactory implements IUserFactory, ILogger {
 
 		return userDTO;
 	}
+	
+	public List<IUser> findUsersSimple(String name) {
+		List<User> userEntities = PersistenceFacade.getInstance().findUsersSimple(name);
+		List<IUser> userDTO = new LinkedList<IUser>();
+		
+		log.debug(userEntities.size() + " results found for search: name = " + name);
+
+		// convert to DTOs
+		for (User userEntity : userEntities) {
+			userDTO.add(UserConverter.toDTO(userEntity));
+		}
+
+		return userDTO;
+	}
 }

@@ -52,7 +52,21 @@ public class UserFactoryRMI extends UnicastRemoteObject implements IUserFactoryR
 		List<IUser> userDTO = _factory.findUsers(firstName, lastName, departmentId, membershipFeePaid);
 		
 		// convert to rmi
-		List<IUserRMI> userRMI = new LinkedList<IUserRMI>();
+		List<IUserRMI> userRMI = new LinkedList<>();
+		for(IUser user : userDTO){
+			userRMI.add(UserConverterRMI.toRMI(user));
+		}
+		
+		return userRMI;
+	}
+	
+	@Override
+	public List<IUserRMI> findUsersSimple(String name) throws RemoteException {
+		// search results
+		List<IUser> userDTO = _factory.findUsersSimple(name);
+		
+		// convert to rmi
+		List<IUserRMI> userRMI = new LinkedList<>();
 		for(IUser user : userDTO){
 			userRMI.add(UserConverterRMI.toRMI(user));
 		}

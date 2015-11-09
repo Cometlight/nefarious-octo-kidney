@@ -7,4 +7,5 @@ public interface IUserFactory {
 	public IUser createUser() throws Exception;
 	public IUser save(IUser user) throws Exception;
 	public List<? extends IUser> findUsers(String firstName, String lastName, Long departmentId, Boolean membershipFeePaid) throws Exception;
+	public List<? extends IUser> findUsersSimple(String name) throws Exception;
 }

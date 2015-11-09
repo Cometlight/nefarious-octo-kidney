@@ -40,14 +40,7 @@ public class MainViewController implements ILogger{
 	}
 	
 	public void initialize() {
-		//TODO: remove when test values are in the db
-		_mainViewModel.getDepartments().add(new DummyDepartment("Fußball"));
-		_mainViewModel.getDepartments().add(new DummyDepartment("Tennis"));
-		_mainViewModel.getDepartments().add(new DummyDepartment("Basketball"));
 		_departmentsListView.setItems(_mainViewModel.getDepartments());
-		
-		//TODO(san7985) when there are departments in the db
-		//_departmentsListView.setItems(_mainViewModel.getDepartments());
 		_departmentsListView.setCellFactory(new Callback<ListView<IDepartmentRMI>, ListCell<IDepartmentRMI>>() {	
 			@Override
 			public ListCell<IDepartmentRMI> call(ListView<IDepartmentRMI> param) {
@@ -89,76 +82,6 @@ public class MainViewController implements ILogger{
 					ErrorPopUp.connectionError();
 				}
 			}
-		}
-	}
-	
-	//TODO: remove when test values are in the db
-	private class DummyDepartment implements IDepartmentRMI {
-
-		private String _name;
-		
-		public DummyDepartment(String name) {
-			_name = name;
-		}
-		
-		@Override
-		public void setId(Long id) throws RemoteException {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public Long getId() throws RemoteException {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public void setVersion(Long version) throws RemoteException {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public Long getVersion() throws RemoteException {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public void setName(String name) throws RemoteException {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public String getName() throws RemoteException {
-			return _name;
-		}
-
-		@Override
-		public IUserRMI getHead() throws RemoteException {
-			IUserRMI userRmi = RMIClient.getRMIClient().getUserFactory().createUser();
-			userRmi.setFirstName("Fabian");
-			userRmi.setLastName("Salzgeber");
-			return userRmi;
-		}
-
-		@Override
-		public void setHead(IUser head) throws RemoteException {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public TypeOfSport getTypeOfSport() throws RemoteException {
-			return TypeOfSport.Soccer;
-		}
-
-		@Override
-		public void setTypeOfSport(TypeOfSport typeOfSport) throws RemoteException {
-			// TODO Auto-generated method stub
-			
 		}
 	}
 }

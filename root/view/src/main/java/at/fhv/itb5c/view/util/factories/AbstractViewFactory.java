@@ -8,12 +8,12 @@ import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 
-public abstract class AbstractFactory implements IViewFactory{
+public abstract class AbstractViewFactory implements IViewFactory{
 
 	private URL _viewPath;
 	private Object _controller;
 	
-	public AbstractFactory(String viewPath, Object controller) {
+	public AbstractViewFactory(String viewPath, Object controller) {
 		_viewPath = this.getClass().getResource(viewPath);
 		_controller = controller;
 	}

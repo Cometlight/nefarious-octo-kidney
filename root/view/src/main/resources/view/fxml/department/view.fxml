@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="829.0" stylesheets="@../../css/simple.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="_departmentNameLabel" styleClass="simple-heading" text="_departmentNameLabel" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="14.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="74.0">
+         <children>
+            <HBox prefWidth="200.0" spacing="14.0" styleClass="simple-form-row">
+               <children>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="150.0" text="Type of Sport" textAlignment="RIGHT">
+                     <styleClass>
+                        <String fx:value="simple-label" />
+                        <String fx:value="simple-subtle" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="_typeOfSportLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="simple-label" text="_typeOfSportLabel" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <HBox prefWidth="200.0" spacing="14.0" styleClass="simple-form-row">
+               <children>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="150.0" text="Head" textAlignment="RIGHT">
+                     <styleClass>
+                        <String fx:value="simple-label" />
+                        <String fx:value="simple-subtle" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="_headLabel" styleClass="simple-label" text="_headLabel" />
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0" />
+            <Label styleClass="simple-heading-2" text="Teams" />
+            <ListView fx:id="_teamList" minHeight="-Infinity" prefHeight="78.0" prefWidth="799.0" />
+            <HBox prefWidth="200.0" spacing="14.0" styleClass="simple-form-row">
+               <children>
+                  <Button fx:id="_addTeamButton" mnemonicParsing="false" onAction="#_onAddTeamButtonClick" styleClass="simple-blue" text="Add Team" />
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0" />
+            <Label styleClass="simple-heading-2" text="Tournaments" />
+            <ListView fx:id="_tournamentList" minHeight="-Infinity" prefHeight="78.0" prefWidth="799.0" />
+            <HBox prefWidth="200.0" spacing="14.0" styleClass="simple-form-row">
+               <children>
+                  <Button fx:id="_addTournamentButton" mnemonicParsing="false" onAction="#_onAddTournamentButtonClick" styleClass="simple-blue" text="Add Tournament" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

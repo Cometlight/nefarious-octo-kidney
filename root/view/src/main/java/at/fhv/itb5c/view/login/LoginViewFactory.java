@@ -1,26 +1,10 @@
 package at.fhv.itb5c.view.login;
 
-import java.io.IOException;
+import at.fhv.itb5c.view.util.factories.AbstractPanelAndViewFactory;
 
-import at.fhv.itb5c.view.util.RouteProvider;
-import at.fhv.itb5c.view.util.interfaces.IPanelAndViewFactory;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.Pane;
+public class LoginViewFactory extends AbstractPanelAndViewFactory {
 
-public class LoginViewFactory implements IPanelAndViewFactory {
-
-	static {
-		RouteProvider.getInstance().add(LoginController.class, "/view/fxml/Login.fxml");
+	public LoginViewFactory() {
+		super("/view/fxml/Login.fxml", new LoginController());
 	}
-
-	@Override
-	public Pane create() throws IOException {
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(RouteProvider.getInstance().get(LoginController.class));
-		loader.setController(new LoginController());
-		Pane rootLayout = (Pane) loader.load();
-		
-		return  rootLayout;
-	}
-
 }

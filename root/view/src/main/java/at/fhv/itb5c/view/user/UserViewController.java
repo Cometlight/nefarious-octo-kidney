@@ -17,8 +17,8 @@ import at.fhv.itb5c.view.user.states.DetailUserViewControlls;
 import at.fhv.itb5c.view.user.states.ModifyUserViewControlls;
 import at.fhv.itb5c.view.user.states.AddUserViewControllsController;
 import at.fhv.itb5c.view.util.RouteProvider;
-import at.fhv.itb5c.view.util.interfaces.PanelClosable;
-import at.fhv.itb5c.view.util.interfaces.PanelCloseHandler;
+import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
+import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -32,7 +32,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
-public class UserViewController implements PanelClosable, Closeable {
+public class UserViewController implements IPanelClosable, Closeable {
 	
 	@FXML private Label _titelLabel;
 	@FXML private BorderPane _borderPane;
@@ -127,10 +127,10 @@ public class UserViewController implements PanelClosable, Closeable {
 		}
 	}
 
-	private PanelCloseHandler _panelCloseHandler;
+	private IPanelCloseHandler _panelCloseHandler;
 
 	@Override
-	public void setPanelCloseHandler(PanelCloseHandler panelCloseHandler) {
+	public void setPanelCloseHandler(IPanelCloseHandler panelCloseHandler) {
 		_panelCloseHandler = panelCloseHandler;
 	}
 

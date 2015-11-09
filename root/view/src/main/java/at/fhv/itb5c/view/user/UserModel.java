@@ -8,6 +8,7 @@ import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
+import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -18,7 +19,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 
-public class UserModel {
+public class UserModel implements ILogger{
 	private StringProperty _firstName;
 	private StringProperty _lastName;
 	private StringProperty _address;
@@ -85,8 +86,7 @@ public class UserModel {
 				_rmiUser.setTypeOfSports(new HashSet<>(_typeOfSports));
 			}
 		} catch (RemoteException e) {
-			//TODO(san7985) logging
-			e.printStackTrace();
+			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
 		}
 

@@ -7,7 +7,7 @@ import java.util.Observer;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.view.login.LoginViewFactory;
 import at.fhv.itb5c.view.mainview.MainViewFactory;
-import at.fhv.itb5c.view.util.interfaces.IPanelAndViewFactory;
+import at.fhv.itb5c.view.util.factories.IPanelAndViewFactory;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

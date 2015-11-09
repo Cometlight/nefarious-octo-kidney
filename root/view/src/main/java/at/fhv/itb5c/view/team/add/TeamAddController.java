@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.ILeagueRMI;
+import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
@@ -94,7 +95,14 @@ public class TeamAddController implements IPanelClosable, ILogger{
     @FXML
     void _onSaveButtonClick(ActionEvent event) {
     	try {
-    		//TODO: save team
+    		ITeamRMI team = RMIClient.getRMIClient().getTeamFactory().createTeam();
+    		team.setCoach(_teamAddModel.getCoach().getValue());
+    		team.setName(_teamAddModel.getName().getValue());
+    		team.setLeague(_teamAddModel.getLeague().getValue());
+    		team.setTypeOfSport(_teamAddModel.getDepartment().getTypeOfSport());
+    		
+    		RMIClient.getRMIClient().getTeamFactory().saveOrUpdate(team);
+    		
 			_panelCloseHandler.closeNext(new DepartmentViewFactory(_teamAddModel.getDepartment()));
 		} catch (IOException e) {
 			log.error(e.getMessage());

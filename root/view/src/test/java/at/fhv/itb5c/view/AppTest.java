@@ -1,4 +1,4 @@
-package at.fhv.itb5.view;
+package at.fhv.itb5c.view;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

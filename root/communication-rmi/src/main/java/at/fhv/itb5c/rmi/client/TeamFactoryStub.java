@@ -34,12 +34,12 @@ public class TeamFactoryStub extends UnicastRemoteObject implements ITeamFactory
 	}
 
 	@Override
-	public ITeam createTeam() throws RemoteException {
+	public ITeamRMI createTeam() throws RemoteException {
 		return _teamFactory.createTeam();
 	}
 
 	@Override
-	public ITeam saveOrUpdate(ITeam team) throws RemoteException {
+	public ITeamRMI saveOrUpdate(ITeam team) throws RemoteException {
 		return _teamFactory.createTeam();
 	}
 

@@ -11,4 +11,5 @@ public interface IUserFactory {
 	 * Returns the user after successful login, otherwise null.
 	 */
 	public IUser login(String username, String password) throws Exception;
+	public List<? extends IUser> findUsersSimple(String name) throws Exception;
 }

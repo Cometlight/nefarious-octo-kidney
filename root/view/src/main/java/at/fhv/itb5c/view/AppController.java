@@ -26,7 +26,7 @@ public class AppController implements Observer, ILogger {
 	public void start(Stage stage) throws IOException {
 		AppState.getInstance().addObserver(this);
 
-		stage.setTitle("Enterprise Application Project");
+		stage.setTitle("Club Manager 2016");
 		stage.setMinHeight(600);
 		stage.setMinWidth(800);
 		this._primaryStage = stage;

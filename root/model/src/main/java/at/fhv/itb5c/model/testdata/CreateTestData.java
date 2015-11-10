@@ -31,9 +31,15 @@ public class CreateTestData implements ILogger {
 			createUsers();
 			createLeagues();
 			createTeams();
+			updateDepartments();
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
+	}
+
+	private static void updateDepartments() {
+		_deptSoccer.setHead(_userDS);
+		_deptTennis.setHead(_userSA);
 	}
 
 	private static void createDepartments() throws Exception {
@@ -89,7 +95,7 @@ public class CreateTestData implements ILogger {
 		_userSA.setGender(Gender.Female);
 		_userSA.setMembershipFeePaid(true);
 		_userSA.setTelephoneNumber("06648268464");
-		_userSA.setTypeOfSports(new HashSet<>(Arrays.asList(TypeOfSport.Soccer)));
+		_userSA.setTypeOfSports(new HashSet<>(Arrays.asList(TypeOfSport.Tennis)));
 		_userSA.setRoles(new HashSet<>(Arrays.asList(UserRole.StandardUser)));
 		_userSA = PersistenceFacade.getInstance().saveOrUpdate(_userSA);
 	}

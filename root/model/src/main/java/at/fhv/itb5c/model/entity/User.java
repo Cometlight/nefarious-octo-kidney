@@ -57,12 +57,11 @@ public class User extends PersistableObject {
 	@Column(name = "typeOfSports", nullable = true)
 	private Set<TypeOfSport> _typeOfSports;
 
-	@Column(name = "department", nullable = true)
-	private Department _department;
-
 	@Column(name = "departmentId", nullable = true)
-	private Long _departmentId; // needed for search; may be refactored if the
-								// need arises
+	private Long _departmentId;
+	
+	@Column(name = "ldapUID", nullable = true)
+	private String _ldapUID;
 
 	public User() {
 
@@ -179,13 +178,20 @@ public class User extends PersistableObject {
 		_typeOfSports = typeOfSports;
 	}
 
-	public Department getDepartment() {
-		return _department;
+	public Long getDepartmentId() {
+		return _departmentId;
 	}
 
-	public void setDepartment(Department department) {
-		_department = department;
-		_departmentId = department == null ? null : department.getId();
+	public void setDepartmentId(Long departmentId) {
+		_departmentId = departmentId;
+	}
+	
+	public String getLdapUID() {
+		return _ldapUID;
+	}
+
+	public void setLdapUID(String ldapUID) {
+		_ldapUID = ldapUID;
 	}
 
 	@Override
@@ -194,7 +200,7 @@ public class User extends PersistableObject {
 				+ ", _telephoneNumber=" + _telephoneNumber + ", _gender=" + _gender + ", _address=" + _address
 				+ ", _dateOfBirth=" + _dateOfBirth + ", _persistDateOfBirth=" + _persistDateOfBirth
 				+ ", _membershipFee=" + _membershipFee + ", _membershipFeePaid=" + _membershipFeePaid + ", _roles="
-				+ _roles + ", _typeOfSports=" + _typeOfSports + ", _department=" + _department + ", _departmentId="
-				+ _departmentId + "]";
+				+ _roles + ", _typeOfSports=" + _typeOfSports + ", _departmentId=" + _departmentId + ", _ldapUID="
+				+ _ldapUID + "]";
 	}
 }

@@ -14,13 +14,12 @@ import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
-import at.fhv.itb5c.rmi.client.RMIClient;
 
 public class User {
 	
 	@Test
 	public void saveUser() {
-		try {
+		/*try {
 			IUserRMI user = RMIClient.getRMIClient().getUserFactory().createUser();
 			user.setFirstName("Daniel");
 			user.setLastName("Unit");
@@ -56,7 +55,7 @@ public class User {
 			
 		} catch (RemoteException e) {
 			Assert.assertEquals(true, false);
-		}
+		}*/
 	}
 
 }

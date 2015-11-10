@@ -21,7 +21,7 @@ public class UserViewFactory extends AbstractFactory {
 		try {
 			UserModel userModel;
 			if (userViewState == UserViewState.addState) {
-				userModel = UserModel.createUserModel(RMIClient.getRMIClient().getUserFactory().createUser());
+				userModel = UserModel.createUserModel(RMIClient.getRMIClient().getApplicationFacade().createUser());
 			} else {
 				userModel = UserModel.createUserModel(user);
 			}

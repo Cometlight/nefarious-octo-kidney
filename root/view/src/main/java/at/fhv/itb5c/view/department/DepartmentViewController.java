@@ -23,9 +23,9 @@ public class DepartmentViewController {
     
     @FXML
     public void initialize() {
-    	_departmentNameLabel.textProperty().bind(_departmentViewModel.getDepartmentName());
+    	/*_departmentNameLabel.textProperty().bind(_departmentViewModel.getDepartmentName());
     	_headLabel.textProperty().bind(_departmentViewModel.getNameHeadOfDepartment());
-    	_typeOfSportLabel.textProperty().bind(_departmentViewModel.getTypeOfSport());
+    	_typeOfSportLabel.textProperty().bind(_departmentViewModel.getTypeOfSport());*/
     }
     
     @FXML

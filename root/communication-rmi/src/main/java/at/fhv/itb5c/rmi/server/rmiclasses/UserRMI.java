@@ -1,12 +1,10 @@
-package at.fhv.itb5c.rmi.server;
+package at.fhv.itb5c.rmi.server.rmiclasses;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.util.Set;
 
-import at.fhv.itb5c.commons.dto.IDepartment;
-import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
@@ -14,7 +12,7 @@ import at.fhv.itb5c.commons.enums.UserRole;
 
 public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long _id;
 	private Long _version;
 	private String _firstName;
@@ -24,13 +22,14 @@ public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 	private Gender _gender;
 	private String _address;
 	private LocalDate _dateOfBirth;
-	private double _membershipFee;
+	private Double _membershipFee;
 	private Set<UserRole> _roles;
 	private Set<TypeOfSport> _typeOfSports;
-	private IDepartmentRMI _department;
-	private boolean _membershipFeePaid;
+	private Boolean _membershipFeePaid;
+	private Long _departmentId;
+	private String _ldapUID;
 
-	protected UserRMI() throws RemoteException {
+	public UserRMI() throws RemoteException {
 		super();
 	}
 
@@ -71,7 +70,7 @@ public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 
 	@Override
 	public void setTelephoneNumber(String telephoneNumber) throws RemoteException {
-		_telephoneNumber =telephoneNumber;
+		_telephoneNumber = telephoneNumber;
 	}
 
 	@Override
@@ -165,12 +164,22 @@ public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 	}
 
 	@Override
-	public IDepartmentRMI getDepartment() throws RemoteException {
-		return _department;
+	public Long getDepartmentId() throws RemoteException {
+		return _departmentId;
 	}
 
 	@Override
-	public void setDepartment(IDepartment department) throws RemoteException {
-		_department = DepartmentConverterRMI.toRMI(department);
+	public void setDepartmentId(Long departmentId) throws RemoteException {
+		_departmentId = departmentId;
+	}
+
+	@Override
+	public String getLdapUID() throws RemoteException {
+		return _ldapUID;
+	}
+
+	@Override
+	public void setLdapUID(String ldapUID) throws RemoteException {
+		_ldapUID = ldapUID;
 	}
 }

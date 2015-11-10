@@ -41,7 +41,7 @@ private User addUser(String firstName, String lastName) throws Exception {
     User user = new User();
     user.setFirstName(firstName);
     user.setLastName(lastName);
-    user.setDepartment(department);
+//    user.setDepartment(department);
     user.setMembershipFeePaid(membershipFeePaid);
     return PersistenceFacade.getInstance().saveOrUpdate(user);
   }

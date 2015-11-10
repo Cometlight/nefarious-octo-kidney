@@ -1,16 +1,13 @@
 package at.fhv.itb5c.application.dto;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
-import at.fhv.itb5c.commons.dto.IDepartment;
-import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 
-public class UserDTO implements IUser {
+public class UserDTO {
 	private Long _id;
 	private Long _version;
 	private String _firstName;
@@ -20,31 +17,12 @@ public class UserDTO implements IUser {
 	private Gender _gender;
 	private String _address;
 	private LocalDate _dateOfBirth;
-	private double _membershipFee;
+	private Double _membershipFee;
 	private Set<UserRole> _roles;
 	private Set<TypeOfSport> _typeOfSports;
-	private boolean _membershipFeePaid;
-	private DepartmentDTO _department;
-	
-	public UserDTO() {
-		_roles = new HashSet<UserRole>();
-		_typeOfSports = new HashSet<TypeOfSport>();
-	}
-
-	public UserDTO(String firstName, String lastName, String email, String telephoneNumber, Gender gender,
-			String address, LocalDate dateOfBirth, double membershipFee, Set<UserRole> roles,
-			Set<TypeOfSport> typeOfSports) {
-		_firstName = firstName;
-		_lastName = lastName;
-		_email = email;
-		_telephoneNumber = telephoneNumber;
-		_gender = gender;
-		_address = address;
-		_dateOfBirth = dateOfBirth;
-		_membershipFee = membershipFee;
-		_roles = roles;
-		_typeOfSports = typeOfSports;
-	}
+	private Boolean _membershipFeePaid;
+	private Long _departmentId;
+	private String _ldapUID;
 
 	public Long getId() {
 		return _id;
@@ -118,11 +96,11 @@ public class UserDTO implements IUser {
 		_dateOfBirth = dateOfBirth;
 	}
 
-	public double getMembershipFee() {
+	public Double getMembershipFee() {
 		return _membershipFee;
 	}
 
-	public void setMembershipFee(double membershipFee) {
+	public void setMembershipFee(Double membershipFee) {
 		_membershipFee = membershipFee;
 	}
 
@@ -142,20 +120,28 @@ public class UserDTO implements IUser {
 		_typeOfSports = typeOfSports;
 	}
 
-	public boolean getMembershipFeePaid() {
+	public Boolean getMembershipFeePaid() {
 		return _membershipFeePaid;
 	}
 
-	public void setMembershipFeePaid(boolean membershipFeePaid) {
+	public void setMembershipFeePaid(Boolean membershipFeePaid) {
 		_membershipFeePaid = membershipFeePaid;
 	}
 
-	public IDepartment getDepartment() {
-		return _department;
+	public Long getDepartmentId() {
+		return _departmentId;
 	}
 
-	public void setDepartment(IDepartment department) {
-		_department = (DepartmentDTO) department;
+	public void setDepartmentId(Long departmentId) {
+		_departmentId = departmentId;
+	}
+	
+	public String getLdapUID() {
+		return _ldapUID;
+	}
+
+	public void setLdapUID(String ldapUID) {
+		_ldapUID = ldapUID;
 	}
 
 	@Override
@@ -163,6 +149,7 @@ public class UserDTO implements IUser {
 		return "UserDTO [_id=" + _id + ", _version=" + _version + ", _firstName=" + _firstName + ", _lastName="
 				+ _lastName + ", _email=" + _email + ", _telephoneNumber=" + _telephoneNumber + ", _gender=" + _gender
 				+ ", _address=" + _address + ", _dateOfBirth=" + _dateOfBirth + ", _membershipFee=" + _membershipFee
-				+ ", _roles=" + _roles + ", _typeOfSports=" + _typeOfSports + "]";
+				+ ", _roles=" + _roles + ", _typeOfSports=" + _typeOfSports + ", _membershipFeePaid="
+				+ _membershipFeePaid + ", _departmentId=" + _departmentId + ", _ldapUID=" + _ldapUID + "]";
 	}
 }

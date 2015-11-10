@@ -62,7 +62,7 @@ public class CreateTestData implements ILogger {
 		_userDS.setLastName("Scheffknecht");
 		_userDS.setAddress("Hasenfeldstraße 7a, A - 6890 Lustenau");
 		_userDS.setDateOfBirth(LocalDate.now().minusYears(22));
-		_userDS.setDepartment(_deptSoccer);
+		_userDS.setDepartmentId(_deptSoccer.getId());
 		_userDS.setEmail("daniel.scheffknecht@gmx.at");
 		_userDS.setGender(Gender.Male);
 		_userDS.setMembershipFee(20.7d);
@@ -77,7 +77,7 @@ public class CreateTestData implements ILogger {
 		_userDG.setLastName("Grießer");
 		_userDG.setAddress("Rickenbacherstr. 15a, A - 6922 Wolfurt");
 		_userDG.setDateOfBirth(LocalDate.now().minusYears(27));
-		_userDG.setDepartment(_deptSoccer);
+		_userDS.setDepartmentId(_deptSoccer.getId());
 		_userDG.setEmail("daniel.griesser@gmail.com");
 		_userDG.setGender(Gender.Male);
 		_userDG.setMembershipFee(6.9d);
@@ -92,7 +92,7 @@ public class CreateTestData implements ILogger {
 		_userSA.setLastName("Angerer");
 		_userSA.setAddress("Prinzessinnenweg 7b, 6480 Götzis");
 		_userSA.setDateOfBirth(LocalDate.now().minusYears(25));
-		_userSA.setDepartment(_deptTennis);
+		_userDS.setDepartmentId(_deptTennis.getId());
 		_userSA.setEmail("simone.a@gmx.net");
 		_userSA.setGender(Gender.Female);
 		_userSA.setMembershipFeePaid(true);

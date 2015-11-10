@@ -13,14 +13,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import at.fhv.itb5c.application.dto.UserDTO;
-import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 
 public class UserFactoryTest {
-	private UserFactory _factory;
+	/*private UserFactory _factory;
 	private IUser _newUser;
 	private IUser _user;
 
@@ -99,5 +97,5 @@ public class UserFactoryTest {
 		} catch (Exception e) {
 			assertTrue(false);
 		}
-	}
+	}*/
 }

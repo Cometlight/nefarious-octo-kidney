@@ -1,6 +1,5 @@
 package at.fhv.itb5c.view.usersearch;
 
-import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -16,7 +15,7 @@ public class SearchUserModel {
 	private StringProperty _firstName;
 	private StringProperty _lastName;
 	private BooleanProperty _isPaid;
-	private ObjectProperty<IDepartmentRMI> _department;
+	//private ObjectProperty<IDepartmentRMI> _department;
 	private ObservableList<IUserRMI> _searchResult;
 	
 	public SearchUserModel() 
@@ -25,7 +24,7 @@ public class SearchUserModel {
 		_lastName = new SimpleStringProperty();
 		_isPaid = new SimpleBooleanProperty();
 		_searchResult = FXCollections.observableArrayList();
-		_department = new SimpleObjectProperty<>();
+		//_department = new SimpleObjectProperty<>();
 	}
 	
 	public StringProperty getFirstName() {
@@ -44,7 +43,7 @@ public class SearchUserModel {
 		return _searchResult;
 	}
 	
-	public ObjectProperty<IDepartmentRMI> getDepartment() {
+	/*public ObjectProperty<IDepartmentRMI> getDepartment() {
 		return _department;
-	}
+	}*/
 }

@@ -190,14 +190,14 @@ public class UserTest {
 		assertTrue(user.getTypeOfSports().contains(TypeOfSport.Tennis));
 	}
 
-	@Test
-	public void testDepartment() {
-		final Department department = new Department();
-		department.setName("Soccer 01");
-		User user = new User();
-		user.setDepartment(department);
-		assertEquals(department, user.getDepartment());
-	}
+//	@Test
+//	public void testDepartment() {
+//		final Department department = new Department();
+//		department.setName("Soccer 01");
+//		User user = new User();
+//		user.setDepartment(department);
+//		assertEquals(department, user.getDepartment());
+//	}
 
 	@Test
 	public void testSaveOrUpdate() {
@@ -242,7 +242,7 @@ public class UserTest {
 		assertEquals(newUser.getRoles(), returningUser.getRoles());
 		assertEquals(newUser.getTypeOfSports(), returningUser.getTypeOfSports());
 		assertEquals(newUser.getMembershipFeePaid(), returningUser.getMembershipFeePaid());
-		assertEquals(newUser.getDepartment(), returningUser.getDepartment());
+//		assertEquals(newUser.getDepartment(), returningUser.getDepartment());
 
 		// update the user
 		newUser.setFirstName("Daniel2");
@@ -282,6 +282,6 @@ public class UserTest {
 		assertEquals(newUser.getRoles(), returningUser.getRoles());
 		assertEquals(newUser.getTypeOfSports(), returningUser.getTypeOfSports());
 		assertEquals(newUser.getMembershipFeePaid(), returningUser.getMembershipFeePaid());
-		assertEquals(newUser.getDepartment(), returningUser.getDepartment());
+//		assertEquals(newUser.getDepartment(), returningUser.getDepartment());
 	}
 }

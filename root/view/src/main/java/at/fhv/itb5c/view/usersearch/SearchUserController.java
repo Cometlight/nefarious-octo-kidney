@@ -3,9 +3,7 @@ package at.fhv.itb5c.view.usersearch;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.List;
-import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
-import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.user.UserViewController.UserViewState;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
@@ -30,7 +28,7 @@ public class SearchUserController implements IPanelClosable {
 	@FXML private TextField _firstNameTextField;
 	@FXML private TextField _lastNameTextField;
 	@FXML private CheckBox _paidCheckBox;
-	@FXML private ComboBox<IDepartmentRMI> _departmentsCombobox;
+	//@FXML private ComboBox<IDepartmentRMI> _departmentsCombobox;
 	@FXML private TableView<IUserRMI> _searchResultTableView;
 	@FXML private TableColumn<IUserRMI, String> _firstNameTableColumn;
 	@FXML private TableColumn<IUserRMI, String> _lastNameTableColumn;
@@ -52,13 +50,13 @@ public class SearchUserController implements IPanelClosable {
 		_paidCheckBox.selectedProperty().bindBidirectional(_searchUserModel.getIsPaid());
 		_searchResultTableView.setItems(_searchUserModel.getSearchResult());
 
-		try {
+		/*try {
 			_departmentsCombobox.setItems(
 					FXCollections.observableList(RMIClient.getRMIClient().getDepartmentFactory().getAllDepartments()));
 		} catch (RemoteException e) {
 			ErrorPopUp.connectionError();
 		}
-		_departmentsCombobox.valueProperty().bindBidirectional(_searchUserModel.getDepartment());
+		_departmentsCombobox.valueProperty().bindBidirectional(_searchUserModel.getDepartment());*/
 
 		initializeTable();
 	}
@@ -179,7 +177,7 @@ public class SearchUserController implements IPanelClosable {
 
 	@FXML
 	public void searchButtonOnReleasedEventHandler(MouseEvent mouseEvent) {
-		try {
+		/*try {
 			List<IUserRMI> users;
 			if (_searchUserModel.getDepartment().get() == null) {
 				users = RMIClient.getRMIClient().getUserFactory().findUsers(_searchUserModel.getFirstName().getValue(),
@@ -196,7 +194,7 @@ public class SearchUserController implements IPanelClosable {
 			_searchUserModel.getSearchResult().addAll(users);
 		} catch (RemoteException e) {
 			ErrorPopUp.connectionError();
-		}
+		}*/
 	}
 
 	@FXML

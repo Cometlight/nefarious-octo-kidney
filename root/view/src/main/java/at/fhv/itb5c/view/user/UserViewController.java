@@ -12,7 +12,6 @@ import org.controlsfx.control.CheckListView;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
-import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.user.states.DetailUserViewControlls;
 import at.fhv.itb5c.view.user.states.ModifyUserViewControlls;
 import at.fhv.itb5c.view.user.states.AddUserViewControllsController;
@@ -136,12 +135,12 @@ public class UserViewController implements IPanelClosable, Closeable {
 
 	public boolean saveModel() {
 		if (mandatoryFieldsSet()) {
-			try {
+			/*try {
 				_userModel.setIUserRMI(RMIClient.getRMIClient().getUserFactory().save(_userModel.getRMIUser()));
 			} catch (RemoteException e) {
 				ErrorPopUp.connectionError();
 				return false;
-			}
+			}*/
 			return true;
 		} else {
 			return false;

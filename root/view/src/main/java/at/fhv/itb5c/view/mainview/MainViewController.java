@@ -63,7 +63,6 @@ public class MainViewController implements ILogger{
 	
 	@FXML
 	public void departmentListViewOnMouseClick(MouseEvent mouseEvent) throws IOException {
-		//_departmentsListView.getFocusModel().focus(_departmentsListView.getSelectionModel().getSelectedIndex());
 		new DepartmentViewFactory(_departmentsListView.getSelectionModel().getSelectedItem()).create(_mainPanel);
 	}
 	

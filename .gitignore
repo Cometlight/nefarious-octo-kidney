@@ -29,8 +29,6 @@ target/
 # object-db
 *.odb
 *.odb$
-!/root/model/persistence.odb
-!/root/model/persistence.odb$
 
 # eclipse
 .project

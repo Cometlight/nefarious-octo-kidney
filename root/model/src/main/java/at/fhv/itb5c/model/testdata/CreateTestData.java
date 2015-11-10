@@ -25,7 +25,7 @@ public class CreateTestData implements ILogger {
 	private static Team _teamSoccer;
 	private static League _leagueSoccer;
 
-	public static void main(String[] args) {
+	public static void run() {
 		try {
 			createDepartments();
 			createUsers();

@@ -37,9 +37,11 @@ public class CreateTestData implements ILogger {
 		}
 	}
 
-	private static void updateDepartments() {
+	private static void updateDepartments() throws Exception {
 		_deptSoccer.setHead(_userDS);
 		_deptTennis.setHead(_userSA);
+		PersistenceFacade.getInstance().saveOrUpdate(_deptSoccer);
+		PersistenceFacade.getInstance().saveOrUpdate(_deptTennis);
 	}
 
 	private static void createDepartments() throws Exception {
@@ -90,7 +92,7 @@ public class CreateTestData implements ILogger {
 		_userSA.setLastName("Angerer");
 		_userSA.setAddress("Prinzessinnenweg 7b, 6480 Götzis");
 		_userSA.setDateOfBirth(LocalDate.now().minusYears(25));
-		_userSA.setDepartment(_deptSoccer);
+		_userSA.setDepartment(_deptTennis);
 		_userSA.setEmail("simone.a@gmx.net");
 		_userSA.setGender(Gender.Female);
 		_userSA.setMembershipFeePaid(true);

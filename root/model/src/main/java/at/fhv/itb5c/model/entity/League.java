@@ -1,9 +1,11 @@
 package at.fhv.itb5c.model.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 
+@Entity
 public class League extends PersistableObject {
 	@Column(name = "name", nullable = false)
 	private String _name;

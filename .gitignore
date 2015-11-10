@@ -37,3 +37,6 @@ target/
 #logfile
 log/
 logs/
+
+# editor config
+.vscode/

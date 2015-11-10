@@ -10,6 +10,8 @@ import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.PersistenceFacade;
 import at.fhv.itb5c.model.entity.Department;
+import at.fhv.itb5c.model.entity.League;
+import at.fhv.itb5c.model.entity.Team;
 //import at.fhv.itb5c.model.entity.League;
 //import at.fhv.itb5c.model.entity.Team;
 import at.fhv.itb5c.model.entity.User;
@@ -20,15 +22,15 @@ public class CreateTestData implements ILogger {
 	private static User _userSA;
 	private static Department _deptSoccer;
 	private static Department _deptTennis;
-//	private static Team _teamSoccer;
-//	private static League _leagueSoccer;
+	private static Team _teamSoccer;
+	private static League _leagueSoccer;
 
 	public static void main(String[] args) {
 		try {
 			createDepartments();
 			createUsers();
-//			createTeams();
-//			createLeagues();
+			createLeagues();
+			createTeams();
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -39,7 +41,7 @@ public class CreateTestData implements ILogger {
 		_deptSoccer.setName("Soccer");
 		_deptSoccer.setTypeOfSport(TypeOfSport.Soccer);
 		_deptSoccer = PersistenceFacade.getInstance().saveOrUpdate(_deptSoccer);
-		
+
 		_deptTennis = new Department();
 		_deptTennis.setName("Tennis");
 		_deptTennis.setTypeOfSport(TypeOfSport.Tennis);
@@ -61,7 +63,7 @@ public class CreateTestData implements ILogger {
 		_userDS.setTypeOfSports(new HashSet<>(Arrays.asList(TypeOfSport.Soccer)));
 		_userDS.setRoles(new HashSet<>(Arrays.asList(UserRole.StandardUser)));
 		_userDS = PersistenceFacade.getInstance().saveOrUpdate(_userDS);
-		
+
 		_userDG = new User();
 		_userDG.setFirstName("Daniel");
 		_userDG.setLastName("Grießer");
@@ -76,7 +78,7 @@ public class CreateTestData implements ILogger {
 		_userDG.setTypeOfSports(new HashSet<>(Arrays.asList(TypeOfSport.Soccer)));
 		_userDG.setRoles(new HashSet<>(Arrays.asList(UserRole.Admin)));
 		_userDG = PersistenceFacade.getInstance().saveOrUpdate(_userDG);
-		
+
 		_userSA = new User();
 		_userSA.setFirstName("Simone");
 		_userSA.setLastName("Angerer");
@@ -92,14 +94,14 @@ public class CreateTestData implements ILogger {
 		_userSA = PersistenceFacade.getInstance().saveOrUpdate(_userSA);
 	}
 
-	/*private static void createTeams() throws Exception {
+	private static void createTeams() throws Exception {
 		_teamSoccer = new Team();
 		_teamSoccer.setName("Team One");
 		_teamSoccer.setTypeOfSport(TypeOfSport.Soccer);
 		_teamSoccer.setDepartment(_deptSoccer);
 		_teamSoccer.setCoach(_userDS);
-		// _teamSoccer.setMembers(members);
-		// _teamSoccer.setLeague(league);
+		_teamSoccer.setMembers(new HashSet<>(Arrays.asList(_userDS, _userDG, _userSA)));
+		_teamSoccer.setLeague(_leagueSoccer);
 		_teamSoccer = PersistenceFacade.getInstance().saveOrUpdate(_teamSoccer);
 	}
 
@@ -108,5 +110,6 @@ public class CreateTestData implements ILogger {
 		_leagueSoccer.setName("Soccer League");
 		_leagueSoccer.setTypeOfSport(TypeOfSport.Soccer);
 		_leagueSoccer = PersistenceFacade.getInstance().saveOrUpdate(_leagueSoccer);
-	}*/
+	}
+
 }

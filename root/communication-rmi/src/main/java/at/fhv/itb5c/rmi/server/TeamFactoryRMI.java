@@ -30,18 +30,18 @@ public class TeamFactoryRMI extends UnicastRemoteObject implements ITeamFactoryR
 	}
 
 	@Override
-	public ITeam createTeam() throws RemoteException {
+	public ITeamRMI createTeam() throws RemoteException {
 		log.debug("new team created");
 		ITeam team = _factory.createTeam();
 		return TeamConverterRMI.toRMI(team);
 	}
 
 	@Override
-	public ITeam saveOrUpdate(ITeam team) throws RemoteException {
+	public ITeamRMI saveOrUpdate(ITeam team) throws RemoteException {
 		log.debug("saving team ...");
 		team = _factory.saveOrUpdate(team);
 		log.debug("team saved: " + team);
-		return team;
+		return TeamConverterRMI.toRMI(team);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package at.fhv.itb5c.view.team;
+package at.fhv.itb5c.view.team.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

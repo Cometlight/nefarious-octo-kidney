@@ -1,4 +1,4 @@
-package at.fhv.itb5.view;
+package at.fhv.itb5c.view;
 
 import static org.junit.Assert.assertEquals;
 

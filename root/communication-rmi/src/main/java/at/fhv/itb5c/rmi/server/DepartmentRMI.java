@@ -57,7 +57,11 @@ public class DepartmentRMI extends UnicastRemoteObject implements IDepartmentRMI
 
 	@Override
 	public void setHead(IUser head) throws RemoteException {
-		_head = (IUserRMI) head;
+		if(head instanceof IUserRMI) {
+			_head = (IUserRMI) head;
+		} else {
+			_head = UserConverterRMI.toRMI(head);
+		}
 	}
 
 	@Override

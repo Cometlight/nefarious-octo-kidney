@@ -40,20 +40,20 @@
                         <String fx:value="simple-subtle" />
                      </styleClass>
                   </Label>
-                  <TextField fx:id="_userSearchInput" maxWidth="1.7976931348623157E308" onAction="#_onSearchInputChange" promptText="Search Users" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="_userSearchInput" maxWidth="1.7976931348623157E308" promptText="Search Users" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="14.0">
                <children>
                   <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="170.0" styleClass="simple-label" />
-                  <ListView fx:id="_userSearchResultList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="78.0" HBox.hgrow="ALWAYS" />
+                  <ListView fx:id="_userSearchResultList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#_onSearchResultClick" prefHeight="78.0" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="14.0">
                <children>
                   <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="170.0" styleClass="simple-label" />
-                  <Button fx:id="_saveButton" mnemonicParsing="false" onAction="#_onSaveButtonClick" styleClass="simple-blue" text="Save" />
-                  <Button fx:id="_cancelButton" mnemonicParsing="false" onAction="#_onCancelButtonClick" styleClass="simple-red" text="Cancel" />
+                  <Button mnemonicParsing="false" onAction="#_onSaveButtonClick" styleClass="simple-blue" text="Save" />
+                  <Button mnemonicParsing="false" onAction="#_onCancelButtonClick" styleClass="simple-red" text="Cancel" />
                </children>
             </HBox>
          </children>

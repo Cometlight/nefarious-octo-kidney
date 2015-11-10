@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 
 import at.fhv.itb5c.application.dto.UserDTO;
 import at.fhv.itb5c.commons.dto.IUser;
+import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.logging.ILogger;
 
@@ -36,13 +37,13 @@ public class UserConverterRMI implements ILogger {
 				log.error(e.getMessage());
 				return null;
 			}
-
 		}
 		
 		log.debug("Converting User Object DTO2RMI: " + userrmi);
 
 		return userrmi;
 	}
+	
 
 	public static IUser toDTO(IUserRMI userrmi) {
 		IUser user = new UserDTO();

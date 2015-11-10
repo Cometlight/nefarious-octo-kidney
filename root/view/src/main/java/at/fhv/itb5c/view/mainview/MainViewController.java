@@ -2,10 +2,7 @@ package at.fhv.itb5c.view.mainview;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
-import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.department.DepartmentViewFactory;
@@ -66,7 +63,6 @@ public class MainViewController implements ILogger{
 	
 	@FXML
 	public void departmentListViewOnMouseClick(MouseEvent mouseEvent) throws IOException {
-		_departmentsListView.getFocusModel().focus(_departmentsListView.getSelectionModel().getSelectedIndex());
 		new DepartmentViewFactory(_departmentsListView.getSelectionModel().getSelectedItem()).create(_mainPanel);
 	}
 	

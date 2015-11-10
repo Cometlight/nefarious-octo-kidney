@@ -171,6 +171,10 @@ public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 
 	@Override
 	public void setDepartment(IDepartment department) throws RemoteException {
-		_department = DepartmentConverterRMI.toRMI(department);
+		if(department instanceof IDepartmentRMI) {
+			_department = (IDepartmentRMI) department;
+		} else {
+			_department = DepartmentConverterRMI.toRMI(department);
+		}
 	}
 }

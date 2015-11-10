@@ -28,6 +28,7 @@ public class RMIServer implements ILogger{
 			// add servants to server
 			_servants.add(new UserFactoryRMI());
 			_servants.add(new DepartmentFactoryRMI());
+			_servants.add(new TeamFactoryRMI());
 
 			// startup server by initializing all servants
 			log.info("... initializing RMI servants ...");

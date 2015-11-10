@@ -28,6 +28,10 @@ public class DepartmentViewModel implements ILogger{
 		}
 	}
 	
+	public IDepartmentRMI getDepartment() {
+		return _department;
+	}
+	
 	public StringProperty getDepartmentName() {
 		return _departmentName;
 	}

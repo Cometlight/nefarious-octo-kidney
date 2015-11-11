@@ -23,7 +23,7 @@ public class UserDTO extends BaseDTO {
 	private Long _departmentId;
 	private String _ldapUID;
 	
-	private UserDTO() {
+	public UserDTO() {
 		
 	}
 	

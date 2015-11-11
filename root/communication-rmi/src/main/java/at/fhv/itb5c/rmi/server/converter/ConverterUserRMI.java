@@ -41,7 +41,7 @@ public class ConverterUserRMI implements ILogger {
 	}
 
 	public static UserDTO toDTO(IUserRMI rmi) {
-		UserDTO dto = UserDTO.create();
+		UserDTO dto = new UserDTO();
 
 		try {
 			dto.setId(rmi.getId());

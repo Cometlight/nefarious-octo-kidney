@@ -8,28 +8,37 @@ import at.fhv.itb5c.model.entity.User;
 
 public class ConverterUserDTO {
 	public static UserDTO toDTO(User user) {
-		UserDTO dto = new UserDTO();
-		
-		dto.setId(user.getId());
-		dto.setVersion(user.getVersion());
-		dto.setFirstName(user.getFirstName());
-		dto.setLastName(user.getLastName());
-		dto.setEmail(user.getEmail());
-		dto.setTelephoneNumber(user.getTelephoneNumber());
-		dto.setGender(user.getGender());
-		dto.setAddress(user.getAddress());
-		dto.setDateOfBirth(user.getDateOfBirth());
-		dto.setMembershipFee(user.getMembershipFee());
-		dto.setRoles(user.getRoles());
-		dto.setTypeOfSports(user.getTypeOfSports());
-		dto.setMembershipFeePaid(user.getMembershipFeePaid());
-		dto.setDepartmentId(user.getDepartmentId());
-		dto.setLdapUID(user.getLdapUID());
+		UserDTO dto;
+		if(user != null) {
+			dto = new UserDTO();
+			dto.setId(user.getId());
+			dto.setVersion(user.getVersion());
+			dto.setFirstName(user.getFirstName());
+			dto.setLastName(user.getLastName());
+			dto.setEmail(user.getEmail());
+			dto.setTelephoneNumber(user.getTelephoneNumber());
+			dto.setGender(user.getGender());
+			dto.setAddress(user.getAddress());
+			dto.setDateOfBirth(user.getDateOfBirth());
+			dto.setMembershipFee(user.getMembershipFee());
+			dto.setRoles(user.getRoles());
+			dto.setTypeOfSports(user.getTypeOfSports());
+			dto.setMembershipFeePaid(user.getMembershipFeePaid());
+			dto.setDepartmentId(user.getDepartmentId());
+			dto.setLdapUID(user.getLdapUID());
+		}
+		else {
+			dto = null;
+		}
 		
 		return dto;
 	}
 	
 	public static Collection<UserDTO> toDTO(Collection<User> users) {
+		if(users == null) {
+			return null;
+		}
+		
 		return users.stream().map(ConverterUserDTO::toDTO).collect(Collectors.toList());
 	}
 	

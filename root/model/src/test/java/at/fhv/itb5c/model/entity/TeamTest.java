@@ -19,7 +19,7 @@ public class TeamTest {
 		user1.setFirstName("TeamTest - User1");
 		User user2 = new User();
 		user2.setFirstName("TeamTest - User2");
-		Set<User> members = new HashSet<>(Arrays.asList(user1, user2));
+		Set<Long> members = new HashSet<>(Arrays.asList(user1.getId(), user2.getId()));
 		
 		team.setMembers(members);
 		

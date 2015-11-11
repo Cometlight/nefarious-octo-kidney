@@ -108,7 +108,7 @@ public class CreateTestData implements ILogger {
 		_teamSoccer.setTypeOfSport(TypeOfSport.Soccer);
 		_teamSoccer.setDepartment(_deptSoccer);
 		_teamSoccer.setCoach(_userDS);
-		_teamSoccer.setMembers(new HashSet<>(Arrays.asList(_userDS, _userDG, _userSA)));
+		_teamSoccer.setMembers(new HashSet<>(Arrays.asList(_userDS.getId(), _userDG.getId(), _userSA.getId())));
 		_teamSoccer.setLeague(_leagueSoccer);
 		_teamSoccer = PersistenceFacade.getInstance().saveOrUpdate(_teamSoccer);
 	}

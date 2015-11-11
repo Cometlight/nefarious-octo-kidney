@@ -33,7 +33,7 @@ public class Team extends PersistableObject {
 							// arises
 
 	@Column(name = "members", nullable = true)
-	private Set<User> _members;
+	private Set<Long> _members;
 
 	public String getName() {
 		return _name;
@@ -77,11 +77,11 @@ public class Team extends PersistableObject {
 		_leagueId = league == null ? null : league.getId();
 	}
 
-	public Set<User> getMembers() {
+	public Set<Long> getMembers() {
 		return _members;
 	}
 
-	public void setMembers(Set<User> members) {
+	public void setMembers(Set<Long> members) {
 		_members = members;
 	}
 

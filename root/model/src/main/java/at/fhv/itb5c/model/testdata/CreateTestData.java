@@ -10,8 +10,8 @@ import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.PersistenceFacade;
 import at.fhv.itb5c.model.entity.Department;
-import at.fhv.itb5c.model.entity.League;
-import at.fhv.itb5c.model.entity.Team;
+//import at.fhv.itb5c.model.entity.League;
+//import at.fhv.itb5c.model.entity.Team;
 //import at.fhv.itb5c.model.entity.League;
 //import at.fhv.itb5c.model.entity.Team;
 import at.fhv.itb5c.model.entity.User;
@@ -22,27 +22,27 @@ public class CreateTestData implements ILogger {
 	private static User _userSA;
 	private static Department _deptSoccer;
 	private static Department _deptTennis;
-	private static Team _teamSoccer;
-	private static League _leagueSoccer;
+	//private static Team _teamSoccer;
+	//private static League _leagueSoccer;
 
 	public static void run() {
 		try {
 			createDepartments();
 			createUsers();
-			createLeagues();
-			createTeams();
-			//updateDepartments();
+			//createLeagues();
+			//createTeams();
+			updateDepartments();
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 	}
 
-	/*private static void updateDepartments() throws Exception {
-		_deptSoccer.setHead(_userDS);
-		_deptTennis.setHead(_userSA);
+	private static void updateDepartments() throws Exception {
+		_deptSoccer.setHeadId(_userDS.getId());
+		_deptTennis.setHeadId(_userSA.getId());
 		PersistenceFacade.getInstance().saveOrUpdate(_deptSoccer);
 		PersistenceFacade.getInstance().saveOrUpdate(_deptTennis);
-	}*/
+	}
 
 	private static void createDepartments() throws Exception {
 		_deptSoccer = new Department();
@@ -103,21 +103,22 @@ public class CreateTestData implements ILogger {
 	}
 
 	private static void createTeams() throws Exception {
-		_teamSoccer = new Team();
+		/*_teamSoccer = new Team();
 		_teamSoccer.setName("Team One");
 		_teamSoccer.setTypeOfSport(TypeOfSport.Soccer);
-//		_teamSoccer.setDepartment(_deptSoccer); FIXME
-		_teamSoccer.setCoach(_userDS);
+		_teamSoccer.setDepartmentId();
+		_teamSoccer.setDepartment(_deptSoccer); FIXME
+		_teamSoccer.setCoachId(_userDS.getId());
 		_teamSoccer.setMembers(new HashSet<>(Arrays.asList(_userDS.getId(), _userDG.getId(), _userSA.getId())));
-//		_teamSoccer.setLeague(_leagueSoccer); FIXME
-		_teamSoccer = PersistenceFacade.getInstance().saveOrUpdate(_teamSoccer);
+		_teamSoccer.setLeague(_leagueSoccer); FIXME
+		_teamSoccer = PersistenceFacade.getInstance().saveOrUpdate(_teamSoccer);*/
 	}
 
 	private static void createLeagues() throws Exception {
-		_leagueSoccer = new League();
+		/*_leagueSoccer = new League();
 		_leagueSoccer.setName("Soccer League");
 		_leagueSoccer.setTypeOfSport(TypeOfSport.Soccer);
-		_leagueSoccer = PersistenceFacade.getInstance().saveOrUpdate(_leagueSoccer);
+		_leagueSoccer = PersistenceFacade.getInstance().saveOrUpdate(_leagueSoccer);*/
 	}
 
 }

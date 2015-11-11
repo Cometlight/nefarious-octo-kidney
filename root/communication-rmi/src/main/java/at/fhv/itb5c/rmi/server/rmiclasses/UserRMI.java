@@ -1,7 +1,6 @@
 package at.fhv.itb5c.rmi.server.rmiclasses;
 
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -10,11 +9,9 @@ import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 
-public class UserRMI extends UnicastRemoteObject implements IUserRMI {
+public class UserRMI extends BaseRMI implements IUserRMI {
 	private static final long serialVersionUID = 1L;
 
-	private Long _id;
-	private Long _version;
 	private String _firstName;
 	private String _lastName;
 	private String _email;
@@ -131,26 +128,6 @@ public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 	@Override
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) throws RemoteException {
 		_typeOfSports = typeOfSports;
-	}
-
-	@Override
-	public Long getId() throws RemoteException {
-		return _id;
-	}
-
-	@Override
-	public Long getVersion() throws RemoteException {
-		return _version;
-	}
-
-	@Override
-	public void setId(Long id) throws RemoteException {
-		_id = id;
-	}
-
-	@Override
-	public void setVersion(Long version) throws RemoteException {
-		_version = version;
 	}
 
 	@Override

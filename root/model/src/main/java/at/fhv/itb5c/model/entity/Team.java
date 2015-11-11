@@ -25,7 +25,7 @@ public class Team extends PersistableObject {
 	private Long _leagueId;
 
 	@Column(name = "members", nullable = true)
-	private Set<Long> _members;
+	private Set<Long> _memberIds;
 
 	public String getName() {
 		return _name;
@@ -67,11 +67,11 @@ public class Team extends PersistableObject {
 		_leagueId = leagueId;
 	}
 
-	public Set<Long> getMembers() {
-		return _members;
+	public Set<Long> getMemberIds() {
+		return _memberIds;
 	}
 
-	public void setMembers(Set<Long> members) {
-		_members = members;
+	public void setMemberIds(Set<Long> memberIds) {
+		_memberIds = memberIds;
 	}
 }

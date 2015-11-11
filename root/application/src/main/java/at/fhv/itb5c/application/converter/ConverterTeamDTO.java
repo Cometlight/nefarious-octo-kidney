@@ -18,7 +18,7 @@ public class ConverterTeamDTO {
 		dto.setDepartmentId(entity.getDepartmentId());
 		dto.setCoachId(entity.getCoachId());
 		dto.setLeagueId(entity.getLeagueId());
-		dto.setMembers(new HashSet<>(entity.getMembers()));
+		dto.setMembers(new HashSet<>(entity.getMemberIds()));
 		
 		return dto;
 	}
@@ -37,7 +37,7 @@ public class ConverterTeamDTO {
 		entity.setDepartmentId(dto.getDepartmentId());
 		entity.setCoachId(dto.getCoachId());
 		entity.setLeagueId(dto.getLeagueId());
-		entity.setMembers(new HashSet<>(dto.getMembers()));
+		entity.setMemberIds(new HashSet<>(dto.getMembers()));
 		
 		return entity;
 	}

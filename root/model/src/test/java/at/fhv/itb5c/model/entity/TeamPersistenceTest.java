@@ -45,24 +45,24 @@ public class TeamPersistenceTest {
 		user2 = PersistenceFacade.getInstance().saveOrUpdate(user2);
 		final Set<Long> members = new HashSet<>(Arrays.asList(user1.getId(), user2.getId()));
 		Team team = new Team();
-		team.setMembers(members);
+		team.setMemberIds(members);
 		team = PersistenceFacade.getInstance().saveOrUpdate(team);
 
-		assertEquals(members.size(), team.getMembers().size());
-		assertTrue(team.getMembers().contains(user1.getId()));
-		assertTrue(team.getMembers().contains(user2.getId()));
+		assertEquals(members.size(), team.getMemberIds().size());
+		assertTrue(team.getMemberIds().contains(user1.getId()));
+		assertTrue(team.getMemberIds().contains(user2.getId()));
 
 		Team team2 = PersistenceFacade.getInstance().getById(Team.class, team.getId());
-		assertEquals(members.size(), team2.getMembers().size());
-		assertTrue(team2.getMembers().contains(user1.getId()));
-		assertTrue(team2.getMembers().contains(user2.getId()));
+		assertEquals(members.size(), team2.getMemberIds().size());
+		assertTrue(team2.getMemberIds().contains(user1.getId()));
+		assertTrue(team2.getMemberIds().contains(user2.getId()));
 
 		final Set<Long> membersUpdated = new HashSet<>(Arrays.asList(user2.getId()));
-		team.setMembers(membersUpdated);
+		team.setMemberIds(membersUpdated);
 		team2 = PersistenceFacade.getInstance().saveOrUpdate(team);
-		assertEquals(membersUpdated.size(), team2.getMembers().size());
-		assertFalse(team2.getMembers().contains(user1.getId()));
-		assertTrue(team2.getMembers().contains(user2.getId()));
+		assertEquals(membersUpdated.size(), team2.getMemberIds().size());
+		assertFalse(team2.getMemberIds().contains(user1.getId()));
+		assertTrue(team2.getMemberIds().contains(user2.getId()));
 	}
 
 	@Test

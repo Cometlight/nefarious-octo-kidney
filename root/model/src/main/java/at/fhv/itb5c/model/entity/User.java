@@ -3,6 +3,7 @@ package at.fhv.itb5c.model.entity;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -44,22 +45,22 @@ public class User extends PersistableObject {
 
 	@Column(name = "dateOfBirth", nullable = false)
 	private Date _persistDateOfBirth;
-	
+
 	@Column(name = "membershipFee", nullable = true)
-	private Double _membershipFee;
+	private Double _membershipFee = 0.00;
 
 	@Column(name = "membershipFeePaid", nullable = true)
-	private Boolean _membershipFeePaid;
+	private Boolean _membershipFeePaid = false;
 
 	@Column(name = "roles", nullable = false)
-	private Set<UserRole> _roles;
+	private Set<UserRole> _roles = new HashSet<>();
 
 	@Column(name = "typeOfSports", nullable = true)
-	private Set<TypeOfSport> _typeOfSports;
+	private Set<TypeOfSport> _typeOfSports = new HashSet<>();
 
 	@Column(name = "departmentId", nullable = true)
 	private Long _departmentId;
-	
+
 	@Column(name = "ldapUID", nullable = true)
 	private String _ldapUID;
 
@@ -143,7 +144,11 @@ public class User extends PersistableObject {
 	}
 
 	public void setDateOfBirth(LocalDate dateOfBirth) {
-		this._dateOfBirth = dateOfBirth;
+		if (dateOfBirth == null) {
+			_dateOfBirth = null;
+		} else if (dateOfBirth.isBefore(LocalDate.now())) {
+			_dateOfBirth = dateOfBirth;
+		}
 	}
 
 	public Double getMembershipFee() {
@@ -153,7 +158,7 @@ public class User extends PersistableObject {
 	public void setMembershipFee(Double membershipFee) {
 		this._membershipFee = membershipFee;
 	}
-	
+
 	public Boolean getMembershipFeePaid() {
 		return _membershipFeePaid;
 	}
@@ -167,7 +172,11 @@ public class User extends PersistableObject {
 	}
 
 	public void setRoles(Set<UserRole> roles) {
-		_roles = roles;
+		if (roles == null) {
+			_roles = new HashSet<>();
+		} else {
+			_roles = roles;
+		}
 	}
 
 	public Set<TypeOfSport> getTypeOfSports() {
@@ -175,7 +184,11 @@ public class User extends PersistableObject {
 	}
 
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) {
-		_typeOfSports = typeOfSports;
+		if (typeOfSports == null) {
+			_typeOfSports = new HashSet<>();
+		} else {
+			_typeOfSports = typeOfSports;
+		}
 	}
 
 	public Long getDepartmentId() {
@@ -185,7 +198,7 @@ public class User extends PersistableObject {
 	public void setDepartmentId(Long departmentId) {
 		_departmentId = departmentId;
 	}
-	
+
 	public String getLdapUID() {
 		return _ldapUID;
 	}

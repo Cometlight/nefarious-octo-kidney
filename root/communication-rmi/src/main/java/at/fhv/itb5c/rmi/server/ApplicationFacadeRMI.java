@@ -7,18 +7,24 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
 
 import at.fhv.itb5c.application.ApplicationFacade;
+import at.fhv.itb5c.application.dto.TeamDTO;
 import at.fhv.itb5c.application.dto.UserDTO;
 import at.fhv.itb5c.commons.dto.rmi.IApplicationFacadeRMI;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
+import at.fhv.itb5c.commons.dto.rmi.ILeagueRMI;
+import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
+import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.converter.ConverterDepartmentRMI;
+import at.fhv.itb5c.rmi.server.converter.ConverterLeagueRMI;
+import at.fhv.itb5c.rmi.server.converter.ConverterTeamRMI;
 import at.fhv.itb5c.rmi.server.converter.ConverterUserRMI;
 
 public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplicationFacadeRMI, RMIServant, ILogger {
 	private static final long serialVersionUID = -6290768314413969216L;
 	private ApplicationFacade _applicationFacade;
-	
+
 	public ApplicationFacadeRMI() throws RemoteException {
 		super();
 		_applicationFacade = new ApplicationFacade();
@@ -33,7 +39,7 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	public IUserRMI createUser() throws RemoteException {
 		return ConverterUserRMI.toRMI(_applicationFacade.createUser());
 	}
-	
+
 	@Override
 	public IUserRMI getUserById(Long id) throws RemoteException {
 		return ConverterUserRMI.toRMI(_applicationFacade.getUserById(id));
@@ -42,7 +48,8 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	@Override
 	public Collection<IUserRMI> findUsers(String firstName, String lastName, Long departmentId,
 			Boolean membershipFeePaid) throws RemoteException {
-		return ConverterUserRMI.toRMI(_applicationFacade.findUsers(firstName, lastName, departmentId, membershipFeePaid));
+		return ConverterUserRMI
+				.toRMI(_applicationFacade.findUsers(firstName, lastName, departmentId, membershipFeePaid));
 	}
 
 	@Override
@@ -64,5 +71,32 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	@Override
 	public Collection<IDepartmentRMI> getAllDepartments() throws RemoteException {
 		return ConverterDepartmentRMI.toRMI(_applicationFacade.getAllDepartments());
+	}
+
+	@Override
+	public ITeamRMI getTeamById(Long id) throws RemoteException {
+		return ConverterTeamRMI.toRMI(_applicationFacade.getTeamById(id));
+	}
+
+	@Override
+	public Collection<ITeamRMI> findTeams(String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId)
+			throws RemoteException {
+		return ConverterTeamRMI.toRMI(_applicationFacade.findTeams(name, typeOfSport, departmentId, leagueId));
+	}
+
+	@Override
+	public ITeamRMI saveTeam(ITeamRMI team) {
+		TeamDTO teamDTO = ConverterTeamRMI.toDTO(team);
+		return ConverterTeamRMI.toRMI(_applicationFacade.saveTeam(teamDTO));
+	}
+
+	@Override
+	public ILeagueRMI getLeagueById(Long id) throws RemoteException {
+		return ConverterLeagueRMI.toRMI(_applicationFacade.getLeagueById(id));
+	}
+
+	@Override
+	public Collection<ILeagueRMI> getAllLeagues() throws RemoteException {
+		return ConverterLeagueRMI.toRMI(_applicationFacade.getAllLeagues());
 	}
 }

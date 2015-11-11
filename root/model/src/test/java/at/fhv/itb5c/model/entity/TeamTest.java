@@ -35,10 +35,10 @@ public class TeamTest {
 		Set<Long> members = new HashSet<>(Arrays.asList(user1.getId(), user2.getId()));
 
 		Team team = new Team();
-		team.setMembers(members);
+		team.setMemberIds(members);
 		team = PersistenceFacade.getInstance().saveOrUpdate(team);
 
-		assertEquals(members, team.getMembers());
+		assertEquals(members, team.getMemberIds());
 	}
 
 	@Test

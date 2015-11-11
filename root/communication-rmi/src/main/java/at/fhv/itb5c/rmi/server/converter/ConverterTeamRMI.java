@@ -23,7 +23,7 @@ public class ConverterTeamRMI implements ILogger {
 			rmi.setDepartmentId(dto.getDepartmentId());
 			rmi.setCoachId(dto.getCoachId());
 			rmi.setLeagueId(dto.getLeagueId());
-			rmi.setMembers(new HashSet<>(dto.getMembers()));
+			rmi.setMemberIds(new HashSet<>(dto.getMemberIds()));
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 		}
@@ -44,7 +44,7 @@ public class ConverterTeamRMI implements ILogger {
 			dto.setDepartmentId(rmi.getDepartmentId());
 			dto.setCoachId(rmi.getCoachId());
 			dto.setLeagueId(rmi.getLeagueId());
-			dto.setMembers(new HashSet<>(rmi.getMembers()));
+			dto.setMemberIds(new HashSet<>(rmi.getMemberIds()));
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 		}

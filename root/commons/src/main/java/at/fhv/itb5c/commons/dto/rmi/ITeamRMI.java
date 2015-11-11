@@ -26,7 +26,7 @@ public interface ITeamRMI extends IBaseRMI {
 
 	void setLeagueId(Long leagueId) throws RemoteException;
 
-	Set<Long> getMembers() throws RemoteException;
+	Set<Long> getMemberIds() throws RemoteException;
 
-	void setMembers(Set<Long> members) throws RemoteException;
+	void setMemberIds(Set<Long> memberIds) throws RemoteException;
 }

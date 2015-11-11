@@ -9,7 +9,10 @@ import java.util.Collection;
 
 import at.fhv.itb5c.commons.dto.rmi.IApplicationFacadeRMI;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
+import at.fhv.itb5c.commons.dto.rmi.ILeagueRMI;
+import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
+import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.RMIServant;
 
@@ -37,7 +40,7 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	public IUserRMI createUser() throws RemoteException {
 		return _applicationFacadeRMI.createUser();
 	}
-	
+
 	@Override
 	public IUserRMI getUserById(Long id) throws RemoteException {
 		return _applicationFacadeRMI.getUserById(id);
@@ -67,5 +70,31 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	@Override
 	public Collection<IDepartmentRMI> getAllDepartments() throws RemoteException {
 		return _applicationFacadeRMI.getAllDepartments();
+	}
+
+	@Override
+	public ITeamRMI getTeamById(Long id) throws RemoteException {
+		return _applicationFacadeRMI.getTeamById(id);
+	}
+
+	@Override
+	public Collection<ITeamRMI> findTeams(String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId)
+			throws RemoteException {
+		return _applicationFacadeRMI.findTeams(name, typeOfSport, departmentId, leagueId);
+	}
+
+	@Override
+	public ITeamRMI saveTeam(ITeamRMI team) throws RemoteException {
+		return _applicationFacadeRMI.saveTeam(team);
+	}
+
+	@Override
+	public ILeagueRMI getLeagueById(Long id) throws RemoteException {
+		return _applicationFacadeRMI.getLeagueById(id);
+	}
+
+	@Override
+	public Collection<ILeagueRMI> getAllLeagues() throws RemoteException {
+		return _applicationFacadeRMI.getAllLeagues();
 	}
 }

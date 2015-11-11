@@ -1,7 +1,6 @@
 package at.fhv.itb5c.application.dto;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 import at.fhv.itb5c.commons.enums.Gender;
@@ -23,11 +22,6 @@ public class UserDTO extends BaseDTO {
 	private Long _departmentId;
 	private String _ldapUID;
 	
-	public UserDTO() {
-		_roles = new HashSet<>();
-		_typeOfSports = new HashSet<>();
-	}
-
 	public String getFirstName() {
 		return _firstName;
 	}

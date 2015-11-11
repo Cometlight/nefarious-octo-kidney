@@ -21,7 +21,7 @@ import at.fhv.itb5c.model.entity.User;
 
 public class ApplicationFacade implements ILogger {
 	public UserDTO createUser() {
-		return new UserDTO();
+		return UserDTO.create();
 	}
 	
 	public UserDTO getUserById(Long id) {

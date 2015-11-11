@@ -10,7 +10,7 @@ public class ConverterUserDTO {
 	public static UserDTO toDTO(User user) {
 		UserDTO dto;
 		if(user != null) {
-			dto = new UserDTO();
+			dto = UserDTO.create();
 			dto.setId(user.getId());
 			dto.setVersion(user.getVersion());
 			dto.setFirstName(user.getFirstName());

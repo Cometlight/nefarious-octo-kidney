@@ -1,16 +1,13 @@
 package at.fhv.itb5c.rmi.server.rmiclasses;
 
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 
-public class DepartmentRMI extends UnicastRemoteObject implements IDepartmentRMI {
+public class DepartmentRMI extends BaseRMI implements IDepartmentRMI {
 	private static final long serialVersionUID = 1L;
 
-	private Long _id;
-	private Long _version;
 	private Long _headId;
 	private String _name;
 	private TypeOfSport _typeOfSport;
@@ -19,26 +16,6 @@ public class DepartmentRMI extends UnicastRemoteObject implements IDepartmentRMI
 		super();
 	}
 	
-	@Override
-	public Long getId() throws RemoteException {
-		return _id;
-	}
-
-	@Override
-	public void setId(Long id) {
-		_id = id;
-	}
-
-	@Override
-	public Long getVersion() throws RemoteException {
-		return _version;
-	}
-
-	@Override
-	public void setVersion(Long version) {
-		_version = version;
-	}
-
 	@Override
 	public String getName() throws RemoteException {
 		return _name;

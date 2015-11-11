@@ -36,20 +36,30 @@ public class PropertyManager implements ILogger {
 
 	public String getProperty(String key) {
 		String defaultProp = _propertiesDefault.getProperty(key);
-		String userProp = _propertiesUser.getProperty(key);
-		if(defaultProp == null && userProp == null){
+		String userProp = null;
+
+		if (_propertiesUser != null) {
+			userProp = _propertiesUser.getProperty(key);
+		}
+
+		if (defaultProp == null && userProp == null) {
 			log.error("property " + key + "not defined");
 		}
+
 		return (userProp == null) ? defaultProp : userProp;
 	}
 
 	private void loadProperties() throws IOException {
 		log.debug("loading properties file " + _fileName);
 		File props = new File(_fileName);
-		InputStream inputStream = Files.newInputStream(props.toPath(), StandardOpenOption.READ);
+		if (props.exists()) {
+			InputStream inputStream = Files.newInputStream(props.toPath(), StandardOpenOption.READ);
 
-		if (inputStream != null) {
-			_propertiesUser.load(inputStream);
+			if (inputStream != null) {
+				_propertiesUser.load(inputStream);
+			} else {
+				log.info("couldn't load user properties file");
+			}
 		} else {
 			log.info("no user properties file found (config.properties)");
 			throw new IOException();

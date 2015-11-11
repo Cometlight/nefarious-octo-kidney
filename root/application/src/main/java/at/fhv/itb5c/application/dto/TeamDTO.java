@@ -2,7 +2,9 @@ package at.fhv.itb5c.application.dto;
 
 import java.util.Set;
 
+import at.fhv.itb5c.application.converter.ConverterTeamDTO;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
+import at.fhv.itb5c.model.entity.Team;
 
 public class TeamDTO extends BaseDTO {
 	private String _name;
@@ -12,6 +14,10 @@ public class TeamDTO extends BaseDTO {
 	private Long _leagueId;
 	private Set<Long> _memberIds;
 
+	public static TeamDTO create() {
+		return ConverterTeamDTO.toDTO(new Team());
+	}
+	
 	public String getName() {
 		return _name;
 	}

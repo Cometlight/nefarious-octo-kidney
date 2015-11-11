@@ -22,6 +22,7 @@ import at.fhv.itb5c.view.team.view.TeamViewFactory;
 import at.fhv.itb5c.view.util.cellfactory.UserListCell;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
+import at.fhv.itb5c.view.util.popup.DataModificationPopUp;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -83,7 +84,9 @@ public class TeamAddController implements IPanelClosable, ILogger {
 	@FXML
 	void _onSaveButtonClick(ActionEvent event) {
 		
-		
+		if(saveTeam()) {
+			DataModificationPopUp.dataSavedPopUp("Team was added!");
+		} 
 		
 		try {
 			_panelCloseHandler.closeNext(new TeamViewFactory());
@@ -94,7 +97,15 @@ public class TeamAddController implements IPanelClosable, ILogger {
 	}
 	
 	private boolean saveTeam() {
-		ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade().createTeam();
+		try {
+			ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade().createTeam();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//setvalue
+		//save
+		return false;
 	}
 
 	@FXML

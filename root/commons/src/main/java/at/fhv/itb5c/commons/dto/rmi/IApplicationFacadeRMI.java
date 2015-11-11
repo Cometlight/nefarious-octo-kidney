@@ -32,4 +32,6 @@ public interface IApplicationFacadeRMI extends Remote {
 	ILeagueRMI getLeagueById(Long id) throws RemoteException;
 
 	Collection<ILeagueRMI> getAllLeagues() throws RemoteException;
+
+	ITeamRMI createTeam() throws RemoteException;
 }

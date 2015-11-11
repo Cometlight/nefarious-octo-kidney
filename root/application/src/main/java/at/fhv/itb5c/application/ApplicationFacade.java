@@ -75,6 +75,10 @@ public class ApplicationFacade implements ILogger {
 		}
 		return ConverterDepartmentDTO.toDTO(entity);
 	}
+
+	public TeamDTO createTeam() {
+		return TeamDTO.create();
+	}
 	
 	public TeamDTO getTeamById(Long id) {
 		Team entity = PersistenceFacade.getInstance().getById(Team.class, id);

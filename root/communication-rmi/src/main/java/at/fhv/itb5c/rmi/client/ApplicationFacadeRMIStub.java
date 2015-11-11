@@ -72,6 +72,10 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 		return _applicationFacadeRMI.getAllDepartments();
 	}
 
+	public ITeamRMI createTeam() throws RemoteException{
+		return _applicationFacadeRMI.createTeam();
+	}
+	
 	@Override
 	public ITeamRMI getTeamById(Long id) throws RemoteException {
 		return _applicationFacadeRMI.getTeamById(id);

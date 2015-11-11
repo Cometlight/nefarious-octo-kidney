@@ -72,6 +72,11 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	public Collection<IDepartmentRMI> getAllDepartments() throws RemoteException {
 		return ConverterDepartmentRMI.toRMI(_applicationFacade.getAllDepartments());
 	}
+	
+	@Override
+	public ITeamRMI createTeam() throws RemoteException {
+		return ConverterTeamRMI.toRMI(_applicationFacade.createTeam());
+	}
 
 	@Override
 	public ITeamRMI getTeamById(Long id) throws RemoteException {

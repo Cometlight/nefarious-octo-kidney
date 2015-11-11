@@ -9,7 +9,7 @@ public class UserTest {
 	
 	@Before
 	public void before() {
-		RMIClient.getRMIClient().startUp();
+		//RMIClient.getRMIClient().startUp();
 	}
 	
 	@After

@@ -14,12 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-/*Todo(san7985)
- *  abstract factories -> remove static routepath registration
- *	opimice rmi by loading factories at the beginning
- *	add loggin when exceptions are thrown
- */
-
 public class AppController implements Observer, ILogger {
 	private Stage _primaryStage;
 

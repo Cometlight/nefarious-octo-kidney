@@ -4,15 +4,18 @@ import java.util.Collection;
 import java.util.List;
 
 import at.fhv.itb5c.application.converter.ConverterDepartmentDTO;
+import at.fhv.itb5c.application.converter.ConverterLeagueDTO;
 import at.fhv.itb5c.application.converter.ConverterTeamDTO;
 import at.fhv.itb5c.application.converter.ConverterUserDTO;
 import at.fhv.itb5c.application.dto.DepartmentDTO;
+import at.fhv.itb5c.application.dto.LeagueDTO;
 import at.fhv.itb5c.application.dto.TeamDTO;
 import at.fhv.itb5c.application.dto.UserDTO;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.PersistenceFacade;
 import at.fhv.itb5c.model.entity.Department;
+import at.fhv.itb5c.model.entity.League;
 import at.fhv.itb5c.model.entity.Team;
 import at.fhv.itb5c.model.entity.User;
 
@@ -92,5 +95,14 @@ public class ApplicationFacade implements ILogger {
 			return null;
 		}
 		return ConverterTeamDTO.toDTO(entity);
+	}
+	
+	public LeagueDTO getLeagueById(Long id) {
+		return ConverterLeagueDTO.toDTO(PersistenceFacade.getInstance().getById(League.class, id));
+	}
+	
+	public Collection<LeagueDTO> getAllLeagues() {
+		List<League> entities = PersistenceFacade.getInstance().getAll(League.class);
+		return ConverterLeagueDTO.toDTO(entities);
 	}
 }

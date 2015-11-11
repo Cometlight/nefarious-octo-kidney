@@ -2,77 +2,84 @@ package at.fhv.itb5c.model;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.File;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import at.fhv.itb5c.model.entity.Department;
 import at.fhv.itb5c.model.entity.PersistableObject;
+import at.fhv.itb5c.model.entity.Team;
 import at.fhv.itb5c.model.entity.User;
 
-
 public class GetAllTest {
-//  private static final String DBFILE = "testdb.odb";
-//
-//  @Before
-//  public void setUp() throws Exception {
-//    PersistenceFacade.setPersistenceUnitName(DBFILE);
-//    this.addDepartment("Tennis");
-//    this.addDepartment("Soccer");
-//    this.addUser("Max", "Mustermann");
-//    this.addUser("Klaudia", "Müller");
-//    this.addUser("Frederike", "Huber");
-//    this.addUser("Markus", "Susmann");
-//    this.addUser("Massimo", "Maxer");
-//  }
-//
-//  private User addUser(String firstName, String lastName) throws Exception {
-//    User user = new User();
-//    user.setFirstName(firstName);
-//    user.setLastName(lastName);
-//    return PersistenceFacade.getInstance().saveOrUpdate(user);
-//  }
-//
-//  private Department addDepartment(String name) throws Exception {
-//    Department dept = new Department();
-//    dept.setName(name);
-//    return PersistenceFacade.getInstance().saveOrUpdate(dept);
-//  }
-//
-//  @After
-//  public void tearDown() throws Exception {
-//    PersistenceFacade.shutdown();
-//    File file = new File(DBFILE);
-//    if (file.exists()) {
-//      file.delete();
-//    }
-//  }
-//
-//  @Test
-//  public void getAllDepartments() {
-//    List<Department> depts = (List<Department>)PersistenceFacade.getInstance().<Department>getAll(Department.class);
-//    assertEquals(2, depts.size());
-//  }
-//
-//  @Test
-//  public void getAllUsers() {
-//    List<User> users = (List<User>)PersistenceFacade.getInstance().<User>getAll(User.class);
-//    assertEquals(5, users.size());
-//  }
-//
-//  @Test
-//  public void getAllObjects() {
-//    List<PersistableObject> users = (List<PersistableObject>)PersistenceFacade.getInstance().<PersistableObject>getAll(PersistableObject.class);
-//    assertEquals(7, users.size());
-//  }
-//
-//  @Test
-//  public void getAllForNonePersistableObject() {
-//    List<PersistableObject> users = (List<PersistableObject>)PersistenceFacade.getInstance().<PersistableObject>getAll(null);
-//    assertEquals(null, users);
-//  }
+	private static final String DBFILE = "testdb.odb";
 
+	@Before
+	public void beforeEach() throws Exception {
+		DatabaseTestUtility.deleteDatabaseFile(DBFILE);
+		PersistenceFacade.setPersistenceUnitName(DBFILE);
+
+		User user1 = new User();
+		user1.setFirstName("Fabian");
+		user1.setLastName("Salzgeber");
+		PersistenceFacade.getInstance().saveOrUpdate(user1);
+
+		User user2 = new User();
+		user2.setFirstName("Fritz");
+		user2.setLastName("Huber");
+		PersistenceFacade.getInstance().saveOrUpdate(user2);
+
+		Department department1 = new Department();
+		department1.setName("Polo");
+		PersistenceFacade.getInstance().saveOrUpdate(department1);
+
+		Department department2 = new Department();
+		department2.setName("Soccer");
+		PersistenceFacade.getInstance().saveOrUpdate(department2);
+
+		Department department3 = new Department();
+		department3.setName("Golf");
+		PersistenceFacade.getInstance().saveOrUpdate(department3);
+
+		Team team1 = new Team();
+		team1.setName("Good Team");
+		team1.setDepartmentId(145l);
+		PersistenceFacade.getInstance().saveOrUpdate(team1);
+
+		Team team2 = new Team();
+		team2.setName("Better Team");
+		team2.setDepartmentId(146l);
+		PersistenceFacade.getInstance().saveOrUpdate(team2);
+	}
+
+	@Test
+	public void getAllUsers() {
+		List<User> allUsers = PersistenceFacade.getInstance().getAll(User.class);
+		assertEquals(allUsers.size(), 2);
+	}
+
+	@Test
+	public void getAllDepartments() {
+		List<Department> allDepartments = PersistenceFacade.getInstance().getAll(Department.class);
+		assertEquals(allDepartments.size(), 3);
+	}
+
+	@Test
+	public void getAllTeams() {
+		List<Team> allTeams = PersistenceFacade.getInstance().getAll(Team.class);
+		assertEquals(allTeams.size(), 2);
+	}
+
+	@Test
+	public void getAllPersistableObjects() {
+		List<PersistableObject> allPersistableObjects = PersistenceFacade.getInstance().getAll(PersistableObject.class);
+		assertEquals(allPersistableObjects.size(), 7);
+	}
+
+	@Test
+	public void getAllObjects() {
+		List<Object> allObjects = PersistenceFacade.getInstance().getAll(Object.class);
+		assertEquals(allObjects.size(), 7);
+	}
 }

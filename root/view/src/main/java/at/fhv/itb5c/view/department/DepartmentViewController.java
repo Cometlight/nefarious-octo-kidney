@@ -4,9 +4,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+
+import java.io.IOException;
+
+import at.fhv.itb5c.logging.ILogger;
+import at.fhv.itb5c.view.team.add.TeamAddViewFactory;
+import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
+import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
+import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.event.ActionEvent;
 
-public class DepartmentViewController {	
+public class DepartmentViewController implements IPanelClosable, ILogger {	
     @FXML private Label _departmentNameLabel;
     @FXML private Label _headLabel;
     @FXML private ListView<?> _teamList;
@@ -30,12 +38,23 @@ public class DepartmentViewController {
     
     @FXML
     void _onAddTeamButtonClick(ActionEvent event) {
-
+    	try {
+			_panelCloseHandler.closeNext(new TeamAddViewFactory(_departmentViewModel.getDepartment()));
+		} catch (IOException e) {
+			log.error(e.getMessage());
+			ErrorPopUp.criticalSystemError();
+		}
     }
 
     @FXML
     void _onAddTournamentButtonClick(ActionEvent event) {
 
     }
+
+    private IPanelCloseHandler _panelCloseHandler;
+	@Override
+	public void setPanelCloseHandler(IPanelCloseHandler panelCloseHandler) {
+		_panelCloseHandler = panelCloseHandler;
+	}
 
 }

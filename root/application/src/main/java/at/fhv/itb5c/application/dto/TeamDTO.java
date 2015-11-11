@@ -10,7 +10,7 @@ public class TeamDTO extends BaseDTO {
 	private Long _departmentId;
 	private Long _coachId;
 	private Long _leagueId;
-	private Set<Long> _members;
+	private Set<Long> _memberIds;
 
 	public String getName() {
 		return _name;
@@ -52,11 +52,11 @@ public class TeamDTO extends BaseDTO {
 		_leagueId = leagueId;
 	}
 
-	public Set<Long> getMembers() {
-		return _members;
+	public Set<Long> getMemberIds() {
+		return _memberIds;
 	}
 
-	public void setMembers(Set<Long> members) {
-		_members = members;
+	public void setMemberIds(Set<Long> memberIds) {
+		_memberIds = memberIds;
 	}
 }

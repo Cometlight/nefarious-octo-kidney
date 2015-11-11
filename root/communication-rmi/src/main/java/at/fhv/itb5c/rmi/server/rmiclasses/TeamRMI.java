@@ -72,12 +72,12 @@ public class TeamRMI extends BaseRMI implements ITeamRMI {
 	}
 	
 	@Override
-	public Set<Long> getMembers() throws RemoteException {
+	public Set<Long> getMemberIds() throws RemoteException {
 		return _members;
 	}
 	
 	@Override
-	public void setMembers(Set<Long> members) throws RemoteException {
-		_members = members;
+	public void setMemberIds(Set<Long> memberIds) throws RemoteException {
+		_members = memberIds;
 	}
 }

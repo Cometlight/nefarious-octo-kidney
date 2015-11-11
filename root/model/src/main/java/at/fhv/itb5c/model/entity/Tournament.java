@@ -25,6 +25,8 @@ public class Tournament extends PersistableObject {
 	private Set<String> _guestTeams;
 	@Column(name = "matches", nullable = false)
 	private Set<Long> _matches;
+	@Column(name = "departmentId", nullable = false)
+	private Long _departmentId;
 	@Transient
 	private LocalDate _date;
 
@@ -77,6 +79,14 @@ public class Tournament extends PersistableObject {
 
 	public void setMatchesIds(Set<Long> matches) {
 		_matches = matches;
+	}
+
+	public Long getDepartmentId() {
+		return _departmentId;
+	}
+
+	public void setDepartmentId(Long departmentId) {
+		_departmentId = departmentId;
 	}
 
 	@PrePersist

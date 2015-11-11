@@ -80,8 +80,8 @@ public class PersistenceFacade implements ILogger {
 	 *            the object's id
 	 * @return the retrieved object, or null if it was not possible
 	 */
-	public <T extends PersistableObject> T getById(Class<T> clazz, long id) {
-		if (clazz == null) {
+	public <T extends PersistableObject> T getById(Class<T> clazz, Long id) {
+		if (clazz == null || id == null) {
 			return null;
 		}
 

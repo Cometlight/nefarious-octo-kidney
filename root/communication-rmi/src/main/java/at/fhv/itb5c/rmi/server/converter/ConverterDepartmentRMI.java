@@ -1,6 +1,8 @@
 package at.fhv.itb5c.rmi.server.converter;
 
 import java.rmi.RemoteException;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 import at.fhv.itb5c.application.dto.DepartmentDTO;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
@@ -21,6 +23,10 @@ public class ConverterDepartmentRMI implements ILogger {
 			log.error(e.getMessage());
 		}
 		return rmi;
+	}
+	
+	public static Collection<IDepartmentRMI> toRMI(Collection<DepartmentDTO> dtos) {
+		return dtos.stream().map(ConverterDepartmentRMI::toRMI).collect(Collectors.toList());
 	}
 	
 	public static DepartmentDTO toDTO(IDepartmentRMI rmi) {

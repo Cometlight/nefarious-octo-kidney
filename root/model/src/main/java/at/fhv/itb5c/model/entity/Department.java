@@ -9,8 +9,10 @@ import at.fhv.itb5c.commons.enums.TypeOfSport;
 public class Department extends PersistableObject {
 	@Column(name = "name", nullable = false)
 	private String _name;
+	
 	@Column(name = "head", nullable = false)
-	private User _head;
+	private Long _headId;
+	
 	@Column(name = "typeOfSport", nullable = false)
 	private TypeOfSport _typeOfSport;
 	
@@ -22,12 +24,12 @@ public class Department extends PersistableObject {
 		_name = name;
 	}
 
-	public User getHead() {
-		return _head;
+	public Long getHeadId() {
+		return _headId;
 	}
 
-	public void setHead(User head) {
-		_head = head;
+	public void setHeadId(Long head) {
+		_headId = head;
 	}
 
 	public TypeOfSport getTypeOfSport() {

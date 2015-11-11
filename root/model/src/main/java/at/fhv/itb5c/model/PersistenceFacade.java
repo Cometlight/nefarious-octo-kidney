@@ -12,10 +12,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.entity.PersistableObject;
-import at.fhv.itb5c.model.entity.Team;
 import at.fhv.itb5c.model.entity.User;
 
 public class PersistenceFacade implements ILogger {
@@ -230,7 +228,7 @@ public class PersistenceFacade implements ILogger {
         return resultSet;
     }
 
-	public List<Team> findTeams(String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId) {
+	/*public List<Team> findTeams(String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId) {
 		List<Team> resultSet;
 
 		CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
@@ -263,5 +261,5 @@ public class PersistenceFacade implements ILogger {
 		resultSet = typedQuery.getResultList();
 
 		return resultSet;
-	}
+	}*/
 }

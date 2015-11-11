@@ -15,22 +15,14 @@ public class Team extends PersistableObject {
 	@Column(name = "typeOfSport", nullable = false)
 	private TypeOfSport _typeOfSport;
 
-	@Column(name = "department", nullable = true)
-	private Department _department;
-
 	@Column(name = "departmentId", nullable = true)
-	private Long _departmentId; // needed for search; may be refactored if the
-								// need arises
+	private Long _departmentId;
 
 	@Column(name = "coach", nullable = true)
 	private User _coach;
 
-	@Column(name = "league", nullable = true)
-	private League _league;
-
 	@Column(name = "leagueId", nullable = true)
-	private Long _leagueId; // needed for search; may be refactored if the need
-							// arises
+	private Long _leagueId;
 
 	@Column(name = "members", nullable = true)
 	private Set<Long> _members;
@@ -51,13 +43,12 @@ public class Team extends PersistableObject {
 		_typeOfSport = typeOfSport;
 	}
 
-	public Department getDepartment() {
-		return _department;
+	public Long getDepartmentId() {
+		return _departmentId;
 	}
 
-	public void setDepartment(Department department) {
-		_department = department;
-		_departmentId = department == null ? null : department.getId();
+	public void setDepartmentId(Long departmentId) {
+		_departmentId = departmentId;
 	}
 
 	public User getCoach() {
@@ -68,13 +59,12 @@ public class Team extends PersistableObject {
 		_coach = coach;
 	}
 
-	public League getLeague() {
-		return _league;
+	public Long getLeagueId() {
+		return _leagueId;
 	}
 
-	public void setLeague(League league) {
-		_league = league;
-		_leagueId = league == null ? null : league.getId();
+	public void setLeagueId(Long leagueId) {
+		_leagueId = leagueId;
 	}
 
 	public Set<Long> getMembers() {
@@ -84,5 +74,4 @@ public class Team extends PersistableObject {
 	public void setMembers(Set<Long> members) {
 		_members = members;
 	}
-
 }

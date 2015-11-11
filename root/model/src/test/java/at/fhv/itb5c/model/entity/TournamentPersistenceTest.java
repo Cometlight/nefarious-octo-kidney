@@ -3,6 +3,8 @@ package at.fhv.itb5c.model.entity;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -27,7 +29,7 @@ public class TournamentPersistenceTest {
 		homeTeam.setName("Team One");
 		homeTeam.setTypeOfSport(TypeOfSport.Soccer);
 		PersistenceFacade.getInstance().saveOrUpdate(homeTeam);
-		_tournament.setHomeTeam(homeTeam);
+		_tournament.setHomeTeamsIds(new HashSet<>(Arrays.asList(homeTeam.getId())));
 		Set<String> guestTeams = new LinkedHashSet<String>();
 		String guestTeam = "Team Two";
 		guestTeams.add(guestTeam);
@@ -39,7 +41,7 @@ public class TournamentPersistenceTest {
 		match.setStartDate(LocalDate.now().plusMonths(2));
 		PersistenceFacade.getInstance().saveOrUpdate(match);
 		matches.add(match.getId());
-		_tournament.setMatches(matches);
+		_tournament.setMatchesIds(matches);
 		PersistenceFacade.getInstance().saveOrUpdate(homeTeam);
 		_tournamentPersist = PersistenceFacade.getInstance().saveOrUpdate(_tournament);
 	}
@@ -55,9 +57,9 @@ public class TournamentPersistenceTest {
 		assertEquals(_tournament.getName(), _tournamentPersist.getName());
 		assertEquals(_tournament.getDate(), _tournamentPersist.getDate());
 		assertEquals(_tournament.getFee(), _tournamentPersist.getFee(), 0.001d);
-		assertEquals(_tournament.getHomeTeam(), _tournamentPersist.getHomeTeam());
+		assertEquals(_tournament.getHomeTeamsIds(), _tournamentPersist.getHomeTeamsIds());
 		assertEquals(_tournament.getGuestTeams(), _tournamentPersist.getGuestTeams());
-		assertEquals(_tournament.getMatches(), _tournamentPersist.getMatches());
+		assertEquals(_tournament.getMatchesIds(), _tournamentPersist.getMatchesIds());
 	}
 
 }

@@ -26,7 +26,7 @@ public class Match extends PersistableObject {
 	private LocalDate _startDate;
 
 	public Match() {
-
+		
 	}
 
 	public Object getTeamOne() {

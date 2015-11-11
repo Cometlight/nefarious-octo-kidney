@@ -18,9 +18,9 @@ public class Tournament extends PersistableObject {
 	@Column(name = "date", nullable = false)
 	private Date _persistDate;
 	@Column(name = "fee", nullable = true)
-	private double _fee;
+	private Double _fee;
 	@Column(name = "homeTeam", nullable = false)
-	private Team _homeTeam;
+	private Set<Long> _homeTeams;
 	@Column(name = "guestTeams", nullable = false)
 	private Set<String> _guestTeams;
 	@Column(name = "matches", nullable = false)
@@ -47,12 +47,12 @@ public class Tournament extends PersistableObject {
 		_fee = fee;
 	}
 
-	public Team getHomeTeam() {
-		return _homeTeam;
+	public Set<Long> getHomeTeamsIds() {
+		return _homeTeams;
 	}
 
-	public void setHomeTeam(Team homeTeam) {
-		_homeTeam = homeTeam;
+	public void setHomeTeamsIds(Set<Long> homeTeam) {
+		_homeTeams = homeTeam;
 	}
 
 	public Set<String> getGuestTeams() {
@@ -71,11 +71,11 @@ public class Tournament extends PersistableObject {
 		_date = date;
 	}
 
-	public Set<Long> getMatches() {
+	public Set<Long> getMatchesIds() {
 		return _matches;
 	}
 
-	public void setMatches(Set<Long> matches) {
+	public void setMatchesIds(Set<Long> matches) {
 		_matches = matches;
 	}
 

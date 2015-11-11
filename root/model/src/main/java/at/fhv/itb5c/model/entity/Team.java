@@ -1,5 +1,6 @@
 package at.fhv.itb5c.model.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -25,7 +26,7 @@ public class Team extends PersistableObject {
 	private Long _leagueId;
 
 	@Column(name = "members", nullable = true)
-	private Set<Long> _memberIds;
+	private Set<Long> _memberIds = new HashSet<>();
 
 	public String getName() {
 		return _name;

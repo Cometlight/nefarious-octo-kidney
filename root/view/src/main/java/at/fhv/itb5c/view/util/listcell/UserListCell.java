@@ -1,4 +1,4 @@
-package at.fhv.itb5c.view.util.cellfactory;
+package at.fhv.itb5c.view.util.listcell;
 
 import java.rmi.RemoteException;
 

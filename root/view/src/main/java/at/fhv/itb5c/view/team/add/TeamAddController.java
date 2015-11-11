@@ -6,11 +6,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-
 import java.io.IOException;
 import java.rmi.RemoteException;
-
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.ILeagueRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
@@ -19,9 +18,9 @@ import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.department.DepartmentViewFactory;
 import at.fhv.itb5c.view.team.view.TeamViewFactory;
-import at.fhv.itb5c.view.util.cellfactory.UserListCell;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
+import at.fhv.itb5c.view.util.listcell.UserListCell;
 import at.fhv.itb5c.view.util.popup.DataModificationPopUp;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.collections.FXCollections;
@@ -67,6 +66,13 @@ public class TeamAddController implements IPanelClosable, ILogger {
 				return new UserListCell();
 			}
 		});
+		
+		_teamNameInput.textProperty().bindBidirectional(_teamAddModel.getTeamName());
+	}
+	
+	@FXML
+	void _userSearchResultMouseClick(MouseEvent mouseEvent) {
+		_teamAddModel.getCoach().set(_userSearchResultList.getSelectionModel().getSelectedItem());
 	}
 
 	@FXML
@@ -99,13 +105,22 @@ public class TeamAddController implements IPanelClosable, ILogger {
 	private boolean saveTeam() {
 		try {
 			ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade().createTeam();
+			team.setCoachId(_teamAddModel.getCoach().getValue().getId());
+			team.setDepartmentId(_teamAddModel.getDepartment().getId());
+			//TODO(san7985) remove when league test data exists
+			if(_teamAddModel.getLeague().getValue() != null) { 
+				team.setLeagueId(_teamAddModel.getLeague().getValue().getId());
+			}
+			team.setName(_teamAddModel.getTeamName().getName());
+			
+			RMIClient.getRMIClient().getApplicationFacade().saveTeam(team);
+			
+			return true;
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage());
+			ErrorPopUp.criticalSystemError();
+			return false;
 		}
-		//setvalue
-		//save
-		return false;
 	}
 
 	@FXML

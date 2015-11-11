@@ -9,7 +9,7 @@ import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.department.DepartmentViewFactory;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.usersearch.SearchUserViewFactory;
-import at.fhv.itb5c.view.util.cellfactory.DepartmentListCell;
+import at.fhv.itb5c.view.util.listcell.DepartmentListCell;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -37,9 +37,9 @@ public interface IUserRMI extends IBaseRMI {
 
 	public void setDateOfBirth(LocalDate dateOfBirth) throws RemoteException;
 
-	public double getMembershipFee() throws RemoteException;
+	public Double getMembershipFee() throws RemoteException;
 
-	public void setMembershipFee(double membershipFee) throws RemoteException;
+	public void setMembershipFee(Double membershipFee) throws RemoteException;
 
 	public Set<UserRole> getRoles() throws RemoteException;
 
@@ -49,9 +49,9 @@ public interface IUserRMI extends IBaseRMI {
 
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) throws RemoteException;
 	
-	public boolean getMembershipFeePaid() throws RemoteException;
+	public Boolean getMembershipFeePaid() throws RemoteException;
 
-	public void setMembershipFeePaid(boolean membershipFeePaid) throws RemoteException;
+	public void setMembershipFeePaid(Boolean membershipFeePaid) throws RemoteException;
 
 	public Long getDepartmentId() throws RemoteException;
 	

@@ -1,22 +1,10 @@
 package at.fhv.itb5.view;
 
-import static org.junit.Assert.assertEquals;
-
-import java.rmi.RemoteException;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.junit.Assert;
 import org.junit.Test;
 
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
-import at.fhv.itb5c.commons.enums.Gender;
-import at.fhv.itb5c.commons.enums.TypeOfSport;
-import at.fhv.itb5c.commons.enums.UserRole;
 
 public class User {
-	
 	@Test
 	public void saveUser() {
 		/*try {

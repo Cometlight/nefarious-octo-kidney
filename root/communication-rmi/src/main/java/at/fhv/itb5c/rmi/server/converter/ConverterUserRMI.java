@@ -10,11 +10,11 @@ import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.rmiclasses.UserRMI;
 
 public class ConverterUserRMI implements ILogger {
-	public static IUserRMI toRMI(UserDTO dto) {
+	public static IUserRMI toRMI(UserDTO dto) {	
 		IUserRMI rmi = null;
 		try {
 			rmi = new UserRMI();
-
+			
 			rmi.setId(dto.getId());
 			rmi.setVersion(dto.getVersion());
 			rmi.setAddress(dto.getAddress());

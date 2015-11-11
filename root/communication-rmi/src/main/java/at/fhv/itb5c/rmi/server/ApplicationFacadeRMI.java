@@ -17,7 +17,7 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	private static final long serialVersionUID = -6290768314413969216L;
 	private ApplicationFacade _applicationFacade;
 	
-	protected ApplicationFacadeRMI() throws RemoteException {
+	public ApplicationFacadeRMI() throws RemoteException {
 		super();
 		_applicationFacade = new ApplicationFacade();
 	}

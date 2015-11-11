@@ -104,12 +104,12 @@ public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 	}
 
 	@Override
-	public double getMembershipFee() throws RemoteException {
+	public Double getMembershipFee() throws RemoteException {
 		return _membershipFee;
 	}
 
 	@Override
-	public void setMembershipFee(double membershipFee) throws RemoteException {
+	public void setMembershipFee(Double membershipFee) throws RemoteException {
 		_membershipFee = membershipFee;
 	}
 
@@ -154,12 +154,12 @@ public class UserRMI extends UnicastRemoteObject implements IUserRMI {
 	}
 
 	@Override
-	public boolean getMembershipFeePaid() throws RemoteException {
+	public Boolean getMembershipFeePaid() throws RemoteException {
 		return _membershipFeePaid;
 	}
 
 	@Override
-	public void setMembershipFeePaid(boolean membershipFeePaid) throws RemoteException {
+	public void setMembershipFeePaid(Boolean membershipFeePaid) throws RemoteException {
 		_membershipFeePaid = membershipFeePaid;
 	}
 

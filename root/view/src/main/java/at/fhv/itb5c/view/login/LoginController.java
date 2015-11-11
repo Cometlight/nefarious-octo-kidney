@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.logging.ILogger;
+import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.fxml.FXML;
@@ -31,10 +32,10 @@ public class LoginController implements ILogger{
 
 	@FXML
 	public void onSignInMouseReleasedHandler(MouseEvent event) {
-		/*try {
+		try {
 
-			IUserRMI _loggedInUser = RMIClient.getRMIClient().getUserFactory()
-					.login(_loginModel.getUserName().getValue(), _loginModel.getPassword().getValue());
+			IUserRMI _loggedInUser =  RMIClient.getRMIClient().getApplicationFacade().createUser();
+					/*.login(_loginModel.getUserName().getValue(), _loginModel.getPassword().getValue());*/
 
 			if (_loggedInUser == null) {
 				ErrorPopUp.invalidLoginCredentials();
@@ -45,7 +46,7 @@ public class LoginController implements ILogger{
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
-		}*/
+		}
 
 	}
 

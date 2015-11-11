@@ -18,8 +18,8 @@ public class Team extends PersistableObject {
 	@Column(name = "departmentId", nullable = true)
 	private Long _departmentId;
 
-	@Column(name = "coach", nullable = true)
-	private User _coach;
+	@Column(name = "coachId", nullable = true)
+	private Long _coachId;
 
 	@Column(name = "leagueId", nullable = true)
 	private Long _leagueId;
@@ -51,12 +51,12 @@ public class Team extends PersistableObject {
 		_departmentId = departmentId;
 	}
 
-	public User getCoach() {
-		return _coach;
+	public Long getCoachId() {
+		return _coachId;
 	}
 
-	public void setCoach(User coach) {
-		_coach = coach;
+	public void setCoachId(Long coachId) {
+		_coachId = coachId;
 	}
 
 	public Long getLeagueId() {

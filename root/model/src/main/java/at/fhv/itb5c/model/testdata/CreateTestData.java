@@ -31,18 +31,18 @@ public class CreateTestData implements ILogger {
 			createUsers();
 			//createLeagues();
 			//createTeams();
-			//updateDepartments();
+			updateDepartments();
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 	}
 
-	/*private static void updateDepartments() throws Exception {
-		_deptSoccer.setHead(_userDS);
-		_deptTennis.setHead(_userSA);
+	private static void updateDepartments() throws Exception {
+		_deptSoccer.setHeadId(_userDS.getId());
+		_deptTennis.setHeadId(_userSA.getId());
 		PersistenceFacade.getInstance().saveOrUpdate(_deptSoccer);
 		PersistenceFacade.getInstance().saveOrUpdate(_deptTennis);
-	}*/
+	}
 
 	private static void createDepartments() throws Exception {
 		_deptSoccer = new Department();

@@ -1,11 +1,10 @@
 package at.fhv.itb5c.commons.dto.rmi;
 
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 
-public interface IDepartmentRMI extends Remote, IBaseRMI {
+public interface IDepartmentRMI extends IBaseRMI {
 	String getName() throws RemoteException;
 	void setName(String name) throws RemoteException;
 	

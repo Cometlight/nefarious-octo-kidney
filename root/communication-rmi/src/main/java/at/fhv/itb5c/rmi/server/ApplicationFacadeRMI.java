@@ -27,23 +27,23 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	}
 
 	@Override
-	public IUserRMI createUser() {
+	public IUserRMI createUser() throws RemoteException {
 		return ConverterUserRMI.toRMI(_applicationFacade.createUser());
 	}
 
 	@Override
 	public Collection<IUserRMI> findUsers(String firstName, String lastName, Long departmentId,
-			Boolean membershipFeePaid) {
+			Boolean membershipFeePaid) throws RemoteException {
 		return ConverterUserRMI.toRMI(_applicationFacade.findUsers(firstName, lastName, departmentId, membershipFeePaid));
 	}
 
 	@Override
-	public Collection<IUserRMI> findUsersSimple(String name) {
+	public Collection<IUserRMI> findUsersSimple(String name) throws RemoteException {
 		return ConverterUserRMI.toRMI(_applicationFacade.findUsersSimple(name));
 	}
 
 	@Override
-	public IUserRMI saveUser(IUserRMI user) {
+	public IUserRMI saveUser(IUserRMI user) throws RemoteException {
 		UserDTO userDTO = ConverterUserRMI.toDTO(user);
 		return ConverterUserRMI.toRMI(_applicationFacade.saveUser(userDTO));
 	}

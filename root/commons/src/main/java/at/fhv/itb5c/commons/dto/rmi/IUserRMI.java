@@ -1,6 +1,5 @@
 package at.fhv.itb5c.commons.dto.rmi;
 
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.Set;
@@ -9,7 +8,7 @@ import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 
-public interface IUserRMI extends Remote, IBaseRMI {
+public interface IUserRMI extends IBaseRMI {
 	public String getFirstName() throws RemoteException;
 
 	public void setFirstName(String firstName) throws RemoteException;

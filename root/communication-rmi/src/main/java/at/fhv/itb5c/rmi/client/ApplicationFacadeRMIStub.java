@@ -33,23 +33,23 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	}
 
 	@Override
-	public IUserRMI createUser() {
+	public IUserRMI createUser() throws RemoteException {
 		return _applicationFacadeRMI.createUser();
 	}
 
 	@Override
 	public Collection<IUserRMI> findUsers(String firstName, String lastName, Long departmentId,
-			Boolean membershipFeePaid) {
+			Boolean membershipFeePaid) throws RemoteException {
 		return _applicationFacadeRMI.findUsers(firstName, lastName, departmentId, membershipFeePaid);
 	}
 
 	@Override
-	public Collection<IUserRMI> findUsersSimple(String name) {
+	public Collection<IUserRMI> findUsersSimple(String name) throws RemoteException {
 		return _applicationFacadeRMI.findUsersSimple(name);
 	}
 
 	@Override
-	public IUserRMI saveUser(IUserRMI user) {
+	public IUserRMI saveUser(IUserRMI user) throws RemoteException {
 		return _applicationFacadeRMI.saveUser(user);
 	}
 }

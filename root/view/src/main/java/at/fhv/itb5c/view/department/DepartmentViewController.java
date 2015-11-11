@@ -5,15 +5,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-
 import java.io.IOException;
 import java.rmi.RemoteException;
-
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.team.add.TeamAddViewFactory;
+import at.fhv.itb5c.view.team.view.TeamViewFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
 import at.fhv.itb5c.view.util.listcell.TeamListCell;
@@ -60,6 +60,16 @@ public class DepartmentViewController implements IPanelClosable, ILogger {
     void _onAddTeamButtonClick(ActionEvent event) {
     	try {
 			_panelCloseHandler.closeNext(new TeamAddViewFactory(_departmentViewModel.getDepartment()));
+		} catch (IOException e) {
+			log.error(e.getMessage());
+			ErrorPopUp.criticalSystemError();
+		}
+    }
+    
+    @FXML
+    void _teamListOnMouseClick(MouseEvent mouseEvent) {
+    	try {
+			_panelCloseHandler.closeNext(new TeamViewFactory(_departmentViewModel.getDepartment(), _teamList.getSelectionModel().getSelectedItem()));
 		} catch (IOException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();

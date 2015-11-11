@@ -41,7 +41,7 @@ public class TeamAddController implements IPanelClosable, ILogger {
 	private Button _saveButton;
 
 	private TeamAddModel _teamAddModel;
-
+	
 	public TeamAddController(IDepartmentRMI department) {
 		_teamAddModel = new TeamAddModel(department);
 	}
@@ -90,19 +90,20 @@ public class TeamAddController implements IPanelClosable, ILogger {
 	@FXML
 	void _onSaveButtonClick(ActionEvent event) {
 		
-		if(saveTeam()) {
+		ITeamRMI savedTeam = null;
+		if((savedTeam = saveTeam()) != null) {
 			DataModificationPopUp.dataSavedPopUp("Team was added!");
-		} 
 		
-		try {
-			_panelCloseHandler.closeNext(new TeamViewFactory());
-		} catch (IOException e) {
-			log.error(e.getMessage());
-			ErrorPopUp.connectionError();
+			try {
+				_panelCloseHandler.closeNext(new TeamViewFactory(_teamAddModel.getDepartment(), savedTeam));
+			} catch (IOException e) {
+				log.error(e.getMessage());
+				ErrorPopUp.connectionError();
+			}
 		}
 	}
 	
-	private boolean saveTeam() {
+	private ITeamRMI saveTeam() {
 		try {
 			ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade().createTeam();
 			team.setCoachId(_teamAddModel.getCoach().getValue().getId());
@@ -111,15 +112,13 @@ public class TeamAddController implements IPanelClosable, ILogger {
 			if(_teamAddModel.getLeague().getValue() != null) { 
 				team.setLeagueId(_teamAddModel.getLeague().getValue().getId());
 			}
-			team.setName(_teamAddModel.getTeamName().getName());
-			
-			RMIClient.getRMIClient().getApplicationFacade().saveTeam(team);
-			
-			return true;
+			team.setName(_teamAddModel.getTeamName().getValue());
+			ITeamRMI saveTeam = RMIClient.getRMIClient().getApplicationFacade().saveTeam(team);
+			return saveTeam;
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();
-			return false;
+			return null;
 		}
 	}
 

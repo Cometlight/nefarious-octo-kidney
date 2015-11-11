@@ -8,6 +8,7 @@ import java.util.Collection;
 
 import at.fhv.itb5c.application.ApplicationFacade;
 import at.fhv.itb5c.application.dto.UserDTO;
+import at.fhv.itb5c.commons.dto.rmi.IApplicationFacadeRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.converter.ConverterUserRMI;

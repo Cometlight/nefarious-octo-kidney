@@ -7,9 +7,9 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
 
+import at.fhv.itb5c.commons.dto.rmi.IApplicationFacadeRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.rmi.server.IApplicationFacadeRMI;
 import at.fhv.itb5c.rmi.server.RMIServant;
 
 public class ApplicationFacadeRMIStub extends UnicastRemoteObject

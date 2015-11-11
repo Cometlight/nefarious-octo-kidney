@@ -1,10 +1,8 @@
-package at.fhv.itb5c.rmi.server;
+package at.fhv.itb5c.commons.dto.rmi;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Collection;
-
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 
 public interface IApplicationFacadeRMI extends Remote {
 	IUserRMI createUser() throws RemoteException;

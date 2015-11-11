@@ -7,8 +7,12 @@ import java.util.stream.Collectors;
 import at.fhv.itb5c.application.dto.TournamentDTO;
 import at.fhv.itb5c.model.entity.Tournament;
 
-public class ConverterTounamentDTO {
+public class ConverterTournamentDTO {
 	public static TournamentDTO toDTO(Tournament tournament) {
+		if(tournament == null){
+			return null;
+		}
+		
 		TournamentDTO tournamentDTO = new TournamentDTO();
 
 		tournamentDTO.setId(tournament.getId());
@@ -19,6 +23,7 @@ public class ConverterTounamentDTO {
 		tournamentDTO.setMatchesIds(new HashSet<>(tournament.getMatchesIds()));
 		tournamentDTO.setName(tournament.getName());
 		tournamentDTO.setDate(tournament.getDate());
+		tournamentDTO.setDepartmentId(tournament.getDepartmentId());
 
 		return tournamentDTO;
 	}
@@ -28,10 +33,14 @@ public class ConverterTounamentDTO {
 			return null;
 		}
 
-		return tournaments.stream().map(ConverterTounamentDTO::toDTO).collect(Collectors.toList());
+		return tournaments.stream().map(ConverterTournamentDTO::toDTO).collect(Collectors.toList());
 	}
 
 	public static Tournament toEntity(TournamentDTO tournamentDTO) {
+		if(tournamentDTO == null){
+			return null;
+		}
+		
 		Tournament tournament = new Tournament();
 
 		tournament.setId(tournamentDTO.getId());
@@ -42,6 +51,7 @@ public class ConverterTounamentDTO {
 		tournament.setMatchesIds(new HashSet<>(tournamentDTO.getMatchesIds()));
 		tournament.setName(tournamentDTO.getName());
 		tournament.setDate(tournamentDTO.getDate());
+		tournament.setDepartmentId(tournamentDTO.getDepartmentId());
 
 		return tournament;
 	}

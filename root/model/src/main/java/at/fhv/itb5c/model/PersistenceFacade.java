@@ -16,6 +16,7 @@ import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.entity.PersistableObject;
 import at.fhv.itb5c.model.entity.Team;
+import at.fhv.itb5c.model.entity.Tournament;
 import at.fhv.itb5c.model.entity.User;
 
 public class PersistenceFacade implements ILogger {
@@ -260,6 +261,33 @@ public class PersistenceFacade implements ILogger {
 		query.where(predicates.toArray(new Predicate[predicates.size()]));
 
 		TypedQuery<Team> typedQuery = _entityManager.createQuery(query);
+		resultSet = typedQuery.getResultList();
+
+		return resultSet;
+	}
+	
+	public List<Tournament> findTournaments(String name, Long departmentId) {
+		List<Tournament> resultSet;
+
+		CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<Tournament> query = cb.createQuery(Tournament.class);
+		Root<Tournament> root = query.from(Tournament.class);
+		query.select(root);
+
+		List<Predicate> predicates = new LinkedList<>();
+
+		if (name != null) {
+			predicates.add(cb.like(cb.lower(root.get("_name")), "%" + name.toLowerCase() + "%"));
+		}
+
+		if (departmentId != null) {
+			predicates.add(cb.equal(root.get("_departmentId"), departmentId));
+		}
+
+		query.where(predicates.toArray(new Predicate[predicates.size()]));
+
+		TypedQuery<Tournament> typedQuery = _entityManager.createQuery(query);
 		resultSet = typedQuery.getResultList();
 
 		return resultSet;

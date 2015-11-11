@@ -11,6 +11,10 @@ import at.fhv.itb5c.rmi.server.rmiclasses.DepartmentRMI;
 
 public class ConverterDepartmentRMI implements ILogger {
 	public static IDepartmentRMI toRMI(DepartmentDTO dto) {
+		if(dto == null){
+			return null;
+		}
+		
 		IDepartmentRMI rmi = null;
 		try {
 			rmi = new DepartmentRMI();
@@ -26,10 +30,18 @@ public class ConverterDepartmentRMI implements ILogger {
 	}
 	
 	public static Collection<IDepartmentRMI> toRMI(Collection<DepartmentDTO> dtos) {
+		if(dtos == null){
+			return null;
+		}
+		
 		return dtos.stream().map(ConverterDepartmentRMI::toRMI).collect(Collectors.toList());
 	}
 	
 	public static DepartmentDTO toDTO(IDepartmentRMI rmi) {
+		if(rmi == null){
+			return null;
+		}
+		
 		DepartmentDTO dto = null;
 		try {
 			dto = new DepartmentDTO();

@@ -12,6 +12,10 @@ import at.fhv.itb5c.rmi.server.rmiclasses.TeamRMI;
 
 public class ConverterTeamRMI implements ILogger {
 	public static ITeamRMI toRMI(TeamDTO dto) {
+		if(dto == null){
+			return null;
+		}
+		
 		ITeamRMI rmi = null;
 		try {
 			rmi = new TeamRMI();
@@ -31,10 +35,18 @@ public class ConverterTeamRMI implements ILogger {
 	}
 	
 	public static Collection<ITeamRMI> toRMI(Collection<TeamDTO> dtos) {
+		if(dtos == null){
+			return null;
+		}
+		
 		return dtos.stream().map(ConverterTeamRMI::toRMI).collect(Collectors.toList());
 	}
 	
 	public static TeamDTO toDTO(ITeamRMI rmi) {
+		if(rmi == null){
+			return null;
+		}
+		
 		TeamDTO dto = new TeamDTO();
 		try {
 			dto.setId(rmi.getId());

@@ -23,33 +23,22 @@ public class TeamTest {
 	}
 
 	@Test
-	public void testMembers() throws Exception {
-		User user1 = new User();
-		user1.setFirstName("TeamTest - User1");
-		user1 = PersistenceFacade.getInstance().saveOrUpdate(user1);
-		
-		User user2 = new User();
-		user2.setFirstName("TeamTest - User2");
-		user2 = PersistenceFacade.getInstance().saveOrUpdate(user2);
-		
-		Set<Long> members = new HashSet<>(Arrays.asList(user1.getId(), user2.getId()));
-
-		Team team = new Team();
-		team.setMemberIds(members);
-		team = PersistenceFacade.getInstance().saveOrUpdate(team);
-
-		assertEquals(members, team.getMemberIds());
-	}
-
-	@Test
 	public void testName() throws Exception {
 		final String name = "Clearly Awesome Team";
-		
+
 		Team team = new Team();
 		team.setName(name);
 		team = PersistenceFacade.getInstance().saveOrUpdate(team);
 
 		assertEquals(name, team.getName());
+	}
+
+	@Test
+	public void testTypeOfSportDefault() throws Exception {
+		Team team = new Team();
+		team = PersistenceFacade.getInstance().saveOrUpdate(team);
+
+		assertEquals(null, team.getTypeOfSport());
 	}
 
 	@Test
@@ -61,6 +50,33 @@ public class TeamTest {
 		team = PersistenceFacade.getInstance().saveOrUpdate(team);
 
 		assertEquals(typeOfSport, team.getTypeOfSport());
+	}
+
+	@Test
+	public void testMembersDefault() throws Exception {
+		Team team = new Team();
+		team = PersistenceFacade.getInstance().saveOrUpdate(team);
+
+		assertEquals(0, team.getMemberIds().size());
+	}
+
+	@Test
+	public void testMembers() throws Exception {
+		User user1 = new User();
+		user1.setFirstName("TeamTest - User1");
+		user1 = PersistenceFacade.getInstance().saveOrUpdate(user1);
+
+		User user2 = new User();
+		user2.setFirstName("TeamTest - User2");
+		user2 = PersistenceFacade.getInstance().saveOrUpdate(user2);
+
+		Set<Long> members = new HashSet<>(Arrays.asList(user1.getId(), user2.getId()));
+
+		Team team = new Team();
+		team.setMemberIds(members);
+		team = PersistenceFacade.getInstance().saveOrUpdate(team);
+
+		assertEquals(members, team.getMemberIds());
 	}
 
 	@Test

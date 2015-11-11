@@ -26,19 +26,21 @@ public class TournamentPersistenceTest {
 		Team homeTeam = new Team();
 		homeTeam.setName("Team One");
 		homeTeam.setTypeOfSport(TypeOfSport.Soccer);
+		PersistenceFacade.getInstance().saveOrUpdate(homeTeam);
 		_tournament.setHomeTeam(homeTeam);
 		Set<String> guestTeams = new LinkedHashSet<String>();
 		String guestTeam = "Team Two";
 		guestTeams.add(guestTeam);
 		_tournament.setGuestTeams(guestTeams );
-		Set<Match> matches = new LinkedHashSet<Match>();
+		Set<Long> matches = new LinkedHashSet<Long>();
 		Match match = new Match();
 		match.setTeamOne(homeTeam);
 		match.setTeamTwo(guestTeam);
 		match.setStartDate(LocalDate.now().plusMonths(2));
+		PersistenceFacade.getInstance().saveOrUpdate(match);
+		matches.add(match.getId());
 		_tournament.setMatches(matches);
 		PersistenceFacade.getInstance().saveOrUpdate(homeTeam);
-		PersistenceFacade.getInstance().saveOrUpdate(match);
 		_tournamentPersist = PersistenceFacade.getInstance().saveOrUpdate(_tournament);
 	}
 

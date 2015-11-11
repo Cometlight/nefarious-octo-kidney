@@ -19,7 +19,7 @@ public class TeamTest {
 		user1.setFirstName("TeamTest - User1");
 		User user2 = new User();
 		user2.setFirstName("TeamTest - User2");
-		Set<User> members = new HashSet<>(Arrays.asList(user1, user2));
+		Set<Long> members = new HashSet<>(Arrays.asList(user1.getId(), user2.getId()));
 		
 		team.setMembers(members);
 		
@@ -46,16 +46,16 @@ public class TeamTest {
 		assertEquals(typeOfSport, team.getTypeOfSport());
 	}
 
-	@Test
-	public void testDepartment() {
-		Team team = new Team();
-		final Department department = new Department();
-		department.setName("TeamTest - Department1");
-		
-		team.setDepartment(department);
-		
-		assertEquals(department, team.getDepartment());
-	}
+//	@Test
+//	public void testDepartment() {
+//		Team team = new Team();
+//		final Department department = new Department();
+//		department.setName("TeamTest - Department1");
+//		
+//		team.setDepartment(department);
+//		
+//		assertEquals(department, team.getDepartment());
+//	}
 
 	@Test
 	public void testCoach() {
@@ -68,15 +68,15 @@ public class TeamTest {
 		assertEquals(coach, team.getCoach());
 	}
 
-	@Test
-	public void testLeague() {
-		Team team = new Team();
-		final League league = new League();
-		// TODO set values
-		
-		team.setLeague(league);
-		
-		assertEquals(league, team.getLeague());
-	}
+//	@Test
+//	public void testLeague() {
+//		Team team = new Team();
+//		final League league = new League();
+//		// TODO set values
+//		
+//		team.setLeague(league);
+//		
+//		assertEquals(league, team.getLeague());
+//	}
 
 }

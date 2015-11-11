@@ -17,6 +17,8 @@ public class PropertyManager implements ILogger {
 	private final String _defaultFile = "config.properties";
 
 	private PropertyManager() {
+		// TODO where is the null error at startup from?
+		
 		_propertiesDefault = new Properties();
 		_propertiesUser = new Properties();
 		try {

@@ -10,6 +10,7 @@ import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.PersistenceFacade;
 import at.fhv.itb5c.model.entity.Department;
+import at.fhv.itb5c.model.entity.League;
 //import at.fhv.itb5c.model.entity.League;
 //import at.fhv.itb5c.model.entity.Team;
 //import at.fhv.itb5c.model.entity.League;
@@ -23,13 +24,13 @@ public class CreateTestData implements ILogger {
 	private static Department _deptSoccer;
 	private static Department _deptTennis;
 	//private static Team _teamSoccer;
-	//private static League _leagueSoccer;
+	private static League _leagueSoccer;
 
 	public static void run() {
 		try {
 			createDepartments();
 			createUsers();
-			//createLeagues();
+			createLeagues();
 			//createTeams();
 			updateDepartments();
 		} catch (Exception e) {
@@ -115,10 +116,10 @@ public class CreateTestData implements ILogger {
 	}
 
 	private static void createLeagues() throws Exception {
-		/*_leagueSoccer = new League();
+		_leagueSoccer = new League();
 		_leagueSoccer.setName("Soccer League");
 		_leagueSoccer.setTypeOfSport(TypeOfSport.Soccer);
-		_leagueSoccer = PersistenceFacade.getInstance().saveOrUpdate(_leagueSoccer);*/
+		_leagueSoccer = PersistenceFacade.getInstance().saveOrUpdate(_leagueSoccer);
 	}
 
 }

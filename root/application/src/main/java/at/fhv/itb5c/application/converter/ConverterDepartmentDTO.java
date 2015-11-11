@@ -52,7 +52,7 @@ public class ConverterDepartmentDTO {
 	 * 
 	 * @param dto
 	 *            the DTO to convert
-	 * @return a department entity; or null, if the specified DTO was null 
+	 * @return a department entity; or null, if the specified DTO was null
 	 */
 	public static Department toEntity(DepartmentDTO dto) {
 		Department entity = null;

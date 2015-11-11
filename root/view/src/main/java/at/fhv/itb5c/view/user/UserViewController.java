@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.Map;
 
 import org.controlsfx.control.CheckListView;
+
+import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
@@ -137,7 +139,8 @@ public class UserViewController implements IPanelClosable, Closeable {
 	public boolean saveModel() {
 		if (mandatoryFieldsSet()) {
 			try {
-				_userModel.setIUserRMI(RMIClient.getRMIClient().getApplicationFacade().saveUser(_userModel.getRMIUser()));
+				IUserRMI savedUser = RMIClient.getRMIClient().getApplicationFacade().saveUser(_userModel.getRMIUser());
+				_userModel.setIUserRMI(savedUser);
 			} catch (RemoteException e) {
 				ErrorPopUp.connectionError();
 				return false;

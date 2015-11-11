@@ -1,15 +1,8 @@
 package at.fhv.itb5.view;
 
-import java.rmi.RemoteException;
-import java.util.Set;
-
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
-import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.rmi.client.RMIClient;
 
 public class UserTest {
@@ -27,7 +20,7 @@ public class UserTest {
 	
 	@Test
 	public void createUser() {
-		try {
+		/*try {
 			IUserRMI user = RMIClient.getRMIClient().getApplicationFacade().createUser();
 			
 			if(user == null) {
@@ -37,12 +30,12 @@ public class UserTest {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			Assert.assertTrue(false);
-		}
+		}*/
 	}
 	
 	@Test
 	public void readUserTypesOfSport() {
-		try {
+		/*try {
 			IUserRMI user = RMIClient.getRMIClient().getApplicationFacade().createUser();
 			
 			Set<TypeOfSport> sports = user.getTypeOfSports();
@@ -53,6 +46,6 @@ public class UserTest {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			Assert.assertTrue(false);
-		}
+		}*/
 	}
 }

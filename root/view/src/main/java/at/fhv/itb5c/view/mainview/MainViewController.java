@@ -1,41 +1,50 @@
 package at.fhv.itb5c.view.mainview;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
+
+import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.logging.ILogger;
+import at.fhv.itb5c.rmi.client.RMIClient;
+import at.fhv.itb5c.view.department.DepartmentViewFactory;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.usersearch.SearchUserViewFactory;
+import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class MainViewController implements ILogger{
 
 	@FXML BorderPane _rootPane;
 	@FXML Pane _mainPanel;
-	//@FXML ListView<IDepartmentRMI> _departmentsListView;
+	@FXML ListView<IDepartmentRMI> _departmentsListView;
 	
 	public MainViewModel _mainViewModel;
 	
 	public MainViewController() {
-		/*try {
-			_mainViewModel = new MainViewModel(RMIClient.getRMIClient().getDepartmentFactory().getAllDepartments());
+		try {
+			_mainViewModel = new MainViewModel(RMIClient.getRMIClient().getApplicationFacade().getAllDepartments());
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
-		}*/
+		}
 	}
 	
 	public void initialize() {
-		/*_departmentsListView.setItems(_mainViewModel.getDepartments());
+		_departmentsListView.setItems(_mainViewModel.getDepartments());
 		_departmentsListView.setCellFactory(new Callback<ListView<IDepartmentRMI>, ListCell<IDepartmentRMI>>() {	
 			@Override
 			public ListCell<IDepartmentRMI> call(ListView<IDepartmentRMI> param) {
 				return new DepartmentListView();
 			}
-		});*/
+		});
 	}
 	
 	@FXML
@@ -55,11 +64,11 @@ public class MainViewController implements ILogger{
 	
 	@FXML
 	public void departmentListViewOnMouseClick(MouseEvent mouseEvent) throws IOException {
-		/*_departmentsListView.getFocusModel().focus(_departmentsListView.getSelectionModel().getSelectedIndex());
-		new DepartmentViewFactory(_departmentsListView.getSelectionModel().getSelectedItem()).create(_mainPanel);*/
+		_departmentsListView.getFocusModel().focus(_departmentsListView.getSelectionModel().getSelectedIndex());
+		new DepartmentViewFactory(_departmentsListView.getSelectionModel().getSelectedItem()).create(_mainPanel);
 	}
 	
-	/*private class DepartmentListView extends ListCell<IDepartmentRMI> {
+	private class DepartmentListView extends ListCell<IDepartmentRMI> {
 		@Override
 		protected void updateItem(IDepartmentRMI item, boolean empty) {
 			super.updateItem(item, empty);
@@ -72,5 +81,5 @@ public class MainViewController implements ILogger{
 				}
 			}
 		}
-	}*/
+	}
 }

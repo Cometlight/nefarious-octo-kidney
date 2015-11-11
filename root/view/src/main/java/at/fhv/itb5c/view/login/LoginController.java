@@ -35,6 +35,7 @@ public class LoginController implements ILogger{
 		try {
 
 			IUserRMI _loggedInUser =  RMIClient.getRMIClient().getApplicationFacade().createUser();
+			//TODO(san7985) add logging when its implemented in the application facade stub
 					/*.login(_loginModel.getUserName().getValue(), _loginModel.getPassword().getValue());*/
 
 			if (_loggedInUser == null) {

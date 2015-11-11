@@ -7,7 +7,7 @@ import java.util.List;
 
 import at.fhv.itb5c.commons.property.PropertyManager;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.model.testdata.CreateTestData;
+//import at.fhv.itb5c.model.testdata.CreateTestData;
 
 public class RMIServer implements ILogger{
 	private static List<RMIServant> _servants;
@@ -15,11 +15,12 @@ public class RMIServer implements ILogger{
 	private static final String _port = PropertyManager.getInstance().getProperty("at.fhv.itb5c.rmi.port");
 
 	public static void main(String args[]) {
-		if(args.length>0){
+		// TODO reactivate!
+		/*if(args.length>0){
 			if(args[0].equals("test")){
 				CreateTestData.run();
 			}
-		}
+		}*/
 		
 		log.info("Starting RMI server ...");
 		

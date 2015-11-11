@@ -24,7 +24,7 @@ public class Tournament extends PersistableObject {
 	@Column(name = "guestTeams", nullable = false)
 	private Set<String> _guestTeams;
 	@Column(name = "matches", nullable = false)
-	private Set<Match> _matches;
+	private Set<Long> _matches;
 	@Transient
 	private LocalDate _date;
 
@@ -71,11 +71,11 @@ public class Tournament extends PersistableObject {
 		_date = date;
 	}
 
-	public Set<Match> getMatches() {
+	public Set<Long> getMatches() {
 		return _matches;
 	}
 
-	public void setMatches(Set<Match> matches) {
+	public void setMatches(Set<Long> matches) {
 		_matches = matches;
 	}
 

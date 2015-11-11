@@ -34,23 +34,26 @@ public class ConverterUserDTO {
 	}
 	
 	public static User toEntity(UserDTO userDTO) {
-		User entity = new User();
+		User entity = null;
 		
-		entity.setId(userDTO.getId());
-		entity.setVersion(userDTO.getVersion());
-		entity.setFirstName(userDTO.getFirstName());
-		entity.setLastName(userDTO.getLastName());
-		entity.setEmail(userDTO.getEmail());
-		entity.setTelephoneNumber(userDTO.getTelephoneNumber());
-		entity.setGender(userDTO.getGender());
-		entity.setAddress(userDTO.getAddress());
-		entity.setDateOfBirth(userDTO.getDateOfBirth());
-		entity.setMembershipFee(userDTO.getMembershipFee());
-		entity.setRoles(userDTO.getRoles());
-		entity.setTypeOfSports(userDTO.getTypeOfSports());
-		entity.setMembershipFeePaid(userDTO.getMembershipFeePaid());
-		entity.setDepartmentId(userDTO.getDepartmentId());
-		entity.setLdapUID(userDTO.getLdapUID());
+		if (userDTO != null) {
+			entity = new User();
+			entity.setId(userDTO.getId());
+			entity.setVersion(userDTO.getVersion());
+			entity.setFirstName(userDTO.getFirstName());
+			entity.setLastName(userDTO.getLastName());
+			entity.setEmail(userDTO.getEmail());
+			entity.setTelephoneNumber(userDTO.getTelephoneNumber());
+			entity.setGender(userDTO.getGender());
+			entity.setAddress(userDTO.getAddress());
+			entity.setDateOfBirth(userDTO.getDateOfBirth());
+			entity.setMembershipFee(userDTO.getMembershipFee());
+			entity.setRoles(userDTO.getRoles());
+			entity.setTypeOfSports(userDTO.getTypeOfSports());
+			entity.setMembershipFeePaid(userDTO.getMembershipFeePaid());
+			entity.setDepartmentId(userDTO.getDepartmentId());
+			entity.setLdapUID(userDTO.getLdapUID());
+		}
 		
 		return entity;
 	}

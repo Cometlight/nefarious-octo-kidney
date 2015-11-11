@@ -9,7 +9,7 @@ import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 
-public interface IUserRMI extends Remote {
+public interface IUserRMI extends Remote, IBaseRMI {
 	public String getFirstName() throws RemoteException;
 
 	public void setFirstName(String firstName) throws RemoteException;
@@ -49,14 +49,6 @@ public interface IUserRMI extends Remote {
 	public Set<TypeOfSport> getTypeOfSports() throws RemoteException;
 
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) throws RemoteException;
-
-	public Long getId() throws RemoteException;
-
-	public Long getVersion() throws RemoteException;
-
-	public void setId(Long id) throws RemoteException;
-
-	public void setVersion(Long version) throws RemoteException;
 	
 	public boolean getMembershipFeePaid() throws RemoteException;
 

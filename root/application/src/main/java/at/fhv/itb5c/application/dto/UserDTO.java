@@ -7,9 +7,7 @@ import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 
-public class UserDTO {
-	private Long _id;
-	private Long _version;
+public class UserDTO extends BaseDTO {
 	private String _firstName;
 	private String _lastName;
 	private String _email;
@@ -23,22 +21,6 @@ public class UserDTO {
 	private Boolean _membershipFeePaid;
 	private Long _departmentId;
 	private String _ldapUID;
-
-	public Long getId() {
-		return _id;
-	}
-
-	public void setId(Long id) {
-		_id = id;
-	}
-
-	public Long getVersion() {
-		return _version;
-	}
-
-	public void setVersion(Long version) {
-		_version = version;
-	}
 
 	public String getFirstName() {
 		return _firstName;
@@ -135,7 +117,7 @@ public class UserDTO {
 	public void setDepartmentId(Long departmentId) {
 		_departmentId = departmentId;
 	}
-	
+
 	public String getLdapUID() {
 		return _ldapUID;
 	}

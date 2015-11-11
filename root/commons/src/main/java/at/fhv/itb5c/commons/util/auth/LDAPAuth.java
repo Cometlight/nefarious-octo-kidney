@@ -3,6 +3,7 @@ package at.fhv.itb5c.commons.util.auth;
 import java.util.Properties;
 
 import at.fhv.itb5c.commons.property.PropertyManager;
+import at.fhv.itb5c.logging.ILogger;
 
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
@@ -12,7 +13,7 @@ import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
-public class LDAPAuth {
+public class LDAPAuth implements ILogger {
 	public static String ldapLogin(String username, String password) {
 		Properties env = new Properties();
 		env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
@@ -35,6 +36,7 @@ public class LDAPAuth {
 				}
 			}
 		} catch (NamingException e) {
+			log.error(e.getMessage());
 		}
 		return null;
 	}

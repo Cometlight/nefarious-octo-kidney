@@ -1,24 +1,15 @@
 package at.fhv.itb5c.view.mainview;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
-
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
-import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.usersearch.SearchUserViewFactory;
-import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 public class MainViewController implements ILogger{
 

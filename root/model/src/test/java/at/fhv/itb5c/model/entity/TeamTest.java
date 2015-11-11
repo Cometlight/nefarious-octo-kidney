@@ -46,16 +46,16 @@ public class TeamTest {
 		assertEquals(typeOfSport, team.getTypeOfSport());
 	}
 
-	@Test
-	public void testDepartment() {
-		Team team = new Team();
-		final Department department = new Department();
-		department.setName("TeamTest - Department1");
-		
-		team.setDepartment(department);
-		
-		assertEquals(department, team.getDepartment());
-	}
+//	@Test
+//	public void testDepartment() {
+//		Team team = new Team();
+//		final Department department = new Department();
+//		department.setName("TeamTest - Department1");
+//		
+//		team.setDepartment(department);
+//		
+//		assertEquals(department, team.getDepartment());
+//	}
 
 	@Test
 	public void testCoach() {
@@ -68,15 +68,15 @@ public class TeamTest {
 		assertEquals(coach, team.getCoach());
 	}
 
-	@Test
-	public void testLeague() {
-		Team team = new Team();
-		final League league = new League();
-		// TODO set values
-		
-		team.setLeague(league);
-		
-		assertEquals(league, team.getLeague());
-	}
+//	@Test
+//	public void testLeague() {
+//		Team team = new Team();
+//		final League league = new League();
+//		// TODO set values
+//		
+//		team.setLeague(league);
+//		
+//		assertEquals(league, team.getLeague());
+//	}
 
 }

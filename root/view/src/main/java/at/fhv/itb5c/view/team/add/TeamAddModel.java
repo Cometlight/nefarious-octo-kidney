@@ -25,7 +25,6 @@ public class TeamAddModel {
 		_teamName = new SimpleStringProperty();
 		_searchResult = FXCollections.observableArrayList();
 		_searchInput = new SimpleStringProperty();
-		_coach = new SimpleObjectProperty<>();
 	}
 	
 	public IDepartmentRMI getDepartment() {

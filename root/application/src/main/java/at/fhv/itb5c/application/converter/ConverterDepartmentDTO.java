@@ -20,6 +20,10 @@ public class ConverterDepartmentDTO {
 	 *         specified department is null
 	 */
 	public static DepartmentDTO toDTO(Department department) {
+		if(department == null){
+			return null;
+		}
+		
 		DepartmentDTO dto = null;
 
 		if (department != null) {
@@ -43,6 +47,10 @@ public class ConverterDepartmentDTO {
 	 * @return a collection of department DTOs
 	 */
 	public static Collection<DepartmentDTO> toDTO(Collection<Department> departments) {
+		if(departments == null){
+			return null;
+		}
+		
 		return departments.stream().map(ConverterDepartmentDTO::toDTO).collect(Collectors.toList());
 	}
 
@@ -55,6 +63,10 @@ public class ConverterDepartmentDTO {
 	 * @return a department entity; or null, if the specified DTO was null
 	 */
 	public static Department toEntity(DepartmentDTO dto) {
+		if(dto == null){
+			return null;
+		}
+		
 		Department entity = null;
 
 		if (dto != null) {

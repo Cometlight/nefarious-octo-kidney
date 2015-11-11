@@ -10,11 +10,15 @@ import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.rmiclasses.UserRMI;
 
 public class ConverterUserRMI implements ILogger {
-	public static IUserRMI toRMI(UserDTO dto) {	
+	public static IUserRMI toRMI(UserDTO dto) {
+		if (dto == null) {
+			return null;
+		}
+
 		IUserRMI rmi = null;
 		try {
 			rmi = new UserRMI();
-			
+
 			rmi.setId(dto.getId());
 			rmi.setVersion(dto.getVersion());
 			rmi.setAddress(dto.getAddress());
@@ -35,12 +39,20 @@ public class ConverterUserRMI implements ILogger {
 		}
 		return rmi;
 	}
-	
+
 	public static Collection<IUserRMI> toRMI(Collection<UserDTO> users) {
+		if (users == null) {
+			return null;
+		}
+
 		return users.stream().map(ConverterUserRMI::toRMI).collect(Collectors.toList());
 	}
 
 	public static UserDTO toDTO(IUserRMI rmi) {
+		if (rmi == null) {
+			return null;
+		}
+
 		UserDTO dto = new UserDTO();
 
 		try {

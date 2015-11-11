@@ -9,6 +9,10 @@ import at.fhv.itb5c.model.entity.Team;
 
 public class ConverterTeamDTO {
 	public static TeamDTO toDTO(Team entity) {
+		if(entity == null){
+			return null;
+		}
+		
 		TeamDTO dto = new TeamDTO();
 		
 		dto.setId(entity.getId());
@@ -24,10 +28,18 @@ public class ConverterTeamDTO {
 	}
 	
 	public static Collection<TeamDTO> toDTO(Collection<Team> entities) {
+		if(entities == null){
+			return null;
+		}
+		
 		return entities.stream().map(ConverterTeamDTO::toDTO).collect(Collectors.toList());
 	}
 	
 	public static Team toEntity(TeamDTO dto) {
+		if(dto == null){
+			return null;
+		}
+		
 		Team entity = new Team();
 		
 		entity.setId(dto.getId());

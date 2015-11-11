@@ -9,6 +9,10 @@ import at.fhv.itb5c.model.entity.Tournament;
 
 public class ConverterTournamentDTO {
 	public static TournamentDTO toDTO(Tournament tournament) {
+		if(tournament == null){
+			return null;
+		}
+		
 		TournamentDTO tournamentDTO = new TournamentDTO();
 
 		tournamentDTO.setId(tournament.getId());
@@ -33,6 +37,10 @@ public class ConverterTournamentDTO {
 	}
 
 	public static Tournament toEntity(TournamentDTO tournamentDTO) {
+		if(tournamentDTO == null){
+			return null;
+		}
+		
 		Tournament tournament = new Tournament();
 
 		tournament.setId(tournamentDTO.getId());

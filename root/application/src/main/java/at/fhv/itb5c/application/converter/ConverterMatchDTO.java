@@ -8,6 +8,10 @@ import at.fhv.itb5c.model.entity.Match;
 
 public class ConverterMatchDTO {
 	public static MatchDTO toDTO(Match match) {
+		if (match == null) {
+			return null;
+		}
+
 		MatchDTO matchdto = new MatchDTO();
 
 		matchdto.setId(match.getId());
@@ -22,10 +26,18 @@ public class ConverterMatchDTO {
 	}
 
 	public static Collection<MatchDTO> toDTO(Collection<Match> entities) {
+		if (entities == null) {
+			return null;
+		}
+
 		return entities.stream().map(ConverterMatchDTO::toDTO).collect(Collectors.toList());
 	}
 
 	public static Match toEntity(MatchDTO matchdto) {
+		if (matchdto == null) {
+			return null;
+		}
+
 		Match match = new Match();
 
 		match.setId(matchdto.getId());

@@ -41,11 +41,11 @@ public class Tournament extends PersistableObject {
 		_name = name;
 	}
 
-	public double getFee() {
+	public Double getFee() {
 		return _fee;
 	}
 
-	public void setFee(double fee) {
+	public void setFee(Double fee) {
 		_fee = fee;
 	}
 

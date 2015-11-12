@@ -26,7 +26,7 @@ public class AppState extends Observable {
 	public void setSessionID(String sessionID) throws RemoteException {
 		if(sessionID != null) {
 			_sessionID = sessionID;
-			setLoggedInUser(RMIClient.getRMIClient().getApplicationFacade().getUserBySessionId(sessionID));
+			setLoggedInUser(RMIClient.getRMIClient().getApplicationFacade().getCurrentUser(sessionID));
 		}
 	}
 	

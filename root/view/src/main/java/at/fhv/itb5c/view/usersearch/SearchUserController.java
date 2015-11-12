@@ -3,12 +3,12 @@ package at.fhv.itb5c.view.usersearch;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.List;
-
+import java.util.Collection;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.user.UserViewController.UserViewState;
+import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
@@ -56,7 +56,7 @@ public class SearchUserController implements IPanelClosable {
 
 		try {
 			_departmentsCombobox.setItems(
-					FXCollections.observableArrayList(RMIClient.getRMIClient().getApplicationFacade().getAllDepartments()));
+					FXCollections.observableArrayList(RMIClient.getRMIClient().getApplicationFacade().getAllDepartments(AppState.getInstance().getSessionID())));
 		} catch (RemoteException e) {
 			ErrorPopUp.connectionError();
 		}
@@ -182,16 +182,16 @@ public class SearchUserController implements IPanelClosable {
 	@FXML
 	public void searchButtonOnReleasedEventHandler(MouseEvent mouseEvent) {
 		try {
-			List<IUserRMI> users = null;
+			Collection<IUserRMI> users = null;
 			if (_searchUserModel.getDepartment().get() == null) {
-				users = new ArrayList<>(RMIClient.getRMIClient().getApplicationFacade().findUsers(_searchUserModel.getFirstName().getValue(), 
+				users = new ArrayList<>(RMIClient.getRMIClient().getApplicationFacade().findUsers(AppState.getInstance().getSessionID(), _searchUserModel.getFirstName().getValue(), 
 																					_searchUserModel.getLastName().getValue(), 
 																					null,
 																					_searchUserModel.getIsPaid().getValue()));	
 			} else {
-				/*users = RMIClient.getRMIClient().getUserFactory().findUsers(_searchUserModel.getFirstName().getValue(),
+				users = RMIClient.getRMIClient().getApplicationFacade().findUsers(AppState.getInstance().getSessionID(), _searchUserModel.getFirstName().getValue(),
 						_searchUserModel.getLastName().getValue(), _searchUserModel.getDepartment().get().getId(),
-						_searchUserModel.getIsPaid().getValue());*/
+						_searchUserModel.getIsPaid().getValue());
 			}
 
 			_searchResultCountLable.setText(Integer.toString(users.size()));

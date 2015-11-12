@@ -142,7 +142,7 @@ public class UserViewController implements IPanelClosable, Closeable {
 	public boolean saveModel() {
 		if (mandatoryFieldsSet()) {
 			try {
-				IUserRMI savedUser = RMIClient.getRMIClient().getApplicationFacade().saveUser(_userModel.getRMIUser());
+				IUserRMI savedUser = RMIClient.getRMIClient().getApplicationFacade().saveUser(AppState.getInstance().getSessionID(), _userModel.getRMIUser());
 				_userModel.setIUserRMI(savedUser);
 			} catch (RemoteException e) {
 				ErrorPopUp.connectionError();

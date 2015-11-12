@@ -16,6 +16,7 @@ import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
+import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.department.DepartmentViewFactory;
 import at.fhv.itb5c.view.team.view.TeamViewFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
@@ -62,7 +63,7 @@ public class TeamAddController implements IPanelClosable, ILogger {
 
 		try {
 			_leagueChoice.setItems(
-					FXCollections.observableArrayList(RMIClient.getRMIClient().getApplicationFacade().getAllLeagues()));
+					FXCollections.observableArrayList(RMIClient.getRMIClient().getApplicationFacade().getAllLeagues(AppState.getInstance().getSessionID())));
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
@@ -90,7 +91,7 @@ public class TeamAddController implements IPanelClosable, ILogger {
 		_teamAddModel.getSearchResults().clear();
 		try {
 			_teamAddModel.getSearchResults().addAll(RMIClient.getRMIClient().getApplicationFacade()
-					.findUsersSimple(_teamAddModel.getSearchInput().getValue()));
+					.findUsersSimple(AppState.getInstance().getSessionID(), _teamAddModel.getSearchInput().getValue()));
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
@@ -117,7 +118,7 @@ public class TeamAddController implements IPanelClosable, ILogger {
 		try {
 			if ((_teamAddModel.getTeamName().getValue() != "" && _teamAddModel.getTeamName().getValue() != null) &&
 					(_teamAddModel.getCoach().getValue() != null)) {
-				ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade().createTeam();
+				ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade().createTeam(AppState.getInstance().getSessionID());
 				team.setCoachId(_teamAddModel.getCoach().getValue().getId());
 				
 				if (_teamAddModel.getLeague().getValue() != null) {
@@ -126,7 +127,7 @@ public class TeamAddController implements IPanelClosable, ILogger {
 				
 				team.setName(_teamAddModel.getTeamName().getValue());
 				team.setDepartmentId(_teamAddModel.getDepartment().getId());
-				ITeamRMI saveTeam = RMIClient.getRMIClient().getApplicationFacade().saveTeam(team);
+				ITeamRMI saveTeam = RMIClient.getRMIClient().getApplicationFacade().saveTeam(AppState.getInstance().getSessionID(), team);
 				return saveTeam;
 			} else {
 				ErrorPopUp.generalError("Mandatory Fields", "Please set the mandatory field: Team Name, Coach");

@@ -96,7 +96,7 @@ public class CreateTestData implements ILogger {
 		_userDG.setMembershipFeePaid(true);
 		_userDG.setTelephoneNumber("+43 (0) I DONT KNOW");
 		_userDG.setTypeOfSports(new HashSet<>(Arrays.asList(TypeOfSport.Soccer)));
-		_userDG.setRoles(new HashSet<>(Arrays.asList(UserRole.StandardUser)));
+		_userDG.setRoles(new HashSet<>(Arrays.asList(UserRole.Admin)));
 		_userDG = PersistenceFacade.getInstance().saveOrUpdate(_userDG);
 
 		_userFH = new User();
@@ -107,11 +107,11 @@ public class CreateTestData implements ILogger {
 		_userFH.setDateOfBirth(LocalDate.now().minusYears(25));
 		_userFH.setDepartmentId(_deptTennis.getId());
 		_userFH.setEmail("florian.h@gmx.net");
-		_userFH.setGender(Gender.Female);
+		_userFH.setGender(Gender.Male);
 		_userFH.setMembershipFeePaid(true);
 		_userFH.setTelephoneNumber("06648268464");
 		_userFH.setTypeOfSports(new HashSet<>(Arrays.asList(TypeOfSport.Tennis)));
-		_userFH.setRoles(new HashSet<>(Arrays.asList(UserRole.StandardUser)));
+		_userFH.setRoles(new HashSet<>(Arrays.asList(UserRole.Admin)));
 		_userFH = PersistenceFacade.getInstance().saveOrUpdate(_userFH);
 		
 		_userSA = new User();
@@ -122,11 +122,11 @@ public class CreateTestData implements ILogger {
 		_userSA.setDateOfBirth(LocalDate.now().minusYears(25));
 		_userDS.setDepartmentId(_deptTennis.getId());
 		_userSA.setEmail("simone.a@gmx.net");
-		_userSA.setGender(Gender.Female);
+		_userSA.setGender(Gender.Male);
 		_userSA.setMembershipFeePaid(true);
 		_userSA.setTelephoneNumber("06648268464");
 		_userSA.setTypeOfSports(new HashSet<>(Arrays.asList(TypeOfSport.Tennis)));
-		_userSA.setRoles(new HashSet<>(Arrays.asList(UserRole.StandardUser)));
+		_userSA.setRoles(new HashSet<>(Arrays.asList(UserRole.Admin)));
 		_userSA = PersistenceFacade.getInstance().saveOrUpdate(_userSA);
 	}
 

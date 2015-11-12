@@ -186,15 +186,14 @@ public class ApplicationFacade implements ILogger {
 	 *            ldap password
 	 * @return session id
 	 */
-	public String loginLDAP(String sessionId, String username, String password) {
-		if (hasRole(sessionId, UserRole.Admin)) {
+	public String loginLDAP(String username, String password) {
 			if (username != null && password != null) {
 				if (LDAPAuth.ldapLogin(username, password) != null) {
 					User user = PersistenceFacade.getInstance().findUserByLDAP(username);
 					return SessionManager.getInstance().createNewSession(user.getId(), user.getRoles());
 				}
 			}
-		}
+		
 		return null;
 	}
 

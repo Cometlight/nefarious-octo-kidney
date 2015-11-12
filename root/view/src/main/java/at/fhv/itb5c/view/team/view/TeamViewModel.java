@@ -8,6 +8,7 @@ import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
+import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -25,13 +26,13 @@ public class TeamViewModel implements ILogger {
 
 		try {
 			_teamName = new SimpleStringProperty(_team.getName());
-			ILeagueRMI league = RMIClient.getRMIClient().getApplicationFacade().getLeagueById(team.getLeagueId());
+			ILeagueRMI league = RMIClient.getRMIClient().getApplicationFacade().getLeagueById(AppState.getInstance().getSessionID(), team.getLeagueId());
 			if (league != null) {
 				_leagueName = new SimpleStringProperty(league.getName());
 			} else {
 				_leagueName = new SimpleStringProperty("");
 			}
-			IUserRMI coach = RMIClient.getRMIClient().getApplicationFacade().getUserById(_team.getCoachId());
+			IUserRMI coach = RMIClient.getRMIClient().getApplicationFacade().getUserById(AppState.getInstance().getSessionID(), _team.getCoachId());
 			_coachName = new SimpleStringProperty(coach.getFirstName() + " " + coach.getLastName());
 		} catch (RemoteException e) {
 			log.error(e.getMessage());

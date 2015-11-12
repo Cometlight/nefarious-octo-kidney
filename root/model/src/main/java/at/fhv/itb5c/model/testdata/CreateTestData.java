@@ -21,6 +21,7 @@ public class CreateTestData implements ILogger {
 	private static User _userDS;
 	private static User _userDG;
 	private static User _userSA;
+	private static User _userFH;
 	private static Department _deptSoccer;
 	private static Department _deptTennis;
 	//private static Team _teamSoccer;
@@ -98,11 +99,26 @@ public class CreateTestData implements ILogger {
 		_userDG.setRoles(new HashSet<>(Arrays.asList(UserRole.StandardUser)));
 		_userDG = PersistenceFacade.getInstance().saveOrUpdate(_userDG);
 
+		_userFH = new User();
+		_userFH.setFirstName("Florian");
+		_userFH.setLastName("Hämmerle");
+		_userFH.setLdapUID("fha3027");
+		_userFH.setAddress("Winkelgasse 14");
+		_userFH.setDateOfBirth(LocalDate.now().minusYears(25));
+		_userFH.setDepartmentId(_deptTennis.getId());
+		_userFH.setEmail("florian.h@gmx.net");
+		_userFH.setGender(Gender.Female);
+		_userFH.setMembershipFeePaid(true);
+		_userFH.setTelephoneNumber("06648268464");
+		_userFH.setTypeOfSports(new HashSet<>(Arrays.asList(TypeOfSport.Tennis)));
+		_userFH.setRoles(new HashSet<>(Arrays.asList(UserRole.StandardUser)));
+		_userFH = PersistenceFacade.getInstance().saveOrUpdate(_userFH);
+		
 		_userSA = new User();
 		_userSA.setFirstName("Simon");
 		_userSA.setLastName("Angerer");
 		_userSA.setLdapUID("san7985");
-		_userSA.setAddress("Wiedengasse 10, 6480 Götzis");
+		_userSA.setAddress("----");
 		_userSA.setDateOfBirth(LocalDate.now().minusYears(25));
 		_userDS.setDepartmentId(_deptTennis.getId());
 		_userSA.setEmail("simone.a@gmx.net");

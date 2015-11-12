@@ -32,7 +32,8 @@ public class TeamViewController implements IPanelClosable, ILogger{
     public void initialize() {
     	_teamNameLabel.textProperty().bindBidirectional(_teamViewModel.getTeamName());
     	_coachLabel.textProperty().bindBidirectional(_teamViewModel.getCoachName());
-    	//TODO(san7985) add league name when league test data exists
+    	_leagueLabel.textProperty().bindBidirectional(_teamViewModel.getLeagueName());
+    	_editButton.disableProperty().set(true);
     }
 
 	@FXML

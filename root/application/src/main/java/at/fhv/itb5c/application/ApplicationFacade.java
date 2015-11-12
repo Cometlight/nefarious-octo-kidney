@@ -143,4 +143,8 @@ public class ApplicationFacade implements ILogger {
 
 		return null;
 	}
+
+	public User getUserBySessionId(String sessionId) {
+		return PersistenceFacade.getInstance().getById(User.class, SessionManager.getInstance().getUserId(sessionId));
+	}
 }

@@ -29,7 +29,7 @@ public class SessionManager {
 		return session.getSession();
 	}
 
-	public boolean hasRole(String sessionId, UserRole role) {
+	public boolean hasRole(Long sessionId, UserRole role) {
 		// get all roles of the session from the hash table
 		Set<UserRole> roles = _sessionTable.get(sessionId).getRoles();
 

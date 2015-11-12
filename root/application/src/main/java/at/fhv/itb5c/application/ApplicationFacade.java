@@ -92,7 +92,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public Collection<DepartmentDTO> getAllDepartments(String sessionId) {
-		if (hasRole(sessionId, UserRole.Admin)) {
+		if (hasRole(sessionId, UserRole.Admin, UserRole.StandardUser)) {
 			List<Department> departments = PersistenceFacade.getInstance().getAll(Department.class);
 			return ConverterDepartmentDTO.toDTO(departments);
 		}
@@ -170,7 +170,7 @@ public class ApplicationFacade implements ILogger {
 	public TeamDTO addPlayerToTeam(String sessionId, TeamDTO team, UserDTO player) {
 		if (team != null && player != null) {
 			UserDTO currentUser = getCurrentUser(sessionId);
-			if (currentUser != null && team.getCoachId().equals(currentUser.getId())) {
+			if (currentUser != null && (hasRole(sessionId, UserRole.Admin) || team.getCoachId().equals(currentUser.getId()))) {
 				Team teamEntity = ConverterTeamDTO.toEntity(team);
 				if (teamEntity != null) {
 					Set<Long> memberIds = teamEntity.getMemberIds();
@@ -226,7 +226,9 @@ public class ApplicationFacade implements ILogger {
 		if (username != null && password != null) {
 			if (LDAPAuth.ldapLogin(username, password) != null) {
 				User user = PersistenceFacade.getInstance().findUserByLDAP(username);
-				return SessionManager.getInstance().createNewSession(user.getId(), user.getRoles());
+				if (user != null) {
+					return SessionManager.getInstance().createNewSession(user.getId(), user.getRoles());
+				}
 			}
 		}
 

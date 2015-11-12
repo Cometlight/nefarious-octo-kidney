@@ -76,16 +76,16 @@ public class CreateTestData implements ILogger {
 		_userDG = new User();
 		_userDG.setFirstName("Daniel");
 		_userDG.setLastName("Grießer");
-		_userDG.setAddress("Rickenbacherstr. 15a, A - 6922 Wolfurt");
+		_userDG.setAddress("Idiot's Avenue");
 		_userDG.setDateOfBirth(LocalDate.now().minusYears(27));
 		_userDS.setDepartmentId(_deptSoccer.getId());
-		_userDG.setEmail("daniel.griesser@gmail.com");
+		_userDG.setEmail("daniel.griesser@dumm.du");
 		_userDG.setGender(Gender.Male);
 		_userDG.setMembershipFee(6.9d);
 		_userDG.setMembershipFeePaid(true);
-		_userDG.setTelephoneNumber("+43 (0) 6648268464");
+		_userDG.setTelephoneNumber("+43 (0) I DONT KNOW");
 		_userDG.setTypeOfSports(new HashSet<>(Arrays.asList(TypeOfSport.Soccer)));
-		_userDG.setRoles(new HashSet<>(Arrays.asList(UserRole.Admin)));
+		_userDG.setRoles(new HashSet<>(Arrays.asList(UserRole.StandardUser)));
 		_userDG = PersistenceFacade.getInstance().saveOrUpdate(_userDG);
 
 		_userSA = new User();

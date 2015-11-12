@@ -32,7 +32,7 @@ public class RMIServer implements ILogger{
 			_servants.add(new ApplicationFacadeRMI());
 
 			// startup server by initializing all servants
-			log.info("... initializing RMI servants ...");
+			log.info("... initializing RMI servants...");
 			for (RMIServant servant : _servants) {
 				servant.init(_host, _port);
 			}

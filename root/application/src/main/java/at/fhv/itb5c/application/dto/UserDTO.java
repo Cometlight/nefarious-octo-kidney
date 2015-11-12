@@ -2,11 +2,9 @@ package at.fhv.itb5c.application.dto;
 
 import java.time.LocalDate;
 import java.util.Set;
-import at.fhv.itb5c.application.converter.ConverterUserDTO;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
-import at.fhv.itb5c.model.entity.User;
 
 public class UserDTO extends BaseDTO {
 	private String _firstName;
@@ -25,10 +23,6 @@ public class UserDTO extends BaseDTO {
 	
 	public UserDTO() {
 		
-	}
-	
-	public static UserDTO create() {
-		return ConverterUserDTO.toDTO(new User());
 	}
 	
 	public String getFirstName() {

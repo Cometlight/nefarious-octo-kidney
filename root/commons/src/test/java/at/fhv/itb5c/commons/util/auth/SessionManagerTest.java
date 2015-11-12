@@ -24,5 +24,10 @@ public class SessionManagerTest {
 		assertTrue(SessionManager.getInstance().hasRole(_sessionId, UserRole.StandardUser));
 		assertFalse(SessionManager.getInstance().hasRole(_sessionId, UserRole.Admin));
 	}
+	
+	@Test
+	public void getUserIdTest(){
+		assertEquals(SessionManager.getInstance().getUserId(_sessionId).longValue(), 1l);
+	}
 
 }

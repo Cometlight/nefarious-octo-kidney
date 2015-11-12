@@ -118,7 +118,9 @@ public class UserViewController implements IPanelClosable, Closeable {
 		});
 		
 		_errorField.setVisible(false);
-		
+		if(!_userModel.getTypeOfSports().contains(UserRole.Admin)) {
+			_userRoleCheckListView.setDisable(true);
+		}
 		setState(_initialiseState);
 	}
 
@@ -207,7 +209,9 @@ public class UserViewController implements IPanelClosable, Closeable {
 		_birthdayDatePicker.setDisable(isDisabled);
 		_typeOfSportCheckListView.setDisable(isDisabled);
 		_memebershipFeeTextBox.setDisable(isDisabled);
-		_userRoleCheckListView.setDisable(isDisabled);
+		if(_userModel.getTypeOfSports().contains(UserRole.Admin)) {
+			_userRoleCheckListView.setDisable(isDisabled);
+		}
 	}
 
 	public UserModel getUserModel() {

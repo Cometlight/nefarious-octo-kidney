@@ -119,10 +119,13 @@ public class TeamAddController implements IPanelClosable, ILogger {
 					(_teamAddModel.getCoach().getValue() != null)) {
 				ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade().createTeam();
 				team.setCoachId(_teamAddModel.getCoach().getValue().getId());
+				
 				if (_teamAddModel.getLeague().getValue() != null) {
 					team.setLeagueId(_teamAddModel.getLeague().getValue().getId());
 				}
+				
 				team.setName(_teamAddModel.getTeamName().getValue());
+				team.setDepartmentId(_teamAddModel.getDepartment().getId());
 				ITeamRMI saveTeam = RMIClient.getRMIClient().getApplicationFacade().saveTeam(team);
 				return saveTeam;
 			} else {

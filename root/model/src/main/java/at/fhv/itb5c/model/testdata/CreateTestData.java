@@ -1,9 +1,9 @@
 package at.fhv.itb5c.model.testdata;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashSet;
-
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
@@ -27,6 +27,16 @@ public class CreateTestData implements ILogger {
 	private static League _leagueSoccer;
 
 	public static void run() {
+		
+		 File file = new File("persistence.odb");
+	        if (file.exists()) {
+	            file.delete();
+	        }
+	        
+	        File recoveryFile = new File("persistence.odb" + "$");
+	        if (recoveryFile.exists()) {
+	        	recoveryFile.delete();
+	        }
 		try {
 			createDepartments();
 			createUsers();
@@ -89,9 +99,10 @@ public class CreateTestData implements ILogger {
 		_userDG = PersistenceFacade.getInstance().saveOrUpdate(_userDG);
 
 		_userSA = new User();
-		_userSA.setFirstName("Simone");
+		_userSA.setFirstName("Simon");
 		_userSA.setLastName("Angerer");
-		_userSA.setAddress("Prinzessinnenweg 7b, 6480 Götzis");
+		_userSA.setLdapUID("san7985");
+		_userSA.setAddress("Wiedengasse 10, 6480 Götzis");
 		_userSA.setDateOfBirth(LocalDate.now().minusYears(25));
 		_userDS.setDepartmentId(_deptTennis.getId());
 		_userSA.setEmail("simone.a@gmx.net");

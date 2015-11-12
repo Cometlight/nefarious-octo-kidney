@@ -34,4 +34,6 @@ public interface IApplicationFacadeRMI extends Remote {
 	Collection<ILeagueRMI> getAllLeagues() throws RemoteException;
 
 	ITeamRMI createTeam() throws RemoteException;
+	
+	public String loginLDAP(String username, String password);
 }

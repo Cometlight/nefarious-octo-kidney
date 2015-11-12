@@ -104,4 +104,11 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	public Collection<ILeagueRMI> getAllLeagues() throws RemoteException {
 		return ConverterLeagueRMI.toRMI(_applicationFacade.getAllLeagues());
 	}
+
+	@Override
+	public String loginLDAP(String username, String password) {
+		return _applicationFacade.loginLDAP(username, password);
+	}
+	
+	
 }

@@ -101,4 +101,9 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	public Collection<ILeagueRMI> getAllLeagues() throws RemoteException {
 		return _applicationFacadeRMI.getAllLeagues();
 	}
+
+	@Override
+	public String loginLDAP(String username, String password) {
+		return _applicationFacadeRMI.loginLDAP(username, password);
+	}
 }

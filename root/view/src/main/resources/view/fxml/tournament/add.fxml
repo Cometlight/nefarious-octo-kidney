@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../css/simple.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="14.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label styleClass="simple-heading" text="Add Tournament" />
+            <HBox spacing="14.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefWidth="170.0" text="Name">
+                     <styleClass>
+                        <String fx:value="simple-label" />
+                        <String fx:value="simple-subtle" />
+                     </styleClass>
+                  </Label>
+                  <TextField maxWidth="1.7976931348623157E308" promptText="Tournament Name" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <HBox spacing="14.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefWidth="170.0" text="Date">
+                     <styleClass>
+                        <String fx:value="simple-label" />
+                        <String fx:value="simple-subtle" />
+                     </styleClass>
+                  </Label>
+                  <DatePicker maxWidth="1.7976931348623157E308" promptText="Choose Date" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <HBox spacing="14.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefWidth="170.0" text="Fee">
+                     <styleClass>
+                        <String fx:value="simple-label" />
+                        <String fx:value="simple-subtle" />
+                     </styleClass>
+                  </Label>
+                  <TextField maxWidth="1.7976931348623157E308" promptText="0.00" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <HBox spacing="14.0">
+               <children>
+                  <Label prefWidth="170.0" />
+                  <Button mnemonicParsing="false" styleClass="simple-blue" text="Save &amp; Next" />
+                  <Button mnemonicParsing="false" styleClass="simple-red" text="Cancel" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

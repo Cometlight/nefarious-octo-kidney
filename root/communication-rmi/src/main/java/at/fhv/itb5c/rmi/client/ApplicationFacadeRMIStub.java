@@ -114,22 +114,22 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	}
 
 	@Override
-	public ITournamentRMI createTournament(String sessionId) {
+	public ITournamentRMI createTournament(String sessionId) throws RemoteException {
 		return _applicationFacadeRMI.createTournament(sessionId);
 	}
 
 	@Override
-	public ITournamentRMI saveTournament(String sessionId, ITournamentRMI tournament) {
+	public ITournamentRMI saveTournament(String sessionId, ITournamentRMI tournament) throws RemoteException {
 		return _applicationFacadeRMI.saveTournament(sessionId, tournament);
 	}
 
 	@Override
-	public Collection<ITournamentRMI> getAllTournaments(String sessionId) {
+	public Collection<ITournamentRMI> getAllTournaments(String sessionId) throws RemoteException {
 		return _applicationFacadeRMI.getAllTournaments(sessionId);
 	}
 
 	@Override
-	public ITournamentRMI getTournamentById(String sessionId, Long id) {
+	public ITournamentRMI getTournamentById(String sessionId, Long id) throws RemoteException {
 		return _applicationFacadeRMI.getTournamentById(sessionId, id);
 	}
 }

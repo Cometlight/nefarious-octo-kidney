@@ -39,11 +39,11 @@ public interface IApplicationFacadeRMI extends Remote {
 
 	IUserRMI getCurrentUser(String sessionId) throws RemoteException;
 
-	ITournamentRMI createTournament(String sessionId);
+	ITournamentRMI createTournament(String sessionId) throws RemoteException;
 
-	ITournamentRMI saveTournament(String sessionId, ITournamentRMI tournament);
+	ITournamentRMI saveTournament(String sessionId, ITournamentRMI tournament) throws RemoteException;
 
-	Collection<ITournamentRMI> getAllTournaments(String sessionId);
+	Collection<ITournamentRMI> getAllTournaments(String sessionId) throws RemoteException;
 
-	ITournamentRMI getTournamentById(String sessionId, Long id);
+	ITournamentRMI getTournamentById(String sessionId, Long id) throws RemoteException;
 }

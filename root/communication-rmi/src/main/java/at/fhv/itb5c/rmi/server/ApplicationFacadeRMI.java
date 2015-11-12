@@ -119,23 +119,23 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	}
 	
 	@Override
-	public ITournamentRMI createTournament(String sessionId) {
+	public ITournamentRMI createTournament(String sessionId) throws RemoteException {
 		return ConverterTournamentRMI.toRMI(_applicationFacade.createTournament(sessionId));
 	}
 	
 	@Override
-	public ITournamentRMI saveTournament(String sessionId, ITournamentRMI tournament) {
+	public ITournamentRMI saveTournament(String sessionId, ITournamentRMI tournament) throws RemoteException {
 		TournamentDTO tournamentDTO = ConverterTournamentRMI.toDTO(tournament);
 		return ConverterTournamentRMI.toRMI(_applicationFacade.saveTournament(sessionId, tournamentDTO));
 	}
 	
 	@Override
-	public Collection<ITournamentRMI> getAllTournaments(String sessionId) {
+	public Collection<ITournamentRMI> getAllTournaments(String sessionId) throws RemoteException {
 		return ConverterTournamentRMI.toRMI(_applicationFacade.getAllTournaments(sessionId));
 	}
 	
 	@Override
-	public ITournamentRMI getTournamentById(String sessionId, Long id) {
+	public ITournamentRMI getTournamentById(String sessionId, Long id) throws RemoteException {
 		return ConverterTournamentRMI.toRMI(_applicationFacade.getTournamentById(sessionId, id));
 	}
 }

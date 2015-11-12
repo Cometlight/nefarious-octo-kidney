@@ -24,9 +24,9 @@ import at.fhv.itb5c.model.entity.User;
 
 public class ApplicationFacade implements ILogger {
 	public UserDTO createUser() {
-		return UserDTO.create();
+		return ConverterUserDTO.toDTO(new User());
 	}
-	
+
 	public UserDTO getUserById(Long id) {
 		User user = PersistenceFacade.getInstance().getById(User.class, id);
 		return ConverterUserDTO.toDTO(user);
@@ -54,17 +54,17 @@ public class ApplicationFacade implements ILogger {
 			return null;
 		}
 	}
-	
+
 	public DepartmentDTO getDepartmentById(Long id) {
 		Department entity = PersistenceFacade.getInstance().getById(Department.class, id);
 		return ConverterDepartmentDTO.toDTO(entity);
 	}
-	
+
 	public Collection<DepartmentDTO> getAllDepartments() {
 		List<Department> departments = PersistenceFacade.getInstance().getAll(Department.class);
 		return ConverterDepartmentDTO.toDTO(departments);
 	}
-	
+
 	public DepartmentDTO saveDepartment(DepartmentDTO department) {
 		Department entity = ConverterDepartmentDTO.toEntity(department);
 		try {
@@ -77,14 +77,14 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public TeamDTO createTeam() {
-		return TeamDTO.create();
+		return ConverterTeamDTO.toDTO(new Team());
 	}
-	
+
 	public TeamDTO getTeamById(Long id) {
 		Team entity = PersistenceFacade.getInstance().getById(Team.class, id);
 		return ConverterTeamDTO.toDTO(entity);
 	}
-	
+
 	/**
 	 * If a parameter is null, it is ignored.
 	 */
@@ -92,7 +92,7 @@ public class ApplicationFacade implements ILogger {
 		List<Team> entities = PersistenceFacade.getInstance().findTeams(name, typeOfSport, departmentId, leagueId);
 		return ConverterTeamDTO.toDTO(entities);
 	}
-	
+
 	public TeamDTO saveTeam(TeamDTO team) {
 		Team entity = ConverterTeamDTO.toEntity(team);
 		try {
@@ -103,16 +103,16 @@ public class ApplicationFacade implements ILogger {
 		}
 		return ConverterTeamDTO.toDTO(entity);
 	}
-	
+
 	public LeagueDTO getLeagueById(Long id) {
 		return ConverterLeagueDTO.toDTO(PersistenceFacade.getInstance().getById(League.class, id));
 	}
-	
+
 	public Collection<LeagueDTO> getAllLeagues() {
 		List<League> entities = PersistenceFacade.getInstance().getAll(League.class);
 		return ConverterLeagueDTO.toDTO(entities);
 	}
-	
+
 	public Collection<TournamentDTO> findTournaments(String name, Long departmentId){
 		List<Tournament> entities = PersistenceFacade.getInstance().findTournaments(name, departmentId);
 		return ConverterTournamentDTO.toDTO(entities);

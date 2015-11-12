@@ -176,7 +176,7 @@ public class PersistenceFacade implements ILogger {
     }
 
 	public List<User> findUsers(String firstName, String lastName, Long departmentId, Boolean membershipFeePaid) {
-		List<User> resultSet;
+		List<User> resultSet = new LinkedList<>();
 
 		CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
 
@@ -202,10 +202,11 @@ public class PersistenceFacade implements ILogger {
 			predicates.add(cb.equal(root.get("_membershipFeePaid"), membershipFeePaid));
 		}
 
-		query.where(predicates.toArray(new Predicate[predicates.size()]));
-
-		TypedQuery<User> typedQuery = _entityManager.createQuery(query);
-		resultSet = typedQuery.getResultList();
+		if (predicates.size() > 0) {
+			query.where(predicates.toArray(new Predicate[predicates.size()]));
+			TypedQuery<User> typedQuery = _entityManager.createQuery(query);
+			resultSet = typedQuery.getResultList();
+		}
 
 		return resultSet;
 	}
@@ -232,7 +233,7 @@ public class PersistenceFacade implements ILogger {
     }
 
 	public List<Team> findTeams(String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId) {
-		List<Team> resultSet;
+		List<Team> resultSet = new LinkedList<>();
 
 		CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
 
@@ -258,14 +259,15 @@ public class PersistenceFacade implements ILogger {
 			predicates.add(cb.equal(root.get("_leagueId"), leagueId));
 		}
 
-		query.where(predicates.toArray(new Predicate[predicates.size()]));
-
-		TypedQuery<Team> typedQuery = _entityManager.createQuery(query);
-		resultSet = typedQuery.getResultList();
+		if (predicates.size() > 0) {
+			query.where(predicates.toArray(new Predicate[predicates.size()]));
+			TypedQuery<Team> typedQuery = _entityManager.createQuery(query);
+			resultSet = typedQuery.getResultList();
+		}
 
 		return resultSet;
 	}
-	
+
 	public List<Tournament> findTournaments(String name, Long departmentId) {
 		List<Tournament> resultSet;
 

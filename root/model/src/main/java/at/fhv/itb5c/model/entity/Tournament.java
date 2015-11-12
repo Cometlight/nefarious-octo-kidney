@@ -18,13 +18,15 @@ public class Tournament extends PersistableObject {
 	@Column(name = "date", nullable = false)
 	private Date _persistDate;
 	@Column(name = "fee", nullable = true)
-	private double _fee;
+	private Double _fee;
 	@Column(name = "homeTeam", nullable = false)
-	private Team _homeTeam;
+	private Set<Long> _homeTeams;
 	@Column(name = "guestTeams", nullable = false)
 	private Set<String> _guestTeams;
 	@Column(name = "matches", nullable = false)
-	private Set<Match> _matches;
+	private Set<Long> _matches;
+	@Column(name = "departmentId", nullable = false)
+	private Long _departmentId;
 	@Transient
 	private LocalDate _date;
 
@@ -39,20 +41,20 @@ public class Tournament extends PersistableObject {
 		_name = name;
 	}
 
-	public double getFee() {
+	public Double getFee() {
 		return _fee;
 	}
 
-	public void setFee(double fee) {
+	public void setFee(Double fee) {
 		_fee = fee;
 	}
 
-	public Team getHomeTeam() {
-		return _homeTeam;
+	public Set<Long> getHomeTeamsIds() {
+		return _homeTeams;
 	}
 
-	public void setHomeTeam(Team homeTeam) {
-		_homeTeam = homeTeam;
+	public void setHomeTeamsIds(Set<Long> homeTeam) {
+		_homeTeams = homeTeam;
 	}
 
 	public Set<String> getGuestTeams() {
@@ -71,12 +73,20 @@ public class Tournament extends PersistableObject {
 		_date = date;
 	}
 
-	public Set<Match> getMatches() {
+	public Set<Long> getMatchesIds() {
 		return _matches;
 	}
 
-	public void setMatches(Set<Match> matches) {
+	public void setMatchesIds(Set<Long> matches) {
 		_matches = matches;
+	}
+
+	public Long getDepartmentId() {
+		return _departmentId;
+	}
+
+	public void setDepartmentId(Long departmentId) {
+		_departmentId = departmentId;
 	}
 
 	@PrePersist

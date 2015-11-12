@@ -2,7 +2,9 @@ package at.fhv.itb5c.view.usersearch;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
+
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.rmi.client.RMIClient;
@@ -54,7 +56,7 @@ public class SearchUserController implements IPanelClosable {
 
 		try {
 			_departmentsCombobox.setItems(
-					FXCollections.observableList(RMIClient.getRMIClient().getDepartmentFactory().getAllDepartments()));
+					FXCollections.observableArrayList(RMIClient.getRMIClient().getApplicationFacade().getAllDepartments()));
 		} catch (RemoteException e) {
 			ErrorPopUp.connectionError();
 		}
@@ -180,14 +182,16 @@ public class SearchUserController implements IPanelClosable {
 	@FXML
 	public void searchButtonOnReleasedEventHandler(MouseEvent mouseEvent) {
 		try {
-			List<IUserRMI> users;
+			List<IUserRMI> users = null;
 			if (_searchUserModel.getDepartment().get() == null) {
-				users = RMIClient.getRMIClient().getUserFactory().findUsers(_searchUserModel.getFirstName().getValue(),
-						_searchUserModel.getLastName().getValue(), null, _searchUserModel.getIsPaid().getValue());
+				users = new ArrayList<>(RMIClient.getRMIClient().getApplicationFacade().findUsers(_searchUserModel.getFirstName().getValue(), 
+																					_searchUserModel.getLastName().getValue(), 
+																					null,
+																					_searchUserModel.getIsPaid().getValue()));	
 			} else {
-				users = RMIClient.getRMIClient().getUserFactory().findUsers(_searchUserModel.getFirstName().getValue(),
+				/*users = RMIClient.getRMIClient().getUserFactory().findUsers(_searchUserModel.getFirstName().getValue(),
 						_searchUserModel.getLastName().getValue(), _searchUserModel.getDepartment().get().getId(),
-						_searchUserModel.getIsPaid().getValue());
+						_searchUserModel.getIsPaid().getValue());*/
 			}
 
 			_searchResultCountLable.setText(Integer.toString(users.size()));

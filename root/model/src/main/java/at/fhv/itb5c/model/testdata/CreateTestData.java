@@ -11,7 +11,8 @@ import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.PersistenceFacade;
 import at.fhv.itb5c.model.entity.Department;
 import at.fhv.itb5c.model.entity.League;
-import at.fhv.itb5c.model.entity.Team;
+//import at.fhv.itb5c.model.entity.League;
+//import at.fhv.itb5c.model.entity.Team;
 //import at.fhv.itb5c.model.entity.League;
 //import at.fhv.itb5c.model.entity.Team;
 import at.fhv.itb5c.model.entity.User;
@@ -22,7 +23,7 @@ public class CreateTestData implements ILogger {
 	private static User _userSA;
 	private static Department _deptSoccer;
 	private static Department _deptTennis;
-	private static Team _teamSoccer;
+	//private static Team _teamSoccer;
 	private static League _leagueSoccer;
 
 	public static void run() {
@@ -30,19 +31,19 @@ public class CreateTestData implements ILogger {
 			createDepartments();
 			createUsers();
 			createLeagues();
-			createTeams();
-			//updateDepartments();
+			//createTeams();
+			updateDepartments();
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 	}
 
-	/*private static void updateDepartments() throws Exception {
-		_deptSoccer.setHead(_userDS);
-		_deptTennis.setHead(_userSA);
+	private static void updateDepartments() throws Exception {
+		_deptSoccer.setHeadId(_userDS.getId());
+		_deptTennis.setHeadId(_userSA.getId());
 		PersistenceFacade.getInstance().saveOrUpdate(_deptSoccer);
 		PersistenceFacade.getInstance().saveOrUpdate(_deptTennis);
-	}*/
+	}
 
 	private static void createDepartments() throws Exception {
 		_deptSoccer = new Department();
@@ -62,7 +63,7 @@ public class CreateTestData implements ILogger {
 		_userDS.setLastName("Scheffknecht");
 		_userDS.setAddress("Hasenfeldstraße 7a, A - 6890 Lustenau");
 		_userDS.setDateOfBirth(LocalDate.now().minusYears(22));
-		_userDS.setDepartment(_deptSoccer);
+		_userDS.setDepartmentId(_deptSoccer.getId());
 		_userDS.setEmail("daniel.scheffknecht@gmx.at");
 		_userDS.setGender(Gender.Male);
 		_userDS.setMembershipFee(20.7d);
@@ -75,16 +76,16 @@ public class CreateTestData implements ILogger {
 		_userDG = new User();
 		_userDG.setFirstName("Daniel");
 		_userDG.setLastName("Grießer");
-		_userDG.setAddress("Rickenbacherstr. 15a, A - 6922 Wolfurt");
+		_userDG.setAddress("Idiot's Avenue");
 		_userDG.setDateOfBirth(LocalDate.now().minusYears(27));
-		_userDG.setDepartment(_deptSoccer);
-		_userDG.setEmail("daniel.griesser@gmail.com");
+		_userDS.setDepartmentId(_deptSoccer.getId());
+		_userDG.setEmail("daniel.griesser@dumm.du");
 		_userDG.setGender(Gender.Male);
 		_userDG.setMembershipFee(6.9d);
 		_userDG.setMembershipFeePaid(true);
-		_userDG.setTelephoneNumber("+43 (0) 6648268464");
+		_userDG.setTelephoneNumber("+43 (0) I DONT KNOW");
 		_userDG.setTypeOfSports(new HashSet<>(Arrays.asList(TypeOfSport.Soccer)));
-		_userDG.setRoles(new HashSet<>(Arrays.asList(UserRole.Admin)));
+		_userDG.setRoles(new HashSet<>(Arrays.asList(UserRole.StandardUser)));
 		_userDG = PersistenceFacade.getInstance().saveOrUpdate(_userDG);
 
 		_userSA = new User();
@@ -92,7 +93,7 @@ public class CreateTestData implements ILogger {
 		_userSA.setLastName("Angerer");
 		_userSA.setAddress("Prinzessinnenweg 7b, 6480 Götzis");
 		_userSA.setDateOfBirth(LocalDate.now().minusYears(25));
-		_userSA.setDepartment(_deptTennis);
+		_userDS.setDepartmentId(_deptTennis.getId());
 		_userSA.setEmail("simone.a@gmx.net");
 		_userSA.setGender(Gender.Female);
 		_userSA.setMembershipFeePaid(true);
@@ -103,14 +104,15 @@ public class CreateTestData implements ILogger {
 	}
 
 	private static void createTeams() throws Exception {
-		_teamSoccer = new Team();
+		/*_teamSoccer = new Team();
 		_teamSoccer.setName("Team One");
 		_teamSoccer.setTypeOfSport(TypeOfSport.Soccer);
-		_teamSoccer.setDepartment(_deptSoccer);
-		_teamSoccer.setCoach(_userDS);
-		_teamSoccer.setMembers(new HashSet<>(Arrays.asList(_userDS, _userDG, _userSA)));
-		_teamSoccer.setLeague(_leagueSoccer);
-		_teamSoccer = PersistenceFacade.getInstance().saveOrUpdate(_teamSoccer);
+		_teamSoccer.setDepartmentId();
+		_teamSoccer.setDepartment(_deptSoccer); FIXME
+		_teamSoccer.setCoachId(_userDS.getId());
+		_teamSoccer.setMembers(new HashSet<>(Arrays.asList(_userDS.getId(), _userDG.getId(), _userSA.getId())));
+		_teamSoccer.setLeague(_leagueSoccer); FIXME
+		_teamSoccer = PersistenceFacade.getInstance().saveOrUpdate(_teamSoccer);*/
 	}
 
 	private static void createLeagues() throws Exception {

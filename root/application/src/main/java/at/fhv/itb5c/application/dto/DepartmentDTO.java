@@ -1,64 +1,46 @@
 package at.fhv.itb5c.application.dto;
 
-import at.fhv.itb5c.commons.dto.IDepartment;
-import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 
-public class DepartmentDTO implements IDepartment {
-	private Long _id;
-	private Long _version;
+/**
+ * Data Transfer Object for Departments.
+ */
+public class DepartmentDTO extends BaseDTO {
+	private Long _headId;
 	private String _name;
-	private IUser _head;
 	private TypeOfSport _typeOfSport;
 
-	@Override
-	public void setId(Long id) throws Exception {
-		_id = id;
-	}
-
-	@Override
-	public Long getId() throws Exception {
-		return _id;
-	}
-
-	@Override
-	public void setVersion(Long version) throws Exception {
-		_version = version;
-	}
-
-	@Override
-	public Long getVersion() throws Exception {
-		return _version;
-	}
-
-	@Override
-	public void setName(String name) throws Exception {
-		_name = name;
-	}
-
-	@Override
-	public String getName() throws Exception {
+	public String getName() {
 		return _name;
 	}
 
-	@Override
-	public IUser getHead() throws Exception {
-		return _head;
+	public void setName(String name) {
+		_name = name;
 	}
 
-	@Override
-	public void setHead(IUser head) throws Exception {
-		_head = head;
+	public Long getHeadId() {
+		return _headId;
 	}
 
-	@Override
-	public TypeOfSport getTypeOfSport() throws Exception {
+	public void setHeadId(Long headId) {
+		_headId = headId;
+	}
+	
+	public TypeOfSport getTypeOfSport() {
 		return _typeOfSport;
 	}
-
-	@Override
-	public void setTypeOfSport(TypeOfSport typeOfSport) throws Exception {
+	
+	public void setTypeOfSport(TypeOfSport typeOfSport) {
 		_typeOfSport = typeOfSport;
 	}
-
+	
+	@Override
+	public String toString() {
+		return 
+				"DepartmentDTO\n" +
+				"    -> Sport: " + _typeOfSport + "\n" + 
+				"    -> Name:  " + _name + "\n" +
+				"    -> ID:    " + _id + "\n" +
+				"    -> Head:  " + _headId + "\n";
+	}
 }

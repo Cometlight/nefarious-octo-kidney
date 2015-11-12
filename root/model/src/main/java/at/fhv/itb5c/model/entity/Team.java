@@ -1,5 +1,6 @@
 package at.fhv.itb5c.model.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -15,25 +16,17 @@ public class Team extends PersistableObject {
 	@Column(name = "typeOfSport", nullable = false)
 	private TypeOfSport _typeOfSport;
 
-	@Column(name = "department", nullable = true)
-	private Department _department;
-
 	@Column(name = "departmentId", nullable = true)
-	private Long _departmentId; // needed for search; may be refactored if the
-								// need arises
+	private Long _departmentId;
 
-	@Column(name = "coach", nullable = true)
-	private User _coach;
-
-	@Column(name = "league", nullable = true)
-	private League _league;
+	@Column(name = "coachId", nullable = true)
+	private Long _coachId;
 
 	@Column(name = "leagueId", nullable = true)
-	private Long _leagueId; // needed for search; may be refactored if the need
-							// arises
+	private Long _leagueId;
 
 	@Column(name = "members", nullable = true)
-	private Set<User> _members;
+	private Set<Long> _memberIds = new HashSet<>();
 
 	public String getName() {
 		return _name;
@@ -51,38 +44,35 @@ public class Team extends PersistableObject {
 		_typeOfSport = typeOfSport;
 	}
 
-	public Department getDepartment() {
-		return _department;
+	public Long getDepartmentId() {
+		return _departmentId;
 	}
 
-	public void setDepartment(Department department) {
-		_department = department;
-		_departmentId = department == null ? null : department.getId();
+	public void setDepartmentId(Long departmentId) {
+		_departmentId = departmentId;
 	}
 
-	public User getCoach() {
-		return _coach;
+	public Long getCoachId() {
+		return _coachId;
 	}
 
-	public void setCoach(User coach) {
-		_coach = coach;
+	public void setCoachId(Long coachId) {
+		_coachId = coachId;
 	}
 
-	public League getLeague() {
-		return _league;
+	public Long getLeagueId() {
+		return _leagueId;
 	}
 
-	public void setLeague(League league) {
-		_league = league;
-		_leagueId = league == null ? null : league.getId();
+	public void setLeagueId(Long leagueId) {
+		_leagueId = leagueId;
 	}
 
-	public Set<User> getMembers() {
-		return _members;
+	public Set<Long> getMemberIds() {
+		return _memberIds;
 	}
 
-	public void setMembers(Set<User> members) {
-		_members = members;
+	public void setMemberIds(Set<Long> memberIds) {
+		_memberIds = memberIds;
 	}
-
 }

@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.Map;
 
 import org.controlsfx.control.CheckListView;
+
+import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
@@ -116,7 +118,9 @@ public class UserViewController implements IPanelClosable, Closeable {
 		});
 		
 		_errorField.setVisible(false);
-		
+		if(!_userModel.getTypeOfSports().contains(UserRole.Admin)) {
+			_userRoleCheckListView.setDisable(true);
+		}
 		setState(_initialiseState);
 	}
 
@@ -137,7 +141,8 @@ public class UserViewController implements IPanelClosable, Closeable {
 	public boolean saveModel() {
 		if (mandatoryFieldsSet()) {
 			try {
-				_userModel.setIUserRMI(RMIClient.getRMIClient().getUserFactory().save(_userModel.getRMIUser()));
+				IUserRMI savedUser = RMIClient.getRMIClient().getApplicationFacade().saveUser(_userModel.getRMIUser());
+				_userModel.setIUserRMI(savedUser);
 			} catch (RemoteException e) {
 				ErrorPopUp.connectionError();
 				return false;
@@ -204,7 +209,9 @@ public class UserViewController implements IPanelClosable, Closeable {
 		_birthdayDatePicker.setDisable(isDisabled);
 		_typeOfSportCheckListView.setDisable(isDisabled);
 		_memebershipFeeTextBox.setDisable(isDisabled);
-		_userRoleCheckListView.setDisable(isDisabled);
+		if(_userModel.getTypeOfSports().contains(UserRole.Admin)) {
+			_userRoleCheckListView.setDisable(isDisabled);
+		}
 	}
 
 	public UserModel getUserModel() {

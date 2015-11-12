@@ -1,7 +1,6 @@
 package at.fhv.itb5c.view.mainview;
 
-import java.util.List;
-
+import java.util.Collection;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,7 +8,7 @@ import javafx.collections.ObservableList;
 public class MainViewModel {
 	private ObservableList<IDepartmentRMI> _departments;
 	
-	public MainViewModel(List<IDepartmentRMI> departments) {
+	public MainViewModel(Collection<IDepartmentRMI> departments) {
 		_departments = FXCollections.observableArrayList(departments);
 	}
 	

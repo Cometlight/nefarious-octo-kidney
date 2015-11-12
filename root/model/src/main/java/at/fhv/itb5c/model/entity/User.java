@@ -3,6 +3,7 @@ package at.fhv.itb5c.model.entity;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -44,25 +45,24 @@ public class User extends PersistableObject {
 
 	@Column(name = "dateOfBirth", nullable = false)
 	private Date _persistDateOfBirth;
-	
+
 	@Column(name = "membershipFee", nullable = true)
-	private double _membershipFee;
+	private Double _membershipFee = 0.00;
 
 	@Column(name = "membershipFeePaid", nullable = true)
-	private boolean _membershipFeePaid;
+	private Boolean _membershipFeePaid = false;
 
 	@Column(name = "roles", nullable = false)
-	private Set<UserRole> _roles;
+	private Set<UserRole> _roles = new HashSet<>();
 
 	@Column(name = "typeOfSports", nullable = true)
-	private Set<TypeOfSport> _typeOfSports;
-
-	@Column(name = "department", nullable = true)
-	private Department _department;
+	private Set<TypeOfSport> _typeOfSports = new HashSet<>();
 
 	@Column(name = "departmentId", nullable = true)
-	private Long _departmentId; // needed for search; may be refactored if the
-								// need arises
+	private Long _departmentId;
+
+	@Column(name = "ldapUID", nullable = true)
+	private String _ldapUID;
 
 	public User() {
 
@@ -144,22 +144,26 @@ public class User extends PersistableObject {
 	}
 
 	public void setDateOfBirth(LocalDate dateOfBirth) {
-		this._dateOfBirth = dateOfBirth;
+		if (dateOfBirth == null) {
+			_dateOfBirth = null;
+		} else if (dateOfBirth.isBefore(LocalDate.now())) {
+			_dateOfBirth = dateOfBirth;
+		}
 	}
 
-	public double getMembershipFee() {
+	public Double getMembershipFee() {
 		return _membershipFee;
 	}
 
-	public void setMembershipFee(double membershipFee) {
+	public void setMembershipFee(Double membershipFee) {
 		this._membershipFee = membershipFee;
 	}
-	
-	public boolean getMembershipFeePaid() {
+
+	public Boolean getMembershipFeePaid() {
 		return _membershipFeePaid;
 	}
 
-	public void setMembershipFeePaid(boolean membershipFeePaid) {
+	public void setMembershipFeePaid(Boolean membershipFeePaid) {
 		this._membershipFeePaid = membershipFeePaid;
 	}
 
@@ -168,7 +172,11 @@ public class User extends PersistableObject {
 	}
 
 	public void setRoles(Set<UserRole> roles) {
-		_roles = roles;
+		if (roles == null) {
+			_roles = new HashSet<>();
+		} else {
+			_roles = roles;
+		}
 	}
 
 	public Set<TypeOfSport> getTypeOfSports() {
@@ -176,16 +184,27 @@ public class User extends PersistableObject {
 	}
 
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) {
-		_typeOfSports = typeOfSports;
+		if (typeOfSports == null) {
+			_typeOfSports = new HashSet<>();
+		} else {
+			_typeOfSports = typeOfSports;
+		}
 	}
 
-	public Department getDepartment() {
-		return _department;
+	public Long getDepartmentId() {
+		return _departmentId;
 	}
 
-	public void setDepartment(Department department) {
-		_department = department;
-		_departmentId = department == null ? null : department.getId();
+	public void setDepartmentId(Long departmentId) {
+		_departmentId = departmentId;
+	}
+
+	public String getLdapUID() {
+		return _ldapUID;
+	}
+
+	public void setLdapUID(String ldapUID) {
+		_ldapUID = ldapUID;
 	}
 
 	@Override
@@ -194,7 +213,7 @@ public class User extends PersistableObject {
 				+ ", _telephoneNumber=" + _telephoneNumber + ", _gender=" + _gender + ", _address=" + _address
 				+ ", _dateOfBirth=" + _dateOfBirth + ", _persistDateOfBirth=" + _persistDateOfBirth
 				+ ", _membershipFee=" + _membershipFee + ", _membershipFeePaid=" + _membershipFeePaid + ", _roles="
-				+ _roles + ", _typeOfSports=" + _typeOfSports + ", _department=" + _department + ", _departmentId="
-				+ _departmentId + "]";
+				+ _roles + ", _typeOfSports=" + _typeOfSports + ", _departmentId=" + _departmentId + ", _ldapUID="
+				+ _ldapUID + "]";
 	}
 }

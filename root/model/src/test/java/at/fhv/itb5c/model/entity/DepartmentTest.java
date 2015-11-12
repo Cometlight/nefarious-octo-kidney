@@ -1,13 +1,8 @@
 package at.fhv.itb5c.model.entity;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import at.fhv.itb5c.commons.enums.TypeOfSport;
 
 public class DepartmentTest {
-	@Test
+/*	@Test
 	public void testName() {
 		Department department = new Department();
 		final String name = "DepartmentTest Name";
@@ -38,5 +33,5 @@ public class DepartmentTest {
 		assertEquals(head, department.getHead());
 		assertEquals(head.getFirstName(), department.getHead().getFirstName());
 	}
-
+*/
 }

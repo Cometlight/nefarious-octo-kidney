@@ -46,7 +46,7 @@
             <HBox spacing="14.0">
                <children>
                   <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="170.0" styleClass="simple-label" />
-                  <ListView fx:id="_userSearchResultList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="78.0" HBox.hgrow="ALWAYS" />
+                  <ListView fx:id="_userSearchResultList" onMouseClicked="#_userSearchResultMouseClick" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="78.0" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="14.0">

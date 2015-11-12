@@ -1,17 +1,14 @@
 package at.fhv.itb5c.commons.dto.rmi;
 
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.Set;
 
-import at.fhv.itb5c.commons.dto.IDepartment;
-import at.fhv.itb5c.commons.dto.IUser;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 
-public interface IUserRMI extends Remote, IUser {
+public interface IUserRMI extends IBaseRMI {
 	public String getFirstName() throws RemoteException;
 
 	public void setFirstName(String firstName) throws RemoteException;
@@ -40,9 +37,9 @@ public interface IUserRMI extends Remote, IUser {
 
 	public void setDateOfBirth(LocalDate dateOfBirth) throws RemoteException;
 
-	public double getMembershipFee() throws RemoteException;
+	public Double getMembershipFee() throws RemoteException;
 
-	public void setMembershipFee(double membershipFee) throws RemoteException;
+	public void setMembershipFee(Double membershipFee) throws RemoteException;
 
 	public Set<UserRole> getRoles() throws RemoteException;
 
@@ -51,20 +48,16 @@ public interface IUserRMI extends Remote, IUser {
 	public Set<TypeOfSport> getTypeOfSports() throws RemoteException;
 
 	public void setTypeOfSports(Set<TypeOfSport> typeOfSports) throws RemoteException;
-
-	public Long getId() throws RemoteException;
-
-	public Long getVersion() throws RemoteException;
-
-	public void setId(Long id) throws RemoteException;
-
-	public void setVersion(Long version) throws RemoteException;
 	
-	public boolean getMembershipFeePaid() throws RemoteException;
+	public Boolean getMembershipFeePaid() throws RemoteException;
 
-	public void setMembershipFeePaid(boolean membershipFeePaid) throws RemoteException;
+	public void setMembershipFeePaid(Boolean membershipFeePaid) throws RemoteException;
 
-	public IDepartmentRMI getDepartment() throws RemoteException;
+	public Long getDepartmentId() throws RemoteException;
 	
-	public void setDepartment(IDepartment department) throws RemoteException;
+	public void setDepartmentId(Long departmentId) throws RemoteException;
+	
+	public String getLdapUID() throws RemoteException;
+	
+	public void setLdapUID(String ldapUID) throws RemoteException;
 }

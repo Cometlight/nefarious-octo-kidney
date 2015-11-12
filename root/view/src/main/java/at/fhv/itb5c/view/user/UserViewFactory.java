@@ -4,10 +4,10 @@ import java.rmi.RemoteException;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.user.UserViewController.UserViewState;
-import at.fhv.itb5c.view.util.factories.AbstractFactory;
+import at.fhv.itb5c.view.util.factories.AbstractViewFactory;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 
-public class UserViewFactory extends AbstractFactory {
+public class UserViewFactory extends AbstractViewFactory {
 
 	public UserViewFactory() {
 		super("/view/fxml/user/UserView.fxml", createController(UserViewState.addState, null));
@@ -21,7 +21,7 @@ public class UserViewFactory extends AbstractFactory {
 		try {
 			UserModel userModel;
 			if (userViewState == UserViewState.addState) {
-				userModel = UserModel.createUserModel(RMIClient.getRMIClient().getUserFactory().createUser());
+				userModel = UserModel.createUserModel(RMIClient.getRMIClient().getApplicationFacade().createUser());
 			} else {
 				userModel = UserModel.createUserModel(user);
 			}

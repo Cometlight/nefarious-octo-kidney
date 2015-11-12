@@ -2,6 +2,7 @@ package at.fhv.itb5c.application;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import at.fhv.itb5c.application.converter.ConverterDepartmentDTO;
 import at.fhv.itb5c.application.converter.ConverterLeagueDTO;
@@ -91,7 +92,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public Collection<DepartmentDTO> getAllDepartments(String sessionId) {
-		if (hasRole(sessionId, UserRole.Admin)) {
+		if (hasRole(sessionId, UserRole.Admin, UserRole.StandardUser)) {
 			List<Department> departments = PersistenceFacade.getInstance().getAll(Department.class);
 			return ConverterDepartmentDTO.toDTO(departments);
 		}
@@ -153,6 +154,41 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	/**
+	 * Adds the specified player to the specified team.
+	 *
+	 * This method is currently untested!
+	 *
+	 * @param sessionId
+	 *            a session id
+	 * @param team
+	 *            the team the player should be added to
+	 * @param player
+	 *            the user that should be added to the team
+	 * @return the updated team if the session can add players; null, otherwise.
+	 */
+	public TeamDTO addPlayerToTeam(String sessionId, TeamDTO team, UserDTO player) {
+		if (team != null && player != null) {
+			UserDTO currentUser = getCurrentUser(sessionId);
+			if (currentUser != null && (hasRole(sessionId, UserRole.Admin) || team.getCoachId().equals(currentUser.getId()))) {
+				Team teamEntity = ConverterTeamDTO.toEntity(team);
+				if (teamEntity != null) {
+					Set<Long> memberIds = teamEntity.getMemberIds();
+					memberIds.add(player.getId());
+					teamEntity.setMemberIds(memberIds);
+					try {
+						teamEntity = PersistenceFacade.getInstance().saveOrUpdate(teamEntity);
+						return ConverterTeamDTO.toDTO(teamEntity);
+					} catch (Exception e) {
+						log.error(e.getMessage());
+					}
+
+				}
+			}
+		}
+		return null;
+	}
+
 	public LeagueDTO getLeagueById(String sessionId, Long id) {
 		if (hasRole(sessionId, UserRole.Admin)) {
 			return ConverterLeagueDTO.toDTO(PersistenceFacade.getInstance().getById(League.class, id));
@@ -179,7 +215,7 @@ public class ApplicationFacade implements ILogger {
 	/**
 	 * checks the login credentials on the ldap server and returns the new
 	 * created session id
-	 * 
+	 *
 	 * @param username
 	 *            ldap username
 	 * @param password
@@ -187,13 +223,15 @@ public class ApplicationFacade implements ILogger {
 	 * @return session id
 	 */
 	public String loginLDAP(String username, String password) {
-			if (username != null && password != null) {
-				if (LDAPAuth.ldapLogin(username, password) != null) {
-					User user = PersistenceFacade.getInstance().findUserByLDAP(username);
+		if (username != null && password != null) {
+			if (LDAPAuth.ldapLogin(username, password) != null) {
+				User user = PersistenceFacade.getInstance().findUserByLDAP(username);
+				if (user != null) {
 					return SessionManager.getInstance().createNewSession(user.getId(), user.getRoles());
 				}
 			}
-		
+		}
+
 		return null;
 	}
 

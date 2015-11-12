@@ -106,8 +106,13 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	}
 
 	@Override
-	public String loginLDAP(String username, String password) {
+	public String loginLDAP(String username, String password) throws RemoteException{
 		return _applicationFacade.loginLDAP(username, password);
+	}
+
+	@Override
+	public IUserRMI getUserBySessionId(String sessionId) throws RemoteException {
+		return ConverterUserRMI.toRMI(_applicationFacade.getUserBySessionId(sessionId));
 	}
 	
 	

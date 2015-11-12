@@ -103,7 +103,12 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	}
 
 	@Override
-	public String loginLDAP(String username, String password) {
+	public String loginLDAP(String username, String password) throws RemoteException {
 		return _applicationFacadeRMI.loginLDAP(username, password);
+	}
+
+	@Override
+	public IUserRMI getUserBySessionId(String sessionId) throws RemoteException {
+		return _applicationFacadeRMI.getUserBySessionId(sessionId);
 	}
 }

@@ -35,5 +35,7 @@ public interface IApplicationFacadeRMI extends Remote {
 
 	ITeamRMI createTeam() throws RemoteException;
 	
-	public String loginLDAP(String username, String password);
+	String loginLDAP(String username, String password)  throws RemoteException;
+
+	IUserRMI getUserBySessionId(String sessionId) throws RemoteException;
 }

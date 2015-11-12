@@ -1,5 +1,6 @@
 package at.fhv.itb5c.view;
 
+import java.rmi.RemoteException;
 import java.util.Observable;
 
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
@@ -22,10 +23,10 @@ public class AppState extends Observable {
 		return _user;
 	}
 	
-	public void setSessionID(String sessionID) {
+	public void setSessionID(String sessionID) throws RemoteException {
 		if(sessionID != null) {
 			_sessionID = sessionID;
-			
+			setLoggedInUser(RMIClient.getRMIClient().getApplicationFacade().getUserBySessionId(sessionID));
 		}
 	}
 	

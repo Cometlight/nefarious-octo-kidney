@@ -48,7 +48,7 @@ public class AppController implements Observer, ILogger {
 	public void update(Observable o, Object arg) {
 		AppState appState = (AppState) o;
 
-		if (appState._user != null) {
+		if (appState.getLoggedInUser() != null) {
 			try {
 				loadStage(new MainViewFactory());
 			} catch (IOException e) {

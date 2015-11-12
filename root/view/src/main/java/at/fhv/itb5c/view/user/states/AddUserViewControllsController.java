@@ -2,10 +2,12 @@ package at.fhv.itb5c.view.user.states;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
 
 import at.fhv.itb5c.view.user.UserViewController;
 import at.fhv.itb5c.view.user.UserViewController.UserViewState;
 import at.fhv.itb5c.view.util.RouteProvider;
+import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import at.fhv.itb5c.view.user.IUserViewState;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
@@ -47,6 +49,11 @@ public class AddUserViewControllsController implements IUserViewState {
 
 	@Override
 	public void activate() {
-		_userViewController.setDisable(false);
+		try {
+			_userViewController.setDisable(false);
+		} catch (RemoteException e) {
+			log.error(e.getMessage());
+			ErrorPopUp.connectionError();
+		}
 	}
 }

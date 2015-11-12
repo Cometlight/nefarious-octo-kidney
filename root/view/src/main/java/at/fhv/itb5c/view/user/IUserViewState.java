@@ -2,7 +2,9 @@ package at.fhv.itb5c.view.user;
 
 import java.net.URL;
 
-public interface IUserViewState {
+import at.fhv.itb5c.logging.ILogger;
+
+public interface IUserViewState extends ILogger{
 	
 	public String getTitel();
 

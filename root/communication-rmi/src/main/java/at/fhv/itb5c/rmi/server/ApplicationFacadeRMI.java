@@ -8,17 +8,20 @@ import java.util.Collection;
 
 import at.fhv.itb5c.application.ApplicationFacade;
 import at.fhv.itb5c.application.dto.TeamDTO;
+import at.fhv.itb5c.application.dto.TournamentDTO;
 import at.fhv.itb5c.application.dto.UserDTO;
 import at.fhv.itb5c.commons.dto.rmi.IApplicationFacadeRMI;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.ILeagueRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
+import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.converter.ConverterDepartmentRMI;
 import at.fhv.itb5c.rmi.server.converter.ConverterLeagueRMI;
 import at.fhv.itb5c.rmi.server.converter.ConverterTeamRMI;
+import at.fhv.itb5c.rmi.server.converter.ConverterTournamentRMI;
 import at.fhv.itb5c.rmi.server.converter.ConverterUserRMI;
 
 public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplicationFacadeRMI, RMIServant, ILogger {
@@ -115,5 +118,24 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 		return ConverterUserRMI.toRMI(_applicationFacade.getCurrentUser(sessionId));
 	}
 	
+	@Override
+	public ITournamentRMI createTournament(String sessionId) {
+		return ConverterTournamentRMI.toRMI(_applicationFacade.createTournament(sessionId));
+	}
 	
+	@Override
+	public ITournamentRMI saveTournament(String sessionId, ITournamentRMI tournament) {
+		TournamentDTO tournamentDTO = ConverterTournamentRMI.toDTO(tournament);
+		return ConverterTournamentRMI.toRMI(_applicationFacade.saveTournament(sessionId, tournamentDTO));
+	}
+	
+	@Override
+	public Collection<ITournamentRMI> getAllTournaments(String sessionId) {
+		return ConverterTournamentRMI.toRMI(_applicationFacade.getAllTournaments(sessionId));
+	}
+	
+	@Override
+	public ITournamentRMI getTournamentById(String sessionId, Long id) {
+		return ConverterTournamentRMI.toRMI(_applicationFacade.getTournamentById(sessionId, id));
+	}
 }

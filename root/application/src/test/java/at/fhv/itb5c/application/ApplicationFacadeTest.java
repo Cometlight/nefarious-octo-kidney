@@ -17,6 +17,7 @@ import at.fhv.itb5c.application.converter.ConverterDepartmentDTO;
 import at.fhv.itb5c.application.dto.DepartmentDTO;
 import at.fhv.itb5c.application.dto.LeagueDTO;
 import at.fhv.itb5c.application.dto.TeamDTO;
+import at.fhv.itb5c.application.dto.TournamentDTO;
 import at.fhv.itb5c.application.dto.UserDTO;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.commons.util.auth.SessionManager;
@@ -209,4 +210,38 @@ public class ApplicationFacadeTest {
 		assertNotNull(dtos);
 	}
 
+	@Test
+	public void createNewTournament(){
+		TournamentDTO dto = _appFacade.createTournament(_session);
+		assertNotNull(dto);
+	}
+	
+	@Test
+	public void getTournamentById() {
+		final Long id = 1338l;
+		TournamentDTO dto = _appFacade.createTournament(_session);
+		dto.setId(id);
+
+		TournamentDTO savedDTO = _appFacade.saveTournament(_session, dto);
+		assertNotNull(savedDTO);
+		assertEquals(id, savedDTO.getId());
+		assertFalse(dto == savedDTO);
+
+		TournamentDTO retrievedDTO = _appFacade.getTournamentById(_session, id);
+		assertNotNull(retrievedDTO);
+		assertEquals(id, retrievedDTO.getId());
+		assertFalse(savedDTO == retrievedDTO);
+	}
+	
+	@Test
+	public void getAllTournaments(){
+		Collection<TournamentDTO> dtos = _appFacade.getAllTournaments(_session);
+		assertNotNull(dtos);
+	}
+	
+	@Test
+	public void getTournamentByIdNull() {
+		TournamentDTO dto = _appFacade.getTournamentById(_session, null);
+		assertNull(dto);
+	}
 }

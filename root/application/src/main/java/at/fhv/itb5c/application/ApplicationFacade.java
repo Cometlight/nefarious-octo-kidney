@@ -210,4 +210,40 @@ public class ApplicationFacade implements ILogger {
 		}
 		return false;
 	}
+	
+	public TournamentDTO createTournament(String sessionId) {
+		if (hasRole(sessionId, UserRole.Admin)) {
+			return ConverterTournamentDTO.toDTO(new Tournament());
+		}
+		return null;
+	}
+	
+	public TournamentDTO saveTournament(String sessionId, TournamentDTO tournament) {
+		if (hasRole(sessionId, UserRole.Admin)) {
+			Tournament entity = ConverterTournamentDTO.toEntity(tournament);
+			try {
+				entity = PersistenceFacade.getInstance().saveOrUpdate(entity);
+			} catch (Exception e) {
+				log.error(e.getMessage());
+				return null;
+			}
+			return ConverterTournamentDTO.toDTO(entity);
+		}
+		return null;
+	}
+	
+	public Collection<TournamentDTO> getAllTournaments(String sessionId) {
+		if (hasRole(sessionId, UserRole.Admin)) {
+			List<Tournament> entities = PersistenceFacade.getInstance().getAll(Tournament.class);
+			return ConverterTournamentDTO.toDTO(entities);
+		}
+		return null;
+	}
+	
+	public TournamentDTO getTournamentById(String sessionId, Long id) {
+		if (hasRole(sessionId, UserRole.Admin)) {
+			return ConverterTournamentDTO.toDTO(PersistenceFacade.getInstance().getById(Tournament.class, id));
+		}
+		return null;
+	}
 }

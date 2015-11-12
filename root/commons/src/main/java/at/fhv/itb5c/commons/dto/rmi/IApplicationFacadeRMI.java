@@ -38,4 +38,12 @@ public interface IApplicationFacadeRMI extends Remote {
 	String loginLDAP(String username, String password)  throws RemoteException;
 
 	IUserRMI getCurrentUser(String sessionId) throws RemoteException;
+
+	ITournamentRMI createTournament(String sessionId);
+
+	ITournamentRMI saveTournament(String sessionId, ITournamentRMI tournament);
+
+	Collection<ITournamentRMI> getAllTournaments(String sessionId);
+
+	ITournamentRMI getTournamentById(String sessionId, Long id);
 }

@@ -3,6 +3,7 @@ package at.fhv.itb5c.model.entity;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -20,11 +21,11 @@ public class Tournament extends PersistableObject {
 	@Column(name = "fee", nullable = true)
 	private Double _fee;
 	@Column(name = "homeTeam", nullable = false)
-	private Set<Long> _homeTeams;
+	private Set<Long> _homeTeams = new HashSet<>();
 	@Column(name = "guestTeams", nullable = false)
-	private Set<String> _guestTeams;
+	private Set<String> _guestTeams = new HashSet<>();
 	@Column(name = "matches", nullable = false)
-	private Set<Long> _matches;
+	private Set<Long> _matches = new HashSet<>();
 	@Column(name = "departmentId", nullable = false)
 	private Long _departmentId;
 	@Transient

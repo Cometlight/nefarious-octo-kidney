@@ -23,7 +23,7 @@ public class SessionManager {
 		return _instance;
 	}
 
-	public String createNewSeesion(String userName, Set<UserRole> userRoles) {
+	public String createNewSession(Long userName, Set<UserRole> userRoles) {
 		Session session = new Session(userName, userRoles);
 		_sessionTable.put(session.getSession(), session);
 		return session.getSession();
@@ -40,7 +40,7 @@ public class SessionManager {
 		return false;
 	}
 
-	public String getUserId(String sessionId) {
+	public Long getUserId(String sessionId) {
 		return _sessionTable.get(sessionId).getUserId();
 	}
 }

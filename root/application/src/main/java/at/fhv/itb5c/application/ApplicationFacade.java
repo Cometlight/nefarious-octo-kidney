@@ -14,6 +14,8 @@ import at.fhv.itb5c.application.dto.TeamDTO;
 import at.fhv.itb5c.application.dto.TournamentDTO;
 import at.fhv.itb5c.application.dto.UserDTO;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
+import at.fhv.itb5c.commons.util.auth.LDAPAuth;
+import at.fhv.itb5c.commons.util.auth.SessionManager;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.PersistenceFacade;
 import at.fhv.itb5c.model.entity.Department;
@@ -35,8 +37,10 @@ public class ApplicationFacade implements ILogger {
 	/**
 	 * If a parameter is null, it is ignored.
 	 */
-	public Collection<UserDTO> findUsers(String firstName, String lastName, Long departmentId, Boolean membershipFeePaid) {
-		return ConverterUserDTO.toDTO(PersistenceFacade.getInstance().findUsers(firstName, lastName, departmentId, membershipFeePaid));
+	public Collection<UserDTO> findUsers(String firstName, String lastName, Long departmentId,
+			Boolean membershipFeePaid) {
+		return ConverterUserDTO
+				.toDTO(PersistenceFacade.getInstance().findUsers(firstName, lastName, departmentId, membershipFeePaid));
 	}
 
 	/**
@@ -48,7 +52,8 @@ public class ApplicationFacade implements ILogger {
 
 	public UserDTO saveUser(UserDTO user) {
 		try {
-			return ConverterUserDTO.toDTO(PersistenceFacade.getInstance().saveOrUpdate(ConverterUserDTO.toEntity(user)));
+			return ConverterUserDTO
+					.toDTO(PersistenceFacade.getInstance().saveOrUpdate(ConverterUserDTO.toEntity(user)));
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return null;
@@ -113,8 +118,29 @@ public class ApplicationFacade implements ILogger {
 		return ConverterLeagueDTO.toDTO(entities);
 	}
 
-	public Collection<TournamentDTO> findTournaments(String name, Long departmentId){
+	public Collection<TournamentDTO> findTournaments(String name, Long departmentId) {
 		List<Tournament> entities = PersistenceFacade.getInstance().findTournaments(name, departmentId);
 		return ConverterTournamentDTO.toDTO(entities);
+	}
+
+	/**
+	 * checks the login credentials on the ldap server and returns the new
+	 * created session id
+	 * 
+	 * @param username
+	 *            ldap username
+	 * @param password
+	 *            ldap password
+	 * @return session id
+	 */
+	public String loginLDAP(String username, String password) {
+		if (username != null && password != null) {
+			if (LDAPAuth.ldapLogin(username, password) != null) {
+				User user = PersistenceFacade.getInstance().findUserByLDAP(username);
+				return SessionManager.getInstance().createNewSession(user.getId(), user.getRoles());
+			}
+		}
+
+		return null;
 	}
 }

@@ -7,21 +7,21 @@ import at.fhv.itb5c.commons.enums.UserRole;
 
 public class Session {
 	private String _session;
-	private String _userId;
+	private Long _userId;
 	private Set<UserRole> _roles;
 
-	public Session(String userId, Set<UserRole> roles) {
+	public Session(Long userId, Set<UserRole> roles) {
 		super();
 		_userId = userId;
 		_roles = roles;
 		_session = UUID.randomUUID().toString();
 	}
 
-	public String getUserId() {
+	public Long getUserId() {
 		return _userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Long userId) {
 		_userId = userId;
 	}
 

@@ -7,35 +7,35 @@ import java.util.Collection;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 
 public interface IApplicationFacadeRMI extends Remote {
-	IUserRMI createUser() throws RemoteException;
+	IUserRMI createUser(String sessionId) throws RemoteException;
 
-	IUserRMI getUserById(Long id) throws RemoteException;
+	IUserRMI getUserById(String sessionId, Long id) throws RemoteException;
 
-	Collection<IUserRMI> findUsers(String firstName, String lastName, Long departmentId, Boolean membershipFeePaid)
+	Collection<IUserRMI> findUsers(String sessionId, String firstName, String lastName, Long departmentId, Boolean membershipFeePaid)
 			throws RemoteException;
 
-	Collection<IUserRMI> findUsersSimple(String name) throws RemoteException;
+	Collection<IUserRMI> findUsersSimple(String sessionId, String name) throws RemoteException;
 
-	IUserRMI saveUser(IUserRMI user) throws RemoteException;
+	IUserRMI saveUser(String sessionId, IUserRMI user) throws RemoteException;
 
-	IDepartmentRMI getDepartmentById(Long id) throws RemoteException;
+	IDepartmentRMI getDepartmentById(String sessionId, Long id) throws RemoteException;
 
-	Collection<IDepartmentRMI> getAllDepartments() throws RemoteException;
+	Collection<IDepartmentRMI> getAllDepartments(String sessionId) throws RemoteException;
 
-	ITeamRMI getTeamById(Long id) throws RemoteException;
+	ITeamRMI getTeamById(String sessionId, Long id) throws RemoteException;
 
-	Collection<ITeamRMI> findTeams(String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId)
+	Collection<ITeamRMI> findTeams(String sessionId, String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId)
 			throws RemoteException;
 
-	ITeamRMI saveTeam(ITeamRMI team) throws RemoteException;
+	ITeamRMI saveTeam(String sessionId, ITeamRMI team) throws RemoteException;
 
-	ILeagueRMI getLeagueById(Long id) throws RemoteException;
+	ILeagueRMI getLeagueById(String sessionId, Long id) throws RemoteException;
 
-	Collection<ILeagueRMI> getAllLeagues() throws RemoteException;
+	Collection<ILeagueRMI> getAllLeagues(String sessionId) throws RemoteException;
 
-	ITeamRMI createTeam() throws RemoteException;
+	ITeamRMI createTeam(String sessionId) throws RemoteException;
 	
-	String loginLDAP(String username, String password)  throws RemoteException;
+	String loginLDAP(String sessionId, String username, String password)  throws RemoteException;
 
-	IUserRMI getUserBySessionId(String sessionId) throws RemoteException;
+	IUserRMI getCurrentUser(String sessionId) throws RemoteException;
 }

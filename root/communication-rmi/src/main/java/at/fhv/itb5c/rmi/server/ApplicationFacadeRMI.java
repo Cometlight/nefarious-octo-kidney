@@ -36,83 +36,83 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	}
 
 	@Override
-	public IUserRMI createUser() throws RemoteException {
-		return ConverterUserRMI.toRMI(_applicationFacade.createUser());
+	public IUserRMI createUser(String sessionId) throws RemoteException {
+		return ConverterUserRMI.toRMI(_applicationFacade.createUser(sessionId));
 	}
 
 	@Override
-	public IUserRMI getUserById(Long id) throws RemoteException {
-		return ConverterUserRMI.toRMI(_applicationFacade.getUserById(id));
+	public IUserRMI getUserById(String sessionId, Long id) throws RemoteException {
+		return ConverterUserRMI.toRMI(_applicationFacade.getUserById(sessionId, id));
 	}
 
 	@Override
-	public Collection<IUserRMI> findUsers(String firstName, String lastName, Long departmentId,
+	public Collection<IUserRMI> findUsers(String sessionId, String firstName, String lastName, Long departmentId,
 			Boolean membershipFeePaid) throws RemoteException {
 		return ConverterUserRMI
-				.toRMI(_applicationFacade.findUsers(firstName, lastName, departmentId, membershipFeePaid));
+				.toRMI(_applicationFacade.findUsers(sessionId, firstName, lastName, departmentId, membershipFeePaid));
 	}
 
 	@Override
-	public Collection<IUserRMI> findUsersSimple(String name) throws RemoteException {
-		return ConverterUserRMI.toRMI(_applicationFacade.findUsersSimple(name));
+	public Collection<IUserRMI> findUsersSimple(String sessionId, String name) throws RemoteException {
+		return ConverterUserRMI.toRMI(_applicationFacade.findUsersSimple(sessionId, name));
 	}
 
 	@Override
-	public IUserRMI saveUser(IUserRMI user) throws RemoteException {
+	public IUserRMI saveUser(String sessionId, IUserRMI user) throws RemoteException {
 		UserDTO userDTO = ConverterUserRMI.toDTO(user);
-		return ConverterUserRMI.toRMI(_applicationFacade.saveUser(userDTO));
+		return ConverterUserRMI.toRMI(_applicationFacade.saveUser(sessionId, userDTO));
 	}
 
 	@Override
-	public IDepartmentRMI getDepartmentById(Long id) throws RemoteException {
-		return ConverterDepartmentRMI.toRMI(_applicationFacade.getDepartmentById(id));
+	public IDepartmentRMI getDepartmentById(String sessionId, Long id) throws RemoteException {
+		return ConverterDepartmentRMI.toRMI(_applicationFacade.getDepartmentById(sessionId, id));
 	}
 
 	@Override
-	public Collection<IDepartmentRMI> getAllDepartments() throws RemoteException {
-		return ConverterDepartmentRMI.toRMI(_applicationFacade.getAllDepartments());
+	public Collection<IDepartmentRMI> getAllDepartments(String sessionId) throws RemoteException {
+		return ConverterDepartmentRMI.toRMI(_applicationFacade.getAllDepartments(sessionId));
 	}
 	
 	@Override
-	public ITeamRMI createTeam() throws RemoteException {
-		return ConverterTeamRMI.toRMI(_applicationFacade.createTeam());
+	public ITeamRMI createTeam(String sessionId) throws RemoteException {
+		return ConverterTeamRMI.toRMI(_applicationFacade.createTeam(sessionId));
 	}
 
 	@Override
-	public ITeamRMI getTeamById(Long id) throws RemoteException {
-		return ConverterTeamRMI.toRMI(_applicationFacade.getTeamById(id));
+	public ITeamRMI getTeamById(String sessionId, Long id) throws RemoteException {
+		return ConverterTeamRMI.toRMI(_applicationFacade.getTeamById(sessionId, id));
 	}
 
 	@Override
-	public Collection<ITeamRMI> findTeams(String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId)
+	public Collection<ITeamRMI> findTeams(String sessionId, String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId)
 			throws RemoteException {
-		return ConverterTeamRMI.toRMI(_applicationFacade.findTeams(name, typeOfSport, departmentId, leagueId));
+		return ConverterTeamRMI.toRMI(_applicationFacade.findTeams(sessionId, name, typeOfSport, departmentId, leagueId));
 	}
 
 	@Override
-	public ITeamRMI saveTeam(ITeamRMI team) {
+	public ITeamRMI saveTeam(String sessionId, ITeamRMI team) {
 		TeamDTO teamDTO = ConverterTeamRMI.toDTO(team);
-		return ConverterTeamRMI.toRMI(_applicationFacade.saveTeam(teamDTO));
+		return ConverterTeamRMI.toRMI(_applicationFacade.saveTeam(sessionId, teamDTO));
 	}
 
 	@Override
-	public ILeagueRMI getLeagueById(Long id) throws RemoteException {
-		return ConverterLeagueRMI.toRMI(_applicationFacade.getLeagueById(id));
+	public ILeagueRMI getLeagueById(String sessionId, Long id) throws RemoteException {
+		return ConverterLeagueRMI.toRMI(_applicationFacade.getLeagueById(sessionId, id));
 	}
 
 	@Override
-	public Collection<ILeagueRMI> getAllLeagues() throws RemoteException {
-		return ConverterLeagueRMI.toRMI(_applicationFacade.getAllLeagues());
+	public Collection<ILeagueRMI> getAllLeagues(String sessionId) throws RemoteException {
+		return ConverterLeagueRMI.toRMI(_applicationFacade.getAllLeagues(sessionId));
 	}
 
 	@Override
-	public String loginLDAP(String username, String password) throws RemoteException{
-		return _applicationFacade.loginLDAP(username, password);
+	public String loginLDAP(String sessionId, String username, String password) throws RemoteException{
+		return _applicationFacade.loginLDAP(sessionId, username, password);
 	}
 
 	@Override
-	public IUserRMI getUserBySessionId(String sessionId) throws RemoteException {
-		return ConverterUserRMI.toRMI(_applicationFacade.getUserBySessionId(sessionId));
+	public IUserRMI getCurrentUser(String sessionId) throws RemoteException {
+		return ConverterUserRMI.toRMI(_applicationFacade.getCurrentUser(sessionId));
 	}
 	
 	

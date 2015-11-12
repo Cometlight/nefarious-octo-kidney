@@ -21,24 +21,12 @@ public class Session {
 		return _userId;
 	}
 
-	public void setUserId(Long userId) {
-		_userId = userId;
-	}
-
 	public Set<UserRole> getRoles() {
 		return _roles;
 	}
 
-	public void setRoles(Set<UserRole> roles) {
-		_roles = roles;
-	}
-
 	public String getSessionId() {
 		return _sessionId;
-	}
-
-	public void setSessionId(String session) {
-		_sessionId = session;
 	}
 
 }

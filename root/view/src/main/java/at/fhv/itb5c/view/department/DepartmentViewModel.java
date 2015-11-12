@@ -7,6 +7,7 @@ import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
+import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -27,7 +28,7 @@ public class DepartmentViewModel implements ILogger{
 		
 		try {
 			_departmentName = new SimpleStringProperty(_department.getName());
-			IUserRMI head = RMIClient.getRMIClient().getApplicationFacade().getUserById(_department.getHeadId());
+			IUserRMI head = RMIClient.getRMIClient().getApplicationFacade().getUserById(AppState.getInstance().getSessionID(), _department.getHeadId());
 			_nameHeadOfDepartment = new SimpleStringProperty(head.getLastName() + " " + head.getFirstName());
 			_typeOfSport = new SimpleStringProperty(_department.getTypeOfSport().toString());
 			_teams = FXCollections.observableArrayList();

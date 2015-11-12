@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
+import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.department.DepartmentViewFactory;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.usersearch.SearchUserViewFactory;
@@ -31,7 +32,7 @@ public class MainViewController implements ILogger{
 	
 	public MainViewController() {
 		try {
-			_mainViewModel = new MainViewModel(RMIClient.getRMIClient().getApplicationFacade().getAllDepartments());
+			_mainViewModel = new MainViewModel(RMIClient.getRMIClient().getApplicationFacade().getAllDepartments(AppState.getInstance().getSessionID()));
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();

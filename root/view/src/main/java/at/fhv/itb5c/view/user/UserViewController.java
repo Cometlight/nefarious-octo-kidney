@@ -17,6 +17,7 @@ import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.user.states.DetailUserViewControlls;
 import at.fhv.itb5c.view.user.states.ModifyUserViewControlls;
+import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.user.states.AddUserViewControllsController;
 import at.fhv.itb5c.view.util.RouteProvider;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
@@ -118,8 +119,8 @@ public class UserViewController implements IPanelClosable, Closeable {
 		});
 		
 		_errorField.setVisible(false);
-		if(!_userModel.getTypeOfSports().contains(UserRole.Admin)) {
-			_userRoleCheckListView.setDisable(true);
+		if(AppState.getInstance().getLoggedInUser().getRoles().contains(UserRole.Admin)) {
+			_userRoleCheckListView.disableProperty().set(false);
 		}
 		setState(_initialiseState);
 	}
@@ -141,7 +142,7 @@ public class UserViewController implements IPanelClosable, Closeable {
 	public boolean saveModel() {
 		if (mandatoryFieldsSet()) {
 			try {
-				IUserRMI savedUser = RMIClient.getRMIClient().getApplicationFacade().saveUser(_userModel.getRMIUser());
+				IUserRMI savedUser = RMIClient.getRMIClient().getApplicationFacade().saveUser(AppState.getInstance().getSessionID(), _userModel.getRMIUser());
 				_userModel.setIUserRMI(savedUser);
 			} catch (RemoteException e) {
 				ErrorPopUp.connectionError();
@@ -199,7 +200,7 @@ public class UserViewController implements IPanelClosable, Closeable {
 		}
 	}
 
-	public void setDisable(boolean isDisabled) {
+	public void setDisable(boolean isDisabled) throws RemoteException {
 		_firstNameTextField.setDisable(isDisabled);
 		_lastNameTextField.setDisable(isDisabled);
 		_adressTextField.setDisable(isDisabled);
@@ -209,8 +210,8 @@ public class UserViewController implements IPanelClosable, Closeable {
 		_birthdayDatePicker.setDisable(isDisabled);
 		_typeOfSportCheckListView.setDisable(isDisabled);
 		_memebershipFeeTextBox.setDisable(isDisabled);
-		if(_userModel.getTypeOfSports().contains(UserRole.Admin)) {
-			_userRoleCheckListView.setDisable(isDisabled);
+		if(AppState.getInstance().getLoggedInUser().getRoles().contains(UserRole.Admin)) {
+			_userRoleCheckListView.disableProperty().set(false);
 		}
 	}
 

@@ -159,21 +159,22 @@ public class PersistenceFacade implements ILogger {
 		return true;
 	}
 
-    /**
-     * Gets a list of all objects of the specified type.
-     * @return a list of objects or null if there was an error.
-     */
-    public <T> List<T> getAll(Class<T> clazz) {
-        if (clazz == null) {
-            return null;
-        }
-        try {
-            TypedQuery<T> query = _entityManager.createQuery("SELECT o from " + clazz.getSimpleName() + " o", clazz);
-            return query.getResultList();
-        } catch (Exception e) {
-            return null;
-        }
-    }
+	/**
+	 * Gets a list of all objects of the specified type.
+	 * 
+	 * @return a list of objects or null if there was an error.
+	 */
+	public <T> List<T> getAll(Class<T> clazz) {
+		if (clazz == null) {
+			return null;
+		}
+		try {
+			TypedQuery<T> query = _entityManager.createQuery("SELECT o from " + clazz.getSimpleName() + " o", clazz);
+			return query.getResultList();
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
 	public List<User> findUsers(String firstName, String lastName, Long departmentId, Boolean membershipFeePaid) {
 		List<User> resultSet = new LinkedList<>();
@@ -211,26 +212,47 @@ public class PersistenceFacade implements ILogger {
 		return resultSet;
 	}
 
-    public List<User> findUsersSimple(String name) {
-        List<User> resultSet = new LinkedList<>();
+	public List<User> findUsersSimple(String name) {
+		List<User> resultSet = new LinkedList<>();
 
-        if (name != null) {
-            CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
-            CriteriaQuery<User> query = cb.createQuery(User.class);
-            Root<User> root = query.from(User.class);
-            query.select(root);
+		if (name != null) {
+			CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
+			CriteriaQuery<User> query = cb.createQuery(User.class);
+			Root<User> root = query.from(User.class);
+			query.select(root);
 
-            Predicate firstName = cb.like(cb.lower(root.get("_firstName")), "%" + name.toLowerCase() + "%");
-            Predicate lastName = cb.like(cb.lower(root.get("_lastName")), "%" + name.toLowerCase() + "%");
+			Predicate firstName = cb.like(cb.lower(root.get("_firstName")), "%" + name.toLowerCase() + "%");
+			Predicate lastName = cb.like(cb.lower(root.get("_lastName")), "%" + name.toLowerCase() + "%");
 
-            query.where(cb.or(firstName, lastName));
+			query.where(cb.or(firstName, lastName));
 
-            TypedQuery<User> typedQuery = _entityManager.createQuery(query);
-            resultSet = typedQuery.getResultList();
-        }
+			TypedQuery<User> typedQuery = _entityManager.createQuery(query);
+			resultSet = typedQuery.getResultList();
+		}
 
-        return resultSet;
-    }
+		return resultSet;
+	}
+
+	public User findUserByLDAP(String name) {
+		if (name != null) {
+			CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
+			CriteriaQuery<User> query = cb.createQuery(User.class);
+			Root<User> root = query.from(User.class);
+			query.select(root);
+
+			Predicate ldap = cb.like(root.get("_ldapUID"), name);
+			query.where(ldap);
+
+			TypedQuery<User> typedQuery = _entityManager.createQuery(query);
+			List<User> resultSet = typedQuery.getResultList();
+
+			if (resultSet != null && resultSet.size() == 1) {
+				return resultSet.get(0);
+			}
+		}
+
+		return null;
+	}
 
 	public List<Team> findTeams(String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId) {
 		List<Team> resultSet = new LinkedList<>();

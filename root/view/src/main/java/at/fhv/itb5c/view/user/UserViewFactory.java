@@ -3,6 +3,7 @@ package at.fhv.itb5c.view.user;
 import java.rmi.RemoteException;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.rmi.client.RMIClient;
+import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.user.UserViewController.UserViewState;
 import at.fhv.itb5c.view.util.factories.AbstractViewFactory;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
@@ -21,7 +22,7 @@ public class UserViewFactory extends AbstractViewFactory {
 		try {
 			UserModel userModel;
 			if (userViewState == UserViewState.addState) {
-				userModel = UserModel.createUserModel(RMIClient.getRMIClient().getApplicationFacade().createUser());
+				userModel = UserModel.createUserModel(RMIClient.getRMIClient().getApplicationFacade().createUser(AppState.getInstance().getSessionID()));
 			} else {
 				userModel = UserModel.createUserModel(user);
 			}

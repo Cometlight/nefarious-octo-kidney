@@ -37,68 +37,78 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	}
 
 	@Override
-	public IUserRMI createUser() throws RemoteException {
-		return _applicationFacadeRMI.createUser();
+	public IUserRMI createUser(String sessionId) throws RemoteException {
+		return _applicationFacadeRMI.createUser(sessionId);
 	}
 
 	@Override
-	public IUserRMI getUserById(Long id) throws RemoteException {
-		return _applicationFacadeRMI.getUserById(id);
+	public IUserRMI getUserById(String sessionId, Long id) throws RemoteException {
+		return _applicationFacadeRMI.getUserById(sessionId, id);
 	}
 
 	@Override
-	public Collection<IUserRMI> findUsers(String firstName, String lastName, Long departmentId,
+	public Collection<IUserRMI> findUsers(String sessionId, String firstName, String lastName, Long departmentId,
 			Boolean membershipFeePaid) throws RemoteException {
-		return _applicationFacadeRMI.findUsers(firstName, lastName, departmentId, membershipFeePaid);
+		return _applicationFacadeRMI.findUsers(sessionId, firstName, lastName, departmentId, membershipFeePaid);
 	}
 
 	@Override
-	public Collection<IUserRMI> findUsersSimple(String name) throws RemoteException {
-		return _applicationFacadeRMI.findUsersSimple(name);
+	public Collection<IUserRMI> findUsersSimple(String sessionId, String name) throws RemoteException {
+		return _applicationFacadeRMI.findUsersSimple(sessionId, name);
 	}
 
 	@Override
-	public IUserRMI saveUser(IUserRMI user) throws RemoteException {
-		return _applicationFacadeRMI.saveUser(user);
+	public IUserRMI saveUser(String sessionId, IUserRMI user) throws RemoteException {
+		return _applicationFacadeRMI.saveUser(sessionId, user);
 	}
 
 	@Override
-	public IDepartmentRMI getDepartmentById(Long id) throws RemoteException {
-		return _applicationFacadeRMI.getDepartmentById(id);
+	public IDepartmentRMI getDepartmentById(String sessionId, Long id) throws RemoteException {
+		return _applicationFacadeRMI.getDepartmentById(sessionId, id);
 	}
 
 	@Override
-	public Collection<IDepartmentRMI> getAllDepartments() throws RemoteException {
-		return _applicationFacadeRMI.getAllDepartments();
+	public Collection<IDepartmentRMI> getAllDepartments(String sessionId) throws RemoteException {
+		return _applicationFacadeRMI.getAllDepartments(sessionId);
 	}
 
-	public ITeamRMI createTeam() throws RemoteException{
-		return _applicationFacadeRMI.createTeam();
+	public ITeamRMI createTeam(String sessionId) throws RemoteException{
+		return _applicationFacadeRMI.createTeam(sessionId);
 	}
 	
 	@Override
-	public ITeamRMI getTeamById(Long id) throws RemoteException {
-		return _applicationFacadeRMI.getTeamById(id);
+	public ITeamRMI getTeamById(String sessionId, Long id) throws RemoteException {
+		return _applicationFacadeRMI.getTeamById(sessionId, id);
 	}
 
 	@Override
-	public Collection<ITeamRMI> findTeams(String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId)
+	public Collection<ITeamRMI> findTeams(String sessionId, String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId)
 			throws RemoteException {
-		return _applicationFacadeRMI.findTeams(name, typeOfSport, departmentId, leagueId);
+		return _applicationFacadeRMI.findTeams(sessionId, name, typeOfSport, departmentId, leagueId);
 	}
 
 	@Override
-	public ITeamRMI saveTeam(ITeamRMI team) throws RemoteException {
-		return _applicationFacadeRMI.saveTeam(team);
+	public ITeamRMI saveTeam(String sessionId, ITeamRMI team) throws RemoteException {
+		return _applicationFacadeRMI.saveTeam(sessionId, team);
 	}
 
 	@Override
-	public ILeagueRMI getLeagueById(Long id) throws RemoteException {
-		return _applicationFacadeRMI.getLeagueById(id);
+	public ILeagueRMI getLeagueById(String sessionId, Long id) throws RemoteException {
+		return _applicationFacadeRMI.getLeagueById(sessionId, id);
 	}
 
 	@Override
-	public Collection<ILeagueRMI> getAllLeagues() throws RemoteException {
-		return _applicationFacadeRMI.getAllLeagues();
+	public Collection<ILeagueRMI> getAllLeagues(String sessionId) throws RemoteException {
+		return _applicationFacadeRMI.getAllLeagues(sessionId);
+	}
+
+	@Override
+	public String loginLDAP(String username, String password) throws RemoteException {
+		return _applicationFacadeRMI.loginLDAP(username, password);
+	}
+
+	@Override
+	public IUserRMI getCurrentUser(String sessionId) throws RemoteException {
+		return _applicationFacadeRMI.getCurrentUser(sessionId);
 	}
 }

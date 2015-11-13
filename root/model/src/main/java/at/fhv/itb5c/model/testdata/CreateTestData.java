@@ -81,7 +81,8 @@ public class CreateTestData implements ILogger {
 		_userDS.setMembershipFeePaid(false);
 		_userDS.setTelephoneNumber("0043 664 8268464");
 		_userDS.setTypeOfSports(new HashSet<>(Arrays.asList(TypeOfSport.Soccer)));
-		_userDS.setRoles(new HashSet<>(Arrays.asList(UserRole.StandardUser)));
+		_userDS.setRoles(new HashSet<>(Arrays.asList(UserRole.Admin)));
+		_userDS.setLdapUID("dsc2253");
 		_userDS = PersistenceFacade.getInstance().saveOrUpdate(_userDS);
 
 		_userDG = new User();

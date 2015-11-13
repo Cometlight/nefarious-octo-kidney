@@ -34,7 +34,7 @@ public interface IApplicationFacadeRMI extends Remote {
 	Collection<ILeagueRMI> getAllLeagues(String sessionId) throws RemoteException;
 
 	ITeamRMI createTeam(String sessionId) throws RemoteException;
-	
+
 	String loginLDAP(String username, String password)  throws RemoteException;
 
 	IUserRMI getCurrentUser(String sessionId) throws RemoteException;
@@ -46,4 +46,6 @@ public interface IApplicationFacadeRMI extends Remote {
 	Collection<ITournamentRMI> getAllTournaments(String sessionId) throws RemoteException;
 
 	ITournamentRMI getTournamentById(String sessionId, Long id) throws RemoteException;
+	
+	ITeamRMI addPlayerToTeam(String sessionId, ITeamRMI team, IUserRMI player) throws RemoteException;
 }

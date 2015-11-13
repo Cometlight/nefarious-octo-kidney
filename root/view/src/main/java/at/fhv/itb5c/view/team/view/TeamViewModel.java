@@ -12,6 +12,8 @@ import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class TeamViewModel implements ILogger {
 	private IDepartmentRMI _department;
@@ -19,10 +21,12 @@ public class TeamViewModel implements ILogger {
 	private StringProperty _teamName;
 	private StringProperty _coachName;
 	private StringProperty _leagueName;
+	private ObservableList<IUserRMI> _members;
 
 	public TeamViewModel(IDepartmentRMI department, ITeamRMI team) {
 		_department = department;
 		_team = team;
+		_members = FXCollections.observableArrayList();
 
 		try {
 			_teamName = new SimpleStringProperty(_team.getName());
@@ -34,6 +38,12 @@ public class TeamViewModel implements ILogger {
 			}
 			IUserRMI coach = RMIClient.getRMIClient().getApplicationFacade().getUserById(AppState.getInstance().getSessionID(), _team.getCoachId());
 			_coachName = new SimpleStringProperty(coach.getFirstName() + " " + coach.getLastName());
+			
+			// load all members
+			String sessionId = AppState.getInstance().getSessionID();
+			for(Long userId : _team.getMemberIds()) {
+				_members.add(RMIClient.getRMIClient().getApplicationFacade().getUserById(sessionId, userId));
+			}
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
@@ -58,5 +68,9 @@ public class TeamViewModel implements ILogger {
 
 	public StringProperty getLeagueName() {
 		return _leagueName;
+	}
+
+	public ObservableList<IUserRMI> getMembers() {
+		return _members;
 	}
 }

@@ -40,4 +40,6 @@ public interface IApplicationFacadeRMI extends Remote {
 	IUserRMI getCurrentUser(String sessionId) throws RemoteException;
 
 	ITeamRMI addPlayerToTeam(String sessionId, ITeamRMI team, IUserRMI player) throws RemoteException;
+
+	ITournamentRMI addMatchToTournament(String sessionId, ITournamentRMI tournament, IMatchRMI match) throws RemoteException;
 }

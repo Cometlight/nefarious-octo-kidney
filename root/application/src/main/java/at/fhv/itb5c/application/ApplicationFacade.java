@@ -6,11 +6,13 @@ import java.util.Set;
 
 import at.fhv.itb5c.application.converter.ConverterDepartmentDTO;
 import at.fhv.itb5c.application.converter.ConverterLeagueDTO;
+import at.fhv.itb5c.application.converter.ConverterMatchDTO;
 import at.fhv.itb5c.application.converter.ConverterTeamDTO;
 import at.fhv.itb5c.application.converter.ConverterTournamentDTO;
 import at.fhv.itb5c.application.converter.ConverterUserDTO;
 import at.fhv.itb5c.application.dto.DepartmentDTO;
 import at.fhv.itb5c.application.dto.LeagueDTO;
+import at.fhv.itb5c.application.dto.MatchDTO;
 import at.fhv.itb5c.application.dto.TeamDTO;
 import at.fhv.itb5c.application.dto.TournamentDTO;
 import at.fhv.itb5c.application.dto.UserDTO;
@@ -22,6 +24,7 @@ import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.PersistenceFacade;
 import at.fhv.itb5c.model.entity.Department;
 import at.fhv.itb5c.model.entity.League;
+import at.fhv.itb5c.model.entity.Match;
 import at.fhv.itb5c.model.entity.Team;
 import at.fhv.itb5c.model.entity.Tournament;
 import at.fhv.itb5c.model.entity.User;
@@ -170,7 +173,8 @@ public class ApplicationFacade implements ILogger {
 	public TeamDTO addPlayerToTeam(String sessionId, TeamDTO team, UserDTO player) {
 		if (team != null && player != null) {
 			UserDTO currentUser = getCurrentUser(sessionId);
-			if (currentUser != null && (hasRole(sessionId, UserRole.Admin) || team.getCoachId().equals(currentUser.getId()))) {
+			if (currentUser != null
+					&& (hasRole(sessionId, UserRole.Admin) || team.getCoachId().equals(currentUser.getId()))) {
 				Team teamEntity = ConverterTeamDTO.toEntity(team);
 				if (teamEntity != null) {
 					Set<Long> memberIds = teamEntity.getMemberIds();
@@ -182,7 +186,6 @@ public class ApplicationFacade implements ILogger {
 					} catch (Exception e) {
 						log.error(e.getMessage());
 					}
-
 				}
 			}
 		}
@@ -208,6 +211,50 @@ public class ApplicationFacade implements ILogger {
 		if (hasRole(sessionId, UserRole.Admin)) {
 			List<Tournament> entities = PersistenceFacade.getInstance().findTournaments(name, departmentId);
 			return ConverterTournamentDTO.toDTO(entities);
+		}
+		return null;
+	}
+
+	public MatchDTO createMatch(String sessionId) {
+		return ConverterMatchDTO.toDTO(new Match());
+	}
+
+	/**
+	 * Adds a Match to a Tournament. Only administrators and the head of the
+	 * hosting department have permissions to do this.
+	 *
+	 * @param sessionId
+	 *            the session id of the currently logged in user
+	 * @param tournament
+	 *            the tournament, the match should be added to
+	 * @param match
+	 *            the match that should be added to the tournament
+	 * @return the updated tournament; or null, if the match could not be added
+	 */
+	public TournamentDTO addMatchToTournament(String sessionId, TournamentDTO tournament, MatchDTO match) {
+		if (tournament != null && match != null) {
+			UserDTO currentUser = getCurrentUser(sessionId);
+			DepartmentDTO currentDepartment = this.getDepartmentById(sessionId, tournament.getDepartmentId());
+			if (currentUser != null) {
+				if (hasRole(sessionId, UserRole.Admin) || currentUser.getId().equals(currentDepartment.getHeadId())) {
+					Tournament tournamentEntity = ConverterTournamentDTO.toEntity(tournament);
+					if (tournamentEntity != null) {
+						try {
+							// first: save match (this is a new entity)
+							Match matchEntity = ConverterMatchDTO.toEntity(match);
+							matchEntity = PersistenceFacade.getInstance().saveOrUpdate(matchEntity);
+							// add match id to tournament
+							Set<Long> matchIds = tournamentEntity.getMatchesIds();
+							matchIds.add(matchEntity.getId());
+							tournamentEntity.setMatchesIds(matchIds);
+							tournamentEntity = PersistenceFacade.getInstance().saveOrUpdate(tournamentEntity);
+							return ConverterTournamentDTO.toDTO(tournamentEntity);
+						} catch (Exception e) {
+							log.error(e.getMessage());
+						}
+					}
+				}
+			}
 		}
 		return null;
 	}

@@ -73,10 +73,11 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 		return _applicationFacadeRMI.getAllDepartments(sessionId);
 	}
 
+	@Override
 	public ITeamRMI createTeam(String sessionId) throws RemoteException{
 		return _applicationFacadeRMI.createTeam(sessionId);
 	}
-	
+
 	@Override
 	public ITeamRMI getTeamById(String sessionId, Long id) throws RemoteException {
 		return _applicationFacadeRMI.getTeamById(sessionId, id);
@@ -131,5 +132,9 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	@Override
 	public ITournamentRMI getTournamentById(String sessionId, Long id) throws RemoteException {
 		return _applicationFacadeRMI.getTournamentById(sessionId, id);
+	}
+
+	public ITeamRMI addPlayerToTeam(String sessionId, ITeamRMI team, IUserRMI player) throws RemoteException {
+		return _applicationFacadeRMI.addPlayerToTeam(sessionId, team, player);
 	}
 }

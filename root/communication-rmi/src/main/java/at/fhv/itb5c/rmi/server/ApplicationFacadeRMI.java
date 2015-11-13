@@ -75,7 +75,7 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	public Collection<IDepartmentRMI> getAllDepartments(String sessionId) throws RemoteException {
 		return ConverterDepartmentRMI.toRMI(_applicationFacade.getAllDepartments(sessionId));
 	}
-	
+
 	@Override
 	public ITeamRMI createTeam(String sessionId) throws RemoteException {
 		return ConverterTeamRMI.toRMI(_applicationFacade.createTeam(sessionId));
@@ -137,5 +137,12 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	@Override
 	public ITournamentRMI getTournamentById(String sessionId, Long id) throws RemoteException {
 		return ConverterTournamentRMI.toRMI(_applicationFacade.getTournamentById(sessionId, id));
+	}
+	
+	@Override
+	public ITeamRMI addPlayerToTeam(String sessionId, ITeamRMI team, IUserRMI player) throws RemoteException {
+		TeamDTO teamDTO = ConverterTeamRMI.toDTO(team);
+		UserDTO playerDTO = ConverterUserRMI.toDTO(player);
+		return ConverterTeamRMI.toRMI(_applicationFacade.addPlayerToTeam(sessionId, teamDTO, playerDTO));
 	}
 }

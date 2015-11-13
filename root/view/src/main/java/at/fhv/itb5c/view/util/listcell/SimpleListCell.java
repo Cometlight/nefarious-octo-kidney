@@ -9,7 +9,10 @@ public abstract class SimpleListCell<T> extends ListCell<T> implements ILogger{
 	@Override
 	protected void updateItem(T item, boolean empty) {
 		super.updateItem(item, empty);
-		if((item != null) && (!empty)) {
+		if (empty) {
+			setText(null);
+			setGraphic(null);
+		} else if (item != null) {
 			try {
 				format(item);
 			} catch (RemoteException e) {

@@ -134,4 +134,9 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 		MatchDTO matchDTO = ConverterMatchRMI.toDTO(match);
 		return ConverterTournamentRMI.toRMI(_applicationFacade.addMatchToTournament(sessionId, tournamentDTO, matchDTO));
 	}
+
+	@Override
+	public IMatchRMI createMatch(String sessionId) throws RemoteException {
+		return ConverterMatchRMI.toRMI(_applicationFacade.createMatch(sessionId));
+	}
 }

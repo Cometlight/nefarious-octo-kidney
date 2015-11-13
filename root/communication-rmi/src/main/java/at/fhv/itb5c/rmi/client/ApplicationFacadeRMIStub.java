@@ -124,4 +124,9 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	public ITournamentRMI addMatchToTournament(String sessionId, ITournamentRMI tournament, IMatchRMI match) throws RemoteException {
 		return _applicationFacadeRMI.addMatchToTournament(sessionId, tournament, match);
 	}
+
+	@Override
+	public IMatchRMI createMatch(String sessionId) throws RemoteException {
+		return _applicationFacadeRMI.createMatch(sessionId);
+	}
 }

@@ -35,6 +35,7 @@ public class TournamentViewController implements IPanelClosable, ILogger {
 	
 	public TournamentViewController(IDepartmentRMI department, ITournamentRMI tournament) {
 		_department = department;
+		_tournamentModel = new TournamentModel();
 		try {
 			_tournamentModel.setITournamentRMI(tournament);
 		} catch (RemoteException e) {

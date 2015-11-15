@@ -1,6 +1,7 @@
 package at.fhv.itb5c.view.tournament;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
@@ -26,21 +27,28 @@ public class TournamentAddController implements IPanelClosable, ILogger {
 	private TextField _fee;
 
 	private TournamentModel _tournamentModel;
+	private IDepartmentRMI _department;
 
 	@FXML
 	public void initialize() {
 		_tournamentName.textProperty().bindBidirectional(_tournamentModel.getTournamentName());
 		_date.valueProperty().bindBidirectional(_tournamentModel.getDate());
 		_fee.textProperty().bindBidirectional(_tournamentModel.getFee().asObject(), new DecimalFormat());
+		try {
+			ITournamentRMI tournamentRMI = RMIClient.getRMIClient().getApplicationFacade()
+					.createTournament(AppState.getInstance().getSessionID());
+			tournamentRMI.setDepartmentId(_department.getId());
+			_tournamentModel.setITournamentRMI(tournamentRMI );
+		} catch (RemoteException e) {
+			log.error(e.getMessage());
+			ErrorPopUp.connectionError();
+		}
 	}
 
 	// Event Listener on Button.onMouseClicked
 	@FXML
 	public void _saveAndNextButtonClicked(MouseEvent event) {
 		try {
-			_tournamentModel.setITournamentRMI(RMIClient.getRMIClient().getApplicationFacade()
-					.createTournament(AppState.getInstance().getSessionID()));
-			log.debug("tournament name = " + _tournamentModel.getTournamentName().getValue() + ", " + _tournamentName.textProperty().getValue());
 			ITournamentRMI tournament = RMIClient.getRMIClient().getApplicationFacade().saveTournament(AppState.getInstance().getSessionID(),
 					_tournamentModel.getITournamentRMI());
 			
@@ -55,8 +63,6 @@ public class TournamentAddController implements IPanelClosable, ILogger {
 		_department = department;
 		_tournamentModel = new TournamentModel();
 	}
-
-	private IDepartmentRMI _department;
 
 	// Event Listener on Button.onMouseClicked
 	@FXML

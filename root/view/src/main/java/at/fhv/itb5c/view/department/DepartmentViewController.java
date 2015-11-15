@@ -10,15 +10,18 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
+import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.team.add.TeamAddViewFactory;
 import at.fhv.itb5c.view.team.view.TeamViewFactory;
 import at.fhv.itb5c.view.tournament.TournamentAddFactory;
+import at.fhv.itb5c.view.tournament.TournamentViewFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
 import at.fhv.itb5c.view.util.listcell.TeamListCell;
+import at.fhv.itb5c.view.util.listcell.TournamentListCell;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.event.ActionEvent;
 
@@ -32,7 +35,7 @@ public class DepartmentViewController implements IPanelClosable, ILogger {
 	@FXML
 	private Button _addTeamButton;
 	@FXML
-	private ListView<?> _tournamentList;
+	private ListView<ITournamentRMI> _tournamentList;
 	@FXML
 	private Label _typeOfSportLabel;
 	@FXML
@@ -65,7 +68,22 @@ public class DepartmentViewController implements IPanelClosable, ILogger {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();
 		}
-
+		_tournamentList.setItems(_departmentViewModel.getTournaments());
+		_tournamentList.setCellFactory(new Callback<ListView<ITournamentRMI>, ListCell<ITournamentRMI>>() {
+			@Override
+			public ListCell<ITournamentRMI> call(ListView<ITournamentRMI> param) {
+				return new TournamentListCell();
+			}
+		});
+		try {
+			_departmentViewModel.getTournaments()
+					.setAll(RMIClient.getRMIClient().getApplicationFacade().findTournaments(
+							AppState.getInstance().getSessionID(), null, _departmentViewModel.getDepartment().getId()));
+		} catch (RemoteException e) {
+			log.error(e.getMessage());
+			ErrorPopUp.criticalSystemError();
+		}
+		log.debug(_tournamentList.getItems().size());
 	}
 
 	@FXML
@@ -84,6 +102,19 @@ public class DepartmentViewController implements IPanelClosable, ILogger {
 		if (team != null) {
 			try {
 				_panelCloseHandler.closeNext(new TeamViewFactory(_departmentViewModel.getDepartment(), team));
+			} catch (IOException e) {
+				log.error(e.getMessage());
+				ErrorPopUp.criticalSystemError();
+			}
+		}
+	}
+	
+	@FXML
+	void _tournamentListOnMouseClick(MouseEvent mouseEvent) {
+		ITournamentRMI tournament = _tournamentList.getSelectionModel().getSelectedItem();
+		if (tournament != null) {
+			try {
+				_panelCloseHandler.closeNext(new TournamentViewFactory(_departmentViewModel.getDepartment(), tournament));
 			} catch (IOException e) {
 				log.error(e.getMessage());
 				ErrorPopUp.criticalSystemError();

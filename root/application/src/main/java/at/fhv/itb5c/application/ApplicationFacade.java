@@ -272,14 +272,6 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 	
-	public Collection<TournamentDTO> getAllTournaments(String sessionId) {
-		if (hasRole(sessionId, UserRole.Admin)) {
-			List<Tournament> entities = PersistenceFacade.getInstance().getAll(Tournament.class);
-			return ConverterTournamentDTO.toDTO(entities);
-		}
-		return null;
-	}
-	
 	public TournamentDTO getTournamentById(String sessionId, Long id) {
 		if (hasRole(sessionId, UserRole.Admin)) {
 			return ConverterTournamentDTO.toDTO(PersistenceFacade.getInstance().getById(Tournament.class, id));

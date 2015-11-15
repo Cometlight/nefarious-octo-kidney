@@ -234,12 +234,6 @@ public class ApplicationFacadeTest {
 	}
 	
 	@Test
-	public void getAllTournaments(){
-		Collection<TournamentDTO> dtos = _appFacade.getAllTournaments(_session);
-		assertNotNull(dtos);
-	}
-	
-	@Test
 	public void getTournamentByIdNull() {
 		TournamentDTO dto = _appFacade.getTournamentById(_session, null);
 		assertNull(dto);

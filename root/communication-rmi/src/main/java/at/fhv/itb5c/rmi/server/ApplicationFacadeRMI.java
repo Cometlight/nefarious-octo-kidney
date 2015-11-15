@@ -130,8 +130,8 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	}
 	
 	@Override
-	public Collection<ITournamentRMI> getAllTournaments(String sessionId) throws RemoteException {
-		return ConverterTournamentRMI.toRMI(_applicationFacade.getAllTournaments(sessionId));
+	public Collection<ITournamentRMI> findTournaments(String sessionId, String name, Long departmentId) throws RemoteException {
+		return ConverterTournamentRMI.toRMI(_applicationFacade.findTournaments(sessionId, name, departmentId));
 	}
 	
 	@Override

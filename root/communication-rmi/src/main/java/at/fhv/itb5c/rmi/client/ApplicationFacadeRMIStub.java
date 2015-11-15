@@ -125,8 +125,8 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	}
 
 	@Override
-	public Collection<ITournamentRMI> getAllTournaments(String sessionId) throws RemoteException {
-		return _applicationFacadeRMI.getAllTournaments(sessionId);
+	public Collection<ITournamentRMI> findTournaments(String sessionId, String name, Long departmentId) throws RemoteException {
+		return _applicationFacadeRMI.findTournaments(sessionId, name, departmentId);
 	}
 
 	@Override

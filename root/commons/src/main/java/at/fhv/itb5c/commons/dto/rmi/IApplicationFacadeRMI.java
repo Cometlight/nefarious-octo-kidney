@@ -43,9 +43,9 @@ public interface IApplicationFacadeRMI extends Remote {
 
 	ITournamentRMI saveTournament(String sessionId, ITournamentRMI tournament) throws RemoteException;
 
-	Collection<ITournamentRMI> getAllTournaments(String sessionId) throws RemoteException;
-
 	ITournamentRMI getTournamentById(String sessionId, Long id) throws RemoteException;
 	
 	ITeamRMI addPlayerToTeam(String sessionId, ITeamRMI team, IUserRMI player) throws RemoteException;
+
+	Collection<ITournamentRMI> findTournaments(String sessionId, String name, Long departmentId) throws RemoteException;
 }

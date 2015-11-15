@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.junit.Test;
 
@@ -74,7 +74,7 @@ public class MatchDTOTest {
 
 	@Test
 	public void testStartDate() {
-		final LocalDate startDate = LocalDate.now();
+		final LocalDateTime startDate = LocalDateTime.now();
 		MatchDTO match = new MatchDTO();
 		match.setStartDate(startDate);
 		assertTrue(startDate.equals(match.getStartDate()));

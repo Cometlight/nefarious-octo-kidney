@@ -1,15 +1,13 @@
 package at.fhv.itb5c.application.dto;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class MatchDTO extends BaseDTO {
 	private Object _teamOne;
 	private Object _teamTwo;
-	private Date _persistStartDate;
 	private Integer _resultTeamOne;
 	private Integer _resultTeamTwo;
-	private LocalDate _startDate;
+	private LocalDateTime _startDate;
 
 	public Object getTeamOne() {
 		return _teamOne;
@@ -25,14 +23,6 @@ public class MatchDTO extends BaseDTO {
 
 	public void setTeamTwo(Object teamTwo) {
 		_teamTwo = teamTwo;
-	}
-
-	public Date getPersistStartDate() {
-		return _persistStartDate;
-	}
-
-	public void setPersistStartDate(Date persistStartDate) {
-		_persistStartDate = persistStartDate;
 	}
 
 	public Integer getResultTeamOne() {
@@ -51,11 +41,11 @@ public class MatchDTO extends BaseDTO {
 		_resultTeamTwo = resultTeamTwo;
 	}
 
-	public LocalDate getStartDate() {
+	public LocalDateTime getStartDate() {
 		return _startDate;
 	}
 
-	public void setStartDate(LocalDate startDate) {
+	public void setStartDate(LocalDateTime startDate) {
 		_startDate = startDate;
 	}
 

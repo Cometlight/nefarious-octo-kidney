@@ -11,7 +11,9 @@ import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.PersistenceFacade;
 import at.fhv.itb5c.model.entity.Department;
 import at.fhv.itb5c.model.entity.League;
+import at.fhv.itb5c.model.entity.Match;
 import at.fhv.itb5c.model.entity.Team;
+import at.fhv.itb5c.model.entity.Tournament;
 import at.fhv.itb5c.model.entity.User;
 
 public class CreateTestData implements ILogger {
@@ -20,7 +22,10 @@ public class CreateTestData implements ILogger {
 	private static User _userSA;
 	private static User _userFH;
 	private static Department _deptSoccer;
-	private static Department _deptTennis;
+	private static Department _deptTennis;	
+	private static Team _teamSoccer1;
+	private static Team _teamSoccer2;
+	private static Team _tennisTeam1;
 	private static League _leagueSoccer;
 	private static League _leagueTennis;
 
@@ -132,7 +137,7 @@ public class CreateTestData implements ILogger {
 	}
 
 	private static void createTeams() throws Exception {
-		Team _teamSoccer1 = new Team();
+		_teamSoccer1 = new Team();
 		_teamSoccer1.setName("Team One Soccer");
 		_teamSoccer1.setTypeOfSport(TypeOfSport.Soccer);
 		_teamSoccer1.setDepartmentId(_deptSoccer.getId());
@@ -141,7 +146,7 @@ public class CreateTestData implements ILogger {
 		_teamSoccer1.setLeagueId(_leagueSoccer.getId());
 		_teamSoccer1 = PersistenceFacade.getInstance().saveOrUpdate(_teamSoccer1);
 		
-		Team _teamSoccer2 = new Team();
+		_teamSoccer2 = new Team();
 		_teamSoccer2.setName("Team Two Soccer");
 		_teamSoccer2.setTypeOfSport(TypeOfSport.Soccer);
 		_teamSoccer2.setDepartmentId(_deptSoccer.getId());
@@ -150,17 +155,37 @@ public class CreateTestData implements ILogger {
 		_teamSoccer2.setLeagueId(_leagueSoccer.getId());
 		_teamSoccer2 = PersistenceFacade.getInstance().saveOrUpdate(_teamSoccer2);
 		
-		Team _tennisTeam1 = new Team();
+		_tennisTeam1 = new Team();
 		_tennisTeam1.setName("Tennis Team 1");
 		_tennisTeam1.setTypeOfSport(TypeOfSport.Tennis);
-		_tennisTeam1.setDepartmentId(_deptSoccer.getId());
+		_tennisTeam1.setDepartmentId(_deptTennis.getId());
 		_tennisTeam1.setCoachId(_userFH.getId());
 		_tennisTeam1.setMemberIds(new HashSet<>(Arrays.asList(_userDS.getId(), _userDG.getId(), _userSA.getId())));
 		_tennisTeam1.setLeagueId(_leagueTennis.getId());
 		_tennisTeam1 = PersistenceFacade.getInstance().saveOrUpdate(_tennisTeam1);
 	}
 	
-	private static void createTournaments() {
+	private static void createTournaments() throws Exception {
+		//two local team
+		Match match1Tournament1 = new Match();
+		match1Tournament1.setTeamOne(_teamSoccer1.getId());
+		match1Tournament1.setTeamTwo(_teamSoccer2.getId());
+		match1Tournament1 = PersistenceFacade.getInstance().saveOrUpdate(match1Tournament1);
+		
+		//one local one external
+		Match match2Tournament1 = new Match();
+		match2Tournament1.setTeamOne(_teamSoccer1.getId());
+		match2Tournament1.setTeamTwo("A3 Bregenz");
+		match2Tournament1 = PersistenceFacade.getInstance().saveOrUpdate(match2Tournament1);
+		
+		Tournament _tournament1 = new Tournament();
+		_tournament1.setName("Local Tournament");
+		_tournament1.setDepartmentId(_deptSoccer.getId());
+		_tournament1.setFee(new Double(10.50));
+		_tournament1.setMatchesIds(new HashSet<>(Arrays.asList(match1Tournament1.getId(), match2Tournament1.getId())));
+		_tournament1.setHomeTeamsIds(new HashSet<>(Arrays.asList(_teamSoccer1.getId(), _teamSoccer2.getId())));
+		_tournament1.setGuestTeams(new HashSet<>(Arrays.asList("A3 Bregenz")));
+		_tournament1 = PersistenceFacade.getInstance().saveOrUpdate(_tournament1);
 		
 	}
 

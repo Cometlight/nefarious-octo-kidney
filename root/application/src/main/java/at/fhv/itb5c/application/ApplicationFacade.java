@@ -258,6 +258,7 @@ public class ApplicationFacade implements ILogger {
 	
 	public TournamentDTO saveTournament(String sessionId, TournamentDTO tournament) {
 		if (hasRole(sessionId, UserRole.Admin)) {
+			log.debug("Saving tournament: " + tournament);
 			Tournament entity = ConverterTournamentDTO.toEntity(tournament);
 			try {
 				entity = PersistenceFacade.getInstance().saveOrUpdate(entity);
@@ -265,6 +266,7 @@ public class ApplicationFacade implements ILogger {
 				log.error(e.getMessage());
 				return null;
 			}
+			log.debug("... tournament saved");
 			return ConverterTournamentDTO.toDTO(entity);
 		}
 		return null;

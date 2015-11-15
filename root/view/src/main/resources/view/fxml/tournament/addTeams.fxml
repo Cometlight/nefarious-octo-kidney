@@ -20,15 +20,15 @@
                         <String fx:value="simple-subtle" />
                      </styleClass>
                   </Label>
-                  <ComboBox promptText="Select Team" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="simple-green" text="+" />
+                  <ComboBox fx:id="_homeTeamComboBox" promptText="Select Team" />
+                  <Button fx:id="_homeTeamAddButton" mnemonicParsing="false" onAction="#addHomeTeamAction" prefHeight="25.0" prefWidth="25.0" styleClass="simple-green" text="+" />
                </children>
             </HBox>
             <HBox spacing="14.0">
                <children>
                   <Label prefWidth="170.0" />
-                  <ListView HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="simple-red" text="-" />
+                  <ListView fx:id="_homeTeamsList" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="_homeTeamRemoveButton" mnemonicParsing="false" onAction="#removeHomeTeamAction" prefHeight="25.0" prefWidth="25.0" styleClass="simple-red" text="-" />
                </children>
             </HBox>
             <HBox spacing="14.0">
@@ -39,22 +39,22 @@
                         <String fx:value="simple-subtle" />
                      </styleClass>
                   </Label>
-                  <TextField promptText="Enter Team Name " HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="simple-green" text="+" />
+                  <TextField fx:id="_guestTeamTextArea" promptText="Enter Team Name " HBox.hgrow="ALWAYS" />
+                  <Button fx:id="_guestTeamAddButton" mnemonicParsing="false" onAction="#addGuestTeamAction" prefHeight="25.0" prefWidth="25.0" styleClass="simple-green" text="+" />
                </children>
             </HBox>
             <HBox spacing="14.0">
                <children>
                   <Label prefWidth="170.0" />
-                  <ListView HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="simple-red" text="-" />
+                  <ListView fx:id="_guestTeamsList" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="_guestTeamRemoveButton" mnemonicParsing="false" onAction="#removeGuestTeamAction" prefHeight="25.0" prefWidth="25.0" styleClass="simple-red" text="-" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="14.0">
                <children>
                   <Label prefWidth="170.0" />
-                  <Button mnemonicParsing="false" styleClass="simple-blue" text="Save" />
-                  <Button mnemonicParsing="false" styleClass="simple-red" text="Cancel" />
+                  <Button fx:id="_saveButton" mnemonicParsing="false" onAction="#saveButtonAction" styleClass="simple-blue" text="Save" />
+                  <Button fx:id="_cancelButton" mnemonicParsing="false" onAction="#cancelButtonAction" styleClass="simple-red" text="Cancel" />
                </children>
             </HBox>
          </children>

@@ -19,7 +19,7 @@
                         <String fx:value="simple-subtle" />
                      </styleClass>
                   </Label>
-                  <TextField maxWidth="1.7976931348623157E308" promptText="Tournament Name" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="_tournamentName" maxWidth="1.7976931348623157E308" promptText="Tournament Name" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="14.0">
@@ -30,7 +30,7 @@
                         <String fx:value="simple-subtle" />
                      </styleClass>
                   </Label>
-                  <DatePicker maxWidth="1.7976931348623157E308" promptText="Choose Date" HBox.hgrow="ALWAYS" />
+                  <DatePicker fx:id="_date" maxWidth="1.7976931348623157E308" promptText="Choose Date" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="14.0">
@@ -41,14 +41,14 @@
                         <String fx:value="simple-subtle" />
                      </styleClass>
                   </Label>
-                  <TextField maxWidth="1.7976931348623157E308" promptText="0.00" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="_fee" maxWidth="1.7976931348623157E308" promptText="0.00" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="14.0">
                <children>
                   <Label prefWidth="170.0" />
-                  <Button mnemonicParsing="false" styleClass="simple-blue" text="Save &amp; Next" />
-                  <Button mnemonicParsing="false" styleClass="simple-red" text="Cancel" />
+                  <Button mnemonicParsing="false" onMouseClicked="#_saveAndNextButtonClicked" styleClass="simple-blue" text="Save &amp; Next" />
+                  <Button mnemonicParsing="false" onMouseClicked="#_cancelButtonClicked" styleClass="simple-red" text="Cancel" />
                </children>
             </HBox>
          </children>

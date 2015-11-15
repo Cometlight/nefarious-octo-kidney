@@ -15,6 +15,7 @@ import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.team.add.TeamAddViewFactory;
 import at.fhv.itb5c.view.team.view.TeamViewFactory;
+import at.fhv.itb5c.view.tournament.TournamentAddFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
 import at.fhv.itb5c.view.util.listcell.TeamListCell;
@@ -56,8 +57,10 @@ public class DepartmentViewController implements IPanelClosable, ILogger {
 			}
 		});
 		try {
-			_departmentViewModel.getTeams().setAll(RMIClient.getRMIClient().getApplicationFacade().findTeams(AppState.getInstance().getSessionID(), null, null,
-					_departmentViewModel.getDepartment().getId(), null));
+			_departmentViewModel.getTeams()
+					.setAll(RMIClient.getRMIClient().getApplicationFacade().findTeams(
+							AppState.getInstance().getSessionID(), null, null,
+							_departmentViewModel.getDepartment().getId(), null));
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();
@@ -90,7 +93,12 @@ public class DepartmentViewController implements IPanelClosable, ILogger {
 
 	@FXML
 	void _onAddTournamentButtonClick(ActionEvent event) {
-
+		try {
+			_panelCloseHandler.closeNext(new TournamentAddFactory(_departmentViewModel.getDepartment()));
+		} catch (IOException e) {
+			log.error(e.getMessage());
+			ErrorPopUp.criticalSystemError();
+		}
 	}
 
 	private IPanelCloseHandler _panelCloseHandler;

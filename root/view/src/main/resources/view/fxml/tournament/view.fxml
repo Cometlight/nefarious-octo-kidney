@@ -11,12 +11,12 @@
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="14.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="simple-heading" text="_tournamentLabelName" />
+            <Label fx:id="_tournamentLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="simple-heading" text="_tournamentLabelName" />
             <Label styleClass="simple-heading-2" text="Participating Teams" />
-            <ListView prefHeight="200.0" prefWidth="200.0" />
-            <Button mnemonicParsing="false" styleClass="simple-green" text="Add Teams" />
-            <ListView prefHeight="200.0" prefWidth="200.0" />
-            <Button mnemonicParsing="false" styleClass="simple-green" text="Add Matches" />
+            <ListView fx:id="_teamsList" prefHeight="200.0" prefWidth="200.0" />
+            <Button fx:id="_addTeamsButton" mnemonicParsing="false" onAction="#addTeamsButtonAction" styleClass="simple-green" text="Add Teams" />
+            <ListView fx:id="_matchesList" prefHeight="200.0" prefWidth="200.0" />
+            <Button fx:id="_addMatchesButton" mnemonicParsing="false" onAction="#addMatchesButtonAction" styleClass="simple-green" text="Add Matches" />
          </children>
          <padding>
             <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />

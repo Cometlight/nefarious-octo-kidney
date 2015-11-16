@@ -41,7 +41,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public UserDTO getUserById(String sessionId, Long id) {
-		if (hasRole(sessionId, UserRole.StandardUser)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			User user = PersistenceFacade.getInstance().getById(User.class, id);
 			return ConverterUserDTO.toDTO(user);
 		}
@@ -84,7 +84,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public DepartmentDTO getDepartmentById(String sessionId, Long id) {
-		if (hasRole(sessionId, UserRole.StandardUser)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			Department entity = PersistenceFacade.getInstance().getById(Department.class, id);
 			return ConverterDepartmentDTO.toDTO(entity);
 		}
@@ -121,7 +121,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public TeamDTO getTeamById(String sessionId, Long id) {
-		if (hasRole(sessionId, UserRole.StandardUser)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			Team entity = PersistenceFacade.getInstance().getById(Team.class, id);
 			return ConverterTeamDTO.toDTO(entity);
 		}
@@ -190,7 +190,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public LeagueDTO getLeagueById(String sessionId, Long id) {
-		if (hasRole(sessionId, UserRole.StandardUser)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			return ConverterLeagueDTO.toDTO(PersistenceFacade.getInstance().getById(League.class, id));
 		}
 		return null;
@@ -271,7 +271,7 @@ public class ApplicationFacade implements ILogger {
 	}
 	
 	public TournamentDTO getTournamentById(String sessionId, Long id) {
-		if (hasRole(sessionId, UserRole.StandardUser)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			return ConverterTournamentDTO.toDTO(PersistenceFacade.getInstance().getById(Tournament.class, id));
 		}
 		return null;

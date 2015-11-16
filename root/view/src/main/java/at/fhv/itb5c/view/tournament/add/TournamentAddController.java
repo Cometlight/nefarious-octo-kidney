@@ -52,8 +52,8 @@ public class TournamentAddController implements IPanelClosable, ILogger {
 	public void _saveAndNextButtonClicked(MouseEvent event) {
 		if (_tournamentName.getText() != null && _tournamentName.getText() != "" && _date.getValue() != null) {
 			try {
-				ITournamentRMI tournament = RMIClient.getRMIClient().getApplicationFacade()
-						.saveTournament(AppState.getInstance().getSessionID(), _tournamentModel.getITournamentRMI(), _department);
+				ITournamentRMI tournament = RMIClient.getRMIClient().getApplicationFacade().saveTournament(
+						AppState.getInstance().getSessionID(), _tournamentModel.getITournamentRMI(), _department);
 
 				_panelCloseHandler.closeNext(new TournamentAddTeamsFactory(_department, tournament));
 			} catch (IOException e) {

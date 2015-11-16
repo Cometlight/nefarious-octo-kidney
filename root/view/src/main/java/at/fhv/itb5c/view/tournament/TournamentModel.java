@@ -40,16 +40,11 @@ public class TournamentModel implements ILogger {
 	public TournamentModel(){
 		_tournamentName = new SimpleStringProperty();
 		_date = new SimpleObjectProperty<>();
-		_fee =  new SimpleDoubleProperty();
+		_fee = new SimpleDoubleProperty();
 		_guestTeams = new SimpleListProperty<>();
 		_homeTeams = new SimpleListProperty<>();
 		_teams = new SimpleListProperty<>();
 		_matches = new SimpleListProperty<>();
-	}
-	
-	public TournamentModel(Long departmentId){
-		this();
-		_departmentId = departmentId;
 	}
 
 	public StringProperty getTournamentName() {
@@ -69,13 +64,15 @@ public class TournamentModel implements ILogger {
 		_tournamentName.setValue(tournament.getName());
 		_date.setValue(tournament.getDate());
 		_fee.setValue(tournament.getFee());
-		_guestTeams.setValue((ObservableList<String>) FXCollections.observableList(new ArrayList<>(tournament.getGuestTeams())));
+		_guestTeams.setValue(FXCollections.observableList(new ArrayList<>(tournament.getGuestTeams())));
 		ArrayList<ITeamRMI> homeTeams = new ArrayList<>();
-		for(Long teamId : tournament.getHomeTeamsIds()){
-			homeTeams.add(RMIClient.getRMIClient().getApplicationFacade().getTeamById(AppState.getInstance().getSessionID(), teamId));
+		for (Long teamId : tournament.getHomeTeamsIds()) {
+			homeTeams.add(RMIClient.getRMIClient().getApplicationFacade()
+					.getTeamById(AppState.getInstance().getSessionID(), teamId));
 		}
-		_homeTeams.setValue((ObservableList<ITeamRMI>) FXCollections.observableList(homeTeams));
-		_teams.setValue((ObservableList<Object>) FXCollections.observableList(Stream.concat(_guestTeams.getValue().stream(), _homeTeams.getValue().stream()).collect(Collectors.toList())));
+		_homeTeams.setValue(FXCollections.observableList(homeTeams));
+		_teams.setValue(FXCollections.observableList(Stream
+				.concat(_guestTeams.getValue().stream(), _homeTeams.getValue().stream()).collect(Collectors.toList())));
 		_departmentId = tournament.getDepartmentId();
 	}
 
@@ -92,8 +89,8 @@ public class TournamentModel implements ILogger {
 		_rmiTournament.setDate(_date.getValue());
 		_rmiTournament.setFee(_fee.doubleValue());
 		_rmiTournament.setGuestTeams(_guestTeams.getValue().stream().collect(Collectors.toSet()));
-		Set<Long> homeTeamsIds = new HashSet<Long>();
-		for(ITeamRMI homeTeam : _homeTeams.getValue()){
+		Set<Long> homeTeamsIds = new HashSet<>();
+		for (ITeamRMI homeTeam : _homeTeams.getValue()) {
 			homeTeamsIds.add(homeTeam.getId());
 		}
 		_rmiTournament.setHomeTeamsIds(homeTeamsIds);

@@ -11,6 +11,7 @@ import at.fhv.itb5c.commons.dto.rmi.IApplicationFacadeRMI;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.ILeagueRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
+import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
@@ -114,6 +115,25 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	}
 
 	@Override
+	public ITournamentRMI createTournament(String sessionId, IDepartmentRMI dept) throws RemoteException {
+		return _applicationFacadeRMI.createTournament(sessionId, dept);
+	}
+
+	@Override
+	public ITournamentRMI saveTournament(String sessionId, ITournamentRMI tournament, IDepartmentRMI dept) throws RemoteException {
+		return _applicationFacadeRMI.saveTournament(sessionId, tournament, dept);
+	}
+
+	@Override
+	public Collection<ITournamentRMI> findTournaments(String sessionId, String name, Long departmentId) throws RemoteException {
+		return _applicationFacadeRMI.findTournaments(sessionId, name, departmentId);
+	}
+
+	@Override
+	public ITournamentRMI getTournamentById(String sessionId, Long id) throws RemoteException {
+		return _applicationFacadeRMI.getTournamentById(sessionId, id);
+	}
+
 	public ITeamRMI addPlayerToTeam(String sessionId, ITeamRMI team, IUserRMI player) throws RemoteException {
 		return _applicationFacadeRMI.addPlayerToTeam(sessionId, team, player);
 	}

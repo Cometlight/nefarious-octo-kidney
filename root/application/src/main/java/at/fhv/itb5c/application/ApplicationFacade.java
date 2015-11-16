@@ -41,7 +41,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public UserDTO getUserById(String sessionId, Long id) {
-		if (hasRole(sessionId, UserRole.Admin)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			User user = PersistenceFacade.getInstance().getById(User.class, id);
 			return ConverterUserDTO.toDTO(user);
 		}
@@ -84,7 +84,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public DepartmentDTO getDepartmentById(String sessionId, Long id) {
-		if (hasRole(sessionId, UserRole.Admin)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			Department entity = PersistenceFacade.getInstance().getById(Department.class, id);
 			return ConverterDepartmentDTO.toDTO(entity);
 		}
@@ -121,7 +121,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public TeamDTO getTeamById(String sessionId, Long id) {
-		if (hasRole(sessionId, UserRole.Admin)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			Team entity = PersistenceFacade.getInstance().getById(Team.class, id);
 			return ConverterTeamDTO.toDTO(entity);
 		}
@@ -190,7 +190,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public LeagueDTO getLeagueById(String sessionId, Long id) {
-		if (hasRole(sessionId, UserRole.Admin)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			return ConverterLeagueDTO.toDTO(PersistenceFacade.getInstance().getById(League.class, id));
 		}
 		return null;
@@ -247,5 +247,41 @@ public class ApplicationFacade implements ILogger {
 			}
 		}
 		return false;
+	}
+	
+	public TournamentDTO createTournament(String sessionId, DepartmentDTO dept) {
+		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(_sessionManager.getUserId(sessionId), dept)) {
+			return ConverterTournamentDTO.toDTO(new Tournament());
+		}
+		return null;
+	}
+	
+	public TournamentDTO saveTournament(String sessionId, TournamentDTO tournament, DepartmentDTO dept) {
+		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(_sessionManager.getUserId(sessionId), dept)) {
+			Tournament entity = ConverterTournamentDTO.toEntity(tournament);
+			try {
+				entity = PersistenceFacade.getInstance().saveOrUpdate(entity);
+			} catch (Exception e) {
+				log.error(e.getMessage());
+				return null;
+			}
+			return ConverterTournamentDTO.toDTO(entity);
+		}
+		return null;
+	}
+	
+	public TournamentDTO getTournamentById(String sessionId, Long id) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
+			return ConverterTournamentDTO.toDTO(PersistenceFacade.getInstance().getById(Tournament.class, id));
+		}
+		return null;
+	}
+	
+	public boolean isDepartmentHead(Long userId, DepartmentDTO dept){
+		return dept.getHeadId().equals(userId);
+	}
+	
+	public boolean isCoach(Long userId, TeamDTO team){
+		return team.getCoachId().equals(userId);
 	}
 }

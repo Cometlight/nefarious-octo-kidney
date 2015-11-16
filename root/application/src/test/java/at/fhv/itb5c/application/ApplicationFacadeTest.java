@@ -221,8 +221,12 @@ public class ApplicationFacadeTest {
 		TournamentDTO dto = _appFacade.createTournament(_session, dept);
 		assertNotNull(dto);
 		
-		dept.setHeadId(_user.getId()+1);
-		dto = _appFacade.createTournament(_session, dept);
+		UserDTO standardUser = new UserDTO();
+		standardUser.setId(3l);
+		standardUser.setRoles(new HashSet<>(Arrays.asList(UserRole.StandardUser)));
+		String session = SessionManager.getInstance().createNewSession(standardUser.getId(), standardUser.getRoles());
+		dept.setHeadId(standardUser.getId()+1);
+		dto = _appFacade.createTournament(session, dept);
 		assertNull(dto);
 	}
 	

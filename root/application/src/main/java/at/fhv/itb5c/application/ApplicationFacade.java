@@ -250,14 +250,14 @@ public class ApplicationFacade implements ILogger {
 	}
 	
 	public TournamentDTO createTournament(String sessionId, DepartmentDTO dept) {
-		if (hasRole(sessionId, UserRole.Admin) && isDepartmentHead(_sessionManager.getUserId(sessionId), dept)) {
+		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(_sessionManager.getUserId(sessionId), dept)) {
 			return ConverterTournamentDTO.toDTO(new Tournament());
 		}
 		return null;
 	}
 	
 	public TournamentDTO saveTournament(String sessionId, TournamentDTO tournament, DepartmentDTO dept) {
-		if (hasRole(sessionId, UserRole.Admin) && isDepartmentHead(_sessionManager.getUserId(sessionId), dept)) {
+		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(_sessionManager.getUserId(sessionId), dept)) {
 			Tournament entity = ConverterTournamentDTO.toEntity(tournament);
 			try {
 				entity = PersistenceFacade.getInstance().saveOrUpdate(entity);

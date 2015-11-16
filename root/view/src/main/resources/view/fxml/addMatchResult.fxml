@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="simple-heading" stylesheets="@../css/simple.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <VBox spacing="14.0" stylesheets="@../css/simple.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Match Results" />
+            <HBox spacing="14.0">
+               <children>
+                  <Label fx:id="_teamOneLabel" prefWidth="200.0" styleClass="simple-label" text="_teamOne" />
+                  <Label text=":" visible="false" />
+                  <Label fx:id="_teamTwoLabel" prefWidth="200.0" styleClass="simple-label" text="_teamTwo" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="14.0">
+               <children>
+                  <TextField fx:id="_teamOneInput" prefWidth="200.0" />
+                  <Label text=":" />
+                  <TextField fx:id="_teamTwoInput" prefWidth="200.0" />
+               </children>
+            </HBox>
+            <HBox spacing="14.0">
+               <children>
+                  <Button mnemonicParsing="false" styleClass="simple-blue" text="Save" />
+                  <Button mnemonicParsing="false" styleClass="simple-red" text="Cancel" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

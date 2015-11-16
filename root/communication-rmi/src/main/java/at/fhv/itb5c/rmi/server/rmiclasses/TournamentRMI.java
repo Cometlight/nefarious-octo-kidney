@@ -53,14 +53,6 @@ public class TournamentRMI extends BaseRMI implements ITournamentRMI{
 		_guestTeams = guestTeams;
 	}
 
-	public Set<Long> getMatches() throws RemoteException {
-		return _matches;
-	}
-
-	public void setMatches(Set<Long> matches) throws RemoteException {
-		_matches = matches;
-	}
-
 	public LocalDate getDate() throws RemoteException {
 		return _date;
 	}
@@ -79,14 +71,12 @@ public class TournamentRMI extends BaseRMI implements ITournamentRMI{
 
 	@Override
 	public Set<Long> getMatchesIds() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return _matches;
 	}
 
 	@Override
 	public void setMatchesIds(Set<Long> matches) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		_matches = matches;
 	}
 
 }

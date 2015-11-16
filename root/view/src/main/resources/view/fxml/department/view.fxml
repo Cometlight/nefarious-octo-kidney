@@ -42,7 +42,7 @@
             </HBox>
             <Separator prefWidth="200.0" />
             <Label styleClass="simple-heading-2" text="Tournaments" />
-            <ListView fx:id="_tournamentList" minHeight="-Infinity" prefHeight="78.0" prefWidth="799.0" />
+            <ListView fx:id="_tournamentList" onMouseClicked="#_tournamentListOnMouseClick" minHeight="-Infinity" prefHeight="78.0" prefWidth="799.0" />
             <HBox prefWidth="200.0" spacing="14.0" styleClass="simple-form-row">
                <children>
                   <Button fx:id="_addTournamentButton" mnemonicParsing="false" onAction="#_onAddTournamentButtonClick" styleClass="simple-blue" text="Add Tournament" />

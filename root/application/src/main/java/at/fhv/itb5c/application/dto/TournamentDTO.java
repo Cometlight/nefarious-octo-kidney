@@ -77,4 +77,11 @@ public class TournamentDTO extends BaseDTO {
 	public void setDepartmentId(Long departmentId) {
 		_departmentId = departmentId;
 	}
+
+	@Override
+	public String toString() {
+		return "TournamentDTO [_name=" + _name + ", _persistDate=" + _persistDate + ", _fee=" + _fee + ", _homeTeams="
+				+ _homeTeams + ", _guestTeams=" + _guestTeams + ", _matches=" + _matches + ", _date=" + _date
+				+ ", _departmentId=" + _departmentId + "]";
+	}
 }

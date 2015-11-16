@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
+import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
@@ -22,6 +23,7 @@ public class DepartmentViewModel implements ILogger{
 	private StringProperty _nameHeadOfDepartment;
 	private StringProperty _typeOfSport;
 	private ObservableList<ITeamRMI> _teams;
+	private ObservableList<ITournamentRMI> _tournaments;
 	
 	public DepartmentViewModel(IDepartmentRMI department) {
 		_department = department;
@@ -32,6 +34,7 @@ public class DepartmentViewModel implements ILogger{
 			_nameHeadOfDepartment = new SimpleStringProperty(head.getLastName() + " " + head.getFirstName());
 			_typeOfSport = new SimpleStringProperty(_department.getTypeOfSport().toString());
 			_teams = FXCollections.observableArrayList();
+			_tournaments = FXCollections.observableArrayList();
 		} catch (RemoteException e) {
 			ErrorPopUp.connectionError();
 			log.error(e.getMessage());
@@ -56,5 +59,9 @@ public class DepartmentViewModel implements ILogger{
 
 	public ObservableList<ITeamRMI> getTeams() {
 		return _teams;
+	}
+
+	public ObservableList<ITournamentRMI> getTournaments() {
+		return _tournaments;
 	}
 }

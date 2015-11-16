@@ -214,6 +214,14 @@ public class ApplicationFacade implements ILogger {
 		}
 		return null;
 	}
+	
+	public MatchDTO getMatchById(String sessionId, Long matchId){
+		if (hasRole(sessionId, UserRole.Admin, UserRole.StandardUser)) {
+			Match match = PersistenceFacade.getInstance().getById(Match.class, matchId);
+			return ConverterMatchDTO.toDTO(match);
+		}
+		return null;
+	}
 
 	public MatchDTO createMatch(String sessionId) {
 		return ConverterMatchDTO.toDTO(new Match());

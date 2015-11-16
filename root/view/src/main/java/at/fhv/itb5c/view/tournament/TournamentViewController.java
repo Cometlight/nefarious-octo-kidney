@@ -7,9 +7,11 @@ import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IMatchRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.logging.ILogger;
+import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.tournament.addteams.TournamentAddTeamsFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
+import at.fhv.itb5c.view.util.listcell.MatchListCell;
 import at.fhv.itb5c.view.util.listcell.ObjectListCell;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.event.ActionEvent;
@@ -50,11 +52,20 @@ public class TournamentViewController implements IPanelClosable, ILogger {
 	@FXML
 	public void initialize() {
 		_tournamentLabel.textProperty().bindBidirectional(_tournamentModel.getTournamentName());
+		
 		_teamsList.itemsProperty().bindBidirectional(_tournamentModel.getTeams());
 		_teamsList.setCellFactory(new Callback<ListView<Object>, ListCell<Object>>() {
 			@Override
 			public ListCell<Object> call(ListView<Object> param) {
 				return new ObjectListCell();
+			}
+		});
+		
+		_matchesList.itemsProperty().bindBidirectional(_tournamentModel.getMatches());
+		_matchesList.setCellFactory(new Callback<ListView<IMatchRMI>, ListCell<IMatchRMI>>() {
+			@Override
+			public ListCell<IMatchRMI> call(ListView<IMatchRMI> param) {
+				return new MatchListCell(AppState.getInstance().getSessionID());
 			}
 		});
 	}

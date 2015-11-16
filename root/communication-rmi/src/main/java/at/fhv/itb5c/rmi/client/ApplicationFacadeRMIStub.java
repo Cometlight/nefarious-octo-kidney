@@ -148,4 +148,9 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	public IMatchRMI createMatch(String sessionId) throws RemoteException {
 		return _applicationFacadeRMI.createMatch(sessionId);
 	}
+
+	@Override
+	public IMatchRMI getMatchById(String sessionId, Long matchId) throws RemoteException {
+		return _applicationFacadeRMI.getMatchById(sessionId, matchId);
+	}
 }

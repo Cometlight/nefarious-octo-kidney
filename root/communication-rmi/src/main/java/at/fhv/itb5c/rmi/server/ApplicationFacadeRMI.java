@@ -160,4 +160,9 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	public IMatchRMI createMatch(String sessionId) throws RemoteException {
 		return ConverterMatchRMI.toRMI(_applicationFacade.createMatch(sessionId));
 	}
+
+	@Override
+	public IMatchRMI getMatchById(String sessionId, Long matchId) throws RemoteException {
+		return ConverterMatchRMI.toRMI(_applicationFacade.getMatchById(sessionId, matchId));
+	}
 }

@@ -130,7 +130,13 @@ public class TournamentAddMatchViewController implements IPanelClosable, ILogger
 		ITournamentRMI updatedTournament = null;
 
 		if ((updatedTournament = addMatchToTournament()) != null) {
-
+			// TODO
+			// try {
+			// _panelCloseHandler.closeNext(new TournamentViewFactory(updatedTournament)); TODO
+			// } catch (IOException e) {
+			// ErrorPopUp.criticalSystemError();
+			// log.error(e.getMessage());
+			// }
 		} else {
 			ErrorPopUp.generalError("Match not added",
 					"Failed to add match to tournament. Please try again or contact the system administrator.");
@@ -150,7 +156,8 @@ public class TournamentAddMatchViewController implements IPanelClosable, ILogger
 							.createMatch(sessionId);
 					if (match != null) {
 						match.setStartDate(startDateTime); 
-						match.setTeamOne(teamOne);
+						match.setTeamOne(_model.getTeam1().getValue());
+						match.setTeamTwo(_model.getTeam2().getValue());
 						ITournamentRMI updatedTournament = RMIClient.getRMIClient().getApplicationFacade().addMatchToTournament(sessionId, _model.getTournament(), match);
 						return updatedTournament;
 					}
@@ -159,6 +166,8 @@ public class TournamentAddMatchViewController implements IPanelClosable, ILogger
 				log.error(e.getMessage());
 				ErrorPopUp.connectionError();
 			}
+		} else {
+			ErrorPopUp.generalError("Mandatory Fields", "Please set the mandatory field: Team 1, Team 2, Start Date and Time");
 		}
 		return null;
 	}
@@ -166,7 +175,7 @@ public class TournamentAddMatchViewController implements IPanelClosable, ILogger
 	@FXML
 	void _onCancelButtonClick(ActionEvent event) {
 		// try {
-		// _panelCloseHandler.closeNext(new TournamentViewFactory()); TODO
+		// _panelCloseHandler.closeNext(new TournamentViewFactory(_model.getTournament())); TODO
 		// } catch (IOException e) {
 		// ErrorPopUp.criticalSystemError();
 		// log.error(e.getMessage());

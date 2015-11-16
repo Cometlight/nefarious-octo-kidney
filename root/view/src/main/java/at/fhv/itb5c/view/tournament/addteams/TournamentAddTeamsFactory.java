@@ -1,4 +1,4 @@
-package at.fhv.itb5c.view.tournament;
+package at.fhv.itb5c.view.tournament.addteams;
 
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;

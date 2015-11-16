@@ -1,4 +1,4 @@
-package at.fhv.itb5c.view.tournament;
+package at.fhv.itb5c.view.tournament.add;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -10,6 +10,8 @@ import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.department.DepartmentViewFactory;
+import at.fhv.itb5c.view.tournament.TournamentModel;
+import at.fhv.itb5c.view.tournament.addteams.TournamentAddTeamsFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;

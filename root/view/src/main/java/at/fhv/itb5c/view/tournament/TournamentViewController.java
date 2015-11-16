@@ -8,6 +8,7 @@ import at.fhv.itb5c.commons.dto.rmi.IMatchRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.view.AppState;
+import at.fhv.itb5c.view.tournament.addmatch.TournamentAddMatchViewFactory;
 import at.fhv.itb5c.view.tournament.addteams.TournamentAddTeamsFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
@@ -83,7 +84,12 @@ public class TournamentViewController implements IPanelClosable, ILogger {
 	// Event Listener on Button[#_addMatchesButton].onAction
 	@FXML
 	public void addMatchesButtonAction(ActionEvent event) {
-		// TODO implement!
+		try {
+			_panelCloseHandler.closeNext(new TournamentAddMatchViewFactory(_tournamentModel.getITournamentRMI()));
+		} catch (IOException e) {
+			log.error(e.getMessage());
+			ErrorPopUp.criticalSystemError();
+		}
 	}
 	
 	private IPanelCloseHandler _panelCloseHandler;

@@ -10,8 +10,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class TournamentAddMatchViewModel {
-	private ObjectProperty<Object> _team1;
-	private ObjectProperty<Object> _team2;
+//	private ObjectProperty<Object> _team1;
+//	private ObjectProperty<Object> _team2;
 	private ObjectProperty<LocalDate> _startDate;
 	private SimpleStringProperty _startTime;
 	private ObservableList<Object> _teams;
@@ -20,20 +20,20 @@ public class TournamentAddMatchViewModel {
 	
 	public TournamentAddMatchViewModel(ITournamentRMI tournament) {
 		_tournament = tournament;
-		_team1 = new SimpleObjectProperty<>();
-		_team2 = new SimpleObjectProperty<>();
+//		_team1 = new SimpleObjectProperty<>();
+//		_team2 = new SimpleObjectProperty<>();
 		_startDate = new SimpleObjectProperty<>();
 		_startTime = new SimpleStringProperty();
 		_teams = FXCollections.observableArrayList();
 	}
 
-	public ObjectProperty<Object> getTeam1() {
-		return _team1;
-	}
-
-	public ObjectProperty<Object> getTeam2() {
-		return _team2;
-	}
+//	public ObjectProperty<Object> getTeam1() {
+//		return _team1;
+//	}
+//
+//	public ObjectProperty<Object> getTeam2() {
+//		return _team2;
+//	}
 
 	public ObjectProperty<LocalDate> getStartDate() {
 		return _startDate;

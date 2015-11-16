@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IMatchRMI;
@@ -14,20 +15,21 @@ import at.fhv.itb5c.commons.util.time.TimeUtility;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.AppState;
-import at.fhv.itb5c.view.team.view.TeamViewFactory;
+import at.fhv.itb5c.view.tournament.TournamentViewFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
+import at.fhv.itb5c.view.util.listcell.ObjectListCell;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 public class TournamentAddMatchViewController implements IPanelClosable, ILogger {
 	@FXML
@@ -53,15 +55,37 @@ public class TournamentAddMatchViewController implements IPanelClosable, ILogger
 	@FXML
 	public void initialize() {
 		try {
-			Long departmentId = _model.getTournament().getDepartmentId();
-			Collection<ITeamRMI> teams = RMIClient.getRMIClient().getApplicationFacade()
-					.findTeams(AppState.getInstance().getSessionID(), null, null, departmentId, null);
+			// load home team data from database
+			Collection<Object> teams = _model.getTournament().getHomeTeamsIds().stream().map(id -> {
+				try {
+					return RMIClient.getRMIClient().getApplicationFacade().getTeamById(AppState.getInstance().getSessionID(), id);
+				} catch (Exception e) {
+					log.error(e.getMessage());
+					ErrorPopUp.connectionError();
+					return null;
+				}
+			}).collect(Collectors.toList());
+			
+			// just use Strings for guest teams
+			teams.addAll(_model.getTournament().getGuestTeams());
 			_model.getTeams().setAll(teams);
 
-			_team1Choice.setCellFactory(getTeamComboBoxCellFactoryCallback());
+			_team1Choice.setCellFactory(new Callback<ListView<Object>, ListCell<Object>>() {
+				@Override
+				public ListCell<Object> call(ListView<Object> param) {
+					return new ObjectListCell();
+				}
+			});
+			_team1Choice.setConverter(getStringConverter());
 			_team1Choice.setItems(_model.getTeams());
 
-			_team2Choice.setCellFactory(getTeamComboBoxCellFactoryCallback());
+			_team2Choice.setCellFactory(new Callback<ListView<Object>, ListCell<Object>>() {
+				@Override
+				public ListCell<Object> call(ListView<Object> param) {
+					return new ObjectListCell();
+				}
+			});
+			_team2Choice.setConverter(getStringConverter());
 			_team2Choice.setItems(_model.getTeams());
 
 			_startDatePicker.valueProperty().bindBidirectional(_model.getStartDate());
@@ -73,55 +97,30 @@ public class TournamentAddMatchViewController implements IPanelClosable, ILogger
 		}
 	}
 
-	private Callback<ListView<Object>, ListCell<Object>> getTeamComboBoxCellFactoryCallback() {
-		return new Callback<ListView<Object>, ListCell<Object>>() {
-
+	private StringConverter<Object> getStringConverter() {
+		return new StringConverter<Object>() {
+			
 			@Override
-			public ListCell<Object> call(ListView<Object> param) {
-				return new ListCell<Object>() {
-
-					private final Button btn;
-
-					{
-						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-						btn = new Button();
+			public String toString(Object object) {
+				if(object == null) {
+					return null;
+				} else if (object instanceof String) {
+					return (String) object;
+				} else if (object instanceof ITeamRMI) {
+					try {
+						return ((ITeamRMI)object).getName();
+					} catch (RemoteException e) {
+						log.error(e.getMessage());
+						ErrorPopUp.connectionError();
 					}
-
-					@Override
-					protected void updateItem(Object item, boolean empty) {
-						super.updateItem(item, empty);
-
-						if (item == null || empty) {
-							setGraphic(null);
-						} else {
-							String text = "-";
-							if (item instanceof Long) {
-								// item == teamId
-								try {
-									ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade()
-											.getTeamById(AppState.getInstance().getSessionID(), (Long) item);
-									text = team.getName();
-								} catch (RemoteException e) {
-									log.error(e.getMessage());
-									ErrorPopUp.connectionError();
-								}
-							} else if (item instanceof String) {
-								// item == team name
-								text = (String) item;
-							} else {
-								log.error("team object is neither of type Long or String");
-								ErrorPopUp.generalError("Failed to load teams",
-										"Failed to load teams. Please contact the system administrator. No changes have been made.");
-								// _panelCloseHandler.closeNext(new
-								// TournamentViewFactory()); TODO
-							}
-							btn.setText(text);
-							setGraphic(btn);
-						}
-					}
-				};
+				}
+				return null;
 			}
-
+			
+			@Override
+			public Object fromString(String string) {
+				return null;
+			}
 		};
 	}
 
@@ -130,35 +129,44 @@ public class TournamentAddMatchViewController implements IPanelClosable, ILogger
 		ITournamentRMI updatedTournament = null;
 
 		if ((updatedTournament = addMatchToTournament()) != null) {
-			// TODO
-			// try {
-			// _panelCloseHandler.closeNext(new TournamentViewFactory(updatedTournament)); TODO
-			// } catch (IOException e) {
-			// ErrorPopUp.criticalSystemError();
-			// log.error(e.getMessage());
-			// }
-		} else {
-			ErrorPopUp.generalError("Match not added",
-					"Failed to add match to tournament. Please try again or contact the system administrator.");
+			try {
+				IDepartmentRMI department = RMIClient.getRMIClient().getApplicationFacade()
+						.getDepartmentById(AppState.getInstance().getSessionID(), updatedTournament.getDepartmentId());
+				_panelCloseHandler.closeNext(new TournamentViewFactory(department, updatedTournament));
+			} catch (IOException e) {
+				ErrorPopUp.criticalSystemError();
+				log.error(e.getMessage());
+			}
 		}
 	}
 
 	private ITournamentRMI addMatchToTournament() {
-		if (_model.getStartDate().getValue() != null && _model.getStartTime().getValue() != null
-				&& _model.getTeam1().getValue() != null && _model.getTeam2().getValue() != null) {
+		Object team1 = _team1Choice.getSelectionModel().getSelectedItem();
+		Object team2 = _team2Choice.getSelectionModel().getSelectedItem();
+		if(team1.equals(team2)) {
+			ErrorPopUp.generalError("Distinct Teams needed",
+					"Please select two different teams.");
+		} else if (_model.getStartDate().getValue() != null && _model.getStartTime().getValue() != null
+				&& team1 != null && team2 != null) {
 			String sessionId = AppState.getInstance().getSessionID();
 			try {
 				LocalTime startTime = TimeUtility.timeStringToLocalTime(_model.getStartTime().getValue());
 				if (startTime != null) {
 					LocalDateTime startDateTime = LocalDateTime.of(_model.getStartDate().getValue(), startTime);
-					
-					IMatchRMI match = RMIClient.getRMIClient().getApplicationFacade()
-							.createMatch(sessionId);
+
+					IMatchRMI match = RMIClient.getRMIClient().getApplicationFacade().createMatch(sessionId);
 					if (match != null) {
-						match.setStartDate(startDateTime); 
-						match.setTeamOne(_model.getTeam1().getValue());
-						match.setTeamTwo(_model.getTeam2().getValue());
-						ITournamentRMI updatedTournament = RMIClient.getRMIClient().getApplicationFacade().addMatchToTournament(sessionId, _model.getTournament(), match);
+						match.setStartDate(startDateTime);
+						if (team1 instanceof ITeamRMI) {
+							team1 = ((ITeamRMI)team1).getId();
+						}
+						if (team2 instanceof ITeamRMI) {
+							team2 = ((ITeamRMI)team2).getId();
+						}
+						match.setTeamOne(team1);
+						match.setTeamTwo(team2);
+						ITournamentRMI updatedTournament = RMIClient.getRMIClient().getApplicationFacade()
+								.addMatchToTournament(sessionId, _model.getTournament(), match);
 						return updatedTournament;
 					}
 				}
@@ -167,19 +175,22 @@ public class TournamentAddMatchViewController implements IPanelClosable, ILogger
 				ErrorPopUp.connectionError();
 			}
 		} else {
-			ErrorPopUp.generalError("Mandatory Fields", "Please set the mandatory field: Team 1, Team 2, Start Date and Time");
+			ErrorPopUp.generalError("Mandatory Fields",
+					"Please set the mandatory field: Team 1, Team 2, Start Date and Time");
 		}
 		return null;
 	}
 
 	@FXML
 	void _onCancelButtonClick(ActionEvent event) {
-		// try {
-		// _panelCloseHandler.closeNext(new TournamentViewFactory(_model.getTournament())); TODO
-		// } catch (IOException e) {
-		// ErrorPopUp.criticalSystemError();
-		// log.error(e.getMessage());
-		// }
+		try {
+			IDepartmentRMI department = RMIClient.getRMIClient().getApplicationFacade()
+					.getDepartmentById(AppState.getInstance().getSessionID(), _model.getTournament().getDepartmentId());
+			_panelCloseHandler.closeNext(new TournamentViewFactory(department, _model.getTournament()));
+		} catch (IOException e) {
+			ErrorPopUp.criticalSystemError();
+			log.error(e.getMessage());
+		}
 	}
 
 	@Override

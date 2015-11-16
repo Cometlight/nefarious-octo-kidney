@@ -32,6 +32,9 @@ public class Tournament extends PersistableObject {
 	private LocalDate _date;
 
 	public Tournament() {
+		_homeTeams = new HashSet<>();
+		_guestTeams = new HashSet<>();
+		_matches = new HashSet<>();
 	}
 
 	public String getName() {

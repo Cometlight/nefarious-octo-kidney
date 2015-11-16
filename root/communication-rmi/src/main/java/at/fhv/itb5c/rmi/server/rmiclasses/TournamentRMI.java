@@ -2,7 +2,6 @@ package at.fhv.itb5c.rmi.server.rmiclasses;
 
 import java.rmi.RemoteException;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
@@ -20,9 +19,6 @@ public class TournamentRMI extends BaseRMI implements ITournamentRMI{
 
 	public TournamentRMI() throws RemoteException {
 		super();
-		_homeTeams = new HashSet<>();
-		_guestTeams = new HashSet<>();
-		_matches = new HashSet<>();
 	}
 
 	public String getName() throws RemoteException {

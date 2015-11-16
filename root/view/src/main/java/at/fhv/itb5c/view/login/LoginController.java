@@ -14,7 +14,7 @@ public class LoginController implements ILogger {
 
 	@FXML
 	TextField _usernameInput;
-	
+
 	@FXML
 	PasswordField _passwordInput;
 
@@ -32,6 +32,16 @@ public class LoginController implements ILogger {
 
 	@FXML
 	public void onSignInMouseReleasedHandler(MouseEvent event) {
+		login();
+
+	}
+
+	@FXML
+	public void onActionHandler() {
+		login();
+	}
+
+	private void login() {
 		try {
 
 			String sessionID = RMIClient.getRMIClient().getApplicationFacade()
@@ -46,7 +56,5 @@ public class LoginController implements ILogger {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
 		}
-
 	}
-
 }

@@ -47,10 +47,12 @@ public class TournamentAddTeamsController implements IPanelClosable, ILogger {
 	private Button _cancelButton;
 
 	private IDepartmentRMI _department;
+	private ITournamentRMI _tournament;
 	private TournamentModel _tournamentModel;
 
 	public TournamentAddTeamsController(IDepartmentRMI department, ITournamentRMI tournament) {
 		_department = department;
+		_tournament = tournament;
 		_tournamentModel = new TournamentModel();
 		try {
 			_tournamentModel.setITournamentRMI(tournament);
@@ -85,7 +87,7 @@ public class TournamentAddTeamsController implements IPanelClosable, ILogger {
 	// Event Listener on Button[#_homeTeamAddButton].onAction
 	@FXML
 	public void addHomeTeamAction(ActionEvent event) {
-		if (_homeTeamComboBox.getValue() != null) {
+		if (_homeTeamComboBox.getValue() != null && !_homeTeamsList.getItems().contains(_homeTeamComboBox.getValue())) {
 			ObservableList<ITeamRMI> homeTeamsItems = _homeTeamsList.getItems();
 			homeTeamsItems.add(_homeTeamComboBox.getValue());
 			_homeTeamsList.setItems(homeTeamsItems);
@@ -105,10 +107,11 @@ public class TournamentAddTeamsController implements IPanelClosable, ILogger {
 	// Event Listener on Button[#_guestTeamAddButton].onAction
 	@FXML
 	public void addGuestTeamAction(ActionEvent event) {
-		if (_guestTeamTextArea.getText() != null) {
+		if (_guestTeamTextArea.getText() != null && !_guestTeamTextArea.getText().isEmpty() && !_guestTeamsList.getItems().contains(_guestTeamTextArea.getText())) {
 			ObservableList<String> guestTeamsItems = _guestTeamsList.getItems();
 			guestTeamsItems.add(_guestTeamTextArea.getText());
 			_guestTeamsList.setItems(guestTeamsItems);
+			_guestTeamTextArea.setText(null);
 		}
 	}
 
@@ -126,9 +129,9 @@ public class TournamentAddTeamsController implements IPanelClosable, ILogger {
 	@FXML
 	public void saveButtonAction(ActionEvent event) {
 		try {
-			RMIClient.getRMIClient().getApplicationFacade().saveTournament(AppState.getInstance().getSessionID(),
-					_tournamentModel.getITournamentRMI());
-			_panelCloseHandler.closeNext(new DepartmentViewFactory(_department));
+			ITournamentRMI tournamentUpdated = RMIClient.getRMIClient().getApplicationFacade().saveTournament(AppState.getInstance().getSessionID(),
+					_tournamentModel.getITournamentRMI(), _department);
+			_panelCloseHandler.closeNext(new TournamentViewFactory(_department, tournamentUpdated));
 		} catch (IOException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();
@@ -146,7 +149,7 @@ public class TournamentAddTeamsController implements IPanelClosable, ILogger {
 	@FXML
 	public void cancelButtonAction(ActionEvent event) {
 		try {
-			_panelCloseHandler.closeNext(new DepartmentViewFactory(_department));
+			_panelCloseHandler.closeNext(new TournamentViewFactory(_department, _tournament));
 		} catch (IOException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();

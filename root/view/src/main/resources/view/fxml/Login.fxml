@@ -29,7 +29,7 @@
                   </HBox>
                   <HBox fillHeight="false" spacing="14.0" VBox.vgrow="NEVER">
                      <children>
-                        <PasswordField fx:id="_passwordInput" maxWidth="1.7976931348623157E308" promptText="Password" HBox.hgrow="ALWAYS" />
+                        <PasswordField fx:id="_passwordInput" maxWidth="1.7976931348623157E308" onAction="#onActionHandler" promptText="Password" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                   <HBox fillHeight="false" spacing="14.0">

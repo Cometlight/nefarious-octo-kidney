@@ -249,16 +249,15 @@ public class ApplicationFacade implements ILogger {
 		return false;
 	}
 	
-	public TournamentDTO createTournament(String sessionId) {
-		if (hasRole(sessionId, UserRole.Admin)) {
+	public TournamentDTO createTournament(String sessionId, DepartmentDTO dept) {
+		if (hasRole(sessionId, UserRole.Admin) && isDepartmentHead(_sessionManager.getUserId(sessionId), dept)) {
 			return ConverterTournamentDTO.toDTO(new Tournament());
 		}
 		return null;
 	}
 	
-	public TournamentDTO saveTournament(String sessionId, TournamentDTO tournament) {
-		if (hasRole(sessionId, UserRole.Admin)) {
-			log.debug("Saving tournament: " + tournament);
+	public TournamentDTO saveTournament(String sessionId, TournamentDTO tournament, DepartmentDTO dept) {
+		if (hasRole(sessionId, UserRole.Admin) && isDepartmentHead(_sessionManager.getUserId(sessionId), dept)) {
 			Tournament entity = ConverterTournamentDTO.toEntity(tournament);
 			try {
 				entity = PersistenceFacade.getInstance().saveOrUpdate(entity);
@@ -266,7 +265,6 @@ public class ApplicationFacade implements ILogger {
 				log.error(e.getMessage());
 				return null;
 			}
-			log.debug("... tournament saved");
 			return ConverterTournamentDTO.toDTO(entity);
 		}
 		return null;
@@ -277,5 +275,13 @@ public class ApplicationFacade implements ILogger {
 			return ConverterTournamentDTO.toDTO(PersistenceFacade.getInstance().getById(Tournament.class, id));
 		}
 		return null;
+	}
+	
+	public boolean isDepartmentHead(Long userId, DepartmentDTO dept){
+		return dept.getHeadId().equals(userId);
+	}
+	
+	public boolean isCoach(Long userId, TeamDTO team){
+		return team.getCoachId().equals(userId);
 	}
 }

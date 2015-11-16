@@ -9,12 +9,15 @@ import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
+import at.fhv.itb5c.view.util.listcell.ObjectListCell;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.util.Callback;
 
 public class TournamentViewController implements IPanelClosable, ILogger {
 	@FXML
@@ -29,7 +32,6 @@ public class TournamentViewController implements IPanelClosable, ILogger {
 	private Button _addMatchesButton;
 	
 	private IDepartmentRMI _department;
-	private ITournamentRMI _tournament;
 	
 	private TournamentModel _tournamentModel;
 	
@@ -48,13 +50,19 @@ public class TournamentViewController implements IPanelClosable, ILogger {
 	public void initialize() {
 		_tournamentLabel.textProperty().bindBidirectional(_tournamentModel.getTournamentName());
 		_teamsList.itemsProperty().bindBidirectional(_tournamentModel.getTeams());
+		_teamsList.setCellFactory(new Callback<ListView<Object>, ListCell<Object>>() {
+			@Override
+			public ListCell<Object> call(ListView<Object> param) {
+				return new ObjectListCell();
+			}
+		});
 	}
 
 	// Event Listener on Button[#_addTeamsButton].onAction
 	@FXML
 	public void addTeamsButtonAction(ActionEvent event) {
 		try {
-			_panelCloseHandler.closeNext(new TournamentAddTeamsFactory(_department, _tournament));
+			_panelCloseHandler.closeNext(new TournamentAddTeamsFactory(_department, _tournamentModel.getITournamentRMI()));
 		} catch (IOException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();

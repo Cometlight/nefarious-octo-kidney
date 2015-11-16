@@ -26,11 +26,15 @@ import at.fhv.itb5c.model.entity.Department;
 public class ApplicationFacadeTest {
 	ApplicationFacade _appFacade;
 	String _session;
+	private UserDTO _user;
 
 	@Before
 	public void beforeEach() {
 		_appFacade = new ApplicationFacade();
-		_session = SessionManager.getInstance().createNewSession(1l, new HashSet<>(Arrays.asList(UserRole.Admin)));
+		_user = new UserDTO();
+		_user.setId(1l);
+		_user.setRoles(new HashSet<>(Arrays.asList(UserRole.Admin)));
+		_session = SessionManager.getInstance().createNewSession(_user.getId(), _user.getRoles());
 	}
 
 	@Test
@@ -212,17 +216,25 @@ public class ApplicationFacadeTest {
 
 	@Test
 	public void createNewTournament(){
-		TournamentDTO dto = _appFacade.createTournament(_session);
+		DepartmentDTO dept = new DepartmentDTO();
+		dept.setHeadId(_user.getId());
+		TournamentDTO dto = _appFacade.createTournament(_session, dept);
 		assertNotNull(dto);
+		
+		dept.setHeadId(_user.getId()+1);
+		dto = _appFacade.createTournament(_session, dept);
+		assertNull(dto);
 	}
 	
 	@Test
 	public void getTournamentById() {
 		final Long id = 1338l;
-		TournamentDTO dto = _appFacade.createTournament(_session);
+		DepartmentDTO dept = new DepartmentDTO();
+		dept.setHeadId(_user.getId());
+		TournamentDTO dto = _appFacade.createTournament(_session, dept);
 		dto.setId(id);
 
-		TournamentDTO savedDTO = _appFacade.saveTournament(_session, dto);
+		TournamentDTO savedDTO = _appFacade.saveTournament(_session, dto, dept);
 		assertNotNull(savedDTO);
 		assertEquals(id, savedDTO.getId());
 		assertFalse(dto == savedDTO);
@@ -237,5 +249,10 @@ public class ApplicationFacadeTest {
 	public void getTournamentByIdNull() {
 		TournamentDTO dto = _appFacade.getTournamentById(_session, null);
 		assertNull(dto);
+	}
+
+	public void createUserDeptHead(){
+		DepartmentDTO dept = new DepartmentDTO();
+		dept.setHeadId(_user.getId());
 	}
 }

@@ -36,9 +36,9 @@ public class TournamentAddController implements IPanelClosable, ILogger {
 		_fee.textProperty().bindBidirectional(_tournamentModel.getFee().asObject(), new DecimalFormat());
 		try {
 			ITournamentRMI tournamentRMI = RMIClient.getRMIClient().getApplicationFacade()
-					.createTournament(AppState.getInstance().getSessionID());
+					.createTournament(AppState.getInstance().getSessionID(), _department);
 			tournamentRMI.setDepartmentId(_department.getId());
-			_tournamentModel.setITournamentRMI(tournamentRMI );
+			_tournamentModel.setITournamentRMI(tournamentRMI);
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
@@ -48,14 +48,18 @@ public class TournamentAddController implements IPanelClosable, ILogger {
 	// Event Listener on Button.onMouseClicked
 	@FXML
 	public void _saveAndNextButtonClicked(MouseEvent event) {
-		try {
-			ITournamentRMI tournament = RMIClient.getRMIClient().getApplicationFacade().saveTournament(AppState.getInstance().getSessionID(),
-					_tournamentModel.getITournamentRMI());
-			
-			_panelCloseHandler.closeNext(new TournamentAddTeamsFactory(_department, tournament));
-		} catch (IOException e) {
-			log.error(e.getMessage());
-			ErrorPopUp.connectionError();
+		if (_tournamentName.getText() != null && _tournamentName.getText() != "" && _date.getValue() != null) {
+			try {
+				ITournamentRMI tournament = RMIClient.getRMIClient().getApplicationFacade()
+						.saveTournament(AppState.getInstance().getSessionID(), _tournamentModel.getITournamentRMI(), _department);
+
+				_panelCloseHandler.closeNext(new TournamentAddTeamsFactory(_department, tournament));
+			} catch (IOException e) {
+				log.error(e.getMessage());
+				ErrorPopUp.connectionError();
+			}
+		} else {
+			ErrorPopUp.generalError("Mandatory Fields", "Please set the mandatory field: Tournament Name, Date");
 		}
 	}
 

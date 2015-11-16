@@ -83,7 +83,6 @@ public class DepartmentViewController implements IPanelClosable, ILogger {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();
 		}
-		log.debug(_tournamentList.getItems().size());
 	}
 
 	@FXML

@@ -8,7 +8,6 @@ public class ObjectListCell extends SimpleListCell<Object> {
 
 	@Override
 	protected void format(Object item) throws RemoteException {
-		// TODO Auto-generated method stub
 		if (item instanceof ITeamRMI) {
 			setText(((ITeamRMI) item).getName());
 		} else {

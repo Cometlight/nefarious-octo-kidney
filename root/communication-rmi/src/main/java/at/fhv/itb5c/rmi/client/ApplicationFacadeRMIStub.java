@@ -15,6 +15,7 @@ import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
+import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.RMIServant;
 
@@ -156,5 +157,20 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 
 	public IMatchRMI saveMatch(String sessionId, IMatchRMI match, IDepartmentRMI dept) throws RemoteException {
 		return _applicationFacadeRMI.saveMatch(sessionId, match, dept);
+	}
+
+	@Override
+	public Boolean isDepartmentHead(String sessionId, IDepartmentRMI dept) throws RemoteException {
+		return _applicationFacadeRMI.isDepartmentHead(sessionId, dept);
+	}
+
+	@Override
+	public Boolean isCoach(String sessionId, ITeamRMI team) throws RemoteException {
+		return _applicationFacadeRMI.isCoach(sessionId, team);
+	}
+
+	@Override
+	public Boolean hasRole(String sessionId, UserRole... roles) throws RemoteException {
+		return _applicationFacadeRMI.hasRole(sessionId, roles);
 	}
 }

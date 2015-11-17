@@ -20,6 +20,7 @@ import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
+import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.converter.ConverterDepartmentRMI;
 import at.fhv.itb5c.rmi.server.converter.ConverterLeagueRMI;
@@ -172,5 +173,22 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 		MatchDTO matchDTO = ConverterMatchRMI.toDTO(match);
 		DepartmentDTO deptDTO = ConverterDepartmentRMI.toDTO(dept);
 		return ConverterMatchRMI.toRMI(_applicationFacade.saveMatch(sessionId, matchDTO, deptDTO));
+	}
+
+	@Override
+	public Boolean isDepartmentHead(String sessionId, IDepartmentRMI dept) throws RemoteException {
+		DepartmentDTO departmentDTO = ConverterDepartmentRMI.toDTO(dept);
+		return _applicationFacade.isDepartmentHead(sessionId, departmentDTO);
+	}
+
+	@Override
+	public Boolean isCoach(String sessionId, ITeamRMI team) throws RemoteException {
+		TeamDTO teamDTO = ConverterTeamRMI.toDTO(team);
+		return _applicationFacade.isCoach(sessionId, teamDTO);
+	}
+
+	@Override
+	public Boolean hasRole(String sessionId, UserRole... roles) throws RemoteException {
+		return _applicationFacade.hasRole(sessionId, roles);
 	}
 }

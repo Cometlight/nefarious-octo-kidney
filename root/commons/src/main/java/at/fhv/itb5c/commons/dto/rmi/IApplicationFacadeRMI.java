@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.Collection;
 
 import at.fhv.itb5c.commons.enums.TypeOfSport;
+import at.fhv.itb5c.commons.enums.UserRole;
 
 public interface IApplicationFacadeRMI extends Remote {
 	IUserRMI createUser(String sessionId) throws RemoteException;
@@ -39,6 +40,8 @@ public interface IApplicationFacadeRMI extends Remote {
 
 	IUserRMI getCurrentUser(String sessionId) throws RemoteException;
 
+	Boolean hasRole(String sessionId, UserRole... roles) throws RemoteException;
+	
 	ITournamentRMI createTournament(String sessionId, IDepartmentRMI dept) throws RemoteException;
 
 	ITournamentRMI saveTournament(String sessionId, ITournamentRMI tournament, IDepartmentRMI dept) throws RemoteException;
@@ -56,4 +59,8 @@ public interface IApplicationFacadeRMI extends Remote {
 	IMatchRMI getMatchById(String sessionId, Long matchId) throws RemoteException;
 
 	IMatchRMI saveMatch(String sessionId, IMatchRMI match, IDepartmentRMI dept) throws RemoteException;
+	
+	Boolean isDepartmentHead(String sessionId, IDepartmentRMI dept) throws RemoteException;
+	
+	Boolean isCoach(String sessionId, ITeamRMI team) throws RemoteException;
 }

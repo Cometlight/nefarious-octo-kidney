@@ -56,7 +56,7 @@ public class ApplicationFacade implements ILogger {
 	 */
 	public Collection<UserDTO> findUsers(String sessionId, String firstName, String lastName, Long departmentId,
 			Boolean membershipFeePaid) {
-		if (hasRole(sessionId, UserRole.Admin)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			return ConverterUserDTO.toDTO(
 					PersistenceFacade.getInstance().findUsers(firstName, lastName, departmentId, membershipFeePaid));
 		}
@@ -67,7 +67,7 @@ public class ApplicationFacade implements ILogger {
 	 * If a parameter is null, it is ignored.
 	 */
 	public Collection<UserDTO> findUsersSimple(String sessionId, String name) {
-		if (hasRole(sessionId, UserRole.Admin)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			return ConverterUserDTO.toDTO(PersistenceFacade.getInstance().findUsersSimple(name));
 		}
 		return null;
@@ -136,7 +136,7 @@ public class ApplicationFacade implements ILogger {
 	 */
 	public Collection<TeamDTO> findTeams(String sessionId, String name, TypeOfSport typeOfSport, Long departmentId,
 			Long leagueId) {
-		if (hasRole(sessionId, UserRole.Admin)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			List<Team> entities = PersistenceFacade.getInstance().findTeams(name, typeOfSport, departmentId, leagueId);
 			return ConverterTeamDTO.toDTO(entities);
 		}
@@ -200,7 +200,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public Collection<LeagueDTO> getAllLeagues(String sessionId) {
-		if (hasRole(sessionId, UserRole.Admin)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			List<League> entities = PersistenceFacade.getInstance().getAll(League.class);
 			return ConverterLeagueDTO.toDTO(entities);
 		}
@@ -208,7 +208,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public Collection<TournamentDTO> findTournaments(String sessionId, String name, Long departmentId) {
-		if (hasRole(sessionId, UserRole.Admin)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			List<Tournament> entities = PersistenceFacade.getInstance().findTournaments(name, departmentId);
 			return ConverterTournamentDTO.toDTO(entities);
 		}
@@ -295,7 +295,7 @@ public class ApplicationFacade implements ILogger {
 				PersistenceFacade.getInstance().getById(User.class, SessionManager.getInstance().getUserId(sessionId)));
 	}
 
-	private boolean hasRole(String sessionId, UserRole... roles) {
+	public Boolean hasRole(String sessionId, UserRole... roles) {
 		for (UserRole role : roles) {
 			if (_sessionManager.hasRole(sessionId, role)) {
 				return true;
@@ -305,14 +305,14 @@ public class ApplicationFacade implements ILogger {
 	}
 	
 	public TournamentDTO createTournament(String sessionId, DepartmentDTO dept) {
-		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(_sessionManager.getUserId(sessionId), dept)) {
+		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
 			return ConverterTournamentDTO.toDTO(new Tournament());
 		}
 		return null;
 	}
 	
 	public TournamentDTO saveTournament(String sessionId, TournamentDTO tournament, DepartmentDTO dept) {
-		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(_sessionManager.getUserId(sessionId), dept)) {
+		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
 			Tournament entity = ConverterTournamentDTO.toEntity(tournament);
 			try {
 				entity = PersistenceFacade.getInstance().saveOrUpdate(entity);
@@ -332,16 +332,16 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 	
-	public boolean isDepartmentHead(Long userId, DepartmentDTO dept){
-		return dept.getHeadId().equals(userId);
+	public Boolean isDepartmentHead(String sessionId, DepartmentDTO dept){
+		return dept.getHeadId().equals(_sessionManager.getUserId(sessionId));
 	}
 	
-	public boolean isCoach(Long userId, TeamDTO team){
-		return team.getCoachId().equals(userId);
+	public Boolean isCoach(String sessionId, TeamDTO team){
+		return team.getCoachId().equals(_sessionManager.getUserId(sessionId));
 	}
 
 	public MatchDTO saveMatch(String sessionId, MatchDTO matchDTO, DepartmentDTO dept) {
-		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(_sessionManager.getUserId(sessionId), dept)) {
+		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
 			Match entity = ConverterMatchDTO.toEntity(matchDTO);
 			try {
 				entity = PersistenceFacade.getInstance().saveOrUpdate(entity);

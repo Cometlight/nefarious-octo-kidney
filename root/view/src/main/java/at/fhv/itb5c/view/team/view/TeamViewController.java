@@ -1,11 +1,17 @@
 package at.fhv.itb5c.view.team.view;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
+import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.logging.ILogger;
+import at.fhv.itb5c.rmi.client.ApplicationFacadeRMIStub;
+import at.fhv.itb5c.rmi.client.RMIClient;
+import at.fhv.itb5c.rmi.server.ApplicationFacadeRMI;
+import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.department.DepartmentViewFactory;
 import at.fhv.itb5c.view.team.addplayer.TeamAddPlayerViewFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
@@ -47,7 +53,17 @@ public class TeamViewController implements IPanelClosable, ILogger{
 		});
     	_userList.setItems(_teamViewModel.getMembers());
     	
-    	// TODO check if user is allowed to add members; if not, deactivate edit button
+    	// Only the admin or the coach of this particular team is allowed to add members -> deactive edit button otherwise
+    	String sessionId = AppState.getInstance().getSessionID();
+    	ApplicationFacadeRMIStub afRMI = RMIClient.getRMIClient().getApplicationFacade();
+    	try {
+			if(!afRMI.hasRole(sessionId, UserRole.Admin) && !afRMI.isCoach(sessionId, _teamViewModel.getTeam())) {
+				_editButton.setDisable(true);
+			}
+		} catch (RemoteException e) {
+			log.error(e.getMessage());
+			ErrorPopUp.connectionError();
+		}
     }
 
 	@FXML

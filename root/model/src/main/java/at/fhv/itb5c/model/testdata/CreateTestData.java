@@ -18,6 +18,7 @@ import at.fhv.itb5c.model.entity.Tournament;
 import at.fhv.itb5c.model.entity.User;
 
 public class CreateTestData implements ILogger {
+	private static User _userTFTest;
 	private static User _userDS;
 	private static User _userDG;
 	private static User _userSA;
@@ -74,6 +75,22 @@ public class CreateTestData implements ILogger {
 	}
 
 	private static void createUsers() throws Exception {
+		_userTFTest = new User();
+		_userTFTest.setFirstName("Thomas");
+		_userTFTest.setLastName("Feilhauer");
+		_userTFTest.setAddress("Hochschulstraße 1, A - 6850 Dornbirn");
+		_userTFTest.setDateOfBirth(LocalDate.now().minusYears(40));
+		_userTFTest.setDepartmentId(_deptSoccer.getId());
+		_userTFTest.setEmail("tf-test@fhv.at");
+		_userTFTest.setGender(Gender.Male);
+		_userTFTest.setMembershipFee(42d);
+		_userTFTest.setMembershipFeePaid(false);
+		_userTFTest.setTelephoneNumber("0043 5572 792 5100");
+		_userTFTest.setTypeOfSports(new HashSet<>(Arrays.asList(TypeOfSport.Soccer)));
+		_userTFTest.setRoles(new HashSet<>(Arrays.asList(UserRole.Admin)));
+		_userTFTest.setLdapUID("tf-test");
+		_userTFTest = PersistenceFacade.getInstance().saveOrUpdate(_userTFTest);
+		
 		_userDS = new User();
 		_userDS.setFirstName("Daniel");
 		_userDS.setLastName("Scheffknecht");

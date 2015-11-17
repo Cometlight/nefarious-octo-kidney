@@ -184,27 +184,36 @@ public class CreateTestData implements ILogger {
 	}
 	
 	private static void createTournaments() throws Exception {
-		//two local team
+		// two external teams in the past with a result
 		Match match1Tournament1 = new Match();
-		match1Tournament1.setTeamOne(_teamSoccer1.getId());
-		match1Tournament1.setTeamTwo(_teamSoccer2.getId());
-		match1Tournament1.setStartDate(LocalDateTime.now().plusDays(10));
+		match1Tournament1.setTeamOne("A3 Bregenz");
+		match1Tournament1.setTeamTwo("A2 Dornbirn");
+		match1Tournament1.setStartDate(LocalDateTime.now().minusDays(2));
+		match1Tournament1.setResultTeamOne(4);
+		match1Tournament1.setResultTeamTwo(2);
 		match1Tournament1 = PersistenceFacade.getInstance().saveOrUpdate(match1Tournament1);
 		
-		//one local one external
+		//two local team
 		Match match2Tournament1 = new Match();
 		match2Tournament1.setTeamOne(_teamSoccer1.getId());
-		match2Tournament1.setTeamTwo("A3 Bregenz");
-		match2Tournament1.setStartDate(LocalDateTime.now().plusDays(11));
+		match2Tournament1.setTeamTwo(_teamSoccer2.getId());
+		match2Tournament1.setStartDate(LocalDateTime.now().plusDays(10));
 		match2Tournament1 = PersistenceFacade.getInstance().saveOrUpdate(match2Tournament1);
+		
+		//one local one external
+		Match match3Tournament1 = new Match();
+		match3Tournament1.setTeamOne(_teamSoccer1.getId());
+		match3Tournament1.setTeamTwo("A3 Bregenz");
+		match3Tournament1.setStartDate(LocalDateTime.now().plusDays(11));
+		match3Tournament1 = PersistenceFacade.getInstance().saveOrUpdate(match3Tournament1);
 		
 		Tournament _tournament1 = new Tournament();
 		_tournament1.setName("Local Tournament");
 		_tournament1.setDepartmentId(_deptSoccer.getId());
 		_tournament1.setFee(new Double(10.50));
-		_tournament1.setMatchesIds(new HashSet<>(Arrays.asList(match1Tournament1.getId(), match2Tournament1.getId())));
+		_tournament1.setMatchesIds(new HashSet<>(Arrays.asList(match1Tournament1.getId(), match2Tournament1.getId(), match3Tournament1.getId())));
 		_tournament1.setHomeTeamsIds(new HashSet<>(Arrays.asList(_teamSoccer1.getId(), _teamSoccer2.getId())));
-		_tournament1.setGuestTeams(new HashSet<>(Arrays.asList("A3 Bregenz")));
+		_tournament1.setGuestTeams(new HashSet<>(Arrays.asList("A3 Bregenz", "A2 Dornbirn")));
 		_tournament1 = PersistenceFacade.getInstance().saveOrUpdate(_tournament1);
 		
 	}

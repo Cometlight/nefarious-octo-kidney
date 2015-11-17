@@ -26,10 +26,10 @@ public class LDAPAuth implements ILogger {
 			String filter = "(&(uid=" + username + ")(cn=*))";
 			NamingEnumeration<SearchResult> res = ctx.search("ou=fhv, ou=People", filter, ctls);
 			if (res.hasMore()) {
-				res.next();
+				SearchResult sr = res.next();
 				if (!res.hasMore()) {
 					env.put(Context.SECURITY_AUTHENTICATION, "simple");
-					env.put(Context.SECURITY_PRINCIPAL, "uid=" + username + ",ou=fhv,ou=People,dc=uclv,dc=net");
+					env.put(Context.SECURITY_PRINCIPAL, sr.getNameInNamespace());
 					env.put(Context.SECURITY_CREDENTIALS, password);
 					new InitialDirContext(env);
 					return username;

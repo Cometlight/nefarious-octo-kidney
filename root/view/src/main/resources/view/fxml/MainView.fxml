@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -43,8 +44,13 @@
 	</top>
    <center>
       <Pane fx:id="_mainPanel" BorderPane.alignment="CENTER">
-      
-      </Pane>
+         <children>
+            <ImageView fitHeight="391.0" fitWidth="705.0" layoutX="160.0" layoutY="220.0" opacity="0.62" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/sports-logo.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
    </center>
    <left>
       <HBox>

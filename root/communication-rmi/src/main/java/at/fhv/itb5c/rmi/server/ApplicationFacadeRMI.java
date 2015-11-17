@@ -7,12 +7,14 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
 
 import at.fhv.itb5c.application.ApplicationFacade;
+import at.fhv.itb5c.application.dto.MatchDTO;
 import at.fhv.itb5c.application.dto.TeamDTO;
 import at.fhv.itb5c.application.dto.TournamentDTO;
 import at.fhv.itb5c.application.dto.UserDTO;
 import at.fhv.itb5c.commons.dto.rmi.IApplicationFacadeRMI;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.ILeagueRMI;
+import at.fhv.itb5c.commons.dto.rmi.IMatchRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
@@ -20,6 +22,7 @@ import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.converter.ConverterDepartmentRMI;
 import at.fhv.itb5c.rmi.server.converter.ConverterLeagueRMI;
+import at.fhv.itb5c.rmi.server.converter.ConverterMatchRMI;
 import at.fhv.itb5c.rmi.server.converter.ConverterTeamRMI;
 import at.fhv.itb5c.rmi.server.converter.ConverterTournamentRMI;
 import at.fhv.itb5c.rmi.server.converter.ConverterUserRMI;
@@ -144,5 +147,22 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 		TeamDTO teamDTO = ConverterTeamRMI.toDTO(team);
 		UserDTO playerDTO = ConverterUserRMI.toDTO(player);
 		return ConverterTeamRMI.toRMI(_applicationFacade.addPlayerToTeam(sessionId, teamDTO, playerDTO));
+	}
+
+	@Override
+	public ITournamentRMI addMatchToTournament(String sessionId, ITournamentRMI tournament, IMatchRMI match) throws RemoteException {
+		TournamentDTO tournamentDTO = ConverterTournamentRMI.toDTO(tournament);
+		MatchDTO matchDTO = ConverterMatchRMI.toDTO(match);
+		return ConverterTournamentRMI.toRMI(_applicationFacade.addMatchToTournament(sessionId, tournamentDTO, matchDTO));
+	}
+
+	@Override
+	public IMatchRMI createMatch(String sessionId) throws RemoteException {
+		return ConverterMatchRMI.toRMI(_applicationFacade.createMatch(sessionId));
+	}
+
+	@Override
+	public IMatchRMI getMatchById(String sessionId, Long matchId) throws RemoteException {
+		return ConverterMatchRMI.toRMI(_applicationFacade.getMatchById(sessionId, matchId));
 	}
 }

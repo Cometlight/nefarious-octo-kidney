@@ -65,15 +65,25 @@ public class TournamentModel implements ILogger {
 		_date.setValue(tournament.getDate());
 		_fee.setValue(tournament.getFee());
 		_guestTeams.setValue(FXCollections.observableList(new ArrayList<>(tournament.getGuestTeams())));
+		
 		ArrayList<ITeamRMI> homeTeams = new ArrayList<>();
 		for (Long teamId : tournament.getHomeTeamsIds()) {
 			homeTeams.add(RMIClient.getRMIClient().getApplicationFacade()
 					.getTeamById(AppState.getInstance().getSessionID(), teamId));
 		}
 		_homeTeams.setValue(FXCollections.observableList(homeTeams));
+		
 		_teams.setValue(FXCollections.observableList(Stream
 				.concat(_guestTeams.getValue().stream(), _homeTeams.getValue().stream()).collect(Collectors.toList())));
+		
 		_departmentId = tournament.getDepartmentId();
+		
+		ArrayList<IMatchRMI> matches = new ArrayList<>();
+		for (Long matchId : tournament.getMatchesIds()) {
+			matches.add(RMIClient.getRMIClient().getApplicationFacade()
+					.getMatchById(AppState.getInstance().getSessionID(), matchId));
+		}
+		_matches.setValue(FXCollections.observableList(matches));
 	}
 
 	public Property<ObservableList<String>> getGuestTeams() {

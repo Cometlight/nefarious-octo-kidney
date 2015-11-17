@@ -10,6 +10,7 @@ import java.util.Collection;
 import at.fhv.itb5c.commons.dto.rmi.IApplicationFacadeRMI;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.ILeagueRMI;
+import at.fhv.itb5c.commons.dto.rmi.IMatchRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
@@ -136,5 +137,20 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 
 	public ITeamRMI addPlayerToTeam(String sessionId, ITeamRMI team, IUserRMI player) throws RemoteException {
 		return _applicationFacadeRMI.addPlayerToTeam(sessionId, team, player);
+	}
+
+	@Override
+	public ITournamentRMI addMatchToTournament(String sessionId, ITournamentRMI tournament, IMatchRMI match) throws RemoteException {
+		return _applicationFacadeRMI.addMatchToTournament(sessionId, tournament, match);
+	}
+
+	@Override
+	public IMatchRMI createMatch(String sessionId) throws RemoteException {
+		return _applicationFacadeRMI.createMatch(sessionId);
+	}
+
+	@Override
+	public IMatchRMI getMatchById(String sessionId, Long matchId) throws RemoteException {
+		return _applicationFacadeRMI.getMatchById(sessionId, matchId);
 	}
 }

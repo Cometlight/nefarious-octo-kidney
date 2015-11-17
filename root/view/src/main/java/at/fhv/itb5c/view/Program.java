@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import at.fhv.itb5c.rmi.client.RMIClient;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /*
@@ -23,6 +24,8 @@ public class Program extends Application {
 	@Override
 	public void start(Stage stage) throws IOException {
 		_appController.start(stage);
+		stage.getIcons().add(new Image(getClass().getResourceAsStream("/view/image/sports_icon.png")));
+		stage.setTitle("Sports Management");
 	}
 
 	public static void main(String[] args) {

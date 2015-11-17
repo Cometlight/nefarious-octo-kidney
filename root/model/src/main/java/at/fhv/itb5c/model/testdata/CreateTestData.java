@@ -2,6 +2,7 @@ package at.fhv.itb5c.model.testdata;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import at.fhv.itb5c.commons.enums.Gender;
@@ -170,12 +171,14 @@ public class CreateTestData implements ILogger {
 		Match match1Tournament1 = new Match();
 		match1Tournament1.setTeamOne(_teamSoccer1.getId());
 		match1Tournament1.setTeamTwo(_teamSoccer2.getId());
+		match1Tournament1.setStartDate(LocalDateTime.now().plusDays(10));
 		match1Tournament1 = PersistenceFacade.getInstance().saveOrUpdate(match1Tournament1);
 		
 		//one local one external
 		Match match2Tournament1 = new Match();
 		match2Tournament1.setTeamOne(_teamSoccer1.getId());
 		match2Tournament1.setTeamTwo("A3 Bregenz");
+		match2Tournament1.setStartDate(LocalDateTime.now().plusDays(11));
 		match2Tournament1 = PersistenceFacade.getInstance().saveOrUpdate(match2Tournament1);
 		
 		Tournament _tournament1 = new Tournament();

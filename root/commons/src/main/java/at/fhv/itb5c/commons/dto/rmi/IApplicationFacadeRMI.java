@@ -54,4 +54,6 @@ public interface IApplicationFacadeRMI extends Remote {
 	Collection<ITournamentRMI> findTournaments(String sessionId, String name, Long departmentId) throws RemoteException;
 
 	IMatchRMI getMatchById(String sessionId, Long matchId) throws RemoteException;
+
+	IMatchRMI saveMatch(String sessionId, IMatchRMI match, IDepartmentRMI dept) throws RemoteException;
 }

@@ -339,4 +339,18 @@ public class ApplicationFacade implements ILogger {
 	public boolean isCoach(Long userId, TeamDTO team){
 		return team.getCoachId().equals(userId);
 	}
+
+	public MatchDTO saveMatch(String sessionId, MatchDTO matchDTO, DepartmentDTO dept) {
+		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(_sessionManager.getUserId(sessionId), dept)) {
+			Match entity = ConverterMatchDTO.toEntity(matchDTO);
+			try {
+				entity = PersistenceFacade.getInstance().saveOrUpdate(entity);
+			} catch (Exception e) {
+				log.error(e.getMessage());
+				return null;
+			}
+			return ConverterMatchDTO.toDTO(entity);
+		}
+		return null;
+	}
 }

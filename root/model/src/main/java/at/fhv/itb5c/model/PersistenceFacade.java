@@ -132,6 +132,7 @@ public class PersistenceFacade implements ILogger {
 		} catch (Exception e) {
 			throw e;
 		}
+		
 		return obj;
 	}
 

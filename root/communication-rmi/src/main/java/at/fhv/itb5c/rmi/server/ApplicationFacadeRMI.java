@@ -7,6 +7,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
 
 import at.fhv.itb5c.application.ApplicationFacade;
+import at.fhv.itb5c.application.dto.DepartmentDTO;
 import at.fhv.itb5c.application.dto.MatchDTO;
 import at.fhv.itb5c.application.dto.TeamDTO;
 import at.fhv.itb5c.application.dto.TournamentDTO;
@@ -164,5 +165,12 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	@Override
 	public IMatchRMI getMatchById(String sessionId, Long matchId) throws RemoteException {
 		return ConverterMatchRMI.toRMI(_applicationFacade.getMatchById(sessionId, matchId));
+	}
+	
+	@Override
+	public IMatchRMI saveMatch(String sessionId, IMatchRMI match, IDepartmentRMI dept) throws RemoteException {
+		MatchDTO matchDTO = ConverterMatchRMI.toDTO(match);
+		DepartmentDTO deptDTO = ConverterDepartmentRMI.toDTO(dept);
+		return ConverterMatchRMI.toRMI(_applicationFacade.saveMatch(sessionId, matchDTO, deptDTO));
 	}
 }

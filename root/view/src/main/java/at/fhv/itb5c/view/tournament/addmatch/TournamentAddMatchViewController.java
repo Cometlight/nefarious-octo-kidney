@@ -153,21 +153,25 @@ public class TournamentAddMatchViewController implements IPanelClosable, ILogger
 				LocalTime startTime = TimeUtility.timeStringToLocalTime(_model.getStartTime().getValue());
 				if (startTime != null) {
 					LocalDateTime startDateTime = LocalDateTime.of(_model.getStartDate().getValue(), startTime);
-
-					IMatchRMI match = RMIClient.getRMIClient().getApplicationFacade().createMatch(sessionId);
-					if (match != null) {
-						match.setStartDate(startDateTime);
-						if (team1 instanceof ITeamRMI) {
-							team1 = ((ITeamRMI)team1).getId();
+					if(startDateTime.isAfter(LocalDateTime.now()) || startDateTime.isEqual(LocalDateTime.now())) {
+						IMatchRMI match = RMIClient.getRMIClient().getApplicationFacade().createMatch(sessionId);
+						if (match != null) {
+							match.setStartDate(startDateTime);
+							if (team1 instanceof ITeamRMI) {
+								team1 = ((ITeamRMI)team1).getId();
+							}
+							if (team2 instanceof ITeamRMI) {
+								team2 = ((ITeamRMI)team2).getId();
+							}
+							match.setTeamOne(team1);
+							match.setTeamTwo(team2);
+							ITournamentRMI updatedTournament = RMIClient.getRMIClient().getApplicationFacade()
+									.addMatchToTournament(sessionId, _model.getTournament(), match);
+							return updatedTournament;
 						}
-						if (team2 instanceof ITeamRMI) {
-							team2 = ((ITeamRMI)team2).getId();
-						}
-						match.setTeamOne(team1);
-						match.setTeamTwo(team2);
-						ITournamentRMI updatedTournament = RMIClient.getRMIClient().getApplicationFacade()
-								.addMatchToTournament(sessionId, _model.getTournament(), match);
-						return updatedTournament;
+					} else {
+						ErrorPopUp.generalError("Invalid Date",
+								"Please select a date in the future.");
 					}
 				}
 			} catch (RemoteException e) {

@@ -3,6 +3,7 @@ package at.fhv.itb5c.model.entity;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -38,7 +39,7 @@ public class TournamentPersistenceTest {
 		Match match = new Match();
 		match.setTeamOne(homeTeam);
 		match.setTeamTwo(guestTeam);
-		match.setStartDate(LocalDate.now().plusMonths(2));
+		match.setStartDate(LocalDateTime.now().plusMonths(2));
 		PersistenceFacade.getInstance().saveOrUpdate(match);
 		matches.add(match.getId());
 		_tournament.setMatchesIds(matches);

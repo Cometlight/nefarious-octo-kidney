@@ -3,7 +3,7 @@ package at.fhv.itb5c.model.entity;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.junit.After;
 import org.junit.Before;
@@ -40,7 +40,7 @@ public class MatchPersistenceTest {
 		teamTwo.setName("Team Two");
 		teamTwo.setTypeOfSport(TypeOfSport.Soccer);
 		_match.setTeamTwo(teamTwo);
-		_match.setStartDate(LocalDate.now().plusMonths(2));
+		_match.setStartDate(LocalDateTime.now().plusMonths(2));
 		_match.setResultTeamOne(5);
 		_match.setResultTeamTwo(7);
 		PersistenceFacade.getInstance().saveOrUpdate(teamOne);

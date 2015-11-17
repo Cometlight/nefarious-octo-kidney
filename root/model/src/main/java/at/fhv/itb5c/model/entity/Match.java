@@ -1,6 +1,6 @@
 package at.fhv.itb5c.model.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
@@ -23,7 +23,7 @@ public class Match extends PersistableObject {
 	@Column(name = "resultTeamTwo", nullable = false)
 	private Integer _resultTeamTwo;
 	@Transient
-	private LocalDate _startDate;
+	private LocalDateTime _startDate;
 
 	public Match() {
 		
@@ -45,11 +45,11 @@ public class Match extends PersistableObject {
 		_teamTwo = teamTwo;
 	}
 
-	public LocalDate getStartDate() {
+	public LocalDateTime getStartDate() {
 		return _startDate;
 	}
 
-	public void setStartDate(LocalDate startDate) {
+	public void setStartDate(LocalDateTime startDate) {
 		_startDate = startDate;
 	}
 
@@ -72,14 +72,14 @@ public class Match extends PersistableObject {
 	@PrePersist
 	private void persist() {
 		if (_startDate != null) {
-			_persistStartDate = Date.from(_startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+			_persistStartDate = Date.from(_startDate.atZone(ZoneId.systemDefault()).toInstant());
 		}
 	}
 
 	@PostLoad
 	private void load() {
 		if (_persistStartDate != null) {
-			_startDate = _persistStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			_startDate = _persistStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 		}
 	}
 }

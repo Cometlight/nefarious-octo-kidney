@@ -1,7 +1,7 @@
 package at.fhv.itb5c.commons.dto.rmi;
 
 import java.rmi.RemoteException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public interface IMatchRMI extends IBaseRMI {
 	Object getTeamOne() throws RemoteException;
@@ -12,9 +12,9 @@ public interface IMatchRMI extends IBaseRMI {
 
 	void setTeamTwo(Object teamTwo) throws RemoteException;
 
-	LocalDate getStartDate() throws RemoteException;
+	LocalDateTime getStartDate() throws RemoteException;
 
-	void setStartDate(LocalDate startDate) throws RemoteException;
+	void setStartDate(LocalDateTime startDate) throws RemoteException;
 
 	Integer getResultTeamOne() throws RemoteException;
 

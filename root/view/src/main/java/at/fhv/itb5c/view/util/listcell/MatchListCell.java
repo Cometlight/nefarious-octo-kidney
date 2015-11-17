@@ -16,10 +16,10 @@ public class MatchListCell extends SimpleListCell<IMatchRMI> {
 
 	@Override
 	protected void format(IMatchRMI item) throws RemoteException {
-		String result = null;
-
+		String result = "";
+		
 		if (item.getStartDate() != null) {
-			result = item.getStartDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm")) + " ";
+			result += item.getStartDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm")) + " - ";
 		}
 
 		String textTeamOne = null;
@@ -38,7 +38,7 @@ public class MatchListCell extends SimpleListCell<IMatchRMI> {
 			textTeamTwo = (String) item.getTeamTwo();
 		}
 
-		result = textTeamOne + " : " + textTeamTwo;
+		result += textTeamOne + " : " + textTeamTwo;
 
 		if (item.getResultTeamOne() != null || item.getResultTeamTwo() != null) {
 			result += " - Match Result " + item.getResultTeamOne() + ":" + item.getResultTeamTwo();

@@ -82,4 +82,11 @@ public class Match extends PersistableObject {
 			_startDate = _persistStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Match [_teamOne=" + _teamOne + ", _teamTwo=" + _teamTwo + ", _persistStartDate=" + _persistStartDate
+				+ ", _resultTeamOne=" + _resultTeamOne + ", _resultTeamTwo=" + _resultTeamTwo + ", _startDate="
+				+ _startDate + "]";
+	}
 }

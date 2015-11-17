@@ -1,6 +1,7 @@
 package at.fhv.itb5c.view.util.listcell;
 
 import java.rmi.RemoteException;
+import java.time.format.DateTimeFormatter;
 
 import at.fhv.itb5c.commons.dto.rmi.IMatchRMI;
 import at.fhv.itb5c.rmi.client.RMIClient;
@@ -15,6 +16,12 @@ public class MatchListCell extends SimpleListCell<IMatchRMI> {
 
 	@Override
 	protected void format(IMatchRMI item) throws RemoteException {
+		String result = null;
+
+		if (item.getStartDate() != null) {
+			result = item.getStartDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm")) + " ";
+		}
+
 		String textTeamOne = null;
 		if (item.getTeamOne() instanceof Long) {
 			textTeamOne = RMIClient.getRMIClient().getApplicationFacade()
@@ -31,7 +38,13 @@ public class MatchListCell extends SimpleListCell<IMatchRMI> {
 			textTeamTwo = (String) item.getTeamTwo();
 		}
 
-		setText(textTeamOne + " : " + textTeamTwo);
+		result = textTeamOne + " : " + textTeamTwo;
+
+		if (item.getResultTeamOne() != null || item.getResultTeamTwo() != null) {
+			result += " - Match Result " + item.getResultTeamOne() + ":" + item.getResultTeamTwo();
+		}
+
+		setText(result);
 	}
 
 }

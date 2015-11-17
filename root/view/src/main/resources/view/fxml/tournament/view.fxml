@@ -15,7 +15,7 @@
             <Label styleClass="simple-heading-2" text="Participating Teams" />
             <ListView fx:id="_teamsList" prefHeight="200.0" prefWidth="200.0" />
             <Button fx:id="_addTeamsButton" mnemonicParsing="false" onAction="#addTeamsButtonAction" styleClass="simple-green" text="Add Teams" />
-            <ListView fx:id="_matchesList" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="_matchesList" onMouseClicked="#matchOnclick" prefHeight="200.0" prefWidth="200.0" />
             <Button fx:id="_addMatchesButton" mnemonicParsing="false" onAction="#addMatchesButtonAction" styleClass="simple-green" text="Add Matches" />
          </children>
          <padding>

@@ -21,8 +21,8 @@ public class AppController implements Observer, ILogger {
 		AppState.getInstance().addObserver(this);
 
 		stage.setTitle("Enterprise Application Project");
-		stage.setMinHeight(600);
-		stage.setMinWidth(800);
+		stage.setMinHeight(768);
+		stage.setMinWidth(1280);
 		this._primaryStage = stage;
 
 		loadStage(new LoginViewFactory());

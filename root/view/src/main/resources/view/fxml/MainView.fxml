@@ -9,7 +9,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.Pane?>
 
-<BorderPane fx:id="_rootPane" prefHeight="768.0" prefWidth="1024.0" stylesheets="@../css/simple.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="_rootPane" prefHeight="768.0" prefWidth="1280.0" stylesheets="@../css/simple.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<Pane layoutX="-588.0" layoutY="-582.0" prefHeight="305.0" prefWidth="379.0" />
 	</children>

@@ -18,7 +18,6 @@ public class PropertyManager implements ILogger {
 
 	private PropertyManager() {
 		// TODO where is the null error at startup from?
-		
 		_propertiesDefault = new Properties();
 		_propertiesUser = new Properties();
 		try {
@@ -64,7 +63,6 @@ public class PropertyManager implements ILogger {
 			}
 		} else {
 			log.info("no user properties file found (config.properties)");
-			throw new IOException();
 		}
 	}
 

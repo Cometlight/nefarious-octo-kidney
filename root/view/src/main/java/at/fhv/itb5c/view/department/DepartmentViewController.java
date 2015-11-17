@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
+import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.logging.ILogger;
+import at.fhv.itb5c.rmi.client.ApplicationFacadeRMIStub;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.team.add.TeamAddViewFactory;
@@ -82,6 +84,19 @@ public class DepartmentViewController implements IPanelClosable, ILogger {
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();
+		}
+		
+		// deactivte buttons if user is not ADMIN or head of department
+		String sessionId = AppState.getInstance().getSessionID();
+    	ApplicationFacadeRMIStub afRMI = RMIClient.getRMIClient().getApplicationFacade();
+    	try {
+			if(!afRMI.hasRole(sessionId, UserRole.Admin) && !afRMI.isDepartmentHead(sessionId, _departmentViewModel.getDepartment())) {
+				_addTeamButton.setDisable(true);
+				_addTournamentButton.setDisable(true);
+			}
+		} catch (RemoteException e) {
+			log.error(e.getMessage());
+			ErrorPopUp.connectionError();
 		}
 	}
 

@@ -6,7 +6,10 @@ import java.rmi.RemoteException;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IMatchRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
+import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.logging.ILogger;
+import at.fhv.itb5c.rmi.client.ApplicationFacadeRMIStub;
+import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.tournament.addmatch.TournamentAddMatchViewFactory;
 import at.fhv.itb5c.view.tournament.addmatchresult.MatchAddResultFactory;
@@ -71,6 +74,19 @@ public class TournamentViewController implements IPanelClosable, ILogger {
 				return new MatchListCell(AppState.getInstance().getSessionID());
 			}
 		});
+		
+		// deactivate addMatchButton and addTeamsButton if user is not ADMIN or Head of Department
+		String sessionId = AppState.getInstance().getSessionID();
+    	ApplicationFacadeRMIStub afRMI = RMIClient.getRMIClient().getApplicationFacade();
+    	try {
+			if(!afRMI.hasRole(sessionId, UserRole.Admin) && !afRMI.isDepartmentHead(sessionId, _department)) {
+				_addTeamsButton.setDisable(true);
+				_addMatchesButton.setDisable(true);
+			}
+		} catch (RemoteException e) {
+			log.error(e.getMessage());
+			ErrorPopUp.connectionError();
+		}
 	}
 
 	// Event Listener on Button[#_addTeamsButton].onAction
@@ -99,6 +115,18 @@ public class TournamentViewController implements IPanelClosable, ILogger {
 	// Event Listener on Button[#_addMatchesButton].onAction
 	@FXML
 	public void matchOnclick(MouseEvent event) {
+		// only allowed to edit match if user is ADMIN or HeadOfDepartmentCoach
+		String sessionId = AppState.getInstance().getSessionID();
+    	ApplicationFacadeRMIStub afRMI = RMIClient.getRMIClient().getApplicationFacade();
+    	try {
+			if(!afRMI.hasRole(sessionId, UserRole.Admin) && !afRMI.isDepartmentHead(sessionId, _department)) {
+				return;
+			}
+		} catch (RemoteException e) {
+			log.error(e.getMessage());
+			ErrorPopUp.connectionError();
+		}
+    	
 		IMatchRMI match = _matchesList.getSelectionModel().getSelectedItem();
 		if(match != null){
 			try {

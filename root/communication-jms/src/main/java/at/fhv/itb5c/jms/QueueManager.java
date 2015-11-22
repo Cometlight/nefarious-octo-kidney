@@ -19,6 +19,7 @@ import at.fhv.itb5c.logging.ILogger;
 
 public class QueueManager implements ILogger {
 	String def_windows_url = "file:///C:/tmp";
+	String def_unix_url = "file:///tmp";
 	ConnectionFactory _cf;
 	String MYCF_LOOKUP_NAME = "cn=myQCF";
 	String MYQUEUE_LOOKUP_NAME = "cn=myQ";
@@ -76,7 +77,11 @@ public class QueueManager implements ILogger {
 
 		env = new Hashtable<>();
 		env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.fscontext.RefFSContextFactory");
-		env.put(Context.PROVIDER_URL, def_windows_url);
+		if(System.getProperty("os.name").toLowerCase().indexOf("win") >= 0){
+			env.put(Context.PROVIDER_URL, def_windows_url);
+		} else {
+			env.put(Context.PROVIDER_URL, def_unix_url);
+		}
 
 		try {
 			// Create the initial context.

@@ -214,8 +214,8 @@ public class ApplicationFacade implements ILogger {
 		}
 		return null;
 	}
-	
-	public MatchDTO getMatchById(String sessionId, Long matchId){
+
+	public MatchDTO getMatchById(String sessionId, Long matchId) {
 		if (hasRole(sessionId, UserRole.Admin, UserRole.StandardUser)) {
 			Match match = PersistenceFacade.getInstance().getById(Match.class, matchId);
 			return ConverterMatchDTO.toDTO(match);
@@ -303,14 +303,14 @@ public class ApplicationFacade implements ILogger {
 		}
 		return false;
 	}
-	
+
 	public TournamentDTO createTournament(String sessionId, DepartmentDTO dept) {
 		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
 			return ConverterTournamentDTO.toDTO(new Tournament());
 		}
 		return null;
 	}
-	
+
 	public TournamentDTO saveTournament(String sessionId, TournamentDTO tournament, DepartmentDTO dept) {
 		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
 			Tournament entity = ConverterTournamentDTO.toEntity(tournament);
@@ -324,19 +324,19 @@ public class ApplicationFacade implements ILogger {
 		}
 		return null;
 	}
-	
+
 	public TournamentDTO getTournamentById(String sessionId, Long id) {
 		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			return ConverterTournamentDTO.toDTO(PersistenceFacade.getInstance().getById(Tournament.class, id));
 		}
 		return null;
 	}
-	
-	public Boolean isDepartmentHead(String sessionId, DepartmentDTO dept){
+
+	public Boolean isDepartmentHead(String sessionId, DepartmentDTO dept) {
 		return dept.getHeadId().equals(_sessionManager.getUserId(sessionId));
 	}
-	
-	public Boolean isCoach(String sessionId, TeamDTO team){
+
+	public Boolean isCoach(String sessionId, TeamDTO team) {
 		return team.getCoachId().equals(_sessionManager.getUserId(sessionId));
 	}
 
@@ -353,16 +353,16 @@ public class ApplicationFacade implements ILogger {
 		}
 		return null;
 	}
-	
+
 	public Boolean rsvp(String sessionId, TeamDTO team, Boolean answer) {
-		  try {
-		   UserDTO player = getCurrentUser(sessionId);
-		   Team teamEntity = ConverterTeamDTO.toEntity(team);
-		   teamEntity.setMemberStatus(player.getId(), answer);
-		   return PersistenceFacade.getInstance().saveOrUpdate(teamEntity) != null;
-		  } catch (Exception e) {
-		   log.error(e.getMessage());
-		   return false;
-		  }
-		 }
+		try {
+			UserDTO player = getCurrentUser(sessionId);
+			Team teamEntity = ConverterTeamDTO.toEntity(team);
+			teamEntity.setMemberStatus(player.getId(), answer);
+			return PersistenceFacade.getInstance().saveOrUpdate(teamEntity) != null;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return false;
+		}
+	}
 }

@@ -1,6 +1,7 @@
 package at.fhv.itb5c.commons.dto.rmi;
 
 import java.rmi.RemoteException;
+import java.util.Map;
 import java.util.Set;
 
 import at.fhv.itb5c.commons.enums.TypeOfSport;
@@ -29,4 +30,10 @@ public interface ITeamRMI extends IBaseRMI {
 	Set<Long> getMemberIds() throws RemoteException;
 
 	void setMemberIds(Set<Long> memberIds) throws RemoteException;
+	
+	Map<Long, Boolean> getMemberStatus() throws RemoteException;
+	
+	void setMemberStatus(Map<Long, Boolean> memberStatus) throws RemoteException;
+	
+	void setMemberStatus(Long userID, Boolean status) throws RemoteException;
 }

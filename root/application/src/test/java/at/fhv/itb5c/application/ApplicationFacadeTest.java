@@ -19,6 +19,7 @@ import at.fhv.itb5c.application.dto.LeagueDTO;
 import at.fhv.itb5c.application.dto.TeamDTO;
 import at.fhv.itb5c.application.dto.TournamentDTO;
 import at.fhv.itb5c.application.dto.UserDTO;
+import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.commons.util.auth.SessionManager;
 import at.fhv.itb5c.model.entity.Department;
@@ -255,8 +256,47 @@ public class ApplicationFacadeTest {
 		assertNull(dto);
 	}
 
+	@Test
 	public void createUserDeptHead(){
 		DepartmentDTO dept = new DepartmentDTO();
 		dept.setHeadId(_user.getId());
 	}
+	
+	@Test
+	public void testSaveTournament() {
+		final Long id = 1338l;
+		DepartmentDTO dept = new DepartmentDTO();
+		dept.setHeadId(_user.getId());
+		dept.setId(id);
+		TournamentDTO tournament = _appFacade.createTournament(_session, dept);
+		
+		TournamentDTO savedTournament = _appFacade.saveTournament(_session, tournament, dept);
+		assertNotNull(savedTournament);
+		assertFalse(savedTournament == tournament);
+	}
+	
+//	@Test
+//	TODO fix test
+//	public void testUpdateTournamentAddTeams() {
+//		final Long id = 1338l;
+//		DepartmentDTO dept = new DepartmentDTO();
+//		dept.setHeadId(_user.getId());
+//		dept.setId(id);
+//		TournamentDTO tournament = _appFacade.createTournament(_session, dept);
+//		
+//		TournamentDTO savedTournament = _appFacade.saveTournament(_session, tournament, dept);
+//		
+//		TeamDTO team = _appFacade.createTeam(_session);
+//		team.setName("Team A");
+//		team.setTypeOfSport(TypeOfSport.Soccer);
+//		
+//		TeamDTO savedTeam = _appFacade.saveTeam(_session, team);
+//		
+//		savedTournament.getHomeTeamsIds().add(savedTeam.getId());
+//		TournamentDTO savedTournamentWithTeams = _appFacade.saveTournament(_session, savedTournament, dept);
+//		
+//		assertNotNull(savedTournamentWithTeams);
+//		assertFalse(savedTournamentWithTeams == savedTournament);
+//		
+//	}
 }

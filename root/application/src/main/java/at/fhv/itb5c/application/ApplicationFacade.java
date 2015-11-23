@@ -1,8 +1,10 @@
 package at.fhv.itb5c.application;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import at.fhv.itb5c.application.converter.ConverterDepartmentDTO;
 import at.fhv.itb5c.application.converter.ConverterLeagueDTO;
@@ -313,7 +315,14 @@ public class ApplicationFacade implements ILogger {
 	
 	public TournamentDTO saveTournament(String sessionId, TournamentDTO tournament, DepartmentDTO dept) {
 		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
+			
 			Tournament entity = ConverterTournamentDTO.toEntity(tournament);
+			if(entity.getId() != null) {
+				if(!cloneNewlyAddedTeams(entity)) {
+					return null;	// something went horribly wrong
+				}
+			}
+			
 			try {
 				entity = PersistenceFacade.getInstance().saveOrUpdate(entity);
 			} catch (Exception e) {
@@ -323,6 +332,26 @@ public class ApplicationFacade implements ILogger {
 			return ConverterTournamentDTO.toDTO(entity);
 		}
 		return null;
+	}
+
+	private Boolean cloneNewlyAddedTeams(Tournament entity) {
+		Tournament originalEntity = PersistenceFacade.getInstance().getById(Tournament.class, entity.getId());
+		Set<Long> ids = new HashSet<>(entity.getHomeTeamsIds());	// --> copy
+		ids = ids.stream().filter(id -> !originalEntity.getHomeTeamsIds().contains(id)).collect(Collectors.toSet());	// filter out all IDs that are already in originalEntity
+		entity.getHomeTeamsIds().removeAll(ids);
+		for(Long teamId : ids) {
+			Team team = PersistenceFacade.getInstance().getById(Team.class, teamId);
+			team.setId(null);
+			team.setVersion(null);
+			try {
+				team = PersistenceFacade.getInstance().saveOrUpdate(team);
+			} catch (Exception e) {
+				log.error(e.getMessage());
+				return false;
+			}
+			entity.getHomeTeamsIds().add(team.getId());
+		}
+		return true;
 	}
 	
 	public TournamentDTO getTournamentById(String sessionId, Long id) {

@@ -25,13 +25,16 @@ public class LDAPAuth implements ILogger {
 			SearchControls ctls = new SearchControls();
 			String filter = "(&(uid=" + username + ")(cn=*))";
 			NamingEnumeration<SearchResult> res = ctx.search("ou=fhv, ou=People", filter, ctls);
+			log.debug("LDAP results found for username " + username + ": " + res.hasMore());
 			if (res.hasMore()) {
 				SearchResult sr = res.next();
 				if (!res.hasMore()) {
+					log.debug("LDAP trying to login user " + username);
 					env.put(Context.SECURITY_AUTHENTICATION, "simple");
 					env.put(Context.SECURITY_PRINCIPAL, sr.getNameInNamespace());
 					env.put(Context.SECURITY_CREDENTIALS, password);
 					new InitialDirContext(env);
+					log.debug("LDAP login successful");
 					return username;
 				}
 			}

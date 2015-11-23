@@ -26,7 +26,7 @@ public class JMSHandler implements ILogger {
 	public static void listen(Long userID) {
 		// TODO: Listen for the specified userID
 		if(!_isListening) {
-			QueueManager queueManager = new QueueManager();
+			QueueManager queueManager = new QueueManager("");
 			_executorService.submit(() -> {
 				while(!Thread.interrupted()) {
 					handleIncomingMessage(queueManager.consume());	// TODO: Add timeout to consume

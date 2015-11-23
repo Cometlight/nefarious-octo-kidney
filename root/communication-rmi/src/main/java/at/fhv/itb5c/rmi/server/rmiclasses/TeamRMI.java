@@ -1,6 +1,7 @@
 package at.fhv.itb5c.rmi.server.rmiclasses;
 
 import java.rmi.RemoteException;
+import java.util.Map;
 import java.util.Set;
 
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
@@ -15,6 +16,7 @@ public class TeamRMI extends BaseRMI implements ITeamRMI {
 	private Long _coachId;
 	private Long _leagueId;
 	private Set<Long> _members;
+	private Map<Long, Boolean> _memberStatus;
 	
 	public TeamRMI() throws RemoteException {
 		super();
@@ -84,5 +86,26 @@ public class TeamRMI extends BaseRMI implements ITeamRMI {
 	@Override
 	public String toString(){
 		return _name;
+	}
+	
+	@Override
+	public Map<Long, Boolean> getMemberStatus() {
+		return _memberStatus;
+	}
+
+	@Override
+	public void setMemberStatus(Map<Long, Boolean> memberStatus) {
+		_memberStatus = memberStatus;
+	}
+	
+	/**
+	 * @param userId must be contained in {@link #_members}
+	 * @param status null = undefined, true = accepted, false = declined
+	 */
+	@Override
+	public void setMemberStatus(Long userID, Boolean status) {
+		if(_members.contains(userID)) {
+			_memberStatus.put(userID, status);
+		}
 	}
 }

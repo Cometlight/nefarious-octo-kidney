@@ -1,6 +1,8 @@
 package at.fhv.itb5c.model.entity;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -27,6 +29,13 @@ public class Team extends PersistableObject {
 
 	@Column(name = "members", nullable = true)
 	private Set<Long> _memberIds = new HashSet<>();
+	
+	@Column(name = "memberStatus", nullable = true)
+	/**
+	 * Long ... userID
+	 * Boolean ... null = undefined, true = accepted, false = declined
+	 */
+	private Map<Long /*userID*/, Boolean> _memberStatus = new HashMap<>();
 
 	public String getName() {
 		return _name;
@@ -74,5 +83,23 @@ public class Team extends PersistableObject {
 
 	public void setMemberIds(Set<Long> memberIds) {
 		_memberIds = memberIds;
+	}
+
+	public Map<Long, Boolean> getMemberStatus() {
+		return _memberStatus;
+	}
+
+	public void setMemberStatus(Map<Long, Boolean> memberStatus) {
+		_memberStatus = memberStatus;
+	}
+	
+	/**
+	 * @param userId must be contained in {@link #_memberIds}
+	 * @param status null = undefined, true = accepted, false = declined
+	 */
+	public void setMemberStatus(Long userID, Boolean status) {
+		if(_memberIds.contains(userID)) {
+			_memberStatus.put(userID, status);
+		}
 	}
 }

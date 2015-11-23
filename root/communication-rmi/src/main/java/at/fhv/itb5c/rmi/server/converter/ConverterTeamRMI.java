@@ -2,6 +2,7 @@ package at.fhv.itb5c.rmi.server.converter;
 
 import java.rmi.RemoteException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ public class ConverterTeamRMI implements ILogger {
 			rmi.setCoachId(dto.getCoachId());
 			rmi.setLeagueId(dto.getLeagueId());
 			rmi.setMemberIds(new HashSet<>(dto.getMemberIds()));
+			rmi.setMemberStatus(new HashMap<>(dto.getMemberStatus()));
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 		}
@@ -57,6 +59,7 @@ public class ConverterTeamRMI implements ILogger {
 			dto.setCoachId(rmi.getCoachId());
 			dto.setLeagueId(rmi.getLeagueId());
 			dto.setMemberIds(new HashSet<>(rmi.getMemberIds()));
+			dto.setMemberStatus(new HashMap<>(rmi.getMemberStatus()));
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 		}

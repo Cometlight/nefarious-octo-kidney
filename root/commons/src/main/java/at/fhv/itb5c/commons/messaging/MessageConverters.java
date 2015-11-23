@@ -3,7 +3,9 @@ package at.fhv.itb5c.commons.messaging;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MessageConverters {
+import at.fhv.itb5c.logging.ILogger;
+
+public class MessageConverters implements ILogger {
 
 	/**
 	 * Call this method once at startup to register the converter functions
@@ -28,7 +30,7 @@ public class MessageConverters {
 			map.put("tournamentId", tournamentId);
 			return map;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 		return null;
 	}

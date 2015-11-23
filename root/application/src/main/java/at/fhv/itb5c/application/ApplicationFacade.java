@@ -353,4 +353,16 @@ public class ApplicationFacade implements ILogger {
 		}
 		return null;
 	}
+	
+	public Boolean rsvp(String sessionId, TeamDTO team, Boolean answer) {
+		  try {
+		   UserDTO player = getCurrentUser(sessionId);
+		   Team teamEntity = ConverterTeamDTO.toEntity(team);
+		   teamEntity.setMemberStatus(player.getId(), answer);
+		   return PersistenceFacade.getInstance().saveOrUpdate(teamEntity) != null;
+		  } catch (Exception e) {
+		   log.error(e.getMessage());
+		   return false;
+		  }
+		 }
 }

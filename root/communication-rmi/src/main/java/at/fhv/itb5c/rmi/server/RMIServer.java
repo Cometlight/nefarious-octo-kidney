@@ -25,9 +25,6 @@ public class RMIServer implements ILogger{
 			}
 		}
 		
-		List<User> users = PersistenceFacade.getInstance().getAll(User.class);
-		System.out.println("Nr. of users found: " + users.size());
-		
 		log.info("Starting RMI server ...");
 		LocateRegistry.createRegistry(Integer.parseInt(_port));
 		log.info("RMI server started!");

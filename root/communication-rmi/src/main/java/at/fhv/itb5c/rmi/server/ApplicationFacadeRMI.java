@@ -191,4 +191,10 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	public Boolean hasRole(String sessionId, UserRole... roles) throws RemoteException {
 		return _applicationFacade.hasRole(sessionId, roles);
 	}
+
+	@Override
+	public Boolean rsvp(String sessionId, ITeamRMI team, Boolean answer) throws RemoteException {
+		TeamDTO teamDTO = ConverterTeamRMI.toDTO(team);
+		return _applicationFacade.rsvp(sessionId, teamDTO, answer);
+	}
 }

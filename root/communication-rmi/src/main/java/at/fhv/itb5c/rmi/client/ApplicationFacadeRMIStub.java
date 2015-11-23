@@ -173,4 +173,9 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	public Boolean hasRole(String sessionId, UserRole... roles) throws RemoteException {
 		return _applicationFacadeRMI.hasRole(sessionId, roles);
 	}
+
+	@Override
+	public Boolean rsvp(String sessionId, ITeamRMI team, Boolean answer) throws RemoteException {
+		return _applicationFacadeRMI.rsvp(sessionId, team, answer);
+	}
 }

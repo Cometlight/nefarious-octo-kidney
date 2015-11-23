@@ -8,6 +8,8 @@ import java.util.List;
 
 import at.fhv.itb5c.commons.property.PropertyManager;
 import at.fhv.itb5c.logging.ILogger;
+import at.fhv.itb5c.model.PersistenceFacade;
+import at.fhv.itb5c.model.entity.User;
 import at.fhv.itb5c.model.testdata.CreateTestData;
 
 public class RMIServer implements ILogger{
@@ -19,9 +21,12 @@ public class RMIServer implements ILogger{
 		if(args.length>0){
 			if(args[0].equals("test")){
 				CreateTestData.run();
+				log.info("Testdata created ...");
 			}
 		}
-		CreateTestData.run();
+		
+		List<User> users = PersistenceFacade.getInstance().getAll(User.class);
+		System.out.println("Nr. of users found: " + users.size());
 		
 		log.info("Starting RMI server ...");
 		LocateRegistry.createRegistry(Integer.parseInt(_port));

@@ -216,8 +216,8 @@ public class ApplicationFacade implements ILogger {
 		}
 		return null;
 	}
-	
-	public MatchDTO getMatchById(String sessionId, Long matchId){
+
+	public MatchDTO getMatchById(String sessionId, Long matchId) {
 		if (hasRole(sessionId, UserRole.Admin, UserRole.StandardUser)) {
 			Match match = PersistenceFacade.getInstance().getById(Match.class, matchId);
 			return ConverterMatchDTO.toDTO(match);
@@ -282,10 +282,13 @@ public class ApplicationFacade implements ILogger {
 	public String loginLDAP(String username, String password) {
 		if (username != null && password != null) {
 			if (LDAPAuth.ldapLogin(username, password) != null) {
+				log.debug("User login successful, searching for user in system ...");
 				User user = PersistenceFacade.getInstance().findUserByLDAP(username);
 				if (user != null) {
+					log.debug("... user found.");
 					return SessionManager.getInstance().createNewSession(user.getId(), user.getRoles());
 				}
+				log.debug("... user not found.");
 			}
 		}
 
@@ -305,14 +308,14 @@ public class ApplicationFacade implements ILogger {
 		}
 		return false;
 	}
-	
+
 	public TournamentDTO createTournament(String sessionId, DepartmentDTO dept) {
 		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
 			return ConverterTournamentDTO.toDTO(new Tournament());
 		}
 		return null;
 	}
-	
+
 	public TournamentDTO saveTournament(String sessionId, TournamentDTO tournament, DepartmentDTO dept) {
 		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
 			
@@ -360,12 +363,12 @@ public class ApplicationFacade implements ILogger {
 		}
 		return null;
 	}
-	
-	public Boolean isDepartmentHead(String sessionId, DepartmentDTO dept){
+
+	public Boolean isDepartmentHead(String sessionId, DepartmentDTO dept) {
 		return dept.getHeadId().equals(_sessionManager.getUserId(sessionId));
 	}
-	
-	public Boolean isCoach(String sessionId, TeamDTO team){
+
+	public Boolean isCoach(String sessionId, TeamDTO team) {
 		return team.getCoachId().equals(_sessionManager.getUserId(sessionId));
 	}
 
@@ -381,5 +384,17 @@ public class ApplicationFacade implements ILogger {
 			return ConverterMatchDTO.toDTO(entity);
 		}
 		return null;
+	}
+
+	public Boolean rsvp(String sessionId, TeamDTO team, Boolean answer) {
+		try {
+			UserDTO player = getCurrentUser(sessionId);
+			Team teamEntity = ConverterTeamDTO.toEntity(team);
+			teamEntity.setMemberStatus(player.getId(), answer);
+			return PersistenceFacade.getInstance().saveOrUpdate(teamEntity) != null;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return false;
+		}
 	}
 }

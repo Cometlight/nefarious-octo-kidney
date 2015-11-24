@@ -73,7 +73,7 @@ public class TournamentAddTeamsController implements IPanelClosable, ILogger {
 			}
 		});
 		_homeTeamComboBox.setButtonCell(new TeamListCell());
-		_homeTeamComboBox.getItems().addAll(RMIClient.getRMIClient().getApplicationFacade().findTeams(AppState.getInstance().getSessionID(), null, null, _department.getId(), null));
+		_homeTeamComboBox.getItems().addAll(RMIClient.getRMIClient().getApplicationFacade().findTeams(AppState.getInstance().getSessionID(), null, null, _department.getId(), null, null));
 		// bind properties
 		_homeTeamsList.setCellFactory(new Callback<ListView<ITeamRMI>, ListCell<ITeamRMI>>() {
 			@Override

@@ -193,10 +193,4 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 			throws RemoteException {
 		_applicationFacadeRMI.invitePlayer(sessionId, player, team, tournament);
 	}
-
-	@Override
-	public ITournamentRMI addTeamToTournament(String sessionId, ITournamentRMI tournament, ITeamRMI team)
-			throws RemoteException {
-		return _applicationFacadeRMI.addTeamToTournament(sessionId, tournament, team);
-	}
 }

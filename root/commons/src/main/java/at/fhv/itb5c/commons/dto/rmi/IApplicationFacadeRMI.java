@@ -72,7 +72,4 @@ public interface IApplicationFacadeRMI extends Remote {
 
 	void invitePlayer(String sessionId, IUserRMI player, ITeamRMI team, ITournamentRMI tournament)
 			throws RemoteException;
-
-	ITournamentRMI addTeamToTournament(String sessionId, ITournamentRMI tournament, ITeamRMI team)
-			throws RemoteException;
 }

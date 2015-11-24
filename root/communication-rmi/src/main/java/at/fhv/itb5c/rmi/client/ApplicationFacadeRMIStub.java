@@ -77,7 +77,7 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	}
 
 	@Override
-	public ITeamRMI createTeam(String sessionId) throws RemoteException{
+	public ITeamRMI createTeam(String sessionId) throws RemoteException {
 		return _applicationFacadeRMI.createTeam(sessionId);
 	}
 
@@ -87,9 +87,9 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	}
 
 	@Override
-	public Collection<ITeamRMI> findTeams(String sessionId, String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId)
-			throws RemoteException {
-		return _applicationFacadeRMI.findTeams(sessionId, name, typeOfSport, departmentId, leagueId);
+	public Collection<ITeamRMI> findTeams(String sessionId, String name, TypeOfSport typeOfSport, Long departmentId,
+			Long leagueId, Long coachId) throws RemoteException {
+		return _applicationFacadeRMI.findTeams(sessionId, name, typeOfSport, departmentId, leagueId, coachId);
 	}
 
 	@Override
@@ -123,12 +123,14 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	}
 
 	@Override
-	public ITournamentRMI saveTournament(String sessionId, ITournamentRMI tournament, IDepartmentRMI dept) throws RemoteException {
+	public ITournamentRMI saveTournament(String sessionId, ITournamentRMI tournament, IDepartmentRMI dept)
+			throws RemoteException {
 		return _applicationFacadeRMI.saveTournament(sessionId, tournament, dept);
 	}
 
 	@Override
-	public Collection<ITournamentRMI> findTournaments(String sessionId, String name, Long departmentId) throws RemoteException {
+	public Collection<ITournamentRMI> findTournaments(String sessionId, String name, Long departmentId)
+			throws RemoteException {
 		return _applicationFacadeRMI.findTournaments(sessionId, name, departmentId);
 	}
 
@@ -142,7 +144,8 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	}
 
 	@Override
-	public ITournamentRMI addMatchToTournament(String sessionId, ITournamentRMI tournament, IMatchRMI match) throws RemoteException {
+	public ITournamentRMI addMatchToTournament(String sessionId, ITournamentRMI tournament, IMatchRMI match)
+			throws RemoteException {
 		return _applicationFacadeRMI.addMatchToTournament(sessionId, tournament, match);
 	}
 
@@ -189,5 +192,11 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	public void invitePlayer(String sessionId, IUserRMI player, ITeamRMI team, ITournamentRMI tournament)
 			throws RemoteException {
 		_applicationFacadeRMI.invitePlayer(sessionId, player, team, tournament);
+	}
+
+	@Override
+	public ITournamentRMI addTeamToTournament(String sessionId, ITournamentRMI tournament, ITeamRMI team)
+			throws RemoteException {
+		return _applicationFacadeRMI.addTeamToTournament(sessionId, tournament, team);
 	}
 }

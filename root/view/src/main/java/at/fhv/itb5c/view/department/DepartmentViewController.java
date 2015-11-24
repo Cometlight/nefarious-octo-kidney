@@ -65,7 +65,7 @@ public class DepartmentViewController implements IPanelClosable, ILogger {
 			_departmentViewModel.getTeams()
 					.setAll(RMIClient.getRMIClient().getApplicationFacade().findTeams(
 							AppState.getInstance().getSessionID(), null, null,
-							_departmentViewModel.getDepartment().getId(), null));
+							_departmentViewModel.getDepartment().getId(), null, null));
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();

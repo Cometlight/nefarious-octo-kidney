@@ -8,8 +8,6 @@ import java.util.List;
 
 import at.fhv.itb5c.commons.property.PropertyManager;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.model.PersistenceFacade;
-import at.fhv.itb5c.model.entity.User;
 import at.fhv.itb5c.model.testdata.CreateTestData;
 
 public class RMIServer implements ILogger{

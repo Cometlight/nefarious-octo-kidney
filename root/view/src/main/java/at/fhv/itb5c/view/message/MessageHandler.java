@@ -56,6 +56,9 @@ public class MessageHandler implements ILogger {
 				TournamentInvitationPopup.display(tournament, team);
 				break;
 			}
+			case(""): {
+				
+			}
 			default: {
 				log.error("Can not parse message -> " + msg.getKind());
 				break;

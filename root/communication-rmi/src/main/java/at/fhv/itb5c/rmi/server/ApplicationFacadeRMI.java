@@ -204,4 +204,13 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	public IMessageRMI getMessage(String sessionId) throws RemoteException {
 		return ConverterMessageRMI.toRMI(_applicationFacade.getMessage(sessionId));
 	}
+
+	@Override
+	public void invitePlayer(String sessionId, IUserRMI player, ITeamRMI team, ITournamentRMI tournament)
+			throws RemoteException {
+		TeamDTO teamDTO = ConverterTeamRMI.toDTO(team);
+		TournamentDTO tournamentDTO = ConverterTournamentRMI.toDTO(tournament);
+		UserDTO playerDTO = ConverterUserRMI.toDTO(player);
+		_applicationFacade.invitePlayer(sessionId, playerDTO, teamDTO, tournamentDTO);
+	}
 }

@@ -1,6 +1,7 @@
 package at.fhv.itb5c.application;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +26,7 @@ import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.commons.util.auth.LDAPAuth;
 import at.fhv.itb5c.commons.util.auth.SessionManager;
 import at.fhv.itb5c.jms.QueueManager;
+import at.fhv.itb5c.jms.entity.Message;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.PersistenceFacade;
 import at.fhv.itb5c.model.entity.Department;
@@ -404,5 +406,36 @@ public class ApplicationFacade implements ILogger {
 	public MessageDTO getMessage(String sessionId) {
 		QueueManager qm = new QueueManager(SessionManager.getInstance().getUserId(sessionId).toString());
 		return ConverterMessageDTO.toDTO(qm.consume());
+	}
+
+	/**
+	 * adds a player to a team from the specified tournament and creates a notification for the player
+	 * @param sessionId session id
+	 * @param player player to be added
+	 * @param team team of the player
+	 * @param tournament tournament
+	 */
+	public void invitePlayer(String sessionId, UserDTO player, TeamDTO team, TournamentDTO tournament) {
+		if(tournament.getHomeTeamsIds().contains(team.getId())){
+			// add player to team if not exists
+			if(!team.getMemberIds().contains(player.getId())){
+				Team teamEntity = ConverterTeamDTO.toEntity(team);
+				teamEntity.getMemberIds().add(player.getId());
+				try {
+					PersistenceFacade.getInstance().saveOrUpdate(teamEntity);
+				} catch (Exception e) {
+					log.error(e.getMessage());
+				}
+				
+				// add message to players queue
+				QueueManager qm = new QueueManager(SessionManager.getInstance().getUserId(sessionId).toString());
+				String msgType = "INVITE_PLAYER_TOURNAMENT";
+				HashMap<String, Object> msgData = new HashMap<>();
+				msgData.put("tournamentId", tournament.getId());
+				msgData.put("teamId", team.getId());
+				Message message = new Message(msgType, msgData);
+				qm.produce(message);
+			}
+		}
 	}
 }

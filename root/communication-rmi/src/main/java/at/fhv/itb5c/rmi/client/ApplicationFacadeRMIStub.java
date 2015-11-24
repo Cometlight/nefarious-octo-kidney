@@ -184,4 +184,10 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	public IMessageRMI getMessage(String sessionId) throws RemoteException {
 		return _applicationFacadeRMI.getMessage(sessionId);
 	}
+
+	@Override
+	public void invitePlayer(String sessionId, IUserRMI player, ITeamRMI team, ITournamentRMI tournament)
+			throws RemoteException {
+		_applicationFacadeRMI.invitePlayer(sessionId, player, team, tournament);
+	}
 }

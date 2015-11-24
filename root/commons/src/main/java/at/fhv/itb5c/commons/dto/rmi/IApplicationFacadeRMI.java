@@ -67,4 +67,6 @@ public interface IApplicationFacadeRMI extends Remote {
 	Boolean rsvp(String sessionId, ITeamRMI team, Boolean answer) throws RemoteException;
 	
 	IMessageRMI getMessage(String sessionId) throws RemoteException;
+	
+	void invitePlayer(String sessionId, IUserRMI player, ITeamRMI team, ITournamentRMI tournament) throws RemoteException;
 }

@@ -65,4 +65,6 @@ public interface IApplicationFacadeRMI extends Remote {
 	Boolean isCoach(String sessionId, ITeamRMI team) throws RemoteException;
 	
 	Boolean rsvp(String sessionId, ITeamRMI team, Boolean answer) throws RemoteException;
+	
+	IMessageRMI getMessage(String sessionId) throws RemoteException;
 }

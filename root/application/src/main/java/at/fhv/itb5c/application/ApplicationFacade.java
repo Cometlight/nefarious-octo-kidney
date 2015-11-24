@@ -9,12 +9,14 @@ import java.util.stream.Collectors;
 import at.fhv.itb5c.application.converter.ConverterDepartmentDTO;
 import at.fhv.itb5c.application.converter.ConverterLeagueDTO;
 import at.fhv.itb5c.application.converter.ConverterMatchDTO;
+import at.fhv.itb5c.application.converter.ConverterMessageDTO;
 import at.fhv.itb5c.application.converter.ConverterTeamDTO;
 import at.fhv.itb5c.application.converter.ConverterTournamentDTO;
 import at.fhv.itb5c.application.converter.ConverterUserDTO;
 import at.fhv.itb5c.application.dto.DepartmentDTO;
 import at.fhv.itb5c.application.dto.LeagueDTO;
 import at.fhv.itb5c.application.dto.MatchDTO;
+import at.fhv.itb5c.application.dto.MessageDTO;
 import at.fhv.itb5c.application.dto.TeamDTO;
 import at.fhv.itb5c.application.dto.TournamentDTO;
 import at.fhv.itb5c.application.dto.UserDTO;
@@ -22,6 +24,7 @@ import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.commons.util.auth.LDAPAuth;
 import at.fhv.itb5c.commons.util.auth.SessionManager;
+import at.fhv.itb5c.jms.QueueManager;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.PersistenceFacade;
 import at.fhv.itb5c.model.entity.Department;
@@ -396,5 +399,10 @@ public class ApplicationFacade implements ILogger {
 			log.error(e.getMessage());
 			return false;
 		}
+	}
+
+	public MessageDTO getMessage(String sessionId) {
+		QueueManager qm = new QueueManager(SessionManager.getInstance().getUserId(sessionId).toString());
+		return ConverterMessageDTO.toDTO(qm.consume());
 	}
 }

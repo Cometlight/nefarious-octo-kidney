@@ -11,6 +11,7 @@ import at.fhv.itb5c.commons.dto.rmi.IApplicationFacadeRMI;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.ILeagueRMI;
 import at.fhv.itb5c.commons.dto.rmi.IMatchRMI;
+import at.fhv.itb5c.commons.dto.rmi.IMessageRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
@@ -177,5 +178,10 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	@Override
 	public Boolean rsvp(String sessionId, ITeamRMI team, Boolean answer) throws RemoteException {
 		return _applicationFacadeRMI.rsvp(sessionId, team, answer);
+	}
+
+	@Override
+	public IMessageRMI getMessage(String sessionId) throws RemoteException {
+		return _applicationFacadeRMI.getMessage(sessionId);
 	}
 }

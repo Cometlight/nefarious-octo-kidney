@@ -28,4 +28,8 @@ public class Message implements Serializable {
 	public String toString() {
 		return "Message [_kind=" + _kind + ", _data=" + _data + "]";
 	}
+
+	public Map<String, Object> getData() {
+		return _data;
+	}
 }

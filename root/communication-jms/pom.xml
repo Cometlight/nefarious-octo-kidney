@@ -6,6 +6,7 @@
 		<artifactId>root</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+	<groupId>at.fhv.itb5c.jms</groupId>
 	<artifactId>communication-jms</artifactId>
 	<name>communication-jms</name>
 	<dependencies>

@@ -31,6 +31,10 @@ public class QueueManager implements ILogger {
 	private Queue _queue;
 	private Connection _connection;
 
+	/**
+	 * create a new QueueManager entity with the given queue name.
+	 * @param name queue name
+	 */
 	public QueueManager(String name) {
 		// initializing imq paramters
 		_qName = PropertyManager.getInstance().getProperty("at.fhv.itb5c.jms.Qprefix") + name;
@@ -41,6 +45,9 @@ public class QueueManager implements ILogger {
 				+ ", _brokerList = " + _brokerList);
 	}
 
+	/*
+	 * produce a message for the queue
+	 */
 	public void produce(Message message) {
 		// create a new JMS session
 		Session session = createSession();
@@ -62,6 +69,10 @@ public class QueueManager implements ILogger {
 		}
 	}
 
+	/**
+	 * read a message from the queue (in the given timeout)
+	 * @return Message
+	 */
 	public Message consume() {
 		Session session = createSession();
 		try {
@@ -83,6 +94,10 @@ public class QueueManager implements ILogger {
 		}
 	}
 
+	/**
+	 * create a new session for the given queue
+	 * @return Session
+	 */
 	private Session createSession() {
 		try {
 			// create new connection factory

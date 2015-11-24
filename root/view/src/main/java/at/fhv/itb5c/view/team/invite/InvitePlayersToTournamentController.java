@@ -16,10 +16,10 @@ public class InvitePlayersToTournamentController implements ILogger{
 	@FXML private Label _teamLabel;
 	@FXML private CheckListView<IUserRMI> _teamMemberCheckListView;
 
-	private InvitePlayerToTeamModel _model;
+	private InvitePlayerToTournamentModel _model;
 	
 	public InvitePlayersToTournamentController(ITournamentRMI tournament, ITeamRMI team) {
-		_model = new InvitePlayerToTeamModel(team, tournament);
+		_model = new InvitePlayerToTournamentModel(team, tournament);
 		try {
 			_tournamentLabel.setText(_model.getTournament().getName());
 			_teamLabel.setText(_model.getTeam().getName());

@@ -5,12 +5,12 @@ import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import javafx.collections.ObservableList;
 
-public class InvitePlayerToTeamModel {
+public class InvitePlayerToTournamentModel {
 	private ITeamRMI _team;
 	private ITournamentRMI _tournament;
 	private ObservableList<IUserRMI> _teamMembers;
 	
-	public InvitePlayerToTeamModel(ITeamRMI team, ITournamentRMI tournament) {
+	public InvitePlayerToTournamentModel(ITeamRMI team, ITournamentRMI tournament) {
 		_team = team;
 		_tournament = tournament;
 	}

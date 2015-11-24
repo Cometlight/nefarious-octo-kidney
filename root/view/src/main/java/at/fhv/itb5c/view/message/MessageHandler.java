@@ -1,5 +1,6 @@
 package at.fhv.itb5c.view.message;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -9,8 +10,12 @@ import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.AppState;
+import at.fhv.itb5c.view.team.invite.InvitePlayersToTournamentPanelAndViewFactory;
 import at.fhv.itb5c.view.tournament.invitation.TournamentInvitationPopup;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class MessageHandler implements ILogger {
 	private static MessageHandler _instance = new MessageHandler();
@@ -56,8 +61,24 @@ public class MessageHandler implements ILogger {
 				TournamentInvitationPopup.display(tournament, team);
 				break;
 			}
-			case(""): {
+			case("NOTIFY_COACH_TOURNAMENT"): {
+				ITournamentRMI tournament = RMIClient.getRMIClient().getApplicationFacade().getTournamentById(AppState.getInstance().getSessionID(), (Long)msg.get("tournamentId"));
+				ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade().getTeamById(AppState.getInstance().getSessionID(), (Long)msg.get("teamId"));
 				
+				try {
+					Pane root = new InvitePlayersToTournamentPanelAndViewFactory(tournament, team).create();
+					
+					Stage stage = new Stage();
+					stage.setTitle("PopUp");
+					stage.setScene(new Scene(root));
+					stage.showAndWait();
+					
+				} catch (IOException e) {
+					log.error(e.getMessage());
+					ErrorPopUp.criticalSystemError();
+				}
+				
+				break;
 			}
 			default: {
 				log.error("Can not parse message -> " + msg.getKind());

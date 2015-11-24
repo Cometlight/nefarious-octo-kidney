@@ -481,6 +481,9 @@ public class ApplicationFacade implements ILogger {
 						return null;
 					}
 					
+					// send notification to coach
+					enqueueTournamentNotification(team.getCoachId(), tournament.getId(), teamEntity.getId());
+					
 					// send invitation to players
 					for(Long playerId : team.getMemberIds()){
 						enqueueTournamentInvitation(playerId, tournament.getId(), teamEntity.getId());
@@ -502,6 +505,16 @@ public class ApplicationFacade implements ILogger {
 	private void enqueueTournamentInvitation(Long playerId, Long tournamentId, Long teamId){
 		QueueManager qm = new QueueManager(playerId.toString());
 		String msgType = "INVITE_PLAYER_TOURNAMENT";
+		HashMap<String, Object> msgData = new HashMap<>();
+		msgData.put("tournamentId", tournamentId);
+		msgData.put("teamId", teamId);
+		Message message = new Message(msgType, msgData);
+		qm.produce(message);
+	}
+	
+	private void enqueueTournamentNotification(Long coachId, Long tournamentId, Long teamId){
+		QueueManager qm = new QueueManager(coachId.toString());
+		String msgType = "NOTIFY_COACH_TOURNAMENT";
 		HashMap<String, Object> msgData = new HashMap<>();
 		msgData.put("tournamentId", tournamentId);
 		msgData.put("teamId", teamId);

@@ -447,13 +447,7 @@ public class ApplicationFacade implements ILogger {
 					}
 
 					// add message to players queue
-					QueueManager qm = new QueueManager(SessionManager.getInstance().getUserId(sessionId).toString());
-					String msgType = "INVITE_PLAYER_TOURNAMENT";
-					HashMap<String, Object> msgData = new HashMap<>();
-					msgData.put("tournamentId", tournament.getId());
-					msgData.put("teamId", team.getId());
-					Message message = new Message(msgType, msgData);
-					qm.produce(message);
+					enqueueTournamentInvitation(SessionManager.getInstance().getUserId(sessionId), tournament.getId(), team.getId());
 				}
 			}
 		}
@@ -466,14 +460,30 @@ public class ApplicationFacade implements ILogger {
 		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept) || isCoach(sessionId, dept)) {
 			if (tournament != null && team != null) {
 				if (!tournament.getHomeTeamsIds().contains(team.getId())) {
+					// save a copy of the team
+					Team teamEntity = ConverterTeamDTO.toEntity(team);
+					teamEntity.setId(null);
+					try {
+						teamEntity = PersistenceFacade.getInstance().saveOrUpdate(teamEntity);
+					} catch (Exception e) {
+						log.error(e.getMessage());
+						return null;
+					}
+					
+					// add team copy to tournament
 					Tournament tournamentEntity = ConverterTournamentDTO.toEntity(tournament);
-					tournamentEntity.getHomeTeamsIds().add(team.getId());
+					tournamentEntity.getHomeTeamsIds().add(teamEntity.getId());
 					try {
 						tournament = ConverterTournamentDTO
 								.toDTO(PersistenceFacade.getInstance().saveOrUpdate(tournamentEntity));
 					} catch (Exception e) {
 						log.error(e.getMessage());
 						return null;
+					}
+					
+					// send invitation to players
+					for(Long playerId : team.getMemberIds()){
+						enqueueTournamentInvitation(playerId, tournament.getId(), teamEntity.getId());
 					}
 					return tournament;
 				}
@@ -487,5 +497,15 @@ public class ApplicationFacade implements ILogger {
 				SessionManager.getInstance().getUserId(sessionId));
 
 		return !res.isEmpty();
+	}
+	
+	private void enqueueTournamentInvitation(Long playerId, Long tournamentId, Long teamId){
+		QueueManager qm = new QueueManager(playerId.toString());
+		String msgType = "INVITE_PLAYER_TOURNAMENT";
+		HashMap<String, Object> msgData = new HashMap<>();
+		msgData.put("tournamentId", tournamentId);
+		msgData.put("teamId", teamId);
+		Message message = new Message(msgType, msgData);
+		qm.produce(message);
 	}
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
+import at.fhv.itb5c.view.message.MessageHandler;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -30,7 +31,7 @@ public class Program extends Application implements ILogger {
 		RMIClient.getRMIClient().close();
 		log.info("\tRMI Connection closed.");
 		
-		JMSHandler.shutdown();
+		MessageHandler.shutdown();
 		log.info("\tJMS listening stoped.");
 		
 		super.stop();

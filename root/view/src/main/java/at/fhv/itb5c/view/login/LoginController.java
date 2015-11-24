@@ -6,7 +6,7 @@ import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.AppState;
-import at.fhv.itb5c.view.JMSHandler;
+import at.fhv.itb5c.view.message.MessageHandler;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -55,7 +55,7 @@ public class LoginController implements ILogger {
 				// valid credentials
 				AppState.getInstance().setSessionID(sessionID);
 				IUserRMI currentUser = RMIClient.getRMIClient().getApplicationFacade().getCurrentUser(sessionID);
-				JMSHandler.getInstance().listen(currentUser.getId());
+				MessageHandler.getInstance().listen(currentUser.getId());
 			}
 
 		} catch (RemoteException e) {

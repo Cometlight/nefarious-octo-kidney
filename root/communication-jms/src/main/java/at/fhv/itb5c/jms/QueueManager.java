@@ -1,6 +1,10 @@
+/**
+ * QueueManager for producing and consuming messages on/from the queue broker.
+ * The imqbroker (glassfish) needs to be running.
+ * New queues are automatically generated.
+ * (https://glassfish.java.net/docs/4.0/mq-dev-guide-java.pdf) 
+ */
 package at.fhv.itb5c.jms;
-
-import java.util.Hashtable;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -8,69 +12,71 @@ import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
+import javax.jms.ObjectMessage;
 import javax.jms.Queue;
 import javax.jms.Session;
-import javax.jms.TextMessage;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+
+import com.sun.messaging.AdministeredObject;
+import com.sun.messaging.ConnectionConfiguration;
 
 import at.fhv.itb5c.commons.property.PropertyManager;
+import at.fhv.itb5c.jms.entity.Message;
 import at.fhv.itb5c.logging.ILogger;
 
 public class QueueManager implements ILogger {
-	private String _winPath;
-	private String _unixPath;
-	private String _cfLookupName;
-	private String _qLookupName;
+	private String _qName;
+	private String _brokerList;
+	private int _timeoutConsumer;
 
 	private Queue _queue;
 	private Connection _connection;
 
 	public QueueManager(String name) {
-		_cfLookupName = PropertyManager.getInstance().getProperty("at.fhv.itb5c.jms.QF");
-		_qLookupName = PropertyManager.getInstance().getProperty("at.fhv.itb5c.jms.Qprefix") + name;
-		_winPath = PropertyManager.getInstance().getProperty("at.fhv.itb5c.jms.winPath");
-		_unixPath = PropertyManager.getInstance().getProperty("at.fhv.itb5c.jms.unixPath");
-		log.debug("Queue Parameters: _cfLookupName = " + _cfLookupName + ", _qLookupName = " + _qLookupName
-				+ ", _winPath = " + _winPath + ", _unixPath = " + _unixPath);
+		// initializing imq paramters
+		_qName = PropertyManager.getInstance().getProperty("at.fhv.itb5c.jms.Qprefix") + name;
+		_timeoutConsumer = Integer
+				.parseInt(PropertyManager.getInstance().getProperty("at.fhv.itb5c.jms.consumer.timeout"));
+		_brokerList = PropertyManager.getInstance().getProperty("at.fhv.itb5c.jms.brokerlist");
+		log.debug("Queue Parameters: _cfLookupName = " + _qName + ", _timeoutConsumer = " + _timeoutConsumer
+				+ ", _brokerList = " + _brokerList);
 	}
 
-	public void produce(String textMessage) {
+	public void produce(Message message) {
 		// create a new JMS session
 		Session session = createSession();
-		TextMessage msg;
+		ObjectMessage msg;
 		try {
-			msg = session.createTextMessage(textMessage);
-			log.info("Message created!");
-
-			// Publish the message
-			log.info("Publishing a message to Queue: " + _queue.getQueueName());
+			// change to .createObjectMessage(Serializable)
+			msg = session.createObjectMessage(message);
 
 			// Create the MessageProducer
 			MessageProducer msgProducer = session.createProducer(_queue);
 
-			log.info("Producer created!");
-
 			// send message to queue
 			msgProducer.send(msg, DeliveryMode.NON_PERSISTENT, 4, 0);
 
+			log.info("Message published to queue: " + _queue.getQueueName());
 			_connection.close();
 		} catch (JMSException e) {
 			log.error(e.getMessage());
 		}
 	}
 
-	public String consume() {
+	public Message consume() {
 		Session session = createSession();
 		try {
 			// Create the MessageConsumer
 			MessageConsumer msgConsumer = session.createConsumer(_queue);
-			TextMessage msg = (TextMessage) msgConsumer.receive();
+			ObjectMessage msg = (ObjectMessage) msgConsumer.receive(_timeoutConsumer);
+			log.info("Message consumed from queue: " + _queue.getQueueName());
 
 			_connection.close();
 
-			return msg.getText();
+			if (msg == null) {
+				return null;
+			}
+
+			return (Message) msg.getObject();
 		} catch (JMSException e) {
 			log.error(e.getMessage());
 			return null;
@@ -78,25 +84,16 @@ public class QueueManager implements ILogger {
 	}
 
 	private Session createSession() {
-		Hashtable<String, String> env;
-		Context ctx = null;
-
-		// set environment variables
-		env = new Hashtable<>();
-		env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.fscontext.RefFSContextFactory");
-		if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
-			env.put(Context.PROVIDER_URL, _winPath);
-		} else {
-			env.put(Context.PROVIDER_URL, _unixPath);
-		}
-
 		try {
-			// Create the initial context.
-			ctx = new InitialContext(env);
-			ConnectionFactory cf = (javax.jms.ConnectionFactory) ctx.lookup(_cfLookupName);
-			_queue = (javax.jms.Queue) ctx.lookup(_qLookupName);
+			// create new connection factory
+			ConnectionFactory cf = new com.sun.messaging.ConnectionFactory();
+			((AdministeredObject) cf).setProperty(ConnectionConfiguration.imqAddressList, _brokerList);
+			((AdministeredObject) cf).setProperty(ConnectionConfiguration.imqReconnectEnabled, "true");
+			// create new queue
+			_queue = new com.sun.messaging.Queue(_qName);
+			// create connection
 			_connection = cf.createConnection();
-		} catch (NamingException | JMSException e) {
+		} catch (JMSException e) {
 			log.error(e.getMessage());
 			return null;
 		}
@@ -105,12 +102,12 @@ public class QueueManager implements ILogger {
 
 		Session session = null;
 
+		// create session and start connection
 		try {
 			session = _connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
 			log.info("Session created!");
 
-			// Tell the provider to start sending messages.
 			_connection.start();
 		} catch (JMSException e) {
 			log.error(e.getMessage());

@@ -1,4 +1,4 @@
-package at.fhv.itb5c.commons.messaging;
+package at.fhv.itb5c.jms.entity;
 
 import java.util.HashMap;
 import java.util.Map;

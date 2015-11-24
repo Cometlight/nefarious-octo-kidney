@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.jms.QueueManager;
+import at.fhv.itb5c.jms.entity.Message;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.tournament.invitation.TournamentInvitationPopup;
@@ -41,7 +42,7 @@ public class JMSHandler implements ILogger {
 		}
 	}
 	
-	private static void handleIncomingMessage(String msg) {
+	private static void handleIncomingMessage(Message msg) {
 		log.info("JMS Message received: " + msg);
 		// TODO
 		// parseMessage(msg);

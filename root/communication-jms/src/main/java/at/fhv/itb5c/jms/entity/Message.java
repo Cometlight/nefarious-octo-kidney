@@ -1,11 +1,13 @@
-package at.fhv.itb5c.commons.messaging;
+package at.fhv.itb5c.jms.entity;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * Represents a message received from a messaging service.
  */
-public class Message {
+public class Message implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String _kind;
 	private Map<String, Object> _data;
 
@@ -20,5 +22,10 @@ public class Message {
 
 	public Object get(String prop) {
 		return this._data.get(prop);
+	}
+
+	@Override
+	public String toString() {
+		return "Message [_kind=" + _kind + ", _data=" + _data + "]";
 	}
 }

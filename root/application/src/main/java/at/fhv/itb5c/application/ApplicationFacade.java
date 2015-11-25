@@ -446,15 +446,7 @@ public class ApplicationFacade implements ILogger {
 		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
 			if (tournament.getHomeTeamsIds().contains(team.getId())) {
 				// add player to team if not exists
-				if (!team.getMemberIds().contains(player.getId())) {
-					Team teamEntity = ConverterTeamDTO.toEntity(team);
-					teamEntity.getMemberIds().add(player.getId());
-					try {
-						PersistenceFacade.getInstance().saveOrUpdate(teamEntity);
-					} catch (Exception e) {
-						log.error(e.getMessage());
-					}
-
+				if (team.getMemberIds().contains(player.getId())) {
 					// add message to players queue
 					enqueueTournamentInvitation(SessionManager.getInstance().getUserId(sessionId), tournament.getId(),
 							team.getId());

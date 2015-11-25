@@ -343,9 +343,9 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
-	private Boolean cloneNewlyAddedTeams(Tournament entity) {
-		Tournament originalEntity = PersistenceFacade.getInstance().getById(Tournament.class, entity.getId());
-		Set<Long> ids = new HashSet<>(entity.getHomeTeamsIds()); // --> copy
+	private Boolean cloneNewlyAddedTeams(Tournament tournament) {
+		Tournament originalEntity = PersistenceFacade.getInstance().getById(Tournament.class, tournament.getId());
+		Set<Long> ids = new HashSet<>(tournament.getHomeTeamsIds()); // --> copy
 		ids = ids.stream().filter(id -> !originalEntity.getHomeTeamsIds().contains(id)).collect(Collectors.toSet()); // filter
 																														// out
 																														// all
@@ -355,22 +355,30 @@ public class ApplicationFacade implements ILogger {
 																														// already
 																														// in
 																														// originalEntity
-		entity.getHomeTeamsIds().removeAll(ids);
+		tournament.getHomeTeamsIds().removeAll(ids);
 		for (Long teamId : ids) {
 			Team team = PersistenceFacade.getInstance().getById(Team.class, teamId);
-			team.setId(null);
-			team.setVersion(null);
+			
+			Team teamCopy = new Team();
+			teamCopy.setCoachId(team.getCoachId());
+			teamCopy.setDepartmentId(team.getDepartmentId());
+			teamCopy.setLeagueId(team.getLeagueId());
+			teamCopy.setMemberIds(new HashSet<>(team.getMemberIds()));
+			teamCopy.setName(team.getName());
+			teamCopy.setTypeOfSport(team.getTypeOfSport());
+			
+			Team teamCopySaved = null;
 			try {
-				team = PersistenceFacade.getInstance().saveOrUpdate(team);
+				teamCopySaved = PersistenceFacade.getInstance().saveOrUpdate(teamCopy);
 			} catch (Exception e) {
 				log.error(e.getMessage());
 				return false;
 			}
-			entity.getHomeTeamsIds().add(team.getId());
-			for (Long playerId : team.getMemberIds()) {
-				enqueueTournamentInvitation(playerId, entity.getId(), team.getId());
+			tournament.getHomeTeamsIds().add(teamCopySaved.getId());
+			for (Long playerId : teamCopySaved.getMemberIds()) {
+				enqueueTournamentInvitation(playerId, tournament.getId(), teamCopySaved.getId());
 			}
-			enqueueTournamentNotification(team.getCoachId(), entity.getId(), team.getId());
+			enqueueTournamentNotification(team.getCoachId(), tournament.getId(), teamCopySaved.getId());
 		}
 		return true;
 	}

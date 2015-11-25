@@ -79,14 +79,14 @@ public class QueueManager implements ILogger {
 			// Create the MessageConsumer
 			MessageConsumer msgConsumer = session.createConsumer(_queue);
 			ObjectMessage msg = (ObjectMessage) msgConsumer.receive(_timeoutConsumer);
-			log.info("Message consumed from queue: " + _queue.getQueueName());
-
+			
 			_connection.close();
 
 			if (msg == null) {
+				log.info("No message in " + _queue.getQueueName());
 				return null;
 			}
-
+			log.info("Message consumed from queue: " + _queue.getQueueName());
 			return (Message) msg.getObject();
 		} catch (JMSException e) {
 			log.error(e.getMessage());

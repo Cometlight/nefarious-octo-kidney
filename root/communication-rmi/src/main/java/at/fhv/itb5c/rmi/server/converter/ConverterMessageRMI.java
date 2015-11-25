@@ -9,12 +9,14 @@ import at.fhv.itb5c.rmi.server.rmiclasses.MessageRMI;
 
 public class ConverterMessageRMI implements ILogger {
 	public static IMessageRMI toRMI(MessageDTO messagedto){
-		IMessageRMI messagermi;
-		try {
-			messagermi = new MessageRMI(messagedto.getKind(), messagedto.getData());
-		} catch (RemoteException e) {
-			log.error(e.getMessage());
-			return null;
+		IMessageRMI messagermi = null;
+		if(messagedto != null) {
+			try {
+				messagermi = new MessageRMI(messagedto.getKind(), messagedto.getData());
+			} catch (RemoteException e) {
+				log.error(e.getMessage());
+				return null;
+			}
 		}
 		return messagermi;
 	}

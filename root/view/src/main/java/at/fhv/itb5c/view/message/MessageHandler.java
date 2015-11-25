@@ -40,6 +40,8 @@ public class MessageHandler implements ILogger {
 						handleIncomingMessage(RMIClient.getRMIClient().getApplicationFacade()
 								.getMessage(AppState.getInstance().getSessionID()));
 						Thread.sleep(TIME_BETWEEN_POLLS);
+					} catch (InterruptedException e) {
+						break;	// --> Thread is going to stop
 					} catch (Exception e) {
 						log.error(e.getMessage());
 					}

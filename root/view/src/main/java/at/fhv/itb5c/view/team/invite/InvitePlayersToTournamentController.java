@@ -42,12 +42,14 @@ public class InvitePlayersToTournamentController implements ILogger {
 			_tournamentLabel.setText(_model.getTournament().getName());
 			_teamLabel.setText(_model.getTeam().getName());
 			_teamMemberCheckListView.getItems().addAll(_model.getPlayers());
-			_teamMemberCheckListView.setCellFactory(new Callback<ListView<IUserRMI>, ListCell<IUserRMI>>() {
+			//TODO(san7985) FIX ME
+			/*_teamMemberCheckListView.setCellFactory(new Callback<ListView<IUserRMI>, ListCell<IUserRMI>>() {
 				@Override
 				public ListCell<IUserRMI> call(ListView<IUserRMI> param) {
 					return new UserListCell();
 				}
-			});
+			});*/
+			
 
 		} catch (RemoteException e) {
 			log.error(e.getMessage());

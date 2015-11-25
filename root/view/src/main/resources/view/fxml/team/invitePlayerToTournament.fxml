@@ -42,7 +42,6 @@
       <HBox spacing="14.0" VBox.vgrow="ALWAYS">
          <children>
             <Pane HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" onAction="#_onActionCancleEventHandler" styleClass="simple-red" text="Cancel" />
             <Button mnemonicParsing="false" onAction="#_acceptButtonOnActionEventHandler" styleClass="simple-green" text="Accept" />
          </children>
       </HBox>

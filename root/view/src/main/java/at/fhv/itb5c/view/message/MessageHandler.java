@@ -51,43 +51,44 @@ public class MessageHandler implements ILogger {
 	
 	private static void handleIncomingMessage(IMessageRMI msg) {
 		log.info("Message received: " + msg);
-		
-		try {
-			switch(msg.getKind()) {
-			case("INVITE_PLAYER_TOURNAMENT"): {
-				ITournamentRMI tournament = RMIClient.getRMIClient().getApplicationFacade().getTournamentById(AppState.getInstance().getSessionID(), (Long)msg.get("tournamentId"));
-				ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade().getTeamById(AppState.getInstance().getSessionID(), (Long)msg.get("teamId"));
-				
-				TournamentInvitationPopup.display(tournament, team);
-				break;
-			}
-			case("NOTIFY_COACH_TOURNAMENT"): {
-				ITournamentRMI tournament = RMIClient.getRMIClient().getApplicationFacade().getTournamentById(AppState.getInstance().getSessionID(), (Long)msg.get("tournamentId"));
-				ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade().getTeamById(AppState.getInstance().getSessionID(), (Long)msg.get("teamId"));
-				
-				try {
-					Pane root = new InvitePlayersToTournamentPanelAndViewFactory(tournament, team).create();
+		if(msg != null) {
+			try {
+				switch(msg.getKind()) {
+				case("INVITE_PLAYER_TOURNAMENT"): {
+					ITournamentRMI tournament = RMIClient.getRMIClient().getApplicationFacade().getTournamentById(AppState.getInstance().getSessionID(), (Long)msg.get("tournamentId"));
+					ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade().getTeamById(AppState.getInstance().getSessionID(), (Long)msg.get("teamId"));
 					
-					Stage stage = new Stage();
-					stage.setTitle("PopUp");
-					stage.setScene(new Scene(root));
-					stage.showAndWait();
-					
-				} catch (IOException e) {
-					log.error(e.getMessage());
-					ErrorPopUp.criticalSystemError();
+					TournamentInvitationPopup.display(tournament, team);
+					break;
 				}
-				
-				break;
+				case("NOTIFY_COACH_TOURNAMENT"): {
+					ITournamentRMI tournament = RMIClient.getRMIClient().getApplicationFacade().getTournamentById(AppState.getInstance().getSessionID(), (Long)msg.get("tournamentId"));
+					ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade().getTeamById(AppState.getInstance().getSessionID(), (Long)msg.get("teamId"));
+					
+					try {
+						Pane root = new InvitePlayersToTournamentPanelAndViewFactory(tournament, team).create();
+						
+						Stage stage = new Stage();
+						stage.setTitle("PopUp");
+						stage.setScene(new Scene(root));
+						stage.showAndWait();
+						
+					} catch (IOException e) {
+						log.error(e.getMessage());
+						ErrorPopUp.criticalSystemError();
+					}
+					
+					break;
+				}
+				default: {
+					log.error("Can not parse message -> " + msg.getKind());
+					break;
+				}
+				}
+			} catch (RemoteException e) {
+				ErrorPopUp.connectionError();
+				log.error(e.getMessage());
 			}
-			default: {
-				log.error("Can not parse message -> " + msg.getKind());
-				break;
-			}
-			}
-		} catch (RemoteException e) {
-			ErrorPopUp.connectionError();
-			log.error(e.getMessage());
 		}
 	}
 }

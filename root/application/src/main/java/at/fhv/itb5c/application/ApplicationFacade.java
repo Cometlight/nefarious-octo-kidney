@@ -356,8 +356,6 @@ public class ApplicationFacade implements ILogger {
 			
 			Team teamCopy = new Team();
 			teamCopy.setCoachId(team.getCoachId());
-			teamCopy.setDepartmentId(team.getDepartmentId());
-			teamCopy.setLeagueId(team.getLeagueId());
 			teamCopy.setMemberIds(new HashSet<>(team.getMemberIds()));
 			teamCopy.setName(team.getName());
 			teamCopy.setTypeOfSport(team.getTypeOfSport());

@@ -3,6 +3,7 @@ package at.fhv.itb5c.application.dto;
 import java.util.Map;
 import java.util.Set;
 
+import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 
 public class TeamDTO extends BaseDTO {
@@ -12,7 +13,7 @@ public class TeamDTO extends BaseDTO {
 	private Long _coachId;
 	private Long _leagueId;
 	private Set<Long> _memberIds;
-	private Map<Long, Boolean> _memberStatus;
+	private Map<Long, TeamInvitationStatus> _memberStatus;
 
 	public String getName() {
 		return _name;
@@ -62,11 +63,11 @@ public class TeamDTO extends BaseDTO {
 		_memberIds = memberIds;
 	}
 	
-	public Map<Long, Boolean> getMemberStatus() {
+	public Map<Long, TeamInvitationStatus> getMemberStatus() {
 		return _memberStatus;
 	}
 
-	public void setMemberStatus(Map<Long, Boolean> memberStatus) {
+	public void setMemberStatus(Map<Long, TeamInvitationStatus> memberStatus) {
 		_memberStatus = memberStatus;
 	}
 	
@@ -74,7 +75,7 @@ public class TeamDTO extends BaseDTO {
 	 * @param userId must be contained in {@link #_memberIds}
 	 * @param status null = undefined, true = accepted, false = declined
 	 */
-	public void setMemberStatus(Long userID, Boolean status) {
+	public void setMemberStatus(Long userID, TeamInvitationStatus status) {
 		if(_memberIds.contains(userID)) {
 			_memberStatus.put(userID, status);
 		}

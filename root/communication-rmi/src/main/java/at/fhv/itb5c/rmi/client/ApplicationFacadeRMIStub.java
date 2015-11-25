@@ -15,6 +15,7 @@ import at.fhv.itb5c.commons.dto.rmi.IMessageRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
+import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.logging.ILogger;
@@ -179,7 +180,7 @@ public class ApplicationFacadeRMIStub extends UnicastRemoteObject
 	}
 
 	@Override
-	public Boolean rsvp(String sessionId, ITeamRMI team, Boolean answer) throws RemoteException {
+	public Boolean rsvp(String sessionId, ITeamRMI team, TeamInvitationStatus answer) throws RemoteException {
 		return _applicationFacadeRMI.rsvp(sessionId, team, answer);
 	}
 

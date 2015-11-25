@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
+import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 
 public class TeamRMI extends BaseRMI implements ITeamRMI {
@@ -16,7 +17,7 @@ public class TeamRMI extends BaseRMI implements ITeamRMI {
 	private Long _coachId;
 	private Long _leagueId;
 	private Set<Long> _members;
-	private Map<Long, Boolean> _memberStatus;
+	private Map<Long, TeamInvitationStatus> _memberStatus;
 	
 	public TeamRMI() throws RemoteException {
 		super();
@@ -89,12 +90,12 @@ public class TeamRMI extends BaseRMI implements ITeamRMI {
 	}
 	
 	@Override
-	public Map<Long, Boolean> getMemberStatus() {
+	public Map<Long, TeamInvitationStatus> getMemberStatus() {
 		return _memberStatus;
 	}
 
 	@Override
-	public void setMemberStatus(Map<Long, Boolean> memberStatus) {
+	public void setMemberStatus(Map<Long, TeamInvitationStatus> memberStatus) {
 		_memberStatus = memberStatus;
 	}
 	
@@ -103,7 +104,7 @@ public class TeamRMI extends BaseRMI implements ITeamRMI {
 	 * @param status null = undefined, true = accepted, false = declined
 	 */
 	@Override
-	public void setMemberStatus(Long userID, Boolean status) {
+	public void setMemberStatus(Long userID, TeamInvitationStatus status) {
 		if(_members.contains(userID)) {
 			_memberStatus.put(userID, status);
 		}

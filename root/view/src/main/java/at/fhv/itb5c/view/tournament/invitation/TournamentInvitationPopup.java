@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
+import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.AppState;
@@ -35,14 +36,14 @@ public abstract class TournamentInvitationPopup implements ILogger {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonTypeAccept) {
 			try {
-				RMIClient.getRMIClient().getApplicationFacade().rsvp(AppState.getInstance().getSessionID(), team, true);
+				RMIClient.getRMIClient().getApplicationFacade().rsvp(AppState.getInstance().getSessionID(), team, TeamInvitationStatus.Accepted);
 			} catch (RemoteException e) {
 				log.error(e.getMessage());
 				ErrorPopUp.connectionError();
 			}
 		} else if (result.get() == buttonTypeDecline) {
 			try {
-				RMIClient.getRMIClient().getApplicationFacade().rsvp(AppState.getInstance().getSessionID(), team, false);
+				RMIClient.getRMIClient().getApplicationFacade().rsvp(AppState.getInstance().getSessionID(), team, TeamInvitationStatus.Declined);
 			} catch (RemoteException e) {
 				log.error(e.getMessage());
 				ErrorPopUp.connectionError();

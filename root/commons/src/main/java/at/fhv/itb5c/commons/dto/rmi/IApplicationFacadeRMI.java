@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Collection;
 
+import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 
@@ -66,7 +67,7 @@ public interface IApplicationFacadeRMI extends Remote {
 
 	Boolean isCoach(String sessionId, ITeamRMI team) throws RemoteException;
 
-	Boolean rsvp(String sessionId, ITeamRMI team, Boolean answer) throws RemoteException;
+	Boolean rsvp(String sessionId, ITeamRMI team, TeamInvitationStatus answer) throws RemoteException;
 
 	IMessageRMI getMessage(String sessionId) throws RemoteException;
 

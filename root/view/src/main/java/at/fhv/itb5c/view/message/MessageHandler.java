@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 import at.fhv.itb5c.commons.dto.rmi.IMessageRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
@@ -12,7 +13,7 @@ import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.team.invite.InvitePlayersToTournamentPanelAndViewFactory;
 import at.fhv.itb5c.view.tournament.invitation.TournamentInvitationPopup;
-import at.fhv.itb5c.view.util.popup.ErrorPopUp;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -64,7 +65,7 @@ public class MessageHandler implements ILogger {
 						ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade()
 								.getTeamById(AppState.getInstance().getSessionID(), (Long) msg.get("teamId"));
 	
-						TournamentInvitationPopup.display(tournament, team);
+						Platform.runLater(() -> TournamentInvitationPopup.display(tournament, team));
 						break;
 					}
 					case ("NOTIFY_COACH_TOURNAMENT"): {
@@ -84,7 +85,7 @@ public class MessageHandler implements ILogger {
 	
 						} catch (IOException e) {
 							log.error(e.getMessage());
-							ErrorPopUp.criticalSystemError();
+//							ErrorPopUp.criticalSystemError();	// WILL NOT WORK!!!! FIXME
 						}
 	
 						break;
@@ -95,7 +96,7 @@ public class MessageHandler implements ILogger {
 					}
 				}
 			} catch (RemoteException e) {
-				ErrorPopUp.connectionError();
+//				ErrorPopUp.connectionError();	// WILL NOT WORK!!!! FIXME
 				log.error(e.getMessage());
 			}
 		}

@@ -9,13 +9,14 @@ import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.AppState;
-import at.fhv.itb5c.view.util.listcell.UserListCell;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
+import at.fhv.itb5c.view.util.stringconverter.IUserRMIStringConverter;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -42,13 +43,12 @@ public class InvitePlayersToTournamentController implements ILogger {
 			_tournamentLabel.setText(_model.getTournament().getName());
 			_teamLabel.setText(_model.getTeam().getName());
 			_teamMemberCheckListView.getItems().addAll(_model.getPlayers());
-			//TODO(san7985) FIX ME
-			/*_teamMemberCheckListView.setCellFactory(new Callback<ListView<IUserRMI>, ListCell<IUserRMI>>() {
+			_teamMemberCheckListView.setCellFactory(new Callback<ListView<IUserRMI>, ListCell<IUserRMI>>() {
 				@Override
-				public ListCell<IUserRMI> call(ListView<IUserRMI> param) {
-					return new UserListCell();
+				public ListCell<IUserRMI> call(ListView<IUserRMI> listView) {
+					return new CheckBoxListCell<IUserRMI>(item -> _teamMemberCheckListView.getItemBooleanProperty(item), new IUserRMIStringConverter());
 				}
-			});*/
+			});
 			
 
 		} catch (RemoteException e) {
@@ -56,12 +56,11 @@ public class InvitePlayersToTournamentController implements ILogger {
 			ErrorPopUp.connectionError();
 		}
 	}
-
+	
 	// Event Listener on Button.onAction
 	@FXML
 	public void _acceptButtonOnActionEventHandler(ActionEvent event) {
 		ObservableList<IUserRMI> players = _teamMemberCheckListView.getCheckModel().getCheckedItems();
-
 		for (IUserRMI player : players) {
 			try {
 				RMIClient.getRMIClient().getApplicationFacade().invitePlayer(AppState.getInstance().getSessionID(),

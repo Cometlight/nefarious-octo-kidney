@@ -58,8 +58,8 @@ public class MessageHandler implements ILogger {
 
 	private static void handleIncomingMessage(IMessageRMI msg) {
 		if (msg != null) {
-			log.info("Message received: " + msg);
 			try {
+				log.info("Message received: " + msg + " " + msg.getKind());
 				switch (msg.getKind()) {
 					case ("INVITE_PLAYER_TOURNAMENT"): {
 						log.info("Parse Message -> INVITE_PLAYER_TOURNAMENT");

@@ -370,9 +370,6 @@ public class ApplicationFacade implements ILogger {
 				return false;
 			}
 			tournament.getHomeTeamsIds().add(teamCopySaved.getId());
-			for (Long playerId : teamCopySaved.getMemberIds()) {
-				enqueueTournamentInvitation(playerId, tournament.getId(), teamCopySaved.getId());
-			}
 			enqueueTournamentNotification(team.getCoachId(), tournament.getId(), teamCopySaved.getId());
 		}
 		return true;

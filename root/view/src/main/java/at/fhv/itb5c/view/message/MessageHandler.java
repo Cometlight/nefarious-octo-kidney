@@ -13,6 +13,7 @@ import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.team.invite.InvitePlayersToTournamentPanelAndViewFactory;
 import at.fhv.itb5c.view.tournament.invitation.TournamentInvitationPopup;
+import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -22,7 +23,7 @@ public class MessageHandler implements ILogger {
 	private static MessageHandler _instance = new MessageHandler();
 	private static ExecutorService _executorService = Executors.newFixedThreadPool(1);
 	private static boolean _isListening = false;
-	private static long TIME_BETWEEN_POLLS = 10000l;	// [ms]
+	private static long TIME_BETWEEN_POLLS = 10000l; // [ms]
 
 	private MessageHandler() {
 	}
@@ -69,24 +70,35 @@ public class MessageHandler implements ILogger {
 						break;
 					}
 					case ("NOTIFY_COACH_TOURNAMENT"): {
-						log.info("Parse Message -> NOTIFY_COACH_TOURNAMENT");
-						ITournamentRMI tournament = RMIClient.getRMIClient().getApplicationFacade()
-								.getTournamentById(AppState.getInstance().getSessionID(), (Long) msg.get("tournamentId"));
-						ITeamRMI team = RMIClient.getRMIClient().getApplicationFacade()
-								.getTeamById(AppState.getInstance().getSessionID(), (Long) msg.get("teamId"));
+						Platform.runLater(() ->  {
+						ITournamentRMI tournament = null;
+						ITeamRMI team = null;
+						
+						try {
+							tournament = RMIClient.getRMIClient().getApplicationFacade()
+									.getTournamentById(AppState.getInstance().getSessionID(), (Long) msg.get("tournamentId"));
+							team = RMIClient.getRMIClient().getApplicationFacade()
+									.getTeamById(AppState.getInstance().getSessionID(), (Long) msg.get("teamId"));
+						} catch (Exception e) {
+							Platform.runLater(() -> ErrorPopUp.connectionError());
+							log.error(e.getMessage());
+						}
+						
 	
 						try {
 							Pane root = new InvitePlayersToTournamentPanelAndViewFactory(tournament, team).create();
 	
 							Stage stage = new Stage();
-							stage.setTitle("PopUp");
+							stage.setTitle("Choose Players");
 							stage.setScene(new Scene(root));
 							stage.showAndWait();
 	
 						} catch (IOException e) {
 							log.error(e.getMessage());
-//							ErrorPopUp.criticalSystemError();	// WILL NOT WORK!!!! FIXME
+							Platform.runLater(() -> ErrorPopUp.criticalSystemError());	
 						}
+						});
+						
 	
 						break;
 					}
@@ -96,7 +108,7 @@ public class MessageHandler implements ILogger {
 					}
 				}
 			} catch (RemoteException e) {
-//				ErrorPopUp.connectionError();	// WILL NOT WORK!!!! FIXME
+				Platform.runLater(() -> ErrorPopUp.connectionError());
 				log.error(e.getMessage());
 			}
 		}

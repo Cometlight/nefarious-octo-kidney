@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Set;
 
+import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 
 public interface ITeamRMI extends IBaseRMI {
@@ -31,9 +32,9 @@ public interface ITeamRMI extends IBaseRMI {
 
 	void setMemberIds(Set<Long> memberIds) throws RemoteException;
 	
-	Map<Long, Boolean> getMemberStatus() throws RemoteException;
+	Map<Long, TeamInvitationStatus> getMemberStatus() throws RemoteException;
 	
-	void setMemberStatus(Map<Long, Boolean> memberStatus) throws RemoteException;
+	void setMemberStatus(Map<Long, TeamInvitationStatus> memberStatus) throws RemoteException;
 	
-	void setMemberStatus(Long userID, Boolean status) throws RemoteException;
+	void setMemberStatus(Long userID, TeamInvitationStatus status) throws RemoteException;
 }

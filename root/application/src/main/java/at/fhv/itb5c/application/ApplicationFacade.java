@@ -21,6 +21,7 @@ import at.fhv.itb5c.application.dto.MessageDTO;
 import at.fhv.itb5c.application.dto.TeamDTO;
 import at.fhv.itb5c.application.dto.TournamentDTO;
 import at.fhv.itb5c.application.dto.UserDTO;
+import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.commons.util.auth.LDAPAuth;
@@ -346,16 +347,10 @@ public class ApplicationFacade implements ILogger {
 	private Boolean cloneNewlyAddedTeams(Tournament tournament) {
 		Tournament originalEntity = PersistenceFacade.getInstance().getById(Tournament.class, tournament.getId());
 		Set<Long> ids = new HashSet<>(tournament.getHomeTeamsIds()); // --> copy
-		ids = ids.stream().filter(id -> !originalEntity.getHomeTeamsIds().contains(id)).collect(Collectors.toSet()); // filter
-																														// out
-																														// all
-																														// IDs
-																														// that
-																														// are
-																														// already
-																														// in
-																														// originalEntity
+		// filter out all IDs that are already in originalEntity
+		ids = ids.stream().filter(id -> !originalEntity.getHomeTeamsIds().contains(id)).collect(Collectors.toSet()); 
 		tournament.getHomeTeamsIds().removeAll(ids);
+
 		for (Long teamId : ids) {
 			Team team = PersistenceFacade.getInstance().getById(Team.class, teamId);
 			
@@ -412,7 +407,14 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
-	public Boolean rsvp(String sessionId, TeamDTO team, Boolean answer) {
+	public Boolean rsvp(String sessionId, TeamDTO team, TeamInvitationStatus answer) {
+		if (team == null || answer == null) {
+			return null;
+		}
+		if (!answer.equals(TeamInvitationStatus.Accepted) && !answer.equals(TeamInvitationStatus.Declined)) {
+			log.warn("rsvp: TeamInvitationStatus must be set to Accepted or Declined!");
+			return null;
+		}
 		try {
 			UserDTO player = getCurrentUser(sessionId);
 			Team teamEntity = ConverterTeamDTO.toEntity(team);

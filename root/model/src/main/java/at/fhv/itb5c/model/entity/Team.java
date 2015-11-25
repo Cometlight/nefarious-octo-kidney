@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 
 @Entity
@@ -35,7 +36,7 @@ public class Team extends PersistableObject {
 	 * Long ... userID
 	 * Boolean ... null = undefined, true = accepted, false = declined
 	 */
-	private Map<Long /*userID*/, Boolean> _memberStatus = new HashMap<>();
+	private Map<Long /*userID*/, TeamInvitationStatus> _memberStatus = new HashMap<>();
 
 	public String getName() {
 		return _name;
@@ -85,11 +86,11 @@ public class Team extends PersistableObject {
 		_memberIds = memberIds;
 	}
 
-	public Map<Long, Boolean> getMemberStatus() {
+	public Map<Long, TeamInvitationStatus> getMemberStatus() {
 		return _memberStatus;
 	}
 
-	public void setMemberStatus(Map<Long, Boolean> memberStatus) {
+	public void setMemberStatus(Map<Long, TeamInvitationStatus> memberStatus) {
 		_memberStatus = memberStatus;
 	}
 	
@@ -97,7 +98,7 @@ public class Team extends PersistableObject {
 	 * @param userId must be contained in {@link #_memberIds}
 	 * @param status null = undefined, true = accepted, false = declined
 	 */
-	public void setMemberStatus(Long userID, Boolean status) {
+	public void setMemberStatus(Long userID, TeamInvitationStatus status) {
 		if(_memberIds.contains(userID)) {
 			_memberStatus.put(userID, status);
 		}

@@ -443,7 +443,7 @@ public class ApplicationFacade implements ILogger {
 		DepartmentDTO dept = ConverterDepartmentDTO
 				.toDTO(PersistenceFacade.getInstance().getById(Department.class, tournament.getDepartmentId()));
 
-		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
+		if (hasRole(sessionId, UserRole.Admin) || isCoach(sessionId, dept)) {
 			if (tournament.getHomeTeamsIds().contains(team.getId())) {
 				// add player to team if not exists
 				if (team.getMemberIds().contains(player.getId())) {

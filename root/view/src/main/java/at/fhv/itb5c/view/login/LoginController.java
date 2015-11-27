@@ -2,7 +2,6 @@ package at.fhv.itb5c.view.login;
 
 import java.rmi.RemoteException;
 
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.AppState;
@@ -53,9 +52,7 @@ public class LoginController implements ILogger {
 				ErrorPopUp.invalidLoginCredentials();
 			} else {
 				// valid credentials
-				AppState.getInstance().setSessionID(sessionID);
-				IUserRMI currentUser = RMIClient.getRMIClient().getApplicationFacade().getCurrentUser(sessionID);
-				MessageHandler.getInstance().listen(currentUser.getId());
+				MessageHandler.getInstance().listen(AppState.getInstance().getLoggedInUser().getId());
 			}
 
 		} catch (RemoteException e) {

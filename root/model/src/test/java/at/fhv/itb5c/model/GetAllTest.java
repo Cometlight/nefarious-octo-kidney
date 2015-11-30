@@ -17,6 +17,7 @@ public class GetAllTest {
 
 	@Before
 	public void beforeEach() throws Exception {
+		PersistenceFacade.shutdown();
 		DatabaseTestUtility.deleteDatabaseFile(DBFILE);
 		PersistenceFacade.setPersistenceUnitName(DBFILE);
 

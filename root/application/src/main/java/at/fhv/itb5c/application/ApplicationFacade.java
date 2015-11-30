@@ -448,7 +448,7 @@ public class ApplicationFacade implements ILogger {
 				// add player to team if not exists
 				if (team.getMemberIds().contains(player.getId())) {
 					// add message to players queue
-					enqueueTournamentInvitation(SessionManager.getInstance().getUserId(sessionId), tournament.getId(),
+					enqueueTournamentInvitation(player.getId(), tournament.getId(),
 							team.getId());
 				}
 			}

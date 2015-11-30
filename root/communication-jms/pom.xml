@@ -6,30 +6,29 @@
 		<artifactId>root</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>at.fhv.itb5c.rmi</groupId>
-	<artifactId>communication-rmi</artifactId>
-	<name>communication-rmi</name>
+	<groupId>at.fhv.itb5c.jms</groupId>
+	<artifactId>communication-jms</artifactId>
+	<name>communication-jms</name>
 	<dependencies>
 		<dependency>
-			<groupId>at.fhv.itb5c.application</groupId>
-			<artifactId>application</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>javax.jms</groupId>
+			<artifactId>javax.jms-api</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.mq</groupId>
+			<artifactId>imq</artifactId>
+			<version>5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.messaging.mq</groupId>
+			<artifactId>fscontext</artifactId>
+			<version>4.6-b01</version>
 		</dependency>
 		<dependency>
 			<groupId>at.fhv.itb5c.commons</groupId>
 			<artifactId>commons</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>at.fhv.itb5c.logging</groupId>
-			<artifactId>logging</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -39,7 +38,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>at.fhv.itb5c.rmi.server.RMIServer</mainClass>
+							<mainClass>at.fhv.itb5c.jms.TestJMS</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

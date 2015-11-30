@@ -16,15 +16,18 @@ import at.fhv.itb5c.commons.dto.rmi.IApplicationFacadeRMI;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.ILeagueRMI;
 import at.fhv.itb5c.commons.dto.rmi.IMatchRMI;
+import at.fhv.itb5c.commons.dto.rmi.IMessageRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
+import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.converter.ConverterDepartmentRMI;
 import at.fhv.itb5c.rmi.server.converter.ConverterLeagueRMI;
 import at.fhv.itb5c.rmi.server.converter.ConverterMatchRMI;
+import at.fhv.itb5c.rmi.server.converter.ConverterMessageRMI;
 import at.fhv.itb5c.rmi.server.converter.ConverterTeamRMI;
 import at.fhv.itb5c.rmi.server.converter.ConverterTournamentRMI;
 import at.fhv.itb5c.rmi.server.converter.ConverterUserRMI;
@@ -92,9 +95,10 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	}
 
 	@Override
-	public Collection<ITeamRMI> findTeams(String sessionId, String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId)
+	public Collection<ITeamRMI> findTeams(String sessionId, String name, TypeOfSport typeOfSport, Long departmentId,
+			Long leagueId, Long coachId)
 			throws RemoteException {
-		return ConverterTeamRMI.toRMI(_applicationFacade.findTeams(sessionId, name, typeOfSport, departmentId, leagueId));
+		return ConverterTeamRMI.toRMI(_applicationFacade.findTeams(sessionId, name, typeOfSport, departmentId, leagueId, coachId));
 	}
 
 	@Override
@@ -190,5 +194,25 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	@Override
 	public Boolean hasRole(String sessionId, UserRole... roles) throws RemoteException {
 		return _applicationFacade.hasRole(sessionId, roles);
+	}
+
+	@Override
+	public Boolean rsvp(String sessionId, ITeamRMI team, TeamInvitationStatus answer) throws RemoteException {
+		TeamDTO teamDTO = ConverterTeamRMI.toDTO(team);
+		return _applicationFacade.rsvp(sessionId, teamDTO, answer);
+	}
+
+	@Override
+	public IMessageRMI getMessage(String sessionId) throws RemoteException {
+		return ConverterMessageRMI.toRMI(_applicationFacade.getMessage(sessionId));
+	}
+
+	@Override
+	public void invitePlayer(String sessionId, IUserRMI player, ITeamRMI team, ITournamentRMI tournament)
+			throws RemoteException {
+		TeamDTO teamDTO = ConverterTeamRMI.toDTO(team);
+		TournamentDTO tournamentDTO = ConverterTournamentRMI.toDTO(tournament);
+		UserDTO playerDTO = ConverterUserRMI.toDTO(player);
+		_applicationFacade.invitePlayer(sessionId, playerDTO, teamDTO, tournamentDTO);
 	}
 }

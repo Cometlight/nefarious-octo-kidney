@@ -27,7 +27,11 @@ public class RMIClient implements ILogger {
 	}
 
 	public void close() {
-		throw new UnsupportedOperationException();
+		// Note: This will fail, if something on the outside still holds a reference to _applicationFacadeRMIStub.
+		_applicationFacadeRMIStub = null;
+		_client = null;
+		System.gc();
+		System.runFinalization();
 	}
 
 	public static RMIClient getRMIClient() {

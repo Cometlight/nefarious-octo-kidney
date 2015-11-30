@@ -19,9 +19,9 @@ public class RMIServer implements ILogger{
 		if(args.length>0){
 			if(args[0].equals("test")){
 				CreateTestData.run();
+				log.info("Testdata created ...");
 			}
 		}
-		CreateTestData.run();
 		
 		log.info("Starting RMI server ...");
 		LocateRegistry.createRegistry(Integer.parseInt(_port));

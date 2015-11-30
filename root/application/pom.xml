@@ -30,6 +30,11 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>at.fhv.itb5c.jms</groupId>
+			<artifactId>communication-jms</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<name>application</name>
 </project>

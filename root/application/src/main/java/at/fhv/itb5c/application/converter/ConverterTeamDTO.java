@@ -1,6 +1,7 @@
 package at.fhv.itb5c.application.converter;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,7 @@ public class ConverterTeamDTO {
 		dto.setCoachId(entity.getCoachId());
 		dto.setLeagueId(entity.getLeagueId());
 		dto.setMemberIds(new HashSet<>(entity.getMemberIds()));
+		dto.setMemberStatus(new HashMap<>(entity.getMemberStatus()));
 		
 		return dto;
 	}
@@ -50,6 +52,7 @@ public class ConverterTeamDTO {
 		entity.setCoachId(dto.getCoachId());
 		entity.setLeagueId(dto.getLeagueId());
 		entity.setMemberIds(new HashSet<>(dto.getMemberIds()));
+		entity.setMemberStatus(new HashMap<>(dto.getMemberStatus()));
 		
 		return entity;
 	}

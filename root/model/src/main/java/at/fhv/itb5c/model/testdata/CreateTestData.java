@@ -210,6 +210,7 @@ public class CreateTestData implements ILogger {
 		Tournament _tournament1 = new Tournament();
 		_tournament1.setName("Local Tournament");
 		_tournament1.setDepartmentId(_deptSoccer.getId());
+		_tournament1.setDate(LocalDate.now());
 		_tournament1.setFee(new Double(10.50));
 		_tournament1.setMatchesIds(new HashSet<>(Arrays.asList(match1Tournament1.getId(), match2Tournament1.getId(), match3Tournament1.getId())));
 		_tournament1.setHomeTeamsIds(new HashSet<>(Arrays.asList(_teamSoccer1.getId(), _teamSoccer2.getId())));

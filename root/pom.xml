@@ -13,6 +13,7 @@
 		<module>application</module>
 		<module>commons</module>
 		<module>logging</module>
+		<module>communication-jms</module>
 	</modules>
 	<repositories>
 		<repository>

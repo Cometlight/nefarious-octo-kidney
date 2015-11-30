@@ -132,7 +132,7 @@ public class PersistenceFacade implements ILogger {
 		} catch (Exception e) {
 			throw e;
 		}
-		
+
 		return obj;
 	}
 
@@ -255,7 +255,7 @@ public class PersistenceFacade implements ILogger {
 		return null;
 	}
 
-	public List<Team> findTeams(String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId) {
+	public List<Team> findTeams(String name, TypeOfSport typeOfSport, Long departmentId, Long leagueId, Long coachId) {
 		List<Team> resultSet = new LinkedList<>();
 
 		CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
@@ -280,6 +280,10 @@ public class PersistenceFacade implements ILogger {
 
 		if (leagueId != null) {
 			predicates.add(cb.equal(root.get("_leagueId"), leagueId));
+		}
+
+		if (coachId != null) {
+			predicates.add(cb.equal(root.get("_coachId"), coachId));
 		}
 
 		if (predicates.size() > 0) {

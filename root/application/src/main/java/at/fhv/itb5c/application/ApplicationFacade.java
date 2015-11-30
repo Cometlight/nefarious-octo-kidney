@@ -1,25 +1,33 @@
 package at.fhv.itb5c.application;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import at.fhv.itb5c.application.converter.ConverterDepartmentDTO;
 import at.fhv.itb5c.application.converter.ConverterLeagueDTO;
 import at.fhv.itb5c.application.converter.ConverterMatchDTO;
+import at.fhv.itb5c.application.converter.ConverterMessageDTO;
 import at.fhv.itb5c.application.converter.ConverterTeamDTO;
 import at.fhv.itb5c.application.converter.ConverterTournamentDTO;
 import at.fhv.itb5c.application.converter.ConverterUserDTO;
 import at.fhv.itb5c.application.dto.DepartmentDTO;
 import at.fhv.itb5c.application.dto.LeagueDTO;
 import at.fhv.itb5c.application.dto.MatchDTO;
+import at.fhv.itb5c.application.dto.MessageDTO;
 import at.fhv.itb5c.application.dto.TeamDTO;
 import at.fhv.itb5c.application.dto.TournamentDTO;
 import at.fhv.itb5c.application.dto.UserDTO;
+import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.commons.util.auth.LDAPAuth;
 import at.fhv.itb5c.commons.util.auth.SessionManager;
+import at.fhv.itb5c.jms.QueueManager;
+import at.fhv.itb5c.jms.entity.Message;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.model.PersistenceFacade;
 import at.fhv.itb5c.model.entity.Department;
@@ -135,9 +143,10 @@ public class ApplicationFacade implements ILogger {
 	 * If a parameter is null, it is ignored.
 	 */
 	public Collection<TeamDTO> findTeams(String sessionId, String name, TypeOfSport typeOfSport, Long departmentId,
-			Long leagueId) {
+			Long leagueId, Long coachId) {
 		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
-			List<Team> entities = PersistenceFacade.getInstance().findTeams(name, typeOfSport, departmentId, leagueId);
+			List<Team> entities = PersistenceFacade.getInstance().findTeams(name, typeOfSport, departmentId, leagueId,
+					coachId);
 			return ConverterTeamDTO.toDTO(entities);
 		}
 		return null;
@@ -214,8 +223,8 @@ public class ApplicationFacade implements ILogger {
 		}
 		return null;
 	}
-	
-	public MatchDTO getMatchById(String sessionId, Long matchId){
+
+	public MatchDTO getMatchById(String sessionId, Long matchId) {
 		if (hasRole(sessionId, UserRole.Admin, UserRole.StandardUser)) {
 			Match match = PersistenceFacade.getInstance().getById(Match.class, matchId);
 			return ConverterMatchDTO.toDTO(match);
@@ -280,10 +289,13 @@ public class ApplicationFacade implements ILogger {
 	public String loginLDAP(String username, String password) {
 		if (username != null && password != null) {
 			if (LDAPAuth.ldapLogin(username, password) != null) {
+				log.debug("User login successful, searching for user in system ...");
 				User user = PersistenceFacade.getInstance().findUserByLDAP(username);
 				if (user != null) {
+					log.debug("... user found.");
 					return SessionManager.getInstance().createNewSession(user.getId(), user.getRoles());
 				}
+				log.debug("... user not found.");
 			}
 		}
 
@@ -303,17 +315,24 @@ public class ApplicationFacade implements ILogger {
 		}
 		return false;
 	}
-	
+
 	public TournamentDTO createTournament(String sessionId, DepartmentDTO dept) {
 		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
 			return ConverterTournamentDTO.toDTO(new Tournament());
 		}
 		return null;
 	}
-	
+
 	public TournamentDTO saveTournament(String sessionId, TournamentDTO tournament, DepartmentDTO dept) {
 		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
+
 			Tournament entity = ConverterTournamentDTO.toEntity(tournament);
+			if (entity.getId() != null) {
+				if (!cloneNewlyAddedTeams(entity)) {
+					return null; // something went horribly wrong
+				}
+			}
+
 			try {
 				entity = PersistenceFacade.getInstance().saveOrUpdate(entity);
 			} catch (Exception e) {
@@ -324,19 +343,48 @@ public class ApplicationFacade implements ILogger {
 		}
 		return null;
 	}
-	
+
+	private Boolean cloneNewlyAddedTeams(Tournament tournament) {
+		Tournament originalEntity = PersistenceFacade.getInstance().getById(Tournament.class, tournament.getId());
+		Set<Long> ids = new HashSet<>(tournament.getHomeTeamsIds()); // --> copy
+		// filter out all IDs that are already in originalEntity
+		ids = ids.stream().filter(id -> !originalEntity.getHomeTeamsIds().contains(id)).collect(Collectors.toSet()); 
+		tournament.getHomeTeamsIds().removeAll(ids);
+
+		for (Long teamId : ids) {
+			Team team = PersistenceFacade.getInstance().getById(Team.class, teamId);
+			
+			Team teamCopy = new Team();
+			teamCopy.setCoachId(team.getCoachId());
+			teamCopy.setMemberIds(new HashSet<>(team.getMemberIds()));
+			teamCopy.setName(team.getName());
+			teamCopy.setTypeOfSport(team.getTypeOfSport());
+			
+			Team teamCopySaved = null;
+			try {
+				teamCopySaved = PersistenceFacade.getInstance().saveOrUpdate(teamCopy);
+			} catch (Exception e) {
+				log.error(e.getMessage());
+				return false;
+			}
+			tournament.getHomeTeamsIds().add(teamCopySaved.getId());
+			enqueueTournamentNotification(team.getCoachId(), tournament.getId(), teamCopySaved.getId());
+		}
+		return true;
+	}
+
 	public TournamentDTO getTournamentById(String sessionId, Long id) {
 		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			return ConverterTournamentDTO.toDTO(PersistenceFacade.getInstance().getById(Tournament.class, id));
 		}
 		return null;
 	}
-	
-	public Boolean isDepartmentHead(String sessionId, DepartmentDTO dept){
+
+	public Boolean isDepartmentHead(String sessionId, DepartmentDTO dept) {
 		return dept.getHeadId().equals(_sessionManager.getUserId(sessionId));
 	}
-	
-	public Boolean isCoach(String sessionId, TeamDTO team){
+
+	public Boolean isCoach(String sessionId, TeamDTO team) {
 		return team.getCoachId().equals(_sessionManager.getUserId(sessionId));
 	}
 
@@ -352,5 +400,85 @@ public class ApplicationFacade implements ILogger {
 			return ConverterMatchDTO.toDTO(entity);
 		}
 		return null;
+	}
+
+	public Boolean rsvp(String sessionId, TeamDTO team, TeamInvitationStatus answer) {
+		if (team == null || answer == null) {
+			return null;
+		}
+		if (!answer.equals(TeamInvitationStatus.Accepted) && !answer.equals(TeamInvitationStatus.Declined)) {
+			log.warn("rsvp: TeamInvitationStatus must be set to Accepted or Declined!");
+			return null;
+		}
+		try {
+			UserDTO player = getCurrentUser(sessionId);
+			Team teamEntity = ConverterTeamDTO.toEntity(team);
+			teamEntity.setMemberStatus(player.getId(), answer);
+			return PersistenceFacade.getInstance().saveOrUpdate(teamEntity) != null;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return false;
+		}
+	}
+
+	public MessageDTO getMessage(String sessionId) {
+		QueueManager qm = new QueueManager(SessionManager.getInstance().getUserId(sessionId).toString());
+		return ConverterMessageDTO.toDTO(qm.consume());
+	}
+
+	/**
+	 * adds a player to a team from the specified tournament and creates a
+	 * notification for the player
+	 * 
+	 * @param sessionId
+	 *            session id
+	 * @param player
+	 *            player to be added
+	 * @param team
+	 *            team of the player
+	 * @param tournament
+	 *            tournament
+	 */
+	public void invitePlayer(String sessionId, UserDTO player, TeamDTO team, TournamentDTO tournament) {
+		DepartmentDTO dept = ConverterDepartmentDTO
+				.toDTO(PersistenceFacade.getInstance().getById(Department.class, tournament.getDepartmentId()));
+
+		if (hasRole(sessionId, UserRole.Admin) || isCoach(sessionId, dept)) {
+			if (tournament.getHomeTeamsIds().contains(team.getId())) {
+				// add player to team if not exists
+				if (team.getMemberIds().contains(player.getId())) {
+					// add message to players queue
+					enqueueTournamentInvitation(player.getId(), tournament.getId(),
+							team.getId());
+				}
+			}
+		}
+	}
+
+	public boolean isCoach(String sessionId, DepartmentDTO dept) {
+		List<Team> res = PersistenceFacade.getInstance().findTeams(null, null, dept.getId(), null,
+				SessionManager.getInstance().getUserId(sessionId));
+
+		return !res.isEmpty();
+	}
+
+	private void enqueueTournamentInvitation(Long playerId, Long tournamentId, Long teamId) {
+		QueueManager qm = new QueueManager(playerId.toString());
+		String msgType = "INVITE_PLAYER_TOURNAMENT";
+		HashMap<String, Object> msgData = new HashMap<>();
+		msgData.put("tournamentId", tournamentId);
+		msgData.put("teamId", teamId);
+		Message message = new Message(msgType, msgData);
+		qm.produce(message);
+	}
+
+	private void enqueueTournamentNotification(Long coachId, Long tournamentId, Long teamId) {
+		QueueManager qm = new QueueManager(coachId.toString());
+		String msgType = "NOTIFY_COACH_TOURNAMENT";
+		HashMap<String, Object> msgData = new HashMap<>();
+		msgData.put("tournamentId", tournamentId);
+		msgData.put("teamId", teamId);
+		Message message = new Message(msgType, msgData);
+		qm.produce(message);
 	}
 }

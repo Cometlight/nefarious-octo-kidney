@@ -52,6 +52,7 @@ public class LoginController implements ILogger {
 				ErrorPopUp.invalidLoginCredentials();
 			} else {
 				// valid credentials
+				AppState.getInstance().setSessionID(sessionID);
 				MessageHandler.getInstance().listen(AppState.getInstance().getLoggedInUser().getId());
 			}
 

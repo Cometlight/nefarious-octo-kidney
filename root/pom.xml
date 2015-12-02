@@ -14,6 +14,7 @@
 		<module>commons</module>
 		<module>logging</module>
 		<module>communication-jms</module>
+		<module>communication-ejb</module>
 	</modules>
 	<repositories>
 		<repository>

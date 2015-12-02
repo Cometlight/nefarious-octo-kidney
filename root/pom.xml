@@ -15,6 +15,8 @@
 		<module>logging</module>
 		<module>communication-jms</module>
 		<module>communication-ejb</module>
+		<module>ejb-test-client</module>
+		<module>communication-ejb-interfaces</module>
 	</modules>
 	<repositories>
 		<repository>

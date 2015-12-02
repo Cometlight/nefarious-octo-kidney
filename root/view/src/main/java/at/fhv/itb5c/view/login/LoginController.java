@@ -2,10 +2,10 @@ package at.fhv.itb5c.view.login;
 
 import java.rmi.RemoteException;
 
+import at.fhv.itb5c.app.AppState;
 import at.fhv.itb5c.logging.ILogger;
+import at.fhv.itb5c.message.MessageHandler;
 import at.fhv.itb5c.rmi.client.RMIClient;
-import at.fhv.itb5c.view.AppState;
-import at.fhv.itb5c.view.message.MessageHandler;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;

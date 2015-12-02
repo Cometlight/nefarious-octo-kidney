@@ -1,16 +1,16 @@
-package at.fhv.itb5c.view.message;
+package at.fhv.itb5c.message;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import at.fhv.itb5c.app.AppState;
 import at.fhv.itb5c.commons.dto.rmi.IMessageRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
-import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.team.invite.InvitePlayersToTournamentPanelAndViewFactory;
 import at.fhv.itb5c.view.tournament.invitation.TournamentInvitationPopup;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;

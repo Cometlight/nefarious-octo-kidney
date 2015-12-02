@@ -3,6 +3,7 @@ package at.fhv.itb5c.view.tournament;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
+import at.fhv.itb5c.app.AppState;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IMatchRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
@@ -10,7 +11,6 @@ import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.ApplicationFacadeRMIStub;
 import at.fhv.itb5c.rmi.client.RMIClient;
-import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.tournament.addmatch.TournamentAddMatchViewFactory;
 import at.fhv.itb5c.view.tournament.addmatchresult.MatchAddResultFactory;
 import at.fhv.itb5c.view.tournament.addteams.TournamentAddTeamsFactory;

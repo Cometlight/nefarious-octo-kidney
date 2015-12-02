@@ -3,7 +3,9 @@ package at.fhv.itb5c.ejb;
 import java.util.Collection;
 
 import javax.ejb.Singleton;
+import javax.ejb.Startup;
 
+import at.fhv.itb5c.application.ApplicationFacade;
 import at.fhv.itb5c.application.dto.DepartmentDTO;
 import at.fhv.itb5c.application.dto.LeagueDTO;
 import at.fhv.itb5c.application.dto.MatchDTO;
@@ -14,11 +16,16 @@ import at.fhv.itb5c.application.dto.UserDTO;
 import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
-import at.fhv.itb5c.ejb.interfaces.IApplicationFacadeEJBLocal;
 
+@Startup
 @Singleton
-public class ApplicationFacadeEJB implements IApplicationFacadeEJBLocal {
-
+public class ApplicationFacadeEJB implements ApplicationFacadeEJBLocal {
+	private ApplicationFacade applicationFacade;
+	
+	public ApplicationFacadeEJB() {
+		applicationFacade = new ApplicationFacade();
+	}
+	
 	@Override
 	public UserDTO createUser(String sessionId) {
 		// TODO Auto-generated method stub
@@ -137,8 +144,7 @@ public class ApplicationFacadeEJB implements IApplicationFacadeEJBLocal {
 
 	@Override
 	public String loginLDAP(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		return applicationFacade.loginLDAP(username, password);
 	}
 
 	@Override

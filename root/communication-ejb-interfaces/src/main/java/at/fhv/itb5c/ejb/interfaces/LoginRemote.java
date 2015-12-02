@@ -1,5 +1,8 @@
 package at.fhv.itb5c.ejb.interfaces;
 
-public interface ILogin {
+import javax.ejb.Remote;
+
+@Remote
+public interface LoginRemote {
 	String loginLDAP(String username, String password);
 }

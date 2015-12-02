@@ -1,39 +1,67 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>at.fhv.itb5c</groupId>
-    <artifactId>root</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <groupId>at.fhv.itb5c.ejb</groupId>
-  <artifactId>communication-ejb</artifactId>
-  <name>ejb</name>
-  <dependencies>
-  	<dependency>
-		<groupId>at.fhv.itb5c.logging</groupId>
-		<artifactId>logging</artifactId>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>at.fhv.itb5c</groupId>
+		<artifactId>root</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-	</dependency>
-	<dependency>
-		<groupId>at.fhv.itb5c.commons</groupId>
-		<artifactId>commons</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</dependency>
-	<dependency>
-		<groupId>junit</groupId>
-		<artifactId>junit</artifactId>
-		<version>4.12</version>
-		<scope>test</scope>
-	</dependency>
+	</parent>
+	<groupId>at.fhv.itb5c.ejb</groupId>
+	<artifactId>communication-ejb</artifactId>
+	<name>ejb</name>
+	<dependencies>
 		<dependency>
-		<groupId>at.fhv.itb5c.application</groupId>
-		<artifactId>application</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</dependency>
-	<dependency>
-		<groupId>javax</groupId>
-		<artifactId>javaee-api</artifactId>
-		<version>7.0</version>
-	</dependency>
-  </dependencies>
+			<groupId>at.fhv.itb5c.logging</groupId>
+			<artifactId>logging</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>at.fhv.itb5c.commons</groupId>
+			<artifactId>commons</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>at.fhv.itb5c.application</groupId>
+			<artifactId>application</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>at.fhv.itb5c.ejb.interfaces</groupId>
+			<artifactId>communication-ejb-interfaces</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+		</dependency>
+	</dependencies>
+	<!-- <build> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
+		<artifactId>maven-assembly-plugin</artifactId> <version>2.4.1</version> <configuration> 
+		get all project dependencies <descriptorRefs> <descriptorRef>jar-with-dependencies</descriptorRef> 
+		</descriptorRefs> MainClass in mainfest make a executable jar <archive> <manifest> 
+		<mainClass>com.mkyong.core.utils.App</mainClass> </manifest> </archive> </configuration> 
+		<executions> <execution> <id>make-assembly</id> bind to the packaging phase 
+		<phase>package</phase> <goals> <goal>single</goal> </goals> </execution> 
+		</executions> </plugin> </plugins> </build> -->
+	<!-- <build> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
+		<artifactId>maven-ejb-plugin</artifactId> <version>2.5.1</version> <configuration> 
+		<ejbVersion>3.0</ejbVersion> </configuration> </plugin> </plugins> </build> -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ejb-plugin</artifactId>
+				<configuration>
+					<generateClient>true</generateClient>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

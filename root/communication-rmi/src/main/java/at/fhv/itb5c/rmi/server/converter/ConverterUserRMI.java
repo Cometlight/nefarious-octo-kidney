@@ -76,4 +76,12 @@ public class ConverterUserRMI implements ILogger {
 		}
 		return dto;
 	}
+	
+	public static Collection<UserDTO> toDTO(Collection<IUserRMI> users)  {
+		if(users == null) {
+			return null;
+		}
+		
+		return users.stream().map(ConverterUserRMI::toDTO).collect(Collectors.toList());
+	}
 }

@@ -35,6 +35,15 @@ public class ConverterTournamentRMI implements ILogger {
 
 		return tournamentDTO;
 	}
+	
+	public static Collection<TournamentDTO> toDTO(Collection<ITournamentRMI> tournaments) {
+		if (tournaments == null) {
+			return null;
+		}
+
+		return tournaments.stream().map(ConverterTournamentRMI::toDTO).collect(Collectors.toList());
+	}
+
 
 	public static Collection<ITournamentRMI> toRMI(Collection<TournamentDTO> tournaments) {
 		if (tournaments == null) {

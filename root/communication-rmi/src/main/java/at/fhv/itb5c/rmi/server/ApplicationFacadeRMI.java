@@ -34,7 +34,7 @@ import at.fhv.itb5c.rmi.server.converter.ConverterUserRMI;
 
 public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplicationFacadeRMI, RMIServant, ILogger {
 	private static final long serialVersionUID = -6290768314413969216L;
-	private ApplicationFacade _applicationFacade;
+	private IApplicationFacade _applicationFacade;
 
 	public ApplicationFacadeRMI() throws RemoteException {
 		super();

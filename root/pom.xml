@@ -15,6 +15,7 @@
 		<module>logging</module>
 		<module>communication-jms</module>
 		<module>communication-ws</module>
+		<module>communication-ejb</module>
 	</modules>
 	<repositories>
 		<repository>

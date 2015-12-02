@@ -1,11 +1,10 @@
 package at.fhv.itb5c.view.login;
 
-import java.rmi.RemoteException;
-
 import at.fhv.itb5c.app.AppState;
+import at.fhv.itb5c.communication.CommunicationErrorException;
+import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.message.MessageHandler;
-import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -46,7 +45,7 @@ public class LoginController implements ILogger {
 	private void login() {
 		try {
 
-			String sessionID = RMIClient.getRMIClient().getApplicationFacade()
+			String sessionID = CommunicationFacadeProvider.getInstance().getCurrentFacade()
 					.loginLDAP(_loginModel.getUserName().getValue(), _loginModel.getPassword().getValue());
 			if (sessionID == null) {
 				ErrorPopUp.invalidLoginCredentials();
@@ -56,7 +55,7 @@ public class LoginController implements ILogger {
 				MessageHandler.getInstance().listen(AppState.getInstance().getLoggedInUser().getId());
 			}
 
-		} catch (RemoteException e) {
+		} catch (CommunicationErrorException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
 		}

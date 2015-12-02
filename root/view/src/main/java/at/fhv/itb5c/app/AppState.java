@@ -1,13 +1,12 @@
 package at.fhv.itb5c.app;
 
-import java.rmi.RemoteException;
 import java.util.Observable;
-
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
-import at.fhv.itb5c.rmi.client.RMIClient;
+import at.fhv.itb5c.application.dto.UserDTO;
+import at.fhv.itb5c.communication.CommunicationErrorException;
+import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 
 public class AppState extends Observable {
-	private IUserRMI _user;
+	private UserDTO _user;
 	private String _sessionID;
 	
 	private static AppState _instance;
@@ -19,14 +18,14 @@ public class AppState extends Observable {
 		return _instance;
 	}
 	
-	public IUserRMI getLoggedInUser() {
+	public UserDTO getLoggedInUser() {
 		return _user;
 	}
 	
-	public void setSessionID(String sessionID) throws RemoteException {
+	public void setSessionID(String sessionID) throws CommunicationErrorException {
 		if(sessionID != null) {
 			_sessionID = sessionID;
-			setLoggedInUser(RMIClient.getRMIClient().getApplicationFacade().getCurrentUser(sessionID));
+			setLoggedInUser(CommunicationFacadeProvider.getInstance().getCurrentFacade().getCurrentUser(sessionID));
 		}
 	}
 	
@@ -34,7 +33,7 @@ public class AppState extends Observable {
 		return _sessionID;
 	}
 	
-	public void setLoggedInUser(IUserRMI user) {
+	public void setLoggedInUser(UserDTO user) {
 		_user = user;
 		setChanged();
 		notifyObservers();

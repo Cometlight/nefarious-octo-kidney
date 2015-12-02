@@ -1,28 +1,23 @@
 package at.fhv.itb5c.application;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import at.fhv.itb5c.application.converter.ConverterDepartmentDTO;
-import at.fhv.itb5c.application.dto.DepartmentDTO;
-import at.fhv.itb5c.application.dto.LeagueDTO;
-import at.fhv.itb5c.application.dto.TeamDTO;
-import at.fhv.itb5c.application.dto.TournamentDTO;
-import at.fhv.itb5c.application.dto.UserDTO;
-import at.fhv.itb5c.commons.enums.TypeOfSport;
-import at.fhv.itb5c.commons.enums.UserRole;
-import at.fhv.itb5c.commons.util.auth.SessionManager;
-import at.fhv.itb5c.model.entity.Department;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertNull;
+//import static org.junit.Assert.assertTrue;
+//
+//import java.util.Arrays;
+//import java.util.Collection;
+//import java.util.HashSet;
+//
+//import org.junit.Before;
+//import org.junit.Test;
+//
+//import at.fhv.itb5c.application.converter.ConverterDepartmentDTO;
+//import at.fhv.itb5c.commons.enums.TypeOfSport;
+//import at.fhv.itb5c.commons.enums.UserRole;
+//import at.fhv.itb5c.commons.util.auth.SessionManager;
+//import at.fhv.itb5c.model.entity.Department;
 
 public class ApplicationFacadeTest {
 //	ApplicationFacade _appFacade;

@@ -1,7 +1,8 @@
 package at.fhv.itb5c.view.util.listcell;
 
 import java.time.format.DateTimeFormatter;
-import at.fhv.itb5c.application.dto.MatchDTO;
+
+import at.fhv.itb5c.commons.dto.MatchDTO;
 import at.fhv.itb5c.communication.CommunicationErrorException;
 import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;

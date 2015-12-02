@@ -1,6 +1,6 @@
 package at.fhv.itb5c.view.util.stringconverter;
 
-import at.fhv.itb5c.application.dto.UserDTO;
+import at.fhv.itb5c.commons.dto.UserDTO;
 import at.fhv.itb5c.logging.ILogger;
 import javafx.util.StringConverter;
 

@@ -2,9 +2,9 @@ package at.fhv.itb5c.view.tournament.addteams;
 
 import java.io.IOException;
 import at.fhv.itb5c.app.AppState;
-import at.fhv.itb5c.application.dto.DepartmentDTO;
-import at.fhv.itb5c.application.dto.TeamDTO;
-import at.fhv.itb5c.application.dto.TournamentDTO;
+import at.fhv.itb5c.commons.dto.DepartmentDTO;
+import at.fhv.itb5c.commons.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.TournamentDTO;
 import at.fhv.itb5c.communication.CommunicationErrorException;
 import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.logging.ILogger;

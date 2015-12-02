@@ -1,6 +1,6 @@
 package at.fhv.itb5c.application.converter;
 
-import at.fhv.itb5c.application.dto.MessageDTO;
+import at.fhv.itb5c.commons.dto.MessageDTO;
 import at.fhv.itb5c.jms.entity.Message;
 
 public class ConverterMessageDTO {

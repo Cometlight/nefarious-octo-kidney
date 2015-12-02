@@ -3,7 +3,7 @@ package at.fhv.itb5c.application.converter;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import at.fhv.itb5c.application.dto.MatchDTO;
+import at.fhv.itb5c.commons.dto.MatchDTO;
 import at.fhv.itb5c.model.entity.Match;
 
 public class ConverterMatchDTO {

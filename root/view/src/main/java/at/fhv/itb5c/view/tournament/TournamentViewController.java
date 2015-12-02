@@ -2,9 +2,9 @@ package at.fhv.itb5c.view.tournament;
 
 import java.io.IOException;
 import at.fhv.itb5c.app.AppState;
-import at.fhv.itb5c.application.dto.DepartmentDTO;
-import at.fhv.itb5c.application.dto.MatchDTO;
-import at.fhv.itb5c.application.dto.TournamentDTO;
+import at.fhv.itb5c.commons.dto.DepartmentDTO;
+import at.fhv.itb5c.commons.dto.MatchDTO;
+import at.fhv.itb5c.commons.dto.TournamentDTO;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.communication.CommunicationErrorException;
 import at.fhv.itb5c.communication.CommunicationFacadeProvider;

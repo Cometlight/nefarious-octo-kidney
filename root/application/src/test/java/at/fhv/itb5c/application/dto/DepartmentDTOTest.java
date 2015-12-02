@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
+import at.fhv.itb5c.commons.dto.DepartmentDTO;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 
 public class DepartmentDTOTest {

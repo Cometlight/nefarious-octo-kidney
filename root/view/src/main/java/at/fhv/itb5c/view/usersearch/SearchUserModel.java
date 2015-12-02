@@ -1,7 +1,7 @@
 package at.fhv.itb5c.view.usersearch;
 
-import at.fhv.itb5c.application.dto.DepartmentDTO;
-import at.fhv.itb5c.application.dto.UserDTO;
+import at.fhv.itb5c.commons.dto.DepartmentDTO;
+import at.fhv.itb5c.commons.dto.UserDTO;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;

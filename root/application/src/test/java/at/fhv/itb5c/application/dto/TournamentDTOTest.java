@@ -12,6 +12,8 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import at.fhv.itb5c.commons.dto.TournamentDTO;
+
 public class TournamentDTOTest {
 
 	@Test

@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import at.fhv.itb5c.application.dto.UserDTO;
+import at.fhv.itb5c.commons.dto.UserDTO;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.rmiclasses.UserRMI;

@@ -2,7 +2,8 @@ package at.fhv.itb5c.view.user;
 
 import java.time.LocalDate;
 import java.util.HashSet;
-import at.fhv.itb5c.application.dto.UserDTO;
+
+import at.fhv.itb5c.commons.dto.UserDTO;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;

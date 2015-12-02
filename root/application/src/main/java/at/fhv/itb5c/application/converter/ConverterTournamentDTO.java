@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
-import at.fhv.itb5c.application.dto.TournamentDTO;
+import at.fhv.itb5c.commons.dto.TournamentDTO;
 import at.fhv.itb5c.model.entity.Tournament;
 
 public class ConverterTournamentDTO {

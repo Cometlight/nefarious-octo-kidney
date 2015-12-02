@@ -1,7 +1,8 @@
 package at.fhv.itb5c.app;
 
 import java.util.Observable;
-import at.fhv.itb5c.application.dto.UserDTO;
+
+import at.fhv.itb5c.commons.dto.UserDTO;
 import at.fhv.itb5c.communication.CommunicationErrorException;
 import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 

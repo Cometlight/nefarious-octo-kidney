@@ -1,16 +1,15 @@
 package at.fhv.itb5c.view.team.addplayer;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.Collection;
 import java.util.stream.Collectors;
-
 import at.fhv.itb5c.app.AppState;
-import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
-import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
+import at.fhv.itb5c.application.dto.DepartmentDTO;
+import at.fhv.itb5c.application.dto.TeamDTO;
+import at.fhv.itb5c.application.dto.UserDTO;
+import at.fhv.itb5c.communication.CommunicationErrorException;
+import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.team.view.TeamViewFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
@@ -28,7 +27,7 @@ import javafx.util.Callback;
 
 public class TeamAddPlayerController implements IPanelClosable, ILogger {
 	@FXML
-	private ListView<IUserRMI> _userSearchResultList;
+	private ListView<UserDTO> _userSearchResultList;
 	@FXML
 	private Button _cancelButton;
 	@FXML
@@ -39,7 +38,7 @@ public class TeamAddPlayerController implements IPanelClosable, ILogger {
 	private TeamAddPlayerModel _teamAddPlayerModel;
 	private IPanelCloseHandler _panelCloseHandler;
 
-	public TeamAddPlayerController(ITeamRMI team) {
+	public TeamAddPlayerController(TeamDTO team) {
 		_teamAddPlayerModel = new TeamAddPlayerModel(team);
 	}
 
@@ -48,9 +47,9 @@ public class TeamAddPlayerController implements IPanelClosable, ILogger {
 		_userSearchResultList.setItems(_teamAddPlayerModel.getSearchResults());
 		_userSearchInput.textProperty().bindBidirectional(_teamAddPlayerModel.getSearchInput());
 
-		_userSearchResultList.setCellFactory(new Callback<ListView<IUserRMI>, ListCell<IUserRMI>>() {
+		_userSearchResultList.setCellFactory(new Callback<ListView<UserDTO>, ListCell<UserDTO>>() {
 			@Override
-			public ListCell<IUserRMI> call(ListView<IUserRMI> param) {
+			public ListCell<UserDTO> call(ListView<UserDTO> param) {
 				return new UserListCell();
 			}
 		});
@@ -66,7 +65,7 @@ public class TeamAddPlayerController implements IPanelClosable, ILogger {
 		_teamAddPlayerModel.getSearchResults().clear();
 		_userSearchResultList.getItems().clear();
 		try {
-			Collection<IUserRMI> usersFound = RMIClient.getRMIClient().getApplicationFacade().findUsersSimple(
+			Collection<UserDTO> usersFound = CommunicationFacadeProvider.getInstance().getCurrentFacade().findUsersSimple(
 					AppState.getInstance().getSessionID(), _teamAddPlayerModel.getSearchInput().getValue());
 			
 			// filter out users that are already a member of this team
@@ -80,7 +79,7 @@ public class TeamAddPlayerController implements IPanelClosable, ILogger {
 			}).collect(Collectors.toList());
 			
 			_teamAddPlayerModel.getSearchResults().addAll(usersFound);
-		} catch (RemoteException e) {
+		} catch (CommunicationErrorException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
 		}
@@ -89,7 +88,7 @@ public class TeamAddPlayerController implements IPanelClosable, ILogger {
 	@FXML
 	void _onAddPlayerButtonClick(ActionEvent event) {
 
-		ITeamRMI updatedTeam = null;
+		TeamDTO updatedTeam = null;
 
 		if ((updatedTeam = addPlayerToTeam()) != null) {
 			DataModificationPopUp.dataSavedPopUp("Player was added!");
@@ -109,14 +108,14 @@ public class TeamAddPlayerController implements IPanelClosable, ILogger {
 	/**
 	 * @return the updated team; or null, if something went wrong
 	 */
-	private ITeamRMI addPlayerToTeam() {
+	private TeamDTO addPlayerToTeam() {
 		try {
 			if (_teamAddPlayerModel.getPlayer().getValue() != null) {
-				return RMIClient.getRMIClient().getApplicationFacade().addPlayerToTeam(
+				return CommunicationFacadeProvider.getInstance().getCurrentFacade().addPlayerToTeam(
 						AppState.getInstance().getSessionID(), _teamAddPlayerModel.getTeam(),
 						_teamAddPlayerModel.getPlayer().getValue());
 			}
-		} catch (RemoteException e) {
+		} catch (CommunicationErrorException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();
 		}
@@ -133,12 +132,12 @@ public class TeamAddPlayerController implements IPanelClosable, ILogger {
 		}
 	}
 
-	private IDepartmentRMI getDepartment() {
-		ITeamRMI team = _teamAddPlayerModel.getTeam();
+	private DepartmentDTO getDepartment() {
+		TeamDTO team = _teamAddPlayerModel.getTeam();
 		try {
-			return RMIClient.getRMIClient().getApplicationFacade()
+			return CommunicationFacadeProvider.getInstance().getCurrentFacade()
 					.getDepartmentById(AppState.getInstance().getSessionID(), team.getDepartmentId());
-		} catch (RemoteException e) {
+		} catch (CommunicationErrorException e) {
 			log.error(e.getMessage());
 			return null;
 		}

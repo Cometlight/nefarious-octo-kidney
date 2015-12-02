@@ -34,7 +34,7 @@ public class RMIClient implements ILogger {
 		System.runFinalization();
 	}
 
-	public static RMIClient getRMIClient() {
+	private static RMIClient getRMIClient() {
 		if (_client == null) {
 			_client = new RMIClient();
 		}

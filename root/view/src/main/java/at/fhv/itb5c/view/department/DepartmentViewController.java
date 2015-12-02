@@ -11,9 +11,11 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 
 import at.fhv.itb5c.app.AppState;
-import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
-import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
+import at.fhv.itb5c.application.dto.TeamDTO;
+import at.fhv.itb5c.application.dto.TournamentDTO;
 import at.fhv.itb5c.commons.enums.UserRole;
+import at.fhv.itb5c.communication.CommunicationErrorException;
+import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.ApplicationFacadeRMIStub;
 import at.fhv.itb5c.rmi.client.RMIClient;
@@ -34,11 +36,11 @@ public class DepartmentViewController implements IPanelClosable, ILogger {
 	@FXML
 	private Label _headLabel;
 	@FXML
-	private ListView<ITeamRMI> _teamList;
+	private ListView<TeamDTO> _teamList;
 	@FXML
 	private Button _addTeamButton;
 	@FXML
-	private ListView<ITournamentRMI> _tournamentList;
+	private ListView<TournamentDTO> _tournamentList;
 	@FXML
 	private Label _typeOfSportLabel;
 	@FXML
@@ -56,46 +58,50 @@ public class DepartmentViewController implements IPanelClosable, ILogger {
 		_headLabel.textProperty().bind(_departmentViewModel.getNameHeadOfDepartment());
 		_typeOfSportLabel.textProperty().bind(_departmentViewModel.getTypeOfSport());
 		_teamList.setItems(_departmentViewModel.getTeams());
-		_teamList.setCellFactory(new Callback<ListView<ITeamRMI>, ListCell<ITeamRMI>>() {
+		_teamList.setCellFactory(new Callback<ListView<TeamDTO>, ListCell<TeamDTO>>() {
 			@Override
-			public ListCell<ITeamRMI> call(ListView<ITeamRMI> param) {
+			public ListCell<TeamDTO> call(ListView<TeamDTO> param) {
 				return new TeamListCell();
 			}
 		});
+
 		try {
 			_departmentViewModel.getTeams()
-					.setAll(RMIClient.getRMIClient().getApplicationFacade().findTeams(
-							AppState.getInstance().getSessionID(), null, null,
-							_departmentViewModel.getDepartment().getId(), null, null));
-		} catch (RemoteException e) {
+					.setAll(CommunicationFacadeProvider.getInstance().getCurrentFacade().findTeams(
+							AppState.getInstance().getSessionID(), null, null, _departmentViewModel.getDepartment().getId(),
+							null, null));
+		} catch (CommunicationErrorException e1) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();
 		}
+
 		_tournamentList.setItems(_departmentViewModel.getTournaments());
-		_tournamentList.setCellFactory(new Callback<ListView<ITournamentRMI>, ListCell<ITournamentRMI>>() {
+		_tournamentList.setCellFactory(new Callback<ListView<TournamentDTO>, ListCell<TournamentDTO>>() {
 			@Override
-			public ListCell<ITournamentRMI> call(ListView<ITournamentRMI> param) {
+			public ListCell<TournamentDTO> call(ListView<TournamentDTO> param) {
 				return new TournamentListCell();
 			}
 		});
+		
 		try {
 			_departmentViewModel.getTournaments()
-					.setAll(RMIClient.getRMIClient().getApplicationFacade().findTournaments(
+					.setAll(CommunicationFacadeProvider.getInstance().getCurrentFacade().findTournaments(
 							AppState.getInstance().getSessionID(), null, _departmentViewModel.getDepartment().getId()));
-		} catch (RemoteException e) {
+		} catch (CommunicationErrorException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();
 		}
-		
+
 		// deactivte buttons if user is not ADMIN or head of department
 		String sessionId = AppState.getInstance().getSessionID();
-    	ApplicationFacadeRMIStub afRMI = RMIClient.getRMIClient().getApplicationFacade();
-    	try {
-			if(!afRMI.hasRole(sessionId, UserRole.Admin) && !afRMI.isDepartmentHead(sessionId, _departmentViewModel.getDepartment())) {
+		try {
+			if (!CommunicationFacadeProvider.getInstance().getCurrentFacade().hasRole(sessionId, UserRole.Admin)
+					&& !CommunicationFacadeProvider.getInstance().getCurrentFacade().isDepartmentHead(sessionId,
+							_departmentViewModel.getDepartment())) {
 				_addTeamButton.setDisable(true);
 				_addTournamentButton.setDisable(true);
 			}
-		} catch (RemoteException e) {
+		} catch (CommunicationErrorException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
 		}
@@ -113,7 +119,7 @@ public class DepartmentViewController implements IPanelClosable, ILogger {
 
 	@FXML
 	void _teamListOnMouseClick(MouseEvent mouseEvent) {
-		ITeamRMI team = _teamList.getSelectionModel().getSelectedItem();
+		TeamDTO team = _teamList.getSelectionModel().getSelectedItem();
 		if (team != null) {
 			try {
 				_panelCloseHandler.closeNext(new TeamViewFactory(_departmentViewModel.getDepartment(), team));
@@ -123,13 +129,14 @@ public class DepartmentViewController implements IPanelClosable, ILogger {
 			}
 		}
 	}
-	
+
 	@FXML
 	void _tournamentListOnMouseClick(MouseEvent mouseEvent) {
-		ITournamentRMI tournament = _tournamentList.getSelectionModel().getSelectedItem();
+		TournamentDTO tournament = _tournamentList.getSelectionModel().getSelectedItem();
 		if (tournament != null) {
 			try {
-				_panelCloseHandler.closeNext(new TournamentViewFactory(_departmentViewModel.getDepartment(), tournament));
+				_panelCloseHandler
+						.closeNext(new TournamentViewFactory(_departmentViewModel.getDepartment(), tournament));
 			} catch (IOException e) {
 				log.error(e.getMessage());
 				ErrorPopUp.criticalSystemError();

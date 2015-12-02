@@ -2,13 +2,14 @@ package at.fhv.itb5c.communication;
 
 import java.rmi.RemoteException;
 import java.util.Collection;
-import at.fhv.itb5c.application.dto.DepartmentDTO;
-import at.fhv.itb5c.application.dto.LeagueDTO;
-import at.fhv.itb5c.application.dto.MatchDTO;
-import at.fhv.itb5c.application.dto.MessageDTO;
-import at.fhv.itb5c.application.dto.TeamDTO;
-import at.fhv.itb5c.application.dto.TournamentDTO;
-import at.fhv.itb5c.application.dto.UserDTO;
+
+import at.fhv.itb5c.commons.dto.DepartmentDTO;
+import at.fhv.itb5c.commons.dto.LeagueDTO;
+import at.fhv.itb5c.commons.dto.MatchDTO;
+import at.fhv.itb5c.commons.dto.MessageDTO;
+import at.fhv.itb5c.commons.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.TournamentDTO;
+import at.fhv.itb5c.commons.dto.UserDTO;
 import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;

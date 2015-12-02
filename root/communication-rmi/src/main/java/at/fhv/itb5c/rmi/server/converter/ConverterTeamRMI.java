@@ -5,7 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.stream.Collectors;
-import at.fhv.itb5c.application.dto.TeamDTO;
+
+import at.fhv.itb5c.commons.dto.TeamDTO;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.rmiclasses.TeamRMI;

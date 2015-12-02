@@ -1,7 +1,7 @@
 package at.fhv.itb5c.view.team.view;
 
-import at.fhv.itb5c.application.dto.DepartmentDTO;
-import at.fhv.itb5c.application.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.DepartmentDTO;
+import at.fhv.itb5c.commons.dto.TeamDTO;
 import at.fhv.itb5c.view.util.factories.AbstractViewFactory;
 
 public class TeamViewFactory extends AbstractViewFactory {

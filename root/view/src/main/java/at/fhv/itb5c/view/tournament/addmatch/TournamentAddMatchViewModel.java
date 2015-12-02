@@ -2,7 +2,7 @@ package at.fhv.itb5c.view.tournament.addmatch;
 
 import java.time.LocalDate;
 
-import at.fhv.itb5c.application.dto.TournamentDTO;
+import at.fhv.itb5c.commons.dto.TournamentDTO;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

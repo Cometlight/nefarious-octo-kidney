@@ -7,9 +7,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import at.fhv.itb5c.app.AppState;
-import at.fhv.itb5c.application.dto.MatchDTO;
-import at.fhv.itb5c.application.dto.TeamDTO;
-import at.fhv.itb5c.application.dto.TournamentDTO;
+import at.fhv.itb5c.commons.dto.MatchDTO;
+import at.fhv.itb5c.commons.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.TournamentDTO;
 import at.fhv.itb5c.communication.CommunicationErrorException;
 import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.logging.ILogger;
@@ -34,7 +34,7 @@ public class TournamentModel implements ILogger {
 	private Property<ObservableList<MatchDTO>> _matches;
 	private Long _departmentId;
 
-	private TournamentDTO _rmiTournament;
+	private TournamentDTO _tournament;
 	
 	public TournamentModel(){
 		_tournamentName = new SimpleStringProperty();
@@ -59,7 +59,7 @@ public class TournamentModel implements ILogger {
 	}
 
 	public void setTournamentDTO(TournamentDTO tournament) throws CommunicationErrorException {
-		_rmiTournament = tournament;
+		_tournament = tournament;
 		_tournamentName.setValue(tournament.getName());
 		_date.setValue(tournament.getDate());
 		_fee.setValue(tournament.getFee());
@@ -94,17 +94,17 @@ public class TournamentModel implements ILogger {
 	}
 
 	public TournamentDTO getTournamentDTO() throws CommunicationErrorException {
-		_rmiTournament.setName(_tournamentName.getValue());
-		_rmiTournament.setDate(_date.getValue());
-		_rmiTournament.setFee(_fee.doubleValue());
-		_rmiTournament.setGuestTeams(_guestTeams.getValue().stream().collect(Collectors.toSet()));
+		_tournament.setName(_tournamentName.getValue());
+		_tournament.setDate(_date.getValue());
+		_tournament.setFee(_fee.doubleValue());
+		_tournament.setGuestTeams(_guestTeams.getValue().stream().collect(Collectors.toSet()));
 		Set<Long> homeTeamsIds = new HashSet<>();
 		for (TeamDTO homeTeam : _homeTeams.getValue()) {
 			homeTeamsIds.add(homeTeam.getId());
 		}
-		_rmiTournament.setHomeTeamsIds(homeTeamsIds);
-		_rmiTournament.setDepartmentId(_departmentId);
-		return _rmiTournament;
+		_tournament.setHomeTeamsIds(homeTeamsIds);
+		_tournament.setDepartmentId(_departmentId);
+		return _tournament;
 	}
 
 	public Property<ObservableList<Object>> getTeams() {

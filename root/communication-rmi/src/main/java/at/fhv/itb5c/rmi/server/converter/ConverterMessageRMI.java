@@ -2,7 +2,7 @@ package at.fhv.itb5c.rmi.server.converter;
 
 import java.rmi.RemoteException;
 
-import at.fhv.itb5c.application.dto.MessageDTO;
+import at.fhv.itb5c.commons.dto.MessageDTO;
 import at.fhv.itb5c.commons.dto.rmi.IMessageRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.rmiclasses.MessageRMI;

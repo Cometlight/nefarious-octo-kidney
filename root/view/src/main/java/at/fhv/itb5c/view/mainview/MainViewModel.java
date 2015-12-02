@@ -2,7 +2,7 @@ package at.fhv.itb5c.view.mainview;
 
 import java.util.Collection;
 
-import at.fhv.itb5c.application.dto.DepartmentDTO;
+import at.fhv.itb5c.commons.dto.DepartmentDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import org.controlsfx.control.CheckListView;
 import at.fhv.itb5c.app.AppState;
-import at.fhv.itb5c.application.dto.UserDTO;
+import at.fhv.itb5c.commons.dto.UserDTO;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;

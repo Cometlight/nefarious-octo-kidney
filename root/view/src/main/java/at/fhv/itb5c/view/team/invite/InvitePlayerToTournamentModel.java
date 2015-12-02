@@ -1,9 +1,9 @@
 package at.fhv.itb5c.view.team.invite;
 
 import at.fhv.itb5c.app.AppState;
-import at.fhv.itb5c.application.dto.TeamDTO;
-import at.fhv.itb5c.application.dto.TournamentDTO;
-import at.fhv.itb5c.application.dto.UserDTO;
+import at.fhv.itb5c.commons.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.TournamentDTO;
+import at.fhv.itb5c.commons.dto.UserDTO;
 import at.fhv.itb5c.communication.CommunicationErrorException;
 import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.logging.ILogger;

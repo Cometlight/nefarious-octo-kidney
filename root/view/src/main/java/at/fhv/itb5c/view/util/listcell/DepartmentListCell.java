@@ -1,6 +1,6 @@
 package at.fhv.itb5c.view.util.listcell;
 
-import at.fhv.itb5c.application.dto.DepartmentDTO;
+import at.fhv.itb5c.commons.dto.DepartmentDTO;
 
 public class DepartmentListCell extends SimpleListCell<DepartmentDTO>{
 	@Override

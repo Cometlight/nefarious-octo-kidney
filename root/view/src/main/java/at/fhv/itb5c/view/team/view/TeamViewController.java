@@ -2,9 +2,9 @@ package at.fhv.itb5c.view.team.view;
 
 import java.io.IOException;
 import at.fhv.itb5c.app.AppState;
-import at.fhv.itb5c.application.dto.DepartmentDTO;
-import at.fhv.itb5c.application.dto.TeamDTO;
-import at.fhv.itb5c.application.dto.UserDTO;
+import at.fhv.itb5c.commons.dto.DepartmentDTO;
+import at.fhv.itb5c.commons.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.UserDTO;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.communication.CommunicationErrorException;
 import at.fhv.itb5c.communication.CommunicationFacadeProvider;

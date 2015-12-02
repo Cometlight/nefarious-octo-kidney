@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import at.fhv.itb5c.commons.dto.BaseDTO;
+
 public class BaseDTOTest {
 
 	@Test

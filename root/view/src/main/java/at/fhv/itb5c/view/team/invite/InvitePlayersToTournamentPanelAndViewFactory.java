@@ -1,7 +1,7 @@
 package at.fhv.itb5c.view.team.invite;
 
-import at.fhv.itb5c.application.dto.TeamDTO;
-import at.fhv.itb5c.application.dto.TournamentDTO;
+import at.fhv.itb5c.commons.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.TournamentDTO;
 import at.fhv.itb5c.view.util.factories.AbstractPanelAndViewFactory;
 
 public class InvitePlayersToTournamentPanelAndViewFactory extends AbstractPanelAndViewFactory{

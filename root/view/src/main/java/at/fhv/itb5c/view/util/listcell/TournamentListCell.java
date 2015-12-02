@@ -1,6 +1,6 @@
 package at.fhv.itb5c.view.util.listcell;
 
-import at.fhv.itb5c.application.dto.TournamentDTO;
+import at.fhv.itb5c.commons.dto.TournamentDTO;
 
 public class TournamentListCell extends SimpleListCell<TournamentDTO> {
 

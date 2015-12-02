@@ -2,8 +2,8 @@ package at.fhv.itb5c.view.tournament.invitation;
 
 import java.util.Optional;
 import at.fhv.itb5c.app.AppState;
-import at.fhv.itb5c.application.dto.TeamDTO;
-import at.fhv.itb5c.application.dto.TournamentDTO;
+import at.fhv.itb5c.commons.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.TournamentDTO;
 import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.communication.CommunicationErrorException;
 import at.fhv.itb5c.communication.CommunicationFacadeProvider;

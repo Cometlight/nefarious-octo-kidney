@@ -1,6 +1,6 @@
 package at.fhv.itb5c.view.util.listcell;
 
-import at.fhv.itb5c.application.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.TeamDTO;
 
 public class TeamListCell extends SimpleListCell<TeamDTO>{
 

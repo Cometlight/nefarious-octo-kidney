@@ -35,43 +35,57 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
+@SuppressWarnings("deprecation")
 public class UserViewController implements IPanelClosable, Closeable {
-	
-	@FXML private Label _titelLabel;
-	@FXML private BorderPane _borderPane;
-	@FXML private TextField _firstNameTextField;
-	@FXML private TextField _lastNameTextField;
-	@FXML private TextField _adressTextField;
-	@FXML private TextField _eMailTextField;
-	@FXML private TextField _telephoneNumberTextField;
-	@FXML private ComboBox<Gender> _genderComboBox;
-	@FXML private DatePicker _birthdayDatePicker;
-	@FXML private CheckListView<TypeOfSport> _typeOfSportCheckListView;
-	@FXML private TextField _memebershipFeeTextBox;
-	@FXML private CheckListView<UserRole> _userRoleCheckListView;
-	@FXML private Pane _controlPane;
-	@FXML private Label _errorField;
+
+	@FXML
+	private Label _titelLabel;
+	@FXML
+	private BorderPane _borderPane;
+	@FXML
+	private TextField _firstNameTextField;
+	@FXML
+	private TextField _lastNameTextField;
+	@FXML
+	private TextField _adressTextField;
+	@FXML
+	private TextField _eMailTextField;
+	@FXML
+	private TextField _telephoneNumberTextField;
+	@FXML
+	private ComboBox<Gender> _genderComboBox;
+	@FXML
+	private DatePicker _birthdayDatePicker;
+	@FXML
+	private CheckListView<TypeOfSport> _typeOfSportCheckListView;
+	@FXML
+	private TextField _memebershipFeeTextBox;
+	@FXML
+	private CheckListView<UserRole> _userRoleCheckListView;
+	@FXML
+	private Pane _controlPane;
+	@FXML
+	private Label _errorField;
 
 	private UserModel _userModel;
 
 	public enum UserViewState {
-		addState, 
-		detailState, 
-		modifieState
+		addState, detailState, modifieState
 	}
-	
+
 	private UserViewState _initialiseState;
-	
+
 	static {
 		RouteProvider.getInstance().add(DetailUserViewControlls.class, "/view/fxml/user/DetailUserViewControlls.fxml");
-		RouteProvider.getInstance().add(AddUserViewControllsController.class, "/view/fxml/user/AddUserViewControlls.fxml");
+		RouteProvider.getInstance().add(AddUserViewControllsController.class,
+				"/view/fxml/user/AddUserViewControlls.fxml");
 		RouteProvider.getInstance().add(ModifyUserViewControlls.class, "/view/fxml/user/ModifyUserViewControlls.fxml");
 	}
-	
+
 	public UserViewController(UserModel userModel, UserViewState initialiseState) {
 		_userModel = userModel;
 		_userViewStates = new HashMap<>();
-		
+
 		_userViewStates.put(UserViewState.addState, new AddUserViewControllsController(this));
 		_userViewStates.put(UserViewState.detailState, new DetailUserViewControlls(this));
 		_userViewStates.put(UserViewState.modifieState, new ModifyUserViewControlls(this));
@@ -97,7 +111,8 @@ public class UserViewController implements IPanelClosable, Closeable {
 		_typeOfSportCheckListView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<TypeOfSport>() {
 			@Override
 			public void onChanged(javafx.collections.ListChangeListener.Change<? extends TypeOfSport> c) {
-				_userModel.setTypeOfSports(FXCollections.observableSet(new HashSet<TypeOfSport>(_typeOfSportCheckListView.getCheckModel().getCheckedItems())));
+				_userModel.setTypeOfSports(FXCollections.observableSet(
+						new HashSet<TypeOfSport>(_typeOfSportCheckListView.getCheckModel().getCheckedItems())));
 			}
 		});
 
@@ -106,7 +121,6 @@ public class UserViewController implements IPanelClosable, Closeable {
 
 		_userRoleCheckListView.setItems(FXCollections.observableArrayList(UserRole.values()));
 
-
 		for (UserRole userRole : _userModel.getUserRoles()) {
 			_userRoleCheckListView.getCheckModel().check(userRole);
 		}
@@ -114,12 +128,13 @@ public class UserViewController implements IPanelClosable, Closeable {
 		_userRoleCheckListView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<UserRole>() {
 			@Override
 			public void onChanged(javafx.collections.ListChangeListener.Change<? extends UserRole> c) {
-				_userModel.setUserRoles(FXCollections.observableSet(new HashSet<UserRole>( _userRoleCheckListView.getCheckModel().getCheckedItems())));
+				_userModel.setUserRoles(FXCollections.observableSet(
+						new HashSet<UserRole>(_userRoleCheckListView.getCheckModel().getCheckedItems())));
 			}
 		});
-		
+
 		_errorField.setVisible(false);
-		if(AppState.getInstance().getLoggedInUser().getRoles().contains(UserRole.Admin)) {
+		if (AppState.getInstance().getLoggedInUser().getRoles().contains(UserRole.Admin)) {
 			_userRoleCheckListView.disableProperty().set(false);
 		}
 		setState(_initialiseState);
@@ -142,7 +157,8 @@ public class UserViewController implements IPanelClosable, Closeable {
 	public boolean saveModel() {
 		if (mandatoryFieldsSet()) {
 			try {
-				IUserRMI savedUser = RMIClient.getRMIClient().getApplicationFacade().saveUser(AppState.getInstance().getSessionID(), _userModel.getRMIUser());
+				IUserRMI savedUser = RMIClient.getRMIClient().getApplicationFacade()
+						.saveUser(AppState.getInstance().getSessionID(), _userModel.getRMIUser());
 				_userModel.setIUserRMI(savedUser);
 			} catch (RemoteException e) {
 				ErrorPopUp.connectionError();
@@ -155,7 +171,7 @@ public class UserViewController implements IPanelClosable, Closeable {
 	}
 
 	private boolean mandatoryFieldsSet() {
-		// refactor to validater -> string not empty validator ...
+		//TODO: refactor to validater -> string not empty validator ...
 		if ((_userModel.getFirstName().getValue() != null) && (_userModel.getFirstName().getValue() != "")
 				&& (_userModel.getLastName().getValue() != null) && (_userModel.getLastName().getValue() != "")
 				&& (_userModel.getAddress().getValue() != null) && (_userModel.getAddress().getValue() != "")
@@ -195,7 +211,7 @@ public class UserViewController implements IPanelClosable, Closeable {
 			_controlPane.getChildren().add(loader.load());
 			_borderPane.requestFocus();
 			_errorField.setVisible(false);
-			
+
 			userViewState.activate();
 		}
 	}
@@ -210,7 +226,7 @@ public class UserViewController implements IPanelClosable, Closeable {
 		_birthdayDatePicker.setDisable(isDisabled);
 		_typeOfSportCheckListView.setDisable(isDisabled);
 		_memebershipFeeTextBox.setDisable(isDisabled);
-		if(AppState.getInstance().getLoggedInUser().getRoles().contains(UserRole.Admin)) {
+		if (AppState.getInstance().getLoggedInUser().getRoles().contains(UserRole.Admin)) {
 			_userRoleCheckListView.disableProperty().set(false);
 		}
 	}

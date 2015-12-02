@@ -11,7 +11,6 @@ import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.ApplicationFacadeRMIStub;
 import at.fhv.itb5c.rmi.client.RMIClient;
-import at.fhv.itb5c.rmi.server.ApplicationFacadeRMI;
 import at.fhv.itb5c.view.department.DepartmentViewFactory;
 import at.fhv.itb5c.view.team.addplayer.TeamAddPlayerViewFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;

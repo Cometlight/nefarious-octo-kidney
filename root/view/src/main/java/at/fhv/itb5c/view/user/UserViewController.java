@@ -2,20 +2,18 @@ package at.fhv.itb5c.view.user;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-
 import org.controlsfx.control.CheckListView;
-
 import at.fhv.itb5c.app.AppState;
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
+import at.fhv.itb5c.application.dto.UserDTO;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
-import at.fhv.itb5c.rmi.client.RMIClient;
+import at.fhv.itb5c.communication.CommunicationErrorException;
+import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.view.user.states.DetailUserViewControlls;
 import at.fhv.itb5c.view.user.states.ModifyUserViewControlls;
 import at.fhv.itb5c.view.user.states.AddUserViewControllsController;
@@ -157,10 +155,10 @@ public class UserViewController implements IPanelClosable, Closeable {
 	public boolean saveModel() {
 		if (mandatoryFieldsSet()) {
 			try {
-				IUserRMI savedUser = RMIClient.getRMIClient().getApplicationFacade()
-						.saveUser(AppState.getInstance().getSessionID(), _userModel.getRMIUser());
-				_userModel.setIUserRMI(savedUser);
-			} catch (RemoteException e) {
+				UserDTO savedUser = CommunicationFacadeProvider.getInstance().getCurrentFacade()
+						.saveUser(AppState.getInstance().getSessionID(), _userModel.getUser());
+				_userModel.setUserDTO(savedUser);
+			} catch (CommunicationErrorException e) {
 				ErrorPopUp.connectionError();
 				return false;
 			}
@@ -216,7 +214,7 @@ public class UserViewController implements IPanelClosable, Closeable {
 		}
 	}
 
-	public void setDisable(boolean isDisabled) throws RemoteException {
+	public void setDisable(boolean isDisabled) {
 		_firstNameTextField.setDisable(isDisabled);
 		_lastNameTextField.setDisable(isDisabled);
 		_adressTextField.setDisable(isDisabled);

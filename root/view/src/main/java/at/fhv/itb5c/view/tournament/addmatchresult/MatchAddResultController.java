@@ -1,14 +1,13 @@
 package at.fhv.itb5c.view.tournament.addmatchresult;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
-
 import at.fhv.itb5c.app.AppState;
-import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
-import at.fhv.itb5c.commons.dto.rmi.IMatchRMI;
-import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
+import at.fhv.itb5c.application.dto.DepartmentDTO;
+import at.fhv.itb5c.application.dto.MatchDTO;
+import at.fhv.itb5c.application.dto.TournamentDTO;
+import at.fhv.itb5c.communication.CommunicationErrorException;
+import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.tournament.TournamentViewFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
@@ -33,11 +32,11 @@ public class MatchAddResultController implements IPanelClosable, ILogger {
 	@FXML
 	private Button _cancelButton;
 	
-	private IMatchRMI _match;
-	private IDepartmentRMI _department;
-	private ITournamentRMI _tournament;
+	private MatchDTO _match;
+	private DepartmentDTO _department;
+	private TournamentDTO _tournament;
 
-	public MatchAddResultController(IMatchRMI match, IDepartmentRMI department, ITournamentRMI tournament) {
+	public MatchAddResultController(MatchDTO match, DepartmentDTO department, TournamentDTO tournament) {
 		_match = match;
 		_department = department;
 		_tournament = tournament;
@@ -49,9 +48,9 @@ public class MatchAddResultController implements IPanelClosable, ILogger {
 			if(_match.getTeamOne() instanceof String){
 				_teamOneLabel.setText((String) _match.getTeamOne());
 			} else {
-				_teamOneLabel.setText(RMIClient.getRMIClient().getApplicationFacade().getTeamById(AppState.getInstance().getSessionID(), (Long) _match.getTeamOne()).getName());
+				_teamOneLabel.setText(CommunicationFacadeProvider.getInstance().getCurrentFacade().getTeamById(AppState.getInstance().getSessionID(), (Long) _match.getTeamOne()).getName());
 			}
-		} catch (RemoteException e) {
+		} catch (CommunicationErrorException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();
 		}
@@ -60,9 +59,9 @@ public class MatchAddResultController implements IPanelClosable, ILogger {
 			if(_match.getTeamTwo() instanceof String){
 				_teamTwoLabel.setText((String) _match.getTeamTwo());
 			} else {
-				_teamTwoLabel.setText(RMIClient.getRMIClient().getApplicationFacade().getTeamById(AppState.getInstance().getSessionID(), (Long) _match.getTeamTwo()).getName());
+				_teamTwoLabel.setText(CommunicationFacadeProvider.getInstance().getCurrentFacade().getTeamById(AppState.getInstance().getSessionID(), (Long) _match.getTeamTwo()).getName());
 			}
-		} catch (RemoteException e) {
+		} catch (CommunicationErrorException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();
 		}
@@ -75,7 +74,12 @@ public class MatchAddResultController implements IPanelClosable, ILogger {
 			_match.setResultTeamOne(Integer.valueOf(_teamOneInput.getText()));
 			_match.setResultTeamTwo(Integer.valueOf(_teamTwoInput.getText()));
 			
-			_match = RMIClient.getRMIClient().getApplicationFacade().saveMatch(AppState.getInstance().getSessionID(), _match, _department);
+			try {
+				_match = CommunicationFacadeProvider.getInstance().getCurrentFacade().saveMatch(AppState.getInstance().getSessionID(), _match, _department);
+			} catch (CommunicationErrorException e) {
+				log.error(e.getMessage());
+				ErrorPopUp.connectionError();
+			}
 		
 			_panelCloseHandler.closeNext(new TournamentViewFactory(_department, _tournament));
 		} catch (NumberFormatException e) {

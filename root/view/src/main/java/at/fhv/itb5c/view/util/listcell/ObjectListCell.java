@@ -1,15 +1,13 @@
 package at.fhv.itb5c.view.util.listcell;
 
-import java.rmi.RemoteException;
-
-import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
+import at.fhv.itb5c.application.dto.TeamDTO;
 
 public class ObjectListCell extends SimpleListCell<Object> {
 
 	@Override
-	protected void format(Object item) throws RemoteException {
-		if (item instanceof ITeamRMI) {
-			setText(((ITeamRMI) item).getName());
+	protected void format(Object item) {
+		if (item instanceof TeamDTO) {
+			setText(((TeamDTO) item).getName());
 		} else {
 			setText(item.toString());
 		}

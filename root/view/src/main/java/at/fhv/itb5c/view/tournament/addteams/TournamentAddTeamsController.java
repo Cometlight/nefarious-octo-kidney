@@ -1,14 +1,13 @@
 package at.fhv.itb5c.view.tournament.addteams;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
-
 import at.fhv.itb5c.app.AppState;
-import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
-import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
-import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
+import at.fhv.itb5c.application.dto.DepartmentDTO;
+import at.fhv.itb5c.application.dto.TeamDTO;
+import at.fhv.itb5c.application.dto.TournamentDTO;
+import at.fhv.itb5c.communication.CommunicationErrorException;
+import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.tournament.TournamentModel;
 import at.fhv.itb5c.view.tournament.TournamentViewFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
@@ -27,11 +26,11 @@ import javafx.util.Callback;
 
 public class TournamentAddTeamsController implements IPanelClosable, ILogger {
 	@FXML
-	private ComboBox<ITeamRMI> _homeTeamComboBox;
+	private ComboBox<TeamDTO> _homeTeamComboBox;
 	@FXML
 	private Button _homeTeamAddButton;
 	@FXML
-	private ListView<ITeamRMI> _homeTeamsList;
+	private ListView<TeamDTO> _homeTeamsList;
 	@FXML
 	private Button _homeTeamRemoveButton;
 	@FXML
@@ -47,37 +46,38 @@ public class TournamentAddTeamsController implements IPanelClosable, ILogger {
 	@FXML
 	private Button _cancelButton;
 
-	private IDepartmentRMI _department;
-	private ITournamentRMI _tournament;
+	private DepartmentDTO _department;
+	private TournamentDTO _tournament;
 	private TournamentModel _tournamentModel;
 
-	public TournamentAddTeamsController(IDepartmentRMI department, ITournamentRMI tournament) {
+	public TournamentAddTeamsController(DepartmentDTO department, TournamentDTO tournament) {
 		_department = department;
 		_tournament = tournament;
 		_tournamentModel = new TournamentModel();
 		try {
-			_tournamentModel.setITournamentRMI(tournament);
-		} catch (RemoteException e) {
+			_tournamentModel.setTournamentDTO(tournament);
+		} catch (CommunicationErrorException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
 		}
 	}
-	
+
 	@FXML
-	public void initialize() throws RemoteException {
+	public void initialize() throws CommunicationErrorException {
 		// initialize ComboBox
-		_homeTeamComboBox.setCellFactory(new Callback<ListView<ITeamRMI>, ListCell<ITeamRMI>>() {
+		_homeTeamComboBox.setCellFactory(new Callback<ListView<TeamDTO>, ListCell<TeamDTO>>() {
 			@Override
-			public ListCell<ITeamRMI> call(ListView<ITeamRMI> param) {
+			public ListCell<TeamDTO> call(ListView<TeamDTO> param) {
 				return new TeamListCell();
 			}
 		});
 		_homeTeamComboBox.setButtonCell(new TeamListCell());
-		_homeTeamComboBox.getItems().addAll(RMIClient.getRMIClient().getApplicationFacade().findTeams(AppState.getInstance().getSessionID(), null, null, _department.getId(), null, null));
+		_homeTeamComboBox.getItems().addAll(CommunicationFacadeProvider.getInstance().getCurrentFacade()
+				.findTeams(AppState.getInstance().getSessionID(), null, null, _department.getId(), null, null));
 		// bind properties
-		_homeTeamsList.setCellFactory(new Callback<ListView<ITeamRMI>, ListCell<ITeamRMI>>() {
+		_homeTeamsList.setCellFactory(new Callback<ListView<TeamDTO>, ListCell<TeamDTO>>() {
 			@Override
-			public ListCell<ITeamRMI> call(ListView<ITeamRMI> param) {
+			public ListCell<TeamDTO> call(ListView<TeamDTO> param) {
 				return new TeamListCell();
 			}
 		});
@@ -89,7 +89,7 @@ public class TournamentAddTeamsController implements IPanelClosable, ILogger {
 	@FXML
 	public void addHomeTeamAction(ActionEvent event) {
 		if (_homeTeamComboBox.getValue() != null && !_homeTeamsList.getItems().contains(_homeTeamComboBox.getValue())) {
-			ObservableList<ITeamRMI> homeTeamsItems = _homeTeamsList.getItems();
+			ObservableList<TeamDTO> homeTeamsItems = _homeTeamsList.getItems();
 			homeTeamsItems.add(_homeTeamComboBox.getValue());
 			_homeTeamsList.setItems(homeTeamsItems);
 		}
@@ -99,7 +99,7 @@ public class TournamentAddTeamsController implements IPanelClosable, ILogger {
 	@FXML
 	public void removeHomeTeamAction(ActionEvent event) {
 		if (_homeTeamsList.getSelectionModel().getSelectedItem() != null) {
-			ObservableList<ITeamRMI> homeTeamsItems = _homeTeamsList.getItems();
+			ObservableList<TeamDTO> homeTeamsItems = _homeTeamsList.getItems();
 			homeTeamsItems.remove(_homeTeamsList.getSelectionModel().getSelectedItem());
 			_homeTeamsList.setItems(homeTeamsItems);
 		}
@@ -108,7 +108,8 @@ public class TournamentAddTeamsController implements IPanelClosable, ILogger {
 	// Event Listener on Button[#_guestTeamAddButton].onAction
 	@FXML
 	public void addGuestTeamAction(ActionEvent event) {
-		if (_guestTeamTextArea.getText() != null && !_guestTeamTextArea.getText().isEmpty() && !_guestTeamsList.getItems().contains(_guestTeamTextArea.getText())) {
+		if (_guestTeamTextArea.getText() != null && !_guestTeamTextArea.getText().isEmpty()
+				&& !_guestTeamsList.getItems().contains(_guestTeamTextArea.getText())) {
 			ObservableList<String> guestTeamsItems = _guestTeamsList.getItems();
 			guestTeamsItems.add(_guestTeamTextArea.getText());
 			_guestTeamsList.setItems(guestTeamsItems);
@@ -130,12 +131,15 @@ public class TournamentAddTeamsController implements IPanelClosable, ILogger {
 	@FXML
 	public void saveButtonAction(ActionEvent event) {
 		try {
-			ITournamentRMI tournamentUpdated = RMIClient.getRMIClient().getApplicationFacade().saveTournament(AppState.getInstance().getSessionID(),
-					_tournamentModel.getITournamentRMI(), _department);
+			TournamentDTO tournamentUpdated = CommunicationFacadeProvider.getInstance().getCurrentFacade().saveTournament(
+					AppState.getInstance().getSessionID(), _tournamentModel.getTournamentDTO(), _department);
 			_panelCloseHandler.closeNext(new TournamentViewFactory(_department, tournamentUpdated));
 		} catch (IOException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();
+		} catch (CommunicationErrorException e) {
+			log.error(e.getMessage());
+			ErrorPopUp.connectionError();
 		}
 	}
 
@@ -145,7 +149,7 @@ public class TournamentAddTeamsController implements IPanelClosable, ILogger {
 	public void setPanelCloseHandler(IPanelCloseHandler panelCloseHandler) {
 		_panelCloseHandler = panelCloseHandler;
 	}
-	
+
 	// Event Listener on Button[#_cancelButton].onAction
 	@FXML
 	public void cancelButtonAction(ActionEvent event) {

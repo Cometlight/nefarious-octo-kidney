@@ -1,7 +1,6 @@
 package at.fhv.itb5c.rmi.client;
 
 import java.rmi.RemoteException;
-
 import at.fhv.itb5c.commons.property.PropertyManager;
 import at.fhv.itb5c.logging.ILogger;
 
@@ -34,7 +33,7 @@ public class RMIClient implements ILogger {
 		System.runFinalization();
 	}
 
-	private static RMIClient getRMIClient() {
+	public static RMIClient getRMIClient() {
 		if (_client == null) {
 			_client = new RMIClient();
 		}

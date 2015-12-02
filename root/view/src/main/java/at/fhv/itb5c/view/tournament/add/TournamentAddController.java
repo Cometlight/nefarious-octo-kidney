@@ -1,14 +1,13 @@
 package at.fhv.itb5c.view.tournament.add;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.text.DecimalFormat;
-
 import at.fhv.itb5c.app.AppState;
-import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
-import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
+import at.fhv.itb5c.application.dto.DepartmentDTO;
+import at.fhv.itb5c.application.dto.TournamentDTO;
+import at.fhv.itb5c.communication.CommunicationErrorException;
+import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.department.DepartmentViewFactory;
 import at.fhv.itb5c.view.tournament.TournamentModel;
 import at.fhv.itb5c.view.tournament.addteams.TournamentAddTeamsFactory;
@@ -29,7 +28,7 @@ public class TournamentAddController implements IPanelClosable, ILogger {
 	private TextField _fee;
 
 	private TournamentModel _tournamentModel;
-	private IDepartmentRMI _department;
+	private DepartmentDTO _department;
 
 	@FXML
 	public void initialize() {
@@ -37,11 +36,11 @@ public class TournamentAddController implements IPanelClosable, ILogger {
 		_date.valueProperty().bindBidirectional(_tournamentModel.getDate());
 		_fee.textProperty().bindBidirectional(_tournamentModel.getFee().asObject(), new DecimalFormat());
 		try {
-			ITournamentRMI tournamentRMI = RMIClient.getRMIClient().getApplicationFacade()
+			TournamentDTO tournamentRMI = CommunicationFacadeProvider.getInstance().getCurrentFacade()
 					.createTournament(AppState.getInstance().getSessionID(), _department);
 			tournamentRMI.setDepartmentId(_department.getId());
-			_tournamentModel.setITournamentRMI(tournamentRMI);
-		} catch (RemoteException e) {
+			_tournamentModel.setTournamentDTO(tournamentRMI);
+		} catch (CommunicationErrorException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
 		}
@@ -52,11 +51,14 @@ public class TournamentAddController implements IPanelClosable, ILogger {
 	public void _saveAndNextButtonClicked(MouseEvent event) {
 		if (_tournamentName.getText() != null && _tournamentName.getText() != "" && _date.getValue() != null) {
 			try {
-				ITournamentRMI tournament = RMIClient.getRMIClient().getApplicationFacade().saveTournament(
-						AppState.getInstance().getSessionID(), _tournamentModel.getITournamentRMI(), _department);
+				TournamentDTO tournament = CommunicationFacadeProvider.getInstance().getCurrentFacade().saveTournament(
+						AppState.getInstance().getSessionID(), _tournamentModel.getTournamentDTO(), _department);
 
 				_panelCloseHandler.closeNext(new TournamentAddTeamsFactory(_department, tournament));
 			} catch (IOException e) {
+				log.error(e.getMessage());
+				ErrorPopUp.connectionError();
+			} catch (CommunicationErrorException e) {
 				log.error(e.getMessage());
 				ErrorPopUp.connectionError();
 			}
@@ -65,7 +67,7 @@ public class TournamentAddController implements IPanelClosable, ILogger {
 		}
 	}
 
-	public TournamentAddController(IDepartmentRMI department) {
+	public TournamentAddController(DepartmentDTO department) {
 		_department = department;
 		_tournamentModel = new TournamentModel();
 	}

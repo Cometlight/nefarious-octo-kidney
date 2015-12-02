@@ -1,12 +1,11 @@
 package at.fhv.itb5c.view.mainview;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
-
 import at.fhv.itb5c.app.AppState;
-import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
+import at.fhv.itb5c.application.dto.DepartmentDTO;
+import at.fhv.itb5c.communication.CommunicationErrorException;
+import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.department.DepartmentViewFactory;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.usersearch.SearchUserViewFactory;
@@ -22,48 +21,52 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class MainViewController implements ILogger{
+public class MainViewController implements ILogger {
 
-	@FXML BorderPane _rootPane;
-	@FXML Pane _mainPanel;
-	@FXML ListView<IDepartmentRMI> _departmentsListView;
-	
+	@FXML
+	BorderPane _rootPane;
+	@FXML
+	Pane _mainPanel;
+	@FXML
+	ListView<DepartmentDTO> _departmentsListView;
+
 	public MainViewModel _mainViewModel;
-	
+
 	public MainViewController() {
 		try {
-			_mainViewModel = new MainViewModel(RMIClient.getRMIClient().getApplicationFacade().getAllDepartments(AppState.getInstance().getSessionID()));
-		} catch (RemoteException e) {
+			_mainViewModel = new MainViewModel(CommunicationFacadeProvider.getInstance().getCurrentFacade()
+					.getAllDepartments(AppState.getInstance().getSessionID()));
+		} catch (CommunicationErrorException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
 		}
 	}
-	
+
 	public void initialize() {
 		_departmentsListView.setItems(_mainViewModel.getDepartments());
-		_departmentsListView.setCellFactory(new Callback<ListView<IDepartmentRMI>, ListCell<IDepartmentRMI>>() {	
+		_departmentsListView.setCellFactory(new Callback<ListView<DepartmentDTO>, ListCell<DepartmentDTO>>() {
 			@Override
-			public ListCell<IDepartmentRMI> call(ListView<IDepartmentRMI> param) {
+			public ListCell<DepartmentDTO> call(ListView<DepartmentDTO> param) {
 				return new DepartmentListCell();
 			}
 		});
 	}
-	
+
 	@FXML
 	public void closeMenueItemActionHandler(ActionEvent event) {
 		((Stage) _rootPane.getScene().getWindow()).close();
 	}
 
 	@FXML
-	public void addUserMenueItemActionHandler(ActionEvent event) throws IOException {	
+	public void addUserMenueItemActionHandler(ActionEvent event) throws IOException {
 		new UserViewFactory().create(_mainPanel);
 	}
-	
+
 	@FXML
 	public void searchUserMenueItemActionHandler(ActionEvent event) throws IOException {
 		new SearchUserViewFactory().create(_mainPanel);
 	}
-	
+
 	@FXML
 	public void departmentListViewOnMouseClick(MouseEvent mouseEvent) throws IOException {
 		new DepartmentViewFactory(_departmentsListView.getSelectionModel().getSelectedItem()).create(_mainPanel);

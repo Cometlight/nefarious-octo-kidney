@@ -8,8 +8,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import java.io.IOException;
-import java.rmi.RemoteException;
-
 import at.fhv.itb5c.app.AppState;
 import at.fhv.itb5c.application.dto.TeamDTO;
 import at.fhv.itb5c.application.dto.TournamentDTO;
@@ -17,8 +15,6 @@ import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.communication.CommunicationErrorException;
 import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.rmi.client.ApplicationFacadeRMIStub;
-import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.team.add.TeamAddViewFactory;
 import at.fhv.itb5c.view.team.view.TeamViewFactory;
 import at.fhv.itb5c.view.tournament.TournamentViewFactory;
@@ -70,7 +66,7 @@ public class DepartmentViewController implements IPanelClosable, ILogger {
 					.setAll(CommunicationFacadeProvider.getInstance().getCurrentFacade().findTeams(
 							AppState.getInstance().getSessionID(), null, null, _departmentViewModel.getDepartment().getId(),
 							null, null));
-		} catch (CommunicationErrorException e1) {
+		} catch (CommunicationErrorException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.criticalSystemError();
 		}

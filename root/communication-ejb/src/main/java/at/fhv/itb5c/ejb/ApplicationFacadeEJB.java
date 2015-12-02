@@ -3,9 +3,7 @@ package at.fhv.itb5c.ejb;
 import java.util.Collection;
 
 import javax.ejb.Singleton;
-import javax.ejb.Startup;
 
-import at.fhv.itb5c.application.ApplicationFacade;
 import at.fhv.itb5c.application.dto.DepartmentDTO;
 import at.fhv.itb5c.application.dto.LeagueDTO;
 import at.fhv.itb5c.application.dto.MatchDTO;
@@ -16,176 +14,203 @@ import at.fhv.itb5c.application.dto.UserDTO;
 import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
+import at.fhv.itb5c.ejb.interfaces.IApplicationFacadeEJBLocal;
 
-@Startup
 @Singleton
-public class ApplicationFacadeEJB implements ApplicationFacadeEJBLocal {
-	private ApplicationFacade applicationFacade;
-	
-	public ApplicationFacadeEJB() {
-		applicationFacade = new ApplicationFacade();
-	}
-	
+public class ApplicationFacadeEJB implements IApplicationFacadeEJBLocal {
+
 	@Override
 	public UserDTO createUser(String sessionId) {
-		return applicationFacade.createUser(sessionId);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public UserDTO getUserById(String sessionId, Long id) {
-		return applicationFacade.getUserById(sessionId, id);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Collection<UserDTO> findUsers(String sessionId, String firstName, String lastName, Long departmentId,
 			Boolean membershipFeePaid) {
-		return applicationFacade.findUsers(sessionId, firstName, lastName, departmentId, membershipFeePaid);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Collection<UserDTO> findUsersSimple(String sessionId, String name) {
-		return applicationFacade.findUsersSimple(sessionId, name);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public UserDTO saveUser(String sessionId, UserDTO user) {
-		return applicationFacade.saveUser(sessionId, user);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public DepartmentDTO getDepartmentById(String sessionId, Long id) {
-		return applicationFacade.getDepartmentById(sessionId, id);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Collection<DepartmentDTO> getAllDepartments(String sessionId) {
-		return applicationFacade.getAllDepartments(sessionId);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public DepartmentDTO saveDepartment(String sessionId, DepartmentDTO department) {
-		return applicationFacade.saveDepartment(sessionId, department);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public TeamDTO createTeam(String sessionId) {
-		return applicationFacade.createTeam(sessionId);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public TeamDTO getTeamById(String sessionId, Long id) {
-		return applicationFacade.getTeamById(sessionId, id);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Collection<TeamDTO> findTeams(String sessionId, String name, TypeOfSport typeOfSport, Long departmentId,
 			Long leagueId, Long coachId) {
-		return applicationFacade.findTeams(sessionId, name, typeOfSport, departmentId, leagueId, coachId);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public TeamDTO saveTeam(String sessionId, TeamDTO team) {
-		return applicationFacade.saveTeam(sessionId, team);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public TeamDTO addPlayerToTeam(String sessionId, TeamDTO team, UserDTO player) {
-		return applicationFacade.addPlayerToTeam(sessionId, team, player);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public LeagueDTO getLeagueById(String sessionId, Long id) {
-		return applicationFacade.getLeagueById(sessionId, id);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Collection<LeagueDTO> getAllLeagues(String sessionId) {
-		return applicationFacade.getAllLeagues(sessionId);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Collection<TournamentDTO> findTournaments(String sessionId, String name, Long departmentId) {
-		return applicationFacade.findTournaments(sessionId, name, departmentId);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public MatchDTO getMatchById(String sessionId, Long matchId) {
-		return applicationFacade.getMatchById(sessionId, matchId);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public MatchDTO createMatch(String sessionId) {
-		return applicationFacade.createMatch(sessionId);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public TournamentDTO addMatchToTournament(String sessionId, TournamentDTO tournament, MatchDTO match) {
-		return applicationFacade.addMatchToTournament(sessionId, tournament, match);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String loginLDAP(String username, String password) {
-		return applicationFacade.loginLDAP(username, password);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public UserDTO getCurrentUser(String sessionId) {
-		return applicationFacade.getCurrentUser(sessionId);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Boolean hasRole(String sessionId, UserRole... roles) {
-		return applicationFacade.hasRole(sessionId, roles);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public TournamentDTO createTournament(String sessionId, DepartmentDTO dept) {
-		return applicationFacade.createTournament(sessionId, dept);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public TournamentDTO saveTournament(String sessionId, TournamentDTO tournament, DepartmentDTO dept) {
-		return applicationFacade.saveTournament(sessionId, tournament, dept);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public TournamentDTO getTournamentById(String sessionId, Long id) {
-		return applicationFacade.getTournamentById(sessionId, id);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Boolean isDepartmentHead(String sessionId, DepartmentDTO dept) {
-		return applicationFacade.isDepartmentHead(sessionId, dept);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Boolean isCoach(String sessionId, TeamDTO team) {
-		return applicationFacade.isCoach(sessionId, team);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public MatchDTO saveMatch(String sessionId, MatchDTO matchDTO, DepartmentDTO dept) {
-		return applicationFacade.saveMatch(sessionId, matchDTO, dept);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public Boolean rsvp(String sessionId, TeamDTO team, TeamInvitationStatus answer) {
-		return applicationFacade.rsvp(sessionId, team, answer);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public MessageDTO getMessage(String sessionId) {
-		return applicationFacade.getMessage(sessionId);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public void invitePlayer(String sessionId, UserDTO player, TeamDTO team, TournamentDTO tournament) {
-		applicationFacade.invitePlayer(sessionId, player, team, tournament);
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public boolean isCoach(String sessionId, DepartmentDTO dept) {
-		return applicationFacade.isCoach(sessionId, dept);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

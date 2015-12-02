@@ -1,13 +1,11 @@
 package at.fhv.itb5c.view.util.listcell;
 
-import java.rmi.RemoteException;
+import at.fhv.itb5c.application.dto.TournamentDTO;
 
-import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
-
-public class TournamentListCell extends SimpleListCell<ITournamentRMI> {
+public class TournamentListCell extends SimpleListCell<TournamentDTO> {
 
 	@Override
-	protected void format(ITournamentRMI item) throws RemoteException {
+	protected void format(TournamentDTO item) {
 		setText(item.getName());
 	}
 

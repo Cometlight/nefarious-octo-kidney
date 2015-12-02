@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 
+import at.fhv.itb5c.app.AppState;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.client.RMIClient;
-import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.department.DepartmentViewFactory;
 import at.fhv.itb5c.view.tournament.TournamentModel;
 import at.fhv.itb5c.view.tournament.addteams.TournamentAddTeamsFactory;

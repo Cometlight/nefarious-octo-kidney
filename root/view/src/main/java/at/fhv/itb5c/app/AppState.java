@@ -1,4 +1,4 @@
-package at.fhv.itb5c.view;
+package at.fhv.itb5c.app;
 
 import java.rmi.RemoteException;
 import java.util.Observable;

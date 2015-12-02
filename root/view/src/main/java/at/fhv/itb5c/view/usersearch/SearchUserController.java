@@ -4,11 +4,12 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import at.fhv.itb5c.app.AppState;
 import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
 import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
 import at.fhv.itb5c.rmi.client.RMIClient;
 import at.fhv.itb5c.view.user.UserViewController.UserViewState;
-import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;

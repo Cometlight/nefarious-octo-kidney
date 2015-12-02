@@ -1,10 +1,11 @@
-package at.fhv.itb5c.view;
+package at.fhv.itb5c;
 
 import java.io.IOException;
 
+import at.fhv.itb5c.app.AppController;
 import at.fhv.itb5c.logging.ILogger;
+import at.fhv.itb5c.message.MessageHandler;
 import at.fhv.itb5c.rmi.client.RMIClient;
-import at.fhv.itb5c.view.message.MessageHandler;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;

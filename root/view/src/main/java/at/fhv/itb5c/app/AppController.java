@@ -1,4 +1,4 @@
-package at.fhv.itb5c.view;
+package at.fhv.itb5c.app;
 
 import java.io.IOException;
 import java.util.Observable;

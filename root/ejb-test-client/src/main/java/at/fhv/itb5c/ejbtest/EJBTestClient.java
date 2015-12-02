@@ -15,7 +15,7 @@ public class EJBTestClient {
 		try {
 			Properties props = new Properties();
 			props.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.enterprise.naming.SerialInitContextFactory");
-			props.setProperty("org.omg.CORBA.ORBInitialHost", "172.22.27.107");
+			props.setProperty("org.omg.CORBA.ORBInitialHost", "172.22.25.220");
 			props.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
 			InitialContext ctx = new InitialContext(props);
 			

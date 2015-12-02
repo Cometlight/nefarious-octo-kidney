@@ -42,26 +42,25 @@
 			<version>7.0</version>
 		</dependency>
 	</dependencies>
-	<!-- <build> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
-		<artifactId>maven-assembly-plugin</artifactId> <version>2.4.1</version> <configuration> 
-		get all project dependencies <descriptorRefs> <descriptorRef>jar-with-dependencies</descriptorRef> 
-		</descriptorRefs> MainClass in mainfest make a executable jar <archive> <manifest> 
-		<mainClass>com.mkyong.core.utils.App</mainClass> </manifest> </archive> </configuration> 
-		<executions> <execution> <id>make-assembly</id> bind to the packaging phase 
-		<phase>package</phase> <goals> <goal>single</goal> </goals> </execution> 
-		</executions> </plugin> </plugins> </build> -->
-	<!-- <build> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
-		<artifactId>maven-ejb-plugin</artifactId> <version>2.5.1</version> <configuration> 
-		<ejbVersion>3.0</ejbVersion> </configuration> </plugin> </plugins> </build> -->
 	<build>
+		<finalName>sportmanager-ejbs</finalName>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-ejb-plugin</artifactId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
 				<configuration>
-					<generateClient>true</generateClient>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+	<packaging>war</packaging>
 </project>

@@ -12,6 +12,7 @@ import at.fhv.itb5c.view.user.IUserViewState;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
+@SuppressWarnings("deprecation")
 public class AddUserViewControllsController implements IUserViewState {
 	
 	private UserViewController _userViewController;

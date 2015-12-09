@@ -26,16 +26,16 @@ public class TournamentResponse {
 			tData.setName(t.getName());
 			tData.setDate(t.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 			for(Long id : t.getMatchesIds()){
-				MatchDTO match = appFacade.getMatchById("webservice_request", id);
+				MatchDTO match = appFacade.getMatchById("webservice_request_session", id);
 				MatchData data = new MatchData();
 				data.setDate(match.getStartDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
 				if (match.getTeamOne() instanceof Long) {
-					data.setTeamOne(appFacade.getTeamById("webservice_request", ((Long) match.getTeamOne())).getName());
+					data.setTeamOne(appFacade.getTeamById("webservice_request_session", ((Long) match.getTeamOne())).getName());
 				} else {
 					data.setTeamOne((String) match.getTeamOne());
 				}
 				if (match.getTeamTwo() instanceof Long) {
-					data.setTeamTwo(appFacade.getTeamById("webservice_request", ((Long) match.getTeamTwo())).getName());
+					data.setTeamTwo(appFacade.getTeamById("webservice_request_session", ((Long) match.getTeamTwo())).getName());
 				} else {
 					data.setTeamTwo((String) match.getTeamTwo());
 				}

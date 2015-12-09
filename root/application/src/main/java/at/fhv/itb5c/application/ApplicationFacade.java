@@ -133,7 +133,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public TeamDTO getTeamById(String sessionId, Long id) {
-		if (sessionId.equals("webservice_request") || hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
+		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			Team entity = PersistenceFacade.getInstance().getById(Team.class, id);
 			return ConverterTeamDTO.toDTO(entity);
 		}
@@ -226,7 +226,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public MatchDTO getMatchById(String sessionId, Long matchId) {
-		if (sessionId.equals("webservice_request") || hasRole(sessionId, UserRole.Admin, UserRole.StandardUser)) {
+		if (hasRole(sessionId, UserRole.Admin, UserRole.StandardUser)) {
 			Match match = PersistenceFacade.getInstance().getById(Match.class, matchId);
 			return ConverterMatchDTO.toDTO(match);
 		}
@@ -309,6 +309,9 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public Boolean hasRole(String sessionId, UserRole... roles) {
+		if(sessionId.equals("webservice_request_session")){
+			return true;
+		}
 		for (UserRole role : roles) {
 			if (_sessionManager.hasRole(sessionId, role)) {
 				return true;

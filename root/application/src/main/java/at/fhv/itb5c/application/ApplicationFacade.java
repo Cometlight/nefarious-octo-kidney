@@ -1,5 +1,6 @@
 package at.fhv.itb5c.application;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -218,7 +219,7 @@ public class ApplicationFacade implements ILogger {
 
 	public Collection<TournamentDTO> findTournaments(String sessionId, String name, Long departmentId) {
 		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
-			List<Tournament> entities = PersistenceFacade.getInstance().findTournaments(name, departmentId);
+			List<Tournament> entities = PersistenceFacade.getInstance().findTournaments(name, departmentId, null);
 			return ConverterTournamentDTO.toDTO(entities);
 		}
 		return null;
@@ -348,18 +349,18 @@ public class ApplicationFacade implements ILogger {
 		Tournament originalEntity = PersistenceFacade.getInstance().getById(Tournament.class, tournament.getId());
 		Set<Long> ids = new HashSet<>(tournament.getHomeTeamsIds()); // --> copy
 		// filter out all IDs that are already in originalEntity
-		ids = ids.stream().filter(id -> !originalEntity.getHomeTeamsIds().contains(id)).collect(Collectors.toSet()); 
+		ids = ids.stream().filter(id -> !originalEntity.getHomeTeamsIds().contains(id)).collect(Collectors.toSet());
 		tournament.getHomeTeamsIds().removeAll(ids);
 
 		for (Long teamId : ids) {
 			Team team = PersistenceFacade.getInstance().getById(Team.class, teamId);
-			
+
 			Team teamCopy = new Team();
 			teamCopy.setCoachId(team.getCoachId());
 			teamCopy.setMemberIds(new HashSet<>(team.getMemberIds()));
 			teamCopy.setName(team.getName());
 			teamCopy.setTypeOfSport(team.getTypeOfSport());
-			
+
 			Team teamCopySaved = null;
 			try {
 				teamCopySaved = PersistenceFacade.getInstance().saveOrUpdate(teamCopy);
@@ -448,8 +449,7 @@ public class ApplicationFacade implements ILogger {
 				// add player to team if not exists
 				if (team.getMemberIds().contains(player.getId())) {
 					// add message to players queue
-					enqueueTournamentInvitation(player.getId(), tournament.getId(),
-							team.getId());
+					enqueueTournamentInvitation(player.getId(), tournament.getId(), team.getId());
 				}
 			}
 		}
@@ -480,5 +480,76 @@ public class ApplicationFacade implements ILogger {
 		msgData.put("teamId", teamId);
 		Message message = new Message(msgType, msgData);
 		qm.produce(message);
+	}
+
+	public Collection<LeagueDTO> findLeagues(String leagueName) {
+		// TODO security?
+		return ConverterLeagueDTO.toDTO(PersistenceFacade.getInstance().findLeagues(leagueName));
+	}
+
+	public boolean hasResults(TypeOfSport tos, LeagueDTO league, LocalDate tournamentDate) {
+		// TODO security?
+		if (tos == null || league == null || tournamentDate == null) {
+			log.debug("One of the parameter was null. Returning null!");
+			return false;
+		}
+		log.debug("start");
+		for (TournamentDTO t : getTournaments(tos, league, tournamentDate)) {
+			log.debug("Processing tournament: " + t.getName());
+			if (t.getDone() == null || !t.getDone()) {
+				log.debug("Tournament not finished yet!");
+				return false;
+			}
+		}
+		log.debug("end");
+		return true;
+	}
+
+	public Collection<MatchDTO> getResults(TypeOfSport tos, LeagueDTO league, LocalDate date) {
+		// TODO security?
+		// TODO change to custom Response class
+		// http://stackoverflow.com/questions/11107875/jax-ws-how-to-make-a-soap-response-return-a-hashmap-object
+		Collection<MatchDTO> resultSet = null;
+
+		if (tos == null || league == null || date == null) {
+			log.debug("One of the parameter was null. Returning null!");
+			return null;
+		}
+
+		if (hasResults(tos, league, date)) {
+			resultSet = new HashSet<>();
+			for (TournamentDTO t : getTournaments(tos, league, date)) {
+				for (Long id : t.getMatchesIds()) {
+					resultSet.add(ConverterMatchDTO.toDTO(PersistenceFacade.getInstance().getById(Match.class, id)));
+				}
+			}
+		}
+
+		return resultSet;
+	}
+
+	private Collection<TournamentDTO> getTournaments(TypeOfSport tos, LeagueDTO league, LocalDate tournamentDate) {
+		Collection<TournamentDTO> tmnts = null;
+
+		if (tos == null || league == null || tournamentDate == null) {
+			log.debug("One of the parameter was null. Returning null!");
+			return null;
+		}
+
+		if (league.getTypeOfSport().equals(tos)) {
+			tmnts = ConverterTournamentDTO
+					.toDTO(PersistenceFacade.getInstance().findTournaments(null, null, tournamentDate));
+			log.debug(tmnts.size() + " tournaments found.");
+			for (TournamentDTO t : tmnts) {
+				DepartmentDTO dept = ConverterDepartmentDTO
+						.toDTO(PersistenceFacade.getInstance().getById(Department.class, t.getDepartmentId()));
+				if (!dept.getTypeOfSport().equals(tos)) {
+					log.debug("Department of tournament doesn't match type of sport! tos: " + tos + ", dept: "
+							+ dept.getName());
+					tmnts.remove(t);
+				}
+			}
+		}
+		return tmnts;
 	}
 }

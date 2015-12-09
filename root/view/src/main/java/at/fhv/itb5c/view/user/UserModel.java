@@ -1,15 +1,13 @@
 package at.fhv.itb5c.view.user;
 
-import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.HashSet;
 
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
+import at.fhv.itb5c.commons.dto.UserDTO;
 import at.fhv.itb5c.commons.enums.Gender;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -19,7 +17,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 
-public class UserModel implements ILogger{
+public class UserModel implements ILogger {
 	private StringProperty _firstName;
 	private StringProperty _lastName;
 	private StringProperty _address;
@@ -31,9 +29,9 @@ public class UserModel implements ILogger{
 	private DoubleProperty _membershipFee;
 	private ObservableSet<UserRole> _userRoles;
 
-	private IUserRMI _rmiUser;
+	private UserDTO _rmiUser;
 
-	private UserModel(IUserRMI user) throws RemoteException {
+	private UserModel(UserDTO user) {
 		_firstName = new SimpleStringProperty();
 		_lastName = new SimpleStringProperty();
 		_address = new SimpleStringProperty();
@@ -42,10 +40,10 @@ public class UserModel implements ILogger{
 		_birthDate = new SimpleObjectProperty<>();
 		_membershipFee = new SimpleDoubleProperty();
 
-		setIUserRMI(user);
+		setUserDTO(user);
 	}
 
-	public static UserModel createUserModel(IUserRMI user) throws RemoteException {
+	public static UserModel createUserModel(UserDTO user) {
 		if (user != null) {
 			return new UserModel(user);
 		} else {
@@ -53,7 +51,7 @@ public class UserModel implements ILogger{
 		}
 	}
 
-	public void setIUserRMI(IUserRMI user) throws RemoteException {
+	public void setUserDTO(UserDTO user) {
 		_rmiUser = user;
 		_firstName.setValue(user.getFirstName());
 		_lastName.setValue(user.getLastName());
@@ -67,27 +65,23 @@ public class UserModel implements ILogger{
 		_userRoles = (ObservableSet<UserRole>) FXCollections.observableSet(user.getRoles());
 	}
 
-	public IUserRMI getRMIUser() {
-		try {
-			_rmiUser.setFirstName(_firstName.getValue());
-			_rmiUser.setLastName(_lastName.getValue());
-			_rmiUser.setAddress(_address.getValue());
-			_rmiUser.setTelephoneNumber(_telephonenumber.getValue());
-			_rmiUser.setEmail(_eMail.getValue());
-			_rmiUser.setDateOfBirth(_birthDate.getValue());
-			_rmiUser.setMembershipFee(_membershipFee.getValue());
-			_rmiUser.setGender(_gender);
-			
-			if (_userRoles != null) {
-				_rmiUser.setRoles(new HashSet<>(_userRoles));
-			}
+	public UserDTO getUser() {
 
-			if (_typeOfSports != null) {
-				_rmiUser.setTypeOfSports(new HashSet<>(_typeOfSports));
-			}
-		} catch (RemoteException e) {
-			log.error(e.getMessage());
-			ErrorPopUp.connectionError();
+		_rmiUser.setFirstName(_firstName.getValue());
+		_rmiUser.setLastName(_lastName.getValue());
+		_rmiUser.setAddress(_address.getValue());
+		_rmiUser.setTelephoneNumber(_telephonenumber.getValue());
+		_rmiUser.setEmail(_eMail.getValue());
+		_rmiUser.setDateOfBirth(_birthDate.getValue());
+		_rmiUser.setMembershipFee(_membershipFee.getValue());
+		_rmiUser.setGender(_gender);
+
+		if (_userRoles != null) {
+			_rmiUser.setRoles(new HashSet<>(_userRoles));
+		}
+
+		if (_typeOfSports != null) {
+			_rmiUser.setTypeOfSports(new HashSet<>(_typeOfSports));
 		}
 
 		return _rmiUser;

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
-import at.fhv.itb5c.application.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.TeamDTO;
 import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.rmiclasses.TeamRMI;
@@ -64,5 +64,13 @@ public class ConverterTeamRMI implements ILogger {
 			log.error(e.getMessage());
 		}
 		return dto;
+	}
+	
+	public static Collection<TeamDTO> toDTO(Collection<ITeamRMI> dtos) {
+		if(dtos == null){
+			return null;
+		}
+		
+		return dtos.stream().map(ConverterTeamRMI::toDTO).collect(Collectors.toList());
 	}
 }

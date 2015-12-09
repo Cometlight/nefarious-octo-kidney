@@ -1,7 +1,7 @@
 package at.fhv.itb5c.view.team.addplayer;
 
-import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
+import at.fhv.itb5c.commons.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.UserDTO;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,22 +10,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class TeamAddPlayerModel {
-	private ITeamRMI _team;
+	private TeamDTO _team;
 	private StringProperty _searchInput;
-	private ObservableList<IUserRMI> _searchResults;
-	private ObjectProperty<IUserRMI> _player;
+	private ObservableList<UserDTO> _searchResults;
+	private ObjectProperty<UserDTO> _player;
 	
 	/**
 	 * @param team the team to which the player will be added
 	 */
-	public TeamAddPlayerModel(ITeamRMI team) {
+	public TeamAddPlayerModel(TeamDTO team) {
 		_team = team;
 		_searchInput = new SimpleStringProperty();
 		_searchResults = FXCollections.observableArrayList();
 		_player = new SimpleObjectProperty<>();
 	}
 	
-	public ITeamRMI getTeam() {
+	public TeamDTO getTeam() {
 		return _team;
 	}
 
@@ -33,11 +33,11 @@ public class TeamAddPlayerModel {
 		return _searchInput;
 	}
 
-	public ObservableList<IUserRMI> getSearchResults() {
+	public ObservableList<UserDTO> getSearchResults() {
 		return _searchResults;
 	}
 
-	public ObjectProperty<IUserRMI> getPlayer() {
+	public ObjectProperty<UserDTO> getPlayer() {
 		return _player;
 	}
 }

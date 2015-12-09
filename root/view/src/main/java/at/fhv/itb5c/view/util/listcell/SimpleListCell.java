@@ -1,8 +1,6 @@
 package at.fhv.itb5c.view.util.listcell;
 
-import java.rmi.RemoteException;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.scene.control.ListCell;
 
 public abstract class SimpleListCell<T> extends ListCell<T> implements ILogger{
@@ -13,14 +11,9 @@ public abstract class SimpleListCell<T> extends ListCell<T> implements ILogger{
 			setText(null);
 			setGraphic(null);
 		} else if (item != null) {
-			try {
-				format(item);
-			} catch (RemoteException e) {
-				log.error(e.getMessage());
-				ErrorPopUp.connectionError();
-			}
+			format(item);
 		}
 	}
 	
-	protected abstract void format(T item) throws RemoteException;
+	protected abstract void format(T item);
 }

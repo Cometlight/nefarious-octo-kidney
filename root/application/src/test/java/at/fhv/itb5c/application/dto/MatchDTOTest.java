@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 
 import org.junit.Test;
 
+import at.fhv.itb5c.commons.dto.MatchDTO;
+
 public class MatchDTOTest {
 
 	@Test

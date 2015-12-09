@@ -1,7 +1,6 @@
 package at.fhv.itb5c.rmi.client;
 
 import java.rmi.RemoteException;
-
 import at.fhv.itb5c.commons.property.PropertyManager;
 import at.fhv.itb5c.logging.ILogger;
 

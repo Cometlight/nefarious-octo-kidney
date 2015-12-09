@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
-import at.fhv.itb5c.application.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.TeamDTO;
 import at.fhv.itb5c.model.entity.Team;
 
 public class ConverterTeamDTO {

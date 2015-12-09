@@ -1,17 +1,14 @@
 package at.fhv.itb5c.view.team.view;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
-
-import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
-import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
+import at.fhv.itb5c.app.AppState;
+import at.fhv.itb5c.commons.dto.DepartmentDTO;
+import at.fhv.itb5c.commons.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.UserDTO;
 import at.fhv.itb5c.commons.enums.UserRole;
+import at.fhv.itb5c.communication.CommunicationErrorException;
+import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.rmi.client.ApplicationFacadeRMIStub;
-import at.fhv.itb5c.rmi.client.RMIClient;
-import at.fhv.itb5c.rmi.server.ApplicationFacadeRMI;
-import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.department.DepartmentViewFactory;
 import at.fhv.itb5c.view.team.addplayer.TeamAddPlayerViewFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
@@ -32,11 +29,11 @@ public class TeamViewController implements IPanelClosable, ILogger{
     @FXML private Label _teamNameLabel;
     @FXML private Button _cancelButton;
     @FXML private Label _coachLabel;
-    @FXML private ListView<IUserRMI> _userList;
+    @FXML private ListView<UserDTO> _userList;
     
     private TeamViewModel _teamViewModel;
     
-    public TeamViewController(IDepartmentRMI department, ITeamRMI team) {
+    public TeamViewController(DepartmentDTO department, TeamDTO team) {
 		_teamViewModel = new TeamViewModel(department, team);
 	}
     
@@ -45,9 +42,9 @@ public class TeamViewController implements IPanelClosable, ILogger{
     	_teamNameLabel.textProperty().bindBidirectional(_teamViewModel.getTeamName());
     	_coachLabel.textProperty().bindBidirectional(_teamViewModel.getCoachName());
     	_leagueLabel.textProperty().bindBidirectional(_teamViewModel.getLeagueName());
-    	_userList.setCellFactory(new Callback<ListView<IUserRMI>, ListCell<IUserRMI>>() {
+    	_userList.setCellFactory(new Callback<ListView<UserDTO>, ListCell<UserDTO>>() {
 			@Override
-			public ListCell<IUserRMI> call(ListView<IUserRMI> param) {
+			public ListCell<UserDTO> call(ListView<UserDTO> param) {
 				return new UserListCell();
 			}
 		});
@@ -55,12 +52,11 @@ public class TeamViewController implements IPanelClosable, ILogger{
     	
     	// Only the admin or the coach of this particular team is allowed to add members -> deactive edit button otherwise
     	String sessionId = AppState.getInstance().getSessionID();
-    	ApplicationFacadeRMIStub afRMI = RMIClient.getRMIClient().getApplicationFacade();
     	try {
-			if(!afRMI.hasRole(sessionId, UserRole.Admin) && !afRMI.isCoach(sessionId, _teamViewModel.getTeam())) {
+			if(!CommunicationFacadeProvider.getInstance().getCurrentFacade().hasRole(sessionId, UserRole.Admin) && !CommunicationFacadeProvider.getInstance().getCurrentFacade().isCoach(sessionId, _teamViewModel.getTeam())) {
 				_editButton.setDisable(true);
 			}
-		} catch (RemoteException e) {
+		} catch (CommunicationErrorException e) {
 			log.error(e.getMessage());
 			ErrorPopUp.connectionError();
 		}

@@ -3,6 +3,7 @@ package at.fhv.itb5c.view.util;
 import java.net.URL;
 import java.util.HashMap;
 
+@Deprecated
 public class RouteProvider {
 	private HashMap<Object, URL> _rootMapping;
 

@@ -1,12 +1,13 @@
 package at.fhv.itb5c.view.util.listcell;
 
-import java.rmi.RemoteException;
 import java.time.format.DateTimeFormatter;
 
-import at.fhv.itb5c.commons.dto.rmi.IMatchRMI;
-import at.fhv.itb5c.rmi.client.RMIClient;
+import at.fhv.itb5c.commons.dto.MatchDTO;
+import at.fhv.itb5c.communication.CommunicationErrorException;
+import at.fhv.itb5c.communication.CommunicationFacadeProvider;
+import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 
-public class MatchListCell extends SimpleListCell<IMatchRMI> {
+public class MatchListCell extends SimpleListCell<MatchDTO> {
 	private String _sessionID;
 
 	public MatchListCell(String sessionID) {
@@ -15,7 +16,7 @@ public class MatchListCell extends SimpleListCell<IMatchRMI> {
 	}
 
 	@Override
-	protected void format(IMatchRMI item) throws RemoteException {
+	protected void format(MatchDTO item)  {
 		String result = "";
 		
 		if (item.getStartDate() != null) {
@@ -24,16 +25,26 @@ public class MatchListCell extends SimpleListCell<IMatchRMI> {
 
 		String textTeamOne = null;
 		if (item.getTeamOne() instanceof Long) {
-			textTeamOne = RMIClient.getRMIClient().getApplicationFacade()
-					.getTeamById(_sessionID, (Long) item.getTeamOne()).getName();
+			try {
+				textTeamOne = CommunicationFacadeProvider.getInstance().getCurrentFacade()
+						.getTeamById(_sessionID, (Long) item.getTeamOne()).getName();
+			} catch (CommunicationErrorException e) {
+				log.error(e.getMessage());
+				ErrorPopUp.connectionError();
+			}
 		} else {
 			textTeamOne = (String) item.getTeamOne();
 		}
 
 		String textTeamTwo = null;
 		if (item.getTeamTwo() instanceof Long) {
-			textTeamTwo = RMIClient.getRMIClient().getApplicationFacade()
-					.getTeamById(_sessionID, (Long) item.getTeamTwo()).getName();
+			try {
+				textTeamTwo = CommunicationFacadeProvider.getInstance().getCurrentFacade()
+						.getTeamById(_sessionID, (Long) item.getTeamTwo()).getName();
+			} catch (CommunicationErrorException e) {
+				log.error(e.getMessage());
+				ErrorPopUp.connectionError();
+			}
 		} else {
 			textTeamTwo = (String) item.getTeamTwo();
 		}

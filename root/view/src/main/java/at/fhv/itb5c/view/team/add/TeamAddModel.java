@@ -1,8 +1,8 @@
 package at.fhv.itb5c.view.team.add;
 
-import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
-import at.fhv.itb5c.commons.dto.rmi.ILeagueRMI;
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
+import at.fhv.itb5c.commons.dto.DepartmentDTO;
+import at.fhv.itb5c.commons.dto.LeagueDTO;
+import at.fhv.itb5c.commons.dto.UserDTO;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,14 +12,14 @@ import javafx.collections.ObservableList;
 
 public class TeamAddModel {
 	
-	private IDepartmentRMI _department;
-	private ObjectProperty<ILeagueRMI> _league;
+	private DepartmentDTO _department;
+	private ObjectProperty<LeagueDTO> _league;
 	private StringProperty _teamName;
-	private ObservableList<IUserRMI> _searchResult;
-	private ObjectProperty<IUserRMI> _coach;
+	private ObservableList<UserDTO> _searchResult;
+	private ObjectProperty<UserDTO> _coach;
 	private StringProperty _searchInput;
 	
-	public TeamAddModel(IDepartmentRMI department) {
+	public TeamAddModel(DepartmentDTO department) {
 		_department = department;
 		_league = new SimpleObjectProperty<>();
 		_teamName = new SimpleStringProperty();
@@ -28,11 +28,11 @@ public class TeamAddModel {
 		_coach = new SimpleObjectProperty<>();
 	}
 	
-	public IDepartmentRMI getDepartment() {
+	public DepartmentDTO getDepartment() {
 		return _department;
 	}
 	
-	public ObjectProperty<ILeagueRMI> getLeague() {
+	public ObjectProperty<LeagueDTO> getLeague() {
 		return _league;
 	}
 	
@@ -40,11 +40,11 @@ public class TeamAddModel {
 		return _teamName;
 	}
 	
-	public ObservableList<IUserRMI> getSearchResults() {
+	public ObservableList<UserDTO> getSearchResults() {
 		return _searchResult;
 	}
 	
-	public ObjectProperty<IUserRMI> getCoach() {
+	public ObjectProperty<UserDTO> getCoach() {
 		return _coach;
 	}
 	

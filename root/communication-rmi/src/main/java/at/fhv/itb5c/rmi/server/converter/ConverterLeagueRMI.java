@@ -4,53 +4,61 @@ import java.rmi.RemoteException;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import at.fhv.itb5c.application.dto.LeagueDTO;
+import at.fhv.itb5c.commons.dto.LeagueDTO;
 import at.fhv.itb5c.commons.dto.rmi.ILeagueRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.rmiclasses.LeagueRMI;
 
 public class ConverterLeagueRMI implements ILogger {
-	public static ILeagueRMI toRMI(LeagueDTO dto) {
-		if(dto == null){
+	public static ILeagueRMI toRMI(LeagueDTO league) {
+		if(league == null){
 			return null;
 		}
 		
 		ILeagueRMI rmi = null;
 		try {
 			rmi = new LeagueRMI();
-			rmi.setId(dto.getId());
-			rmi.setVersion(dto.getVersion());
-			rmi.setName(dto.getName());
-			rmi.setTypeOfSport(dto.getTypeOfSport());
+			rmi.setId(league.getId());
+			rmi.setVersion(league.getVersion());
+			rmi.setName(league.getName());
+			rmi.setTypeOfSport(league.getTypeOfSport());
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 		}
 		return rmi;
 	}
 	
-	public static Collection<ILeagueRMI> toRMI(Collection<LeagueDTO> dtos) {
-		if(dtos == null){
+	public static Collection<ILeagueRMI> toRMI(Collection<LeagueDTO> leagues) {
+		if(leagues == null){
 			return null;
 		}
 		
-		return dtos.stream().map(ConverterLeagueRMI::toRMI).collect(Collectors.toList());
+		return leagues.stream().map(ConverterLeagueRMI::toRMI).collect(Collectors.toList());
 	}
 	
-	public static LeagueDTO toDTO(ILeagueRMI rmi) {
-		if(rmi == null){
+	public static LeagueDTO toDTO(ILeagueRMI leauge) {
+		if(leauge == null){
 			return null;
 		}
 		
 		LeagueDTO dto = null;
 		try {
 			dto = new LeagueDTO();
-			dto.setId(rmi.getId());
-			dto.setVersion(rmi.getVersion());
-			dto.setName(rmi.getName());
+			dto.setId(leauge.getId());
+			dto.setVersion(leauge.getVersion());
+			dto.setName(leauge.getName());
 			dto.setTypeOfSport(dto.getTypeOfSport());
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 		}
 		return dto;
+	}
+	
+	public static Collection<LeagueDTO> toDTO(Collection<ILeagueRMI> leagues) {
+		if(leagues == null){
+			return null;
+		}
+		
+		return leagues.stream().map(ConverterLeagueRMI::toDTO).collect(Collectors.toList());
 	}
 }

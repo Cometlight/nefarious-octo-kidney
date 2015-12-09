@@ -1,19 +1,18 @@
 package at.fhv.itb5c.view.tournament;
 
-import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import at.fhv.itb5c.commons.dto.rmi.IMatchRMI;
-import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
-import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
+import at.fhv.itb5c.app.AppState;
+import at.fhv.itb5c.commons.dto.MatchDTO;
+import at.fhv.itb5c.commons.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.TournamentDTO;
+import at.fhv.itb5c.communication.CommunicationErrorException;
+import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.rmi.client.RMIClient;
-import at.fhv.itb5c.view.AppState;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
@@ -30,12 +29,12 @@ public class TournamentModel implements ILogger {
 	private ObjectProperty<LocalDate> _date;
 	private DoubleProperty _fee;
 	private Property<ObservableList<String>> _guestTeams;
-	private Property<ObservableList<ITeamRMI>> _homeTeams;
+	private Property<ObservableList<TeamDTO>> _homeTeams;
 	private Property<ObservableList<Object>> _teams;
-	private Property<ObservableList<IMatchRMI>> _matches;
+	private Property<ObservableList<MatchDTO>> _matches;
 	private Long _departmentId;
 
-	private ITournamentRMI _rmiTournament;
+	private TournamentDTO _tournament;
 	
 	public TournamentModel(){
 		_tournamentName = new SimpleStringProperty();
@@ -59,16 +58,16 @@ public class TournamentModel implements ILogger {
 		return _fee;
 	}
 
-	public void setITournamentRMI(ITournamentRMI tournament) throws RemoteException {
-		_rmiTournament = tournament;
+	public void setTournamentDTO(TournamentDTO tournament) throws CommunicationErrorException {
+		_tournament = tournament;
 		_tournamentName.setValue(tournament.getName());
 		_date.setValue(tournament.getDate());
 		_fee.setValue(tournament.getFee());
 		_guestTeams.setValue(FXCollections.observableList(new ArrayList<>(tournament.getGuestTeams())));
 		
-		ArrayList<ITeamRMI> homeTeams = new ArrayList<>();
+		ArrayList<TeamDTO> homeTeams = new ArrayList<>();
 		for (Long teamId : tournament.getHomeTeamsIds()) {
-			homeTeams.add(RMIClient.getRMIClient().getApplicationFacade()
+			homeTeams.add(CommunicationFacadeProvider.getInstance().getCurrentFacade()
 					.getTeamById(AppState.getInstance().getSessionID(), teamId));
 		}
 		_homeTeams.setValue(FXCollections.observableList(homeTeams));
@@ -78,9 +77,9 @@ public class TournamentModel implements ILogger {
 		
 		_departmentId = tournament.getDepartmentId();
 		
-		ArrayList<IMatchRMI> matches = new ArrayList<>();
+		ArrayList<MatchDTO> matches = new ArrayList<>();
 		for (Long matchId : tournament.getMatchesIds()) {
-			matches.add(RMIClient.getRMIClient().getApplicationFacade()
+			matches.add(CommunicationFacadeProvider.getInstance().getCurrentFacade()
 					.getMatchById(AppState.getInstance().getSessionID(), matchId));
 		}
 		_matches.setValue(FXCollections.observableList(matches));
@@ -90,29 +89,29 @@ public class TournamentModel implements ILogger {
 		return _guestTeams;
 	}
 
-	public Property<ObservableList<ITeamRMI>> getHomeTeams() {
+	public Property<ObservableList<TeamDTO>> getHomeTeams() {
 		return _homeTeams;
 	}
 
-	public ITournamentRMI getITournamentRMI() throws RemoteException {
-		_rmiTournament.setName(_tournamentName.getValue());
-		_rmiTournament.setDate(_date.getValue());
-		_rmiTournament.setFee(_fee.doubleValue());
-		_rmiTournament.setGuestTeams(_guestTeams.getValue().stream().collect(Collectors.toSet()));
+	public TournamentDTO getTournamentDTO() throws CommunicationErrorException {
+		_tournament.setName(_tournamentName.getValue());
+		_tournament.setDate(_date.getValue());
+		_tournament.setFee(_fee.doubleValue());
+		_tournament.setGuestTeams(_guestTeams.getValue().stream().collect(Collectors.toSet()));
 		Set<Long> homeTeamsIds = new HashSet<>();
-		for (ITeamRMI homeTeam : _homeTeams.getValue()) {
+		for (TeamDTO homeTeam : _homeTeams.getValue()) {
 			homeTeamsIds.add(homeTeam.getId());
 		}
-		_rmiTournament.setHomeTeamsIds(homeTeamsIds);
-		_rmiTournament.setDepartmentId(_departmentId);
-		return _rmiTournament;
+		_tournament.setHomeTeamsIds(homeTeamsIds);
+		_tournament.setDepartmentId(_departmentId);
+		return _tournament;
 	}
 
 	public Property<ObservableList<Object>> getTeams() {
 		return _teams;
 	}
 
-	public Property<ObservableList<IMatchRMI>> getMatches() {
+	public Property<ObservableList<MatchDTO>> getMatches() {
 		return _matches;
 	}
 }

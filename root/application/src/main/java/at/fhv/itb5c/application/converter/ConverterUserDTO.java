@@ -3,7 +3,7 @@ package at.fhv.itb5c.application.converter;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import at.fhv.itb5c.application.dto.UserDTO;
+import at.fhv.itb5c.commons.dto.UserDTO;
 import at.fhv.itb5c.model.entity.User;
 
 public class ConverterUserDTO {

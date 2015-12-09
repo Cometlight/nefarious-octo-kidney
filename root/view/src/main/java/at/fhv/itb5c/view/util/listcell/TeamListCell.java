@@ -1,13 +1,11 @@
 package at.fhv.itb5c.view.util.listcell;
 
-import java.rmi.RemoteException;
+import at.fhv.itb5c.commons.dto.TeamDTO;
 
-import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
-
-public class TeamListCell extends SimpleListCell<ITeamRMI>{
+public class TeamListCell extends SimpleListCell<TeamDTO>{
 
 	@Override
-	protected void format(ITeamRMI item) throws RemoteException {
+	protected void format(TeamDTO item) {
 		setText(item.getName());
 	}
 

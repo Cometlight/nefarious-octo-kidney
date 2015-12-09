@@ -1,14 +1,14 @@
 package at.fhv.itb5c.view.usersearch;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
-import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
-import at.fhv.itb5c.rmi.client.RMIClient;
+import at.fhv.itb5c.app.AppState;
+import at.fhv.itb5c.commons.dto.DepartmentDTO;
+import at.fhv.itb5c.commons.dto.UserDTO;
+import at.fhv.itb5c.communication.CommunicationErrorException;
+import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.view.user.UserViewController.UserViewState;
-import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.user.UserViewFactory;
 import at.fhv.itb5c.view.util.interfaces.IPanelClosable;
 import at.fhv.itb5c.view.util.interfaces.IPanelCloseHandler;
@@ -29,18 +29,29 @@ import javafx.util.Callback;
 
 public class SearchUserController implements IPanelClosable {
 
-	@FXML private TextField _firstNameTextField;
-	@FXML private TextField _lastNameTextField;
-	@FXML private CheckBox _paidCheckBox;
-	@FXML private ComboBox<IDepartmentRMI> _departmentsCombobox;
-	@FXML private TableView<IUserRMI> _searchResultTableView;
-	@FXML private TableColumn<IUserRMI, String> _firstNameTableColumn;
-	@FXML private TableColumn<IUserRMI, String> _lastNameTableColumn;
-	@FXML private TableColumn<IUserRMI, String> _addressTableColumn;
-	@FXML private TableColumn<IUserRMI, String> _dateOfBirthTableColumn;
-	@FXML private TableColumn<IUserRMI, String> _membershipFeeTableColumn;
-	@FXML private Label _searchResultCountLable;
-	
+	@FXML
+	private TextField _firstNameTextField;
+	@FXML
+	private TextField _lastNameTextField;
+	@FXML
+	private CheckBox _paidCheckBox;
+	@FXML
+	private ComboBox<DepartmentDTO> _departmentsCombobox;
+	@FXML
+	private TableView<UserDTO> _searchResultTableView;
+	@FXML
+	private TableColumn<UserDTO, String> _firstNameTableColumn;
+	@FXML
+	private TableColumn<UserDTO, String> _lastNameTableColumn;
+	@FXML
+	private TableColumn<UserDTO, String> _addressTableColumn;
+	@FXML
+	private TableColumn<UserDTO, String> _dateOfBirthTableColumn;
+	@FXML
+	private TableColumn<UserDTO, String> _membershipFeeTableColumn;
+	@FXML
+	private Label _searchResultCountLable;
+
 	private IPanelCloseHandler _panelCloseHandler;
 	private SearchUserModel _searchUserModel;
 
@@ -55,9 +66,9 @@ public class SearchUserController implements IPanelClosable {
 		_searchResultTableView.setItems(_searchUserModel.getSearchResult());
 
 		try {
-			_departmentsCombobox.setItems(
-					FXCollections.observableArrayList(RMIClient.getRMIClient().getApplicationFacade().getAllDepartments(AppState.getInstance().getSessionID())));
-		} catch (RemoteException e) {
+			_departmentsCombobox.setItems(FXCollections.observableArrayList(CommunicationFacadeProvider.getInstance()
+					.getCurrentFacade().getAllDepartments(AppState.getInstance().getSessionID())));
+		} catch (CommunicationErrorException e) {
 			ErrorPopUp.connectionError();
 		}
 		_departmentsCombobox.valueProperty().bindBidirectional(_searchUserModel.getDepartment());
@@ -65,32 +76,27 @@ public class SearchUserController implements IPanelClosable {
 		initializeTable();
 	}
 
-	private void showUser(IUserRMI selectedUser) {
-			try {
-				_panelCloseHandler.closeNext(new UserViewFactory(UserViewState.detailState, selectedUser));
-			} catch (IOException e) {
-				ErrorPopUp.criticalSystemError();
-			}
+	private void showUser(UserDTO selectedUser) {
+		try {
+			_panelCloseHandler.closeNext(new UserViewFactory(UserViewState.detailState, selectedUser));
+		} catch (IOException e) {
+			ErrorPopUp.criticalSystemError();
+		}
 	}
 
 	public void initializeTable() {
 		_searchResultTableView.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showUser(newValue));
-		
+
 		_firstNameTableColumn.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<IUserRMI, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<UserDTO, String>, ObservableValue<String>>() {
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<IUserRMI, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<UserDTO, String> param) {
 						String value;
-						try {
-							if (param.getValue().getFirstName() != null) {
-								value = param.getValue().getFirstName().toString();
-							} else {
-								value = "";
-							}
-						} catch (RemoteException e) {
-							ErrorPopUp.connectionError();
-							value = "ERROR";
+						if (param.getValue().getFirstName() != null) {
+							value = param.getValue().getFirstName().toString();
+						} else {
+							value = "";
 						}
 
 						return new SimpleStringProperty(value);
@@ -98,19 +104,15 @@ public class SearchUserController implements IPanelClosable {
 				});
 
 		_lastNameTableColumn.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<IUserRMI, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<UserDTO, String>, ObservableValue<String>>() {
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<IUserRMI, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<UserDTO, String> param) {
 						String value;
-						try {
-							if (param.getValue().getLastName() != null) {
-								value = param.getValue().getLastName().toString();
-							} else {
-								value = "";
-							}
-						} catch (RemoteException e) {
-							ErrorPopUp.connectionError();
-							value = "ERROR";
+
+						if (param.getValue().getLastName() != null) {
+							value = param.getValue().getLastName().toString();
+						} else {
+							value = "";
 						}
 
 						return new SimpleStringProperty(value);
@@ -118,19 +120,15 @@ public class SearchUserController implements IPanelClosable {
 				});
 
 		_addressTableColumn.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<IUserRMI, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<UserDTO, String>, ObservableValue<String>>() {
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<IUserRMI, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<UserDTO, String> param) {
 						String value;
-						try {
-							if (param.getValue().getAddress() != null) {
-								value = param.getValue().getAddress().toString();
-							} else {
-								value = "";
-							}
-						} catch (RemoteException e) {
-							ErrorPopUp.connectionError();
-							value = "ERROR";
+
+						if (param.getValue().getAddress() != null) {
+							value = param.getValue().getAddress().toString();
+						} else {
+							value = "";
 						}
 
 						return new SimpleStringProperty(value);
@@ -138,19 +136,15 @@ public class SearchUserController implements IPanelClosable {
 				});
 
 		_dateOfBirthTableColumn.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<IUserRMI, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<UserDTO, String>, ObservableValue<String>>() {
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<IUserRMI, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<UserDTO, String> param) {
 						String value;
-						try {
-							if (param.getValue().getDateOfBirth() != null) {
-								value = param.getValue().getDateOfBirth().toString();
-							} else {
-								value = "";
-							}
-						} catch (RemoteException e) {
-							ErrorPopUp.connectionError();
-							value = "ERROR";
+
+						if (param.getValue().getDateOfBirth() != null) {
+							value = param.getValue().getDateOfBirth().toString();
+						} else {
+							value = "";
 						}
 
 						return new SimpleStringProperty(value);
@@ -158,20 +152,16 @@ public class SearchUserController implements IPanelClosable {
 				});
 
 		_membershipFeeTableColumn.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<IUserRMI, String>, ObservableValue<String>>() {
+				new Callback<TableColumn.CellDataFeatures<UserDTO, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<IUserRMI, String> param) {
+					public ObservableValue<String> call(CellDataFeatures<UserDTO, String> param) {
 						String value;
-						try {
-							if(param.getValue().getMembershipFeePaid()) {
-								value = "Yes";
-							} else {
-								value = "No";
-							}
-						} catch (RemoteException e) {
-							ErrorPopUp.connectionError();
-							value = "ERROR";
+
+						if (param.getValue().getMembershipFeePaid()) {
+							value = "Yes";
+						} else {
+							value = "No";
 						}
 
 						return new SimpleStringProperty(value);
@@ -182,23 +172,22 @@ public class SearchUserController implements IPanelClosable {
 	@FXML
 	public void searchButtonOnReleasedEventHandler(MouseEvent mouseEvent) {
 		try {
-			Collection<IUserRMI> users = null;
+			Collection<UserDTO> users = null;
 			if (_searchUserModel.getDepartment().get() == null) {
-				users = new ArrayList<>(RMIClient.getRMIClient().getApplicationFacade().findUsers(AppState.getInstance().getSessionID(), _searchUserModel.getFirstName().getValue(), 
-																					_searchUserModel.getLastName().getValue(), 
-																					null,
-																					_searchUserModel.getIsPaid().getValue()));	
+				users = new ArrayList<>(CommunicationFacadeProvider.getInstance().getCurrentFacade().findUsers(
+						AppState.getInstance().getSessionID(), _searchUserModel.getFirstName().getValue(),
+						_searchUserModel.getLastName().getValue(), null, _searchUserModel.getIsPaid().getValue()));
 			} else {
-				users = RMIClient.getRMIClient().getApplicationFacade().findUsers(AppState.getInstance().getSessionID(), _searchUserModel.getFirstName().getValue(),
-						_searchUserModel.getLastName().getValue(), _searchUserModel.getDepartment().get().getId(),
-						_searchUserModel.getIsPaid().getValue());
+				users = CommunicationFacadeProvider.getInstance().getCurrentFacade().findUsers(AppState.getInstance().getSessionID(),
+						_searchUserModel.getFirstName().getValue(), _searchUserModel.getLastName().getValue(),
+						_searchUserModel.getDepartment().get().getId(), _searchUserModel.getIsPaid().getValue());
 			}
 
 			_searchResultCountLable.setText(Integer.toString(users.size()));
-			
+
 			_searchUserModel.getSearchResult().clear();
 			_searchUserModel.getSearchResult().addAll(users);
-		} catch (RemoteException e) {
+		} catch (CommunicationErrorException e) {
 			ErrorPopUp.connectionError();
 		}
 	}

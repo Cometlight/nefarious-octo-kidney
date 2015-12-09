@@ -1,11 +1,10 @@
 package at.fhv.itb5c.view.util.listcell;
 
-import java.rmi.RemoteException;
-import at.fhv.itb5c.commons.dto.rmi.IUserRMI;
+import at.fhv.itb5c.commons.dto.UserDTO;
 
-public class UserListCell extends SimpleListCell<IUserRMI> {
+public class UserListCell extends SimpleListCell<UserDTO> {
 	@Override
-	protected void format(IUserRMI item) throws RemoteException {
+	protected void format(UserDTO item) {
 		setText(item.getFirstName() + " " + item.getLastName());
 	}
 }

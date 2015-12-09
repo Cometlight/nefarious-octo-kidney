@@ -1,32 +1,26 @@
 package at.fhv.itb5c.view.tournament.invitation;
 
-import java.rmi.RemoteException;
 import java.util.Optional;
-
-import at.fhv.itb5c.commons.dto.rmi.ITeamRMI;
-import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
+import at.fhv.itb5c.app.AppState;
+import at.fhv.itb5c.commons.dto.TeamDTO;
+import at.fhv.itb5c.commons.dto.TournamentDTO;
 import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
+import at.fhv.itb5c.communication.CommunicationErrorException;
+import at.fhv.itb5c.communication.CommunicationFacadeProvider;
 import at.fhv.itb5c.logging.ILogger;
-import at.fhv.itb5c.rmi.client.RMIClient;
-import at.fhv.itb5c.view.AppState;
 import at.fhv.itb5c.view.util.popup.ErrorPopUp;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
 public abstract class TournamentInvitationPopup implements ILogger {
-	public static void display(ITournamentRMI tournament, ITeamRMI team) {
+	public static void display(TournamentDTO tournament, TeamDTO team) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Tournament Invitation");
 		alert.setHeaderText("You've been invited to a tournament!");
-		try {
-			alert.setContentText("Tournament: " + tournament.getName() + "\n" 
-					+ "Date: " + tournament.getDate() + "\n\n"
-					+ "Please choose your option:");
-		} catch (RemoteException e) {
-			log.error(e.getMessage());
-			ErrorPopUp.connectionError();
-		}
+		alert.setContentText("Tournament: " + tournament.getName() + "\n" 
+				+ "Date: " + tournament.getDate() + "\n\n"
+				+ "Please choose your option:");
 
 		ButtonType buttonTypeAccept = new ButtonType("Accept");
 		ButtonType buttonTypeDecline = new ButtonType("Decline");
@@ -36,15 +30,15 @@ public abstract class TournamentInvitationPopup implements ILogger {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonTypeAccept) {
 			try {
-				RMIClient.getRMIClient().getApplicationFacade().rsvp(AppState.getInstance().getSessionID(), team, TeamInvitationStatus.Accepted);
-			} catch (RemoteException e) {
+				CommunicationFacadeProvider.getInstance().getCurrentFacade().rsvp(AppState.getInstance().getSessionID(), team, TeamInvitationStatus.Accepted);
+			} catch (CommunicationErrorException e) {
 				log.error(e.getMessage());
 				ErrorPopUp.connectionError();
 			}
 		} else if (result.get() == buttonTypeDecline) {
 			try {
-				RMIClient.getRMIClient().getApplicationFacade().rsvp(AppState.getInstance().getSessionID(), team, TeamInvitationStatus.Declined);
-			} catch (RemoteException e) {
+				CommunicationFacadeProvider.getInstance().getCurrentFacade().rsvp(AppState.getInstance().getSessionID(), team, TeamInvitationStatus.Declined);
+			} catch (CommunicationErrorException e) {
 				log.error(e.getMessage());
 				ErrorPopUp.connectionError();
 			}

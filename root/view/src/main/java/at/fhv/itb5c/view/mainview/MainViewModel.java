@@ -1,18 +1,19 @@
 package at.fhv.itb5c.view.mainview;
 
 import java.util.Collection;
-import at.fhv.itb5c.commons.dto.rmi.IDepartmentRMI;
+
+import at.fhv.itb5c.commons.dto.DepartmentDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class MainViewModel {
-	private ObservableList<IDepartmentRMI> _departments;
+	private ObservableList<DepartmentDTO> _departments;
 	
-	public MainViewModel(Collection<IDepartmentRMI> departments) {
+	public MainViewModel(Collection<DepartmentDTO> departments) {
 		_departments = FXCollections.observableArrayList(departments);
 	}
 	
-	public ObservableList<IDepartmentRMI> getDepartments() {
+	public ObservableList<DepartmentDTO> getDepartments() {
 		return _departments;
 	}
 }

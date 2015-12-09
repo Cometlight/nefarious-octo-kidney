@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
-import at.fhv.itb5c.application.dto.TournamentDTO;
+import at.fhv.itb5c.commons.dto.TournamentDTO;
 import at.fhv.itb5c.commons.dto.rmi.ITournamentRMI;
 import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.rmiclasses.TournamentRMI;
@@ -35,6 +35,15 @@ public class ConverterTournamentRMI implements ILogger {
 
 		return tournamentDTO;
 	}
+	
+	public static Collection<TournamentDTO> toDTO(Collection<ITournamentRMI> tournaments) {
+		if (tournaments == null) {
+			return null;
+		}
+
+		return tournaments.stream().map(ConverterTournamentRMI::toDTO).collect(Collectors.toList());
+	}
+
 
 	public static Collection<ITournamentRMI> toRMI(Collection<TournamentDTO> tournaments) {
 		if (tournaments == null) {

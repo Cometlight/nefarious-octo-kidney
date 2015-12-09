@@ -3,7 +3,7 @@ package at.fhv.itb5c.application.converter;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import at.fhv.itb5c.application.dto.LeagueDTO;
+import at.fhv.itb5c.commons.dto.LeagueDTO;
 import at.fhv.itb5c.model.entity.League;
 
 public class ConverterLeagueDTO {

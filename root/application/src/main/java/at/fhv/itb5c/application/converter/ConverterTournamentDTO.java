@@ -24,6 +24,7 @@ public class ConverterTournamentDTO {
 		tournamentDTO.setName(tournament.getName());
 		tournamentDTO.setDate(tournament.getDate());
 		tournamentDTO.setDepartmentId(tournament.getDepartmentId());
+		tournamentDTO.setDone(tournament.getDone());
 
 		return tournamentDTO;
 	}
@@ -52,6 +53,7 @@ public class ConverterTournamentDTO {
 		tournament.setName(tournamentDTO.getName());
 		tournament.setDate(tournamentDTO.getDate());
 		tournament.setDepartmentId(tournamentDTO.getDepartmentId());
+		tournament.setDone(tournamentDTO.getDone());
 
 		return tournament;
 	}

@@ -44,6 +44,7 @@ public class TournamentPersistenceTest {
 		matches.add(match.getId());
 		_tournament.setMatchesIds(matches);
 		PersistenceFacade.getInstance().saveOrUpdate(homeTeam);
+		_tournament.setDone(true);
 		_tournamentPersist = PersistenceFacade.getInstance().saveOrUpdate(_tournament);
 	}
 
@@ -61,6 +62,7 @@ public class TournamentPersistenceTest {
 		assertEquals(_tournament.getHomeTeamsIds(), _tournamentPersist.getHomeTeamsIds());
 		assertEquals(_tournament.getGuestTeams(), _tournamentPersist.getGuestTeams());
 		assertEquals(_tournament.getMatchesIds(), _tournamentPersist.getMatchesIds());
+		assertNotNull(PersistenceFacade.getInstance().findTournaments(null, null, LocalDate.now().plusMonths(2)));
 	}
 
 }

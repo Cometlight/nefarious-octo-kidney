@@ -1,5 +1,9 @@
 package at.fhv.itb5c.model;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,6 +18,7 @@ import javax.persistence.criteria.Root;
 
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
+import at.fhv.itb5c.model.entity.League;
 import at.fhv.itb5c.model.entity.PersistableObject;
 import at.fhv.itb5c.model.entity.Team;
 import at.fhv.itb5c.model.entity.Tournament;
@@ -295,7 +300,7 @@ public class PersistenceFacade implements ILogger {
 		return resultSet;
 	}
 
-	public List<Tournament> findTournaments(String name, Long departmentId) {
+	public List<Tournament> findTournaments(String name, Long departmentId, LocalDate date) {
 		List<Tournament> resultSet;
 
 		CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
@@ -313,10 +318,43 @@ public class PersistenceFacade implements ILogger {
 		if (departmentId != null) {
 			predicates.add(cb.equal(root.get("_departmentId"), departmentId));
 		}
+		
+		if (date != null) {
+			// convert LocalDate to Date
+			Instant instant = date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+			predicates.add(cb.equal(root.get("_persistDate"), Date.from(instant)));
+		}
 
 		query.where(predicates.toArray(new Predicate[predicates.size()]));
 
 		TypedQuery<Tournament> typedQuery = _entityManager.createQuery(query);
+		resultSet = typedQuery.getResultList();
+
+		return resultSet;
+	}
+	
+	public List<League> findLeagues(String name) {
+		List<League> resultSet;
+		
+		if(name==null){
+			return null;
+		}
+		
+		CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<League> query = cb.createQuery(League.class);
+		Root<League> root = query.from(League.class);
+		query.select(root);
+
+		List<Predicate> predicates = new LinkedList<>();
+
+		if (name != null) {
+			predicates.add(cb.like(cb.lower(root.get("_name")), "%" + name.toLowerCase() + "%"));
+		}
+
+		query.where(predicates.toArray(new Predicate[predicates.size()]));
+
+		TypedQuery<League> typedQuery = _entityManager.createQuery(query);
 		resultSet = typedQuery.getResultList();
 
 		return resultSet;

@@ -1,7 +1,6 @@
 package at.fhv.itb5c.ws;
 
 import java.time.LocalDate;
-import java.util.Collection;
 
 import javax.jws.WebService;
 
@@ -43,7 +42,7 @@ public class TournamentWS implements ILogger {
 		}
 	}
 
-	public Collection<MatchDTO> getResults(String typeOfSport, String leagueName, String date) {
+	public TournamentResponse getResults(String typeOfSport, String leagueName, String date) {
 		try {
 			_appFacade = new ApplicationFacade();
 
@@ -51,7 +50,7 @@ public class TournamentWS implements ILogger {
 			setParams(typeOfSport, leagueName, date);
 
 			if (_tos != null || _league != null || _date != null) {
-				return _appFacade.getResults(_tos, _league, _date);
+				return new TournamentResponse(_appFacade.getResults(_tos, _league, _date));
 			}
 
 			log.debug("One of the parameter was null. Returning null!");

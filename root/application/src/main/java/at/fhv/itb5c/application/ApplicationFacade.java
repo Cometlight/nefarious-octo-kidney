@@ -133,7 +133,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public TeamDTO getTeamById(String sessionId, Long id) {
-		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
+		if (sessionId.equals("webservice_request") || hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			Team entity = PersistenceFacade.getInstance().getById(Team.class, id);
 			return ConverterTeamDTO.toDTO(entity);
 		}
@@ -226,7 +226,7 @@ public class ApplicationFacade implements ILogger {
 	}
 
 	public MatchDTO getMatchById(String sessionId, Long matchId) {
-		if (hasRole(sessionId, UserRole.Admin, UserRole.StandardUser)) {
+		if (sessionId.equals("webservice_request") || hasRole(sessionId, UserRole.Admin, UserRole.StandardUser)) {
 			Match match = PersistenceFacade.getInstance().getById(Match.class, matchId);
 			return ConverterMatchDTO.toDTO(match);
 		}
@@ -505,11 +505,11 @@ public class ApplicationFacade implements ILogger {
 		return true;
 	}
 
-	public Collection<MatchDTO> getResults(TypeOfSport tos, LeagueDTO league, LocalDate date) {
+	public Collection<TournamentDTO> getResults(TypeOfSport tos, LeagueDTO league, LocalDate date) {
 		// TODO security?
 		// TODO change to custom Response class
 		// http://stackoverflow.com/questions/11107875/jax-ws-how-to-make-a-soap-response-return-a-hashmap-object
-		Collection<MatchDTO> resultSet = null;
+		Collection<TournamentDTO> resultSet = null;
 
 		if (tos == null || league == null || date == null) {
 			log.debug("One of the parameter was null. Returning null!");
@@ -519,9 +519,7 @@ public class ApplicationFacade implements ILogger {
 		if (hasResults(tos, league, date)) {
 			resultSet = new HashSet<>();
 			for (TournamentDTO t : getTournaments(tos, league, date)) {
-				for (Long id : t.getMatchesIds()) {
-					resultSet.add(ConverterMatchDTO.toDTO(PersistenceFacade.getInstance().getById(Match.class, id)));
-				}
+				resultSet.add(t);
 			}
 		}
 

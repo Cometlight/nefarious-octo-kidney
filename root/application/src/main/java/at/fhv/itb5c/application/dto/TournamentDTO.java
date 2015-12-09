@@ -13,6 +13,7 @@ public class TournamentDTO extends BaseDTO {
 	private Set<Long> _matches;
 	private LocalDate _date;
 	private Long _departmentId;
+	private Boolean _done;
 
 	public String getName() {
 		return _name;
@@ -76,6 +77,14 @@ public class TournamentDTO extends BaseDTO {
 
 	public void setDepartmentId(Long departmentId) {
 		_departmentId = departmentId;
+	}
+
+	public Boolean getDone() {
+		return _done;
+	}
+
+	public void setDone(Boolean done) {
+		_done = done;
 	}
 
 	@Override

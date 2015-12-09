@@ -28,6 +28,8 @@ public class Tournament extends PersistableObject {
 	private Set<Long> _matches = new HashSet<>();
 	@Column(name = "departmentId", nullable = false)
 	private Long _departmentId;
+	@Column(name = "done", nullable = true)
+	private Boolean _done;
 	@Transient
 	private LocalDate _date;
 
@@ -91,6 +93,14 @@ public class Tournament extends PersistableObject {
 
 	public void setDepartmentId(Long departmentId) {
 		_departmentId = departmentId;
+	}
+
+	public Boolean getDone() {
+		return _done;
+	}
+
+	public void setDone(Boolean done) {
+		_done = done;
 	}
 
 	@PrePersist

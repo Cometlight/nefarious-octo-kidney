@@ -7,8 +7,8 @@ import java.util.LinkedList;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import at.fhv.itb5c.application.ApplicationFacade;
-import at.fhv.itb5c.application.dto.MatchDTO;
-import at.fhv.itb5c.application.dto.TournamentDTO;
+import at.fhv.itb5c.commons.dto.MatchDTO;
+import at.fhv.itb5c.commons.dto.TournamentDTO;
 
 @XmlRootElement
 public class TournamentResponse {

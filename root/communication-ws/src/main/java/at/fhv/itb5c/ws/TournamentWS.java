@@ -6,7 +6,6 @@ import javax.jws.WebService;
 
 import at.fhv.itb5c.application.ApplicationFacade;
 import at.fhv.itb5c.commons.dto.LeagueDTO;
-import at.fhv.itb5c.commons.dto.MatchDTO;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
 

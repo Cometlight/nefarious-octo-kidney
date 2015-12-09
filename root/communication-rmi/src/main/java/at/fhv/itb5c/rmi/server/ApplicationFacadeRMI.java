@@ -7,6 +7,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
 
 import at.fhv.itb5c.application.ApplicationFacade;
+import at.fhv.itb5c.application.IApplicationFacade;
 import at.fhv.itb5c.commons.dto.DepartmentDTO;
 import at.fhv.itb5c.commons.dto.MatchDTO;
 import at.fhv.itb5c.commons.dto.TeamDTO;

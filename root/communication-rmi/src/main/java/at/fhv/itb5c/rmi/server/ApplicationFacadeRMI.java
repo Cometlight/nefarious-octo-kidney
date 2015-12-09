@@ -7,6 +7,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
 
 import at.fhv.itb5c.application.ApplicationFacade;
+import at.fhv.itb5c.application.IApplicationFacade;
 import at.fhv.itb5c.commons.dto.DepartmentDTO;
 import at.fhv.itb5c.commons.dto.MatchDTO;
 import at.fhv.itb5c.commons.dto.TeamDTO;
@@ -34,7 +35,7 @@ import at.fhv.itb5c.rmi.server.converter.ConverterUserRMI;
 
 public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplicationFacadeRMI, RMIServant, ILogger {
 	private static final long serialVersionUID = -6290768314413969216L;
-	private ApplicationFacade _applicationFacade;
+	private IApplicationFacade _applicationFacade;
 
 	public ApplicationFacadeRMI() throws RemoteException {
 		super();
@@ -126,28 +127,28 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	public IUserRMI getCurrentUser(String sessionId) throws RemoteException {
 		return ConverterUserRMI.toRMI(_applicationFacade.getCurrentUser(sessionId));
 	}
-	
+
 	@Override
 	public ITournamentRMI createTournament(String sessionId, IDepartmentRMI dept) throws RemoteException {
 		return ConverterTournamentRMI.toRMI(_applicationFacade.createTournament(sessionId, ConverterDepartmentRMI.toDTO(dept)));
 	}
-	
+
 	@Override
 	public ITournamentRMI saveTournament(String sessionId, ITournamentRMI tournament, IDepartmentRMI dept) throws RemoteException {
 		TournamentDTO tournamentDTO = ConverterTournamentRMI.toDTO(tournament);
 		return ConverterTournamentRMI.toRMI(_applicationFacade.saveTournament(sessionId, tournamentDTO, ConverterDepartmentRMI.toDTO(dept)));
 	}
-	
+
 	@Override
 	public Collection<ITournamentRMI> findTournaments(String sessionId, String name, Long departmentId) throws RemoteException {
 		return ConverterTournamentRMI.toRMI(_applicationFacade.findTournaments(sessionId, name, departmentId));
 	}
-	
+
 	@Override
 	public ITournamentRMI getTournamentById(String sessionId, Long id) throws RemoteException {
 		return ConverterTournamentRMI.toRMI(_applicationFacade.getTournamentById(sessionId, id));
 	}
-	
+
 	@Override
 	public ITeamRMI addPlayerToTeam(String sessionId, ITeamRMI team, IUserRMI player) throws RemoteException {
 		TeamDTO teamDTO = ConverterTeamRMI.toDTO(team);
@@ -171,7 +172,7 @@ public class ApplicationFacadeRMI extends UnicastRemoteObject implements IApplic
 	public IMatchRMI getMatchById(String sessionId, Long matchId) throws RemoteException {
 		return ConverterMatchRMI.toRMI(_applicationFacade.getMatchById(sessionId, matchId));
 	}
-	
+
 	@Override
 	public IMatchRMI saveMatch(String sessionId, IMatchRMI match, IDepartmentRMI dept) throws RemoteException {
 		MatchDTO matchDTO = ConverterMatchRMI.toDTO(match);

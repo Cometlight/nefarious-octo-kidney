@@ -38,13 +38,14 @@ import at.fhv.itb5c.model.entity.Team;
 import at.fhv.itb5c.model.entity.Tournament;
 import at.fhv.itb5c.model.entity.User;
 
-public class ApplicationFacade implements ILogger {
+public class ApplicationFacade implements ILogger, IApplicationFacade {
 	SessionManager _sessionManager;
 
 	public ApplicationFacade() {
 		_sessionManager = SessionManager.getInstance();
 	}
 
+	@Override
 	public UserDTO createUser(String sessionId) {
 		if (hasRole(sessionId, UserRole.Admin)) {
 			return ConverterUserDTO.toDTO(new User());
@@ -52,6 +53,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public UserDTO getUserById(String sessionId, Long id) {
 		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			User user = PersistenceFacade.getInstance().getById(User.class, id);
@@ -63,6 +65,7 @@ public class ApplicationFacade implements ILogger {
 	/**
 	 * If a parameter is null, it is ignored.
 	 */
+	@Override
 	public Collection<UserDTO> findUsers(String sessionId, String firstName, String lastName, Long departmentId,
 			Boolean membershipFeePaid) {
 		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
@@ -75,6 +78,7 @@ public class ApplicationFacade implements ILogger {
 	/**
 	 * If a parameter is null, it is ignored.
 	 */
+	@Override
 	public Collection<UserDTO> findUsersSimple(String sessionId, String name) {
 		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			return ConverterUserDTO.toDTO(PersistenceFacade.getInstance().findUsersSimple(name));
@@ -82,6 +86,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public UserDTO saveUser(String sessionId, UserDTO user) {
 		if (hasRole(sessionId, UserRole.Admin)) {
 			try {
@@ -95,6 +100,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public DepartmentDTO getDepartmentById(String sessionId, Long id) {
 		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			Department entity = PersistenceFacade.getInstance().getById(Department.class, id);
@@ -103,6 +109,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public Collection<DepartmentDTO> getAllDepartments(String sessionId) {
 		if (hasRole(sessionId, UserRole.Admin, UserRole.StandardUser)) {
 			List<Department> departments = PersistenceFacade.getInstance().getAll(Department.class);
@@ -111,6 +118,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public DepartmentDTO saveDepartment(String sessionId, DepartmentDTO department) {
 		if (hasRole(sessionId, UserRole.Admin)) {
 			Department entity = ConverterDepartmentDTO.toEntity(department);
@@ -125,6 +133,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public TeamDTO createTeam(String sessionId) {
 		if (hasRole(sessionId, UserRole.Admin)) {
 			return ConverterTeamDTO.toDTO(new Team());
@@ -132,6 +141,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public TeamDTO getTeamById(String sessionId, Long id) {
 		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			Team entity = PersistenceFacade.getInstance().getById(Team.class, id);
@@ -143,6 +153,7 @@ public class ApplicationFacade implements ILogger {
 	/**
 	 * If a parameter is null, it is ignored.
 	 */
+	@Override
 	public Collection<TeamDTO> findTeams(String sessionId, String name, TypeOfSport typeOfSport, Long departmentId,
 			Long leagueId, Long coachId) {
 		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
@@ -153,6 +164,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public TeamDTO saveTeam(String sessionId, TeamDTO team) {
 		if (hasRole(sessionId, UserRole.Admin)) {
 			Team entity = ConverterTeamDTO.toEntity(team);
@@ -180,6 +192,7 @@ public class ApplicationFacade implements ILogger {
 	 *            the user that should be added to the team
 	 * @return the updated team if the session can add players; null, otherwise.
 	 */
+	@Override
 	public TeamDTO addPlayerToTeam(String sessionId, TeamDTO team, UserDTO player) {
 		if (team != null && player != null) {
 			UserDTO currentUser = getCurrentUser(sessionId);
@@ -202,6 +215,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public LeagueDTO getLeagueById(String sessionId, Long id) {
 		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			return ConverterLeagueDTO.toDTO(PersistenceFacade.getInstance().getById(League.class, id));
@@ -209,6 +223,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public Collection<LeagueDTO> getAllLeagues(String sessionId) {
 		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			List<League> entities = PersistenceFacade.getInstance().getAll(League.class);
@@ -217,6 +232,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public Collection<TournamentDTO> findTournaments(String sessionId, String name, Long departmentId) {
 		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			List<Tournament> entities = PersistenceFacade.getInstance().findTournaments(name, departmentId, null);
@@ -225,6 +241,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public MatchDTO getMatchById(String sessionId, Long matchId) {
 		if (hasRole(sessionId, UserRole.Admin, UserRole.StandardUser)) {
 			Match match = PersistenceFacade.getInstance().getById(Match.class, matchId);
@@ -233,6 +250,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public MatchDTO createMatch(String sessionId) {
 		return ConverterMatchDTO.toDTO(new Match());
 	}
@@ -249,6 +267,7 @@ public class ApplicationFacade implements ILogger {
 	 *            the match that should be added to the tournament
 	 * @return the updated tournament; or null, if the match could not be added
 	 */
+	@Override
 	public TournamentDTO addMatchToTournament(String sessionId, TournamentDTO tournament, MatchDTO match) {
 		if (tournament != null && match != null) {
 			UserDTO currentUser = getCurrentUser(sessionId);
@@ -287,6 +306,7 @@ public class ApplicationFacade implements ILogger {
 	 *            ldap password
 	 * @return session id
 	 */
+	@Override
 	public String loginLDAP(String username, String password) {
 		if (username != null && password != null) {
 			if (LDAPAuth.ldapLogin(username, password) != null) {
@@ -303,11 +323,13 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public UserDTO getCurrentUser(String sessionId) {
 		return ConverterUserDTO.toDTO(
 				PersistenceFacade.getInstance().getById(User.class, SessionManager.getInstance().getUserId(sessionId)));
 	}
 
+	@Override
 	public Boolean hasRole(String sessionId, UserRole... roles) {
 		if(sessionId.equals("webservice_request_session")){
 			return true;
@@ -320,6 +342,7 @@ public class ApplicationFacade implements ILogger {
 		return false;
 	}
 
+	@Override
 	public TournamentDTO createTournament(String sessionId, DepartmentDTO dept) {
 		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
 			return ConverterTournamentDTO.toDTO(new Tournament());
@@ -327,6 +350,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public TournamentDTO saveTournament(String sessionId, TournamentDTO tournament, DepartmentDTO dept) {
 		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
 
@@ -377,6 +401,7 @@ public class ApplicationFacade implements ILogger {
 		return true;
 	}
 
+	@Override
 	public TournamentDTO getTournamentById(String sessionId, Long id) {
 		if (hasRole(sessionId, UserRole.StandardUser, UserRole.Admin)) {
 			return ConverterTournamentDTO.toDTO(PersistenceFacade.getInstance().getById(Tournament.class, id));
@@ -384,14 +409,17 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public Boolean isDepartmentHead(String sessionId, DepartmentDTO dept) {
 		return dept.getHeadId().equals(_sessionManager.getUserId(sessionId));
 	}
 
+	@Override
 	public Boolean isCoach(String sessionId, TeamDTO team) {
 		return team.getCoachId().equals(_sessionManager.getUserId(sessionId));
 	}
 
+	@Override
 	public MatchDTO saveMatch(String sessionId, MatchDTO matchDTO, DepartmentDTO dept) {
 		if (hasRole(sessionId, UserRole.Admin) || isDepartmentHead(sessionId, dept)) {
 			Match entity = ConverterMatchDTO.toEntity(matchDTO);
@@ -406,6 +434,7 @@ public class ApplicationFacade implements ILogger {
 		return null;
 	}
 
+	@Override
 	public Boolean rsvp(String sessionId, TeamDTO team, TeamInvitationStatus answer) {
 		if (team == null || answer == null) {
 			return null;
@@ -425,6 +454,7 @@ public class ApplicationFacade implements ILogger {
 		}
 	}
 
+	@Override
 	public MessageDTO getMessage(String sessionId) {
 		QueueManager qm = new QueueManager(SessionManager.getInstance().getUserId(sessionId).toString());
 		return ConverterMessageDTO.toDTO(qm.consume());
@@ -443,6 +473,7 @@ public class ApplicationFacade implements ILogger {
 	 * @param tournament
 	 *            tournament
 	 */
+	@Override
 	public void invitePlayer(String sessionId, UserDTO player, TeamDTO team, TournamentDTO tournament) {
 		DepartmentDTO dept = ConverterDepartmentDTO
 				.toDTO(PersistenceFacade.getInstance().getById(Department.class, tournament.getDepartmentId()));
@@ -458,6 +489,7 @@ public class ApplicationFacade implements ILogger {
 		}
 	}
 
+	@Override
 	public boolean isCoach(String sessionId, DepartmentDTO dept) {
 		List<Team> res = PersistenceFacade.getInstance().findTeams(null, null, dept.getId(), null,
 				SessionManager.getInstance().getUserId(sessionId));

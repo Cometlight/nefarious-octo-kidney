@@ -1,5 +1,7 @@
 package at.fhv.itb5c.ejb.client;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.naming.Context;
@@ -11,12 +13,13 @@ import at.fhv.itb5c.logging.ILogger;
 public class EJBClient implements ILogger {
 	private static EJBClient _instance;
 	private InitialContext _context;
+	private Map<Class<?> /* EJB Remote Class */, Object /* LookedUp EJB Remote Object */> _ejbRemoteCache;
 	
 	private static final String EJB_SERVER_HOST = "localhost";	// TODO -> PropertyManager.getInstance().getProperty
 	private static final String EJB_SERVER_PORT = "3700";		// TODO -- " --
 	
 	private EJBClient() {
-		
+		_ejbRemoteCache = new HashMap<>();
 	}
 	
 	public static EJBClient getInstance() {
@@ -56,6 +59,11 @@ public class EJBClient implements ILogger {
 			return null;
 		}
 		
+		// Check the cache
+		if (_ejbRemoteCache.containsKey(ejbClazz)) {
+			return ejbClazz.cast(_ejbRemoteCache.get(ejbClazz));
+		}
+		
 		// We assume, that he default ejb names are used
 		// those created when using @EJB without anything else
 		String lookupName = ejbClazz.getName();
@@ -67,6 +75,12 @@ public class EJBClient implements ILogger {
 			log.error(e);
 			lookedUpObject = null;
 		}
-		return lookedUpObject == null ? null : ejbClazz.cast(lookedUpObject);
+		
+		if (lookedUpObject != null) {
+			_ejbRemoteCache.put(ejbClazz, lookedUpObject);
+			return ejbClazz.cast(lookedUpObject);
+		} else {
+			return null;
+		}
 	}
 }

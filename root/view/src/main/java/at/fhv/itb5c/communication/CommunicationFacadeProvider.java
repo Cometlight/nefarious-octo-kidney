@@ -1,12 +1,13 @@
 package at.fhv.itb5c.communication;
 
 public class CommunicationFacadeProvider {
+	private static CommunicationFacadeProvider _instance;
+	private ICommunicationFacade _currentFacade;
 
 	private CommunicationFacadeProvider() {
 		//Singleton
 	}
 	
-	private static CommunicationFacadeProvider _instance;
 	public static CommunicationFacadeProvider getInstance() {
 		if(_instance == null) {
 			_instance = new CommunicationFacadeProvider();
@@ -15,15 +16,14 @@ public class CommunicationFacadeProvider {
 		return _instance;
 	}
 	
-	private ICommunicationFacade _currentFacade;
 	public void configureCommunicationFacade(CommunicationType communicationType) {
 		switch (communicationType) {
-		case EJB: {
-			throw new UnsupportedOperationException();
-		}
-		case RMI: {
-			_currentFacade = new RMICommunicationFacade();
-		}
+			case EJB: {
+				_currentFacade = new EJBCommunicationFacade();
+			} break;
+			case RMI: {
+				_currentFacade = new RMICommunicationFacade();
+			} break;
 		}
 	}
 	

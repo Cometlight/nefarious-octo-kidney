@@ -43,6 +43,11 @@
 			<artifactId>communication-jms</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>at.fhv.itb5c.ejb</groupId>
+			<artifactId>communication-ejb</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

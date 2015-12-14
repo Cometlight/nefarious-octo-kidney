@@ -8,6 +8,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import at.fhv.itb5c.commons.property.PropertyManager;
 import at.fhv.itb5c.logging.ILogger;
 
 public class EJBClient implements ILogger {
@@ -15,8 +16,8 @@ public class EJBClient implements ILogger {
 	private InitialContext _context;
 	private Map<Class<?> /* EJB Remote Class */, Object /* LookedUp EJB Remote Object */> _ejbRemoteCache;
 	
-	private static final String EJB_SERVER_HOST = "localhost";	// TODO -> PropertyManager.getInstance().getProperty
-	private static final String EJB_SERVER_PORT = "3700";		// TODO -- " --
+	private static final String EJB_SERVER_HOST = PropertyManager.getInstance().getProperty("at.fhv.itb5c.ejb.host");
+	private static final String EJB_SERVER_PORT = PropertyManager.getInstance().getProperty("at.fhv.itb5c.ejb.port");
 	
 	private EJBClient() {
 		_ejbRemoteCache = new HashMap<>();

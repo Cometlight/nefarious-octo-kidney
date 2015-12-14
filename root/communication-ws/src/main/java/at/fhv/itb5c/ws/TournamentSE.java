@@ -10,7 +10,7 @@ import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.logging.ILogger;
 
 @WebService
-public class TournamentWS implements ILogger {
+public class TournamentSE implements TournamentSEI, ILogger {
 
 	private ApplicationFacade _appFacade;
 
@@ -18,7 +18,7 @@ public class TournamentWS implements ILogger {
 	private LeagueDTO _league;
 	private LocalDate _date;
 
-	public TournamentWS() {
+	public TournamentSE() {
 		_appFacade = new ApplicationFacade();
 	}
 

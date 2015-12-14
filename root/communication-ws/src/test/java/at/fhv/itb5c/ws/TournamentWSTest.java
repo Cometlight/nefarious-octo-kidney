@@ -161,7 +161,7 @@ public class TournamentWSTest {
 
 	@Test
 	public void test() {
-		TournamentWS ws = new TournamentWS();
+		TournamentSE ws = new TournamentSE();
 		assertTrue(ws.hasResults("Soccer", "Soccer League", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
 		assertNotNull(ws.getResults("Soccer", "Soccer League", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
 	}

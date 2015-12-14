@@ -1,6 +1,8 @@
 package at.fhv.itb5c.commons.dto;
 
-public class BaseDTO {
+import java.io.Serializable;
+
+public class BaseDTO implements Serializable {
 	protected Long _id;
 	protected Long _version;
 

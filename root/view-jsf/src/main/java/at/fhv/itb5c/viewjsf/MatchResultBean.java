@@ -2,6 +2,7 @@ package at.fhv.itb5c.viewjsf;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.inject.Inject;
 
 import at.fhv.itb5c.commons.dto.MatchDTO;
 import at.fhv.itb5c.ejb.interfaces.GetByIdDepartmentRemote;
@@ -26,6 +27,9 @@ public class MatchResultBean {
 
 	@EJB
 	GetByIdDepartmentRemote getDepartmentById;
+	
+	@Inject
+	LoginBean loginBean;
 
 	public Integer getResultTeamOne() {
 		return resultTeamOne;
@@ -51,7 +55,7 @@ public class MatchResultBean {
 		this.matchId = matchId;
 		if (matchId != null) {
 			// TODO replace with session from session bean!!
-			String sessionId = "webservice_request_session";
+			String sessionId = loginBean.getSessionId();
 			match = getMatchById.getMatchById(sessionId, matchId);
 			setResultTeamOne(match.getResultTeamOne());
 			setResultTeamTwo(match.getResultTeamTwo());
@@ -85,7 +89,7 @@ public class MatchResultBean {
 	public void saveMatch() {
 		if (matchId != null && resultTeamOne != null && resultTeamTwo != null) {
 			// TODO replace with session from session bean!!
-			String sessionId = "webservice_request_session";
+			String sessionId = loginBean.getSessionId();
 			match.setResultTeamOne(resultTeamOne);
 			match.setResultTeamTwo(resultTeamTwo);
 			saveMatch.saveMatch(sessionId, match, getDepartmentById.getDepartmentById(sessionId, departmentId));

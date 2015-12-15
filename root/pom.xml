@@ -17,6 +17,7 @@
 		<module>communication-ws</module>
 		<module>communication-ejb</module>
 		<module>communication-ejb-interfaces</module>
+		<module>view-jsf</module>
 	</modules>
 	<repositories>
 		<repository>

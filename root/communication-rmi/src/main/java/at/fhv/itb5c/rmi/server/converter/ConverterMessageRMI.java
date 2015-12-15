@@ -8,9 +8,9 @@ import at.fhv.itb5c.logging.ILogger;
 import at.fhv.itb5c.rmi.server.rmiclasses.MessageRMI;
 
 public class ConverterMessageRMI implements ILogger {
-	public static IMessageRMI toRMI(MessageDTO messagedto){
+	public static IMessageRMI toRMI(MessageDTO messagedto) {
 		IMessageRMI messagermi = null;
-		if(messagedto != null) {
+		if (messagedto != null) {
 			try {
 				messagermi = new MessageRMI(messagedto.getKind(), messagedto.getData());
 			} catch (RemoteException e) {
@@ -20,15 +20,21 @@ public class ConverterMessageRMI implements ILogger {
 		}
 		return messagermi;
 	}
-	
-	public static MessageDTO toDTO(IMessageRMI messagermi){
+
+	public static MessageDTO toDTO(IMessageRMI messagermi) {
+		if (messagermi == null) {
+			return null;
+		}
+
 		MessageDTO messagedto;
+
 		try {
 			messagedto = new MessageDTO(messagermi.getKind(), messagermi.getData());
 		} catch (RemoteException e) {
 			log.error(e.getMessage());
 			return null;
 		}
+		
 		return messagedto;
 	}
 }

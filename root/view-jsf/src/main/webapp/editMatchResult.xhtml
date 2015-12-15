@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<h:body bgcolor="white">
+	<f:view>
+		<h:form>
+			<f:metadata>
+				<f:viewParam name="mId" value="#{matchResultBean.matchId}" />
+				<f:viewParam name="tId" value="#{matchResultBean.departmentId}" />
+				<f:viewParam name="t1" value="#{matchResultBean.teamOne}" />
+				<f:viewParam name="t2" value="#{matchResultBean.teamTwo}" />
+			</f:metadata>
+			<h:panelGrid columns="2">
+				<h:outputText value='Enter result #{matchResultBean.teamOne}' />
+				<h:inputText value='#{matchResultBean.resultTeamOne}' />
+				<h:outputText value='Enter result #{matchResultBean.teamTwo}' />
+				<h:inputText value='#{matchResultBean.resultTeamTwo}' />
+				<h:commandButton action="#{matchResultBean.saveMatch}" value="Save" />
+			</h:panelGrid>
+		</h:form>
+	</f:view>
+</h:body>
+</html>

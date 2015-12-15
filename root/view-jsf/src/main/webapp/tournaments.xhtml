@@ -29,7 +29,7 @@
 								value="${tournamentBean.getTeamName(match.teamOne)}" /> : <h:outputText
 								value="${tournamentBean.getTeamName(match.teamTwo)}" /></td>
 						<td><h:outputText value="${tournamentBean.getMatchResult(match)}" /></td>
-						<td><a href="EditMatchResult.jsp?id=${match.id}">Edit</a></td>
+						<td><a href="editMatchResult.jsf?mId=${match.id}&amp;tId=${tournament.departmentId}&amp;t1=${tournamentBean.getTeamName(match.teamOne)}&amp;t2=${tournamentBean.getTeamName(match.teamTwo)}">Edit</a></td>
 					</tr>
 				</c:forEach>
 			</table>

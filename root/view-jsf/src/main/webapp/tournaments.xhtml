@@ -11,18 +11,29 @@
 	<f:view>
 		<c:forEach var="tournament" items="#{tournamentBean.allTournaments}"
 			varStatus="status">
-			<h:outputText value="${tournament}" />
+			<h1>
+				<h:outputText value="${tournament.name}" />
+				-
+				<h:outputText value="${tournament.date}" />
+			</h1>
+			<table>
+				<tr>
+					<th>Match</th>
+					<th>Result</th>
+					<th>Edit</th>
+				</tr>
+				<c:forEach var="match"
+					items="#{tournamentBean.getMatches(tournament)}" varStatus="status">
+					<tr>
+						<td><h:outputText
+								value="${tournamentBean.getTeamName(match.teamOne)}" /> : <h:outputText
+								value="${tournamentBean.getTeamName(match.teamTwo)}" /></td>
+						<td><h:outputText value="${tournamentBean.getMatchResult(match)}" /></td>
+						<td><a href="EditMatchResult.jsp?id=${match.id}">Edit</a></td>
+					</tr>
+				</c:forEach>
+			</table>
 		</c:forEach>
-
-		<h:form>
-			<h:panelGrid columns="2">
-				<h:outputText value='Enter first number' />
-				<h:inputText value='#{calculatorBean.x}' />
-				<h:outputText value='Enter second number' />
-				<h:inputText value='#{calculatorBean.y}' />
-				<h:commandButton action="#{calculatorBean.add}" value="Add" />
-			</h:panelGrid>
-		</h:form>
 	</f:view>
 </h:body>
 </html>

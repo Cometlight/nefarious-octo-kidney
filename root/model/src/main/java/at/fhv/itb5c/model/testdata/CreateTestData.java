@@ -218,6 +218,16 @@ public class CreateTestData implements ILogger {
 		_tournament1.setDone(true);
 		_tournament1 = PersistenceFacade.getInstance().saveOrUpdate(_tournament1);
 		
+		Tournament _tournament2 = new Tournament();
+		_tournament2.setName("Local Tournament New");
+		_tournament2.setDepartmentId(_deptSoccer.getId());
+		_tournament2.setDate(LocalDate.now().plusDays(14));
+		_tournament2.setFee(new Double(10.90));
+		_tournament2.setMatchesIds(new HashSet<>(Arrays.asList(match1Tournament1.getId(), match2Tournament1.getId(), match3Tournament1.getId())));
+		_tournament2.setHomeTeamsIds(new HashSet<>(Arrays.asList(_teamSoccer1.getId(), _teamSoccer2.getId())));
+		_tournament2.setGuestTeams(new HashSet<>(Arrays.asList("A3 Bregenz", "A2 Dornbirn")));
+		_tournament2.setDone(true);
+		_tournament2 = PersistenceFacade.getInstance().saveOrUpdate(_tournament2);
 	}
 
 	private static void createLeagues() throws Exception {

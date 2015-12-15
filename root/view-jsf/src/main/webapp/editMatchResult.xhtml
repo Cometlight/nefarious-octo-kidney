@@ -3,18 +3,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
+<f:metadata>
+	<f:viewParam name="mId" value="#{matchResultBean.matchId}" />
+	<f:viewParam name="tId" value="#{matchResultBean.departmentId}" />
+	<f:viewParam name="t1" value="#{matchResultBean.teamOne}" />
+	<f:viewParam name="t2" value="#{matchResultBean.teamTwo}" />
+</f:metadata>
 
-<h:body bgcolor="white">
+<f:event
+	listener="#{loginBean.redirectToLogin(matchResultBean.departmentId)}"
+	type="preRenderView" />
+
+<h:head></h:head>
+
+<h:body>
+	<h:outputStylesheet library="css" name="style.css" />
+	<ui:include src="/headerFragment.xhtml" />
 	<f:view>
 		<h:form>
-			<f:metadata>
-				<f:viewParam name="mId" value="#{matchResultBean.matchId}" />
-				<f:viewParam name="tId" value="#{matchResultBean.departmentId}" />
-				<f:viewParam name="t1" value="#{matchResultBean.teamOne}" />
-				<f:viewParam name="t2" value="#{matchResultBean.teamTwo}" />
-			</f:metadata>
 			<h:panelGrid columns="2">
 				<h:outputText value='Enter result #{matchResultBean.teamOne}' />
 				<h:inputText value='#{matchResultBean.resultTeamOne}' />

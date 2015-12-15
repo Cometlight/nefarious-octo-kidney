@@ -2,7 +2,7 @@ package at.fhv.itb5c.viewjsf;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.inject.Inject;
+import javax.faces.bean.ManagedProperty;
 
 import at.fhv.itb5c.commons.dto.MatchDTO;
 import at.fhv.itb5c.ejb.interfaces.GetByIdDepartmentRemote;
@@ -12,8 +12,8 @@ import at.fhv.itb5c.ejb.interfaces.SaveMatchRemote;
 @ManagedBean
 public class MatchResultBean {
 	private Long matchId;
-	private Integer resultTeamOne;
-	private Integer resultTeamTwo;
+	private String resultTeamOne;
+	private String resultTeamTwo;
 	private Long departmentId;
 	private String teamOne;
 	private String teamTwo;
@@ -27,23 +27,23 @@ public class MatchResultBean {
 
 	@EJB
 	GetByIdDepartmentRemote getDepartmentById;
-	
-	@Inject
+
+	@ManagedProperty(value = "#{loginBean}")
 	LoginBean loginBean;
 
-	public Integer getResultTeamOne() {
+	public String getResultTeamOne() {
 		return resultTeamOne;
 	}
 
-	public void setResultTeamOne(Integer resultTeamOne) {
+	public void setResultTeamOne(String resultTeamOne) {
 		this.resultTeamOne = resultTeamOne;
 	}
 
-	public Integer getResultTeamTwo() {
+	public String getResultTeamTwo() {
 		return resultTeamTwo;
 	}
 
-	public void setResultTeamTwo(Integer resultTeamTwo) {
+	public void setResultTeamTwo(String resultTeamTwo) {
 		this.resultTeamTwo = resultTeamTwo;
 	}
 
@@ -54,11 +54,14 @@ public class MatchResultBean {
 	public void setMatchId(Long matchId) {
 		this.matchId = matchId;
 		if (matchId != null) {
-			// TODO replace with session from session bean!!
 			String sessionId = loginBean.getSessionId();
 			match = getMatchById.getMatchById(sessionId, matchId);
-			setResultTeamOne(match.getResultTeamOne());
-			setResultTeamTwo(match.getResultTeamTwo());
+			if (match.getResultTeamOne() != null) {
+				setResultTeamOne(match.getResultTeamOne().toString());
+			}
+			if (match.getResultTeamTwo() != null) {
+				setResultTeamTwo(match.getResultTeamTwo().toString());
+			}
 		}
 	}
 
@@ -86,13 +89,30 @@ public class MatchResultBean {
 		this.teamTwo = teamTwo;
 	}
 
-	public void saveMatch() {
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
+	}
+
+	public String saveMatch() {
 		if (matchId != null && resultTeamOne != null && resultTeamTwo != null) {
-			// TODO replace with session from session bean!!
 			String sessionId = loginBean.getSessionId();
-			match.setResultTeamOne(resultTeamOne);
-			match.setResultTeamTwo(resultTeamTwo);
+			match.setResultTeamOne(toInteger(resultTeamOne));
+			match.setResultTeamTwo(toInteger(resultTeamTwo));
 			saveMatch.saveMatch(sessionId, match, getDepartmentById.getDepartmentById(sessionId, departmentId));
+		}
+
+		return "tournaments";
+	}
+
+	private Integer toInteger(String number) {
+		try {
+			return Integer.parseInt(number);
+		} catch (Exception e) {
+			return null;
 		}
 	}
 }

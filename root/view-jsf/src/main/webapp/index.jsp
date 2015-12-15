@@ -1,4 +1,4 @@
 <%@ page session="false" %>
 <%
-  response.sendRedirect("login.jsf");
+  response.sendRedirect("tournaments.jsf");
 %>>

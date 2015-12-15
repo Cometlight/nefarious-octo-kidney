@@ -318,28 +318,30 @@ public class PersistenceFacade implements ILogger {
 		if (departmentId != null) {
 			predicates.add(cb.equal(root.get("_departmentId"), departmentId));
 		}
-		
+
 		if (date != null) {
 			// convert LocalDate to Date
 			Instant instant = date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
 			predicates.add(cb.equal(root.get("_persistDate"), Date.from(instant)));
 		}
 
-		query.where(predicates.toArray(new Predicate[predicates.size()]));
+		if (!predicates.isEmpty()) {
+			query.where(predicates.toArray(new Predicate[predicates.size()]));
+		}
 
 		TypedQuery<Tournament> typedQuery = _entityManager.createQuery(query);
 		resultSet = typedQuery.getResultList();
 
 		return resultSet;
 	}
-	
+
 	public List<League> findLeagues(String name) {
 		List<League> resultSet;
-		
-		if(name==null){
+
+		if (name == null) {
 			return null;
 		}
-		
+
 		CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
 
 		CriteriaQuery<League> query = cb.createQuery(League.class);

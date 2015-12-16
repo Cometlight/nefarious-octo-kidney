@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head></h:head>
+
+<h:body>
+	<h:outputStylesheet library="css" name="style.css" />
+	<ui:include src="/headerFragment.xhtml" />
+	<f:view>
+		<c:forEach var="tournament" items="#{tournamentBean.allTournaments}"
+			varStatus="status">
+			<h1>
+				<h:outputText value="${tournament.name}" />
+				-
+				<h:outputText value="${tournament.date}" />
+			</h1>
+			<table class="match-table">
+				<tr>
+					<th>Match</th>
+					<th>Result</th>
+					<th>Edit</th>
+				</tr>
+				<c:forEach var="match"
+					items="#{tournamentBean.getMatches(tournament)}" varStatus="status">
+					<tr>
+						<td><h:outputText
+								value="${tournamentBean.getTeamName(match.teamOne)}" /> : <h:outputText
+								value="${tournamentBean.getTeamName(match.teamTwo)}" /></td>
+						<td><h:outputText value="${tournamentBean.getMatchResult(match)}" /></td>
+						<td><a href="editMatchResult.jsf?mId=${match.id}&amp;tId=${tournament.departmentId}&amp;t1=${tournamentBean.getTeamName(match.teamOne)}&amp;t2=${tournamentBean.getTeamName(match.teamTwo)}">Edit</a></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</c:forEach>
+	</f:view>
+</h:body>
+</html>

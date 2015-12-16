@@ -14,23 +14,21 @@ public class TournamentWS implements ILogger {
 
 	private ApplicationFacade _appFacade;
 
-	private TypeOfSport _tos;
-	private LeagueDTO _league;
-	private LocalDate _date;
-
 	public TournamentWS() {
 		_appFacade = new ApplicationFacade();
 	}
 
-	public boolean hasResults(String typeOfSport, String leagueName, String date) {
+	public boolean hasResults(String typeOfSport, String leagueName, String dateString) {
 		try {
 			_appFacade = new ApplicationFacade();
 
 			// set parameters
-			setParams(typeOfSport, leagueName, date);
+			TypeOfSport tos = getTos(typeOfSport);
+			LeagueDTO league = getLeague(leagueName);
+			LocalDate date = getDate(dateString);
 
-			if (_tos != null || _league != null || _date != null) {
-				return _appFacade.hasResults(_tos, _league, _date);
+			if (tos != null || league != null || date != null) {
+				return _appFacade.hasResults(tos, league, date);
 			} else {
 				log.debug("One of the parameter was null. Returning null!");
 				return false;
@@ -41,15 +39,17 @@ public class TournamentWS implements ILogger {
 		}
 	}
 
-	public TournamentResponse getResults(String typeOfSport, String leagueName, String date) {
+	public TournamentResponse getResults(String typeOfSport, String leagueName, String dateString) {
 		try {
 			_appFacade = new ApplicationFacade();
 
 			// set parameters
-			setParams(typeOfSport, leagueName, date);
+			TypeOfSport tos = getTos(typeOfSport);
+			LeagueDTO league = getLeague(leagueName);
+			LocalDate date = getDate(dateString);
 
-			if (_tos != null || _league != null || _date != null) {
-				return new TournamentResponse(_appFacade.getResults(_tos, _league, _date));
+			if (tos != null || league != null || date != null) {
+				return new TournamentResponse(_appFacade.getResults(tos, league, date));
 			}
 
 			log.debug("One of the parameter was null. Returning null!");
@@ -60,30 +60,39 @@ public class TournamentWS implements ILogger {
 		}
 	}
 
-	private void setParams(String typeOfSport, String leagueName, String date) {
+	public TypeOfSport getTos(String typeOfSport) {
 		if (typeOfSport != null) {
 			try {
-				_tos = TypeOfSport.fromString(typeOfSport);
+				return TypeOfSport.fromString(typeOfSport);
 			} catch (Exception e) {
 				log.error("Error occured trying to set type of sport. Param: " + typeOfSport);
 			}
 		}
+		return null;
+	}
+
+	public LeagueDTO getLeague(String leagueName) {
 		if (leagueName != null) {
 			try {
 				for (LeagueDTO l : _appFacade.findLeagues(leagueName)) {
-					_league = l;
+					return l;
 				}
 			} catch (Exception e) {
 				log.error("Error occured trying to set league. Param: " + leagueName);
 			}
 		}
+		return null;
+	}
+
+	public LocalDate getDate(String date) {
 		if (date != null) {
 			try {
-				_date = LocalDate.parse(date);
+				return LocalDate.parse(date);
 			} catch (Exception e) {
 				log.error("Error occured trying to set the date. Param: " + date);
 			}
 		}
-		log.debug("Webservice Parameter set: _tos = " + _tos + ", _league = " + _league + ", _date = " + _date);
+		return null;
 	}
+	
 }

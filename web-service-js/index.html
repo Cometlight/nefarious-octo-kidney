@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>TestWS</title>
+  <style type="text/css">
+    body {
+      font-family: sans-serif;
+    }
+
+    label {
+      display: block;
+      width: 220px;
+      padding-right: 14px;
+      text-align: right;
+      height: 100%;
+    }
+
+    input[type=text] {
+      padding: 8px;
+      width: 100%;
+    }
+
+    .clearfix::after {
+      content: ".";
+      height: 0;
+      font-size: 0;
+      clear: both;
+    }
+
+    .row {
+      padding: 8px 0;
+      display: flex;
+      align-content: center;
+      justify-content: space-between;
+    }
+  </style>
+  <script src="cxf-utils.js" type="text/javascript"></script>
+  <script src="TournamentWSService.js" type="text/javascript"></script>
+</head>
+<body>
+  <div class="row clearfix">
+    <label for="tos">Type of Sport:</label>
+    <input id="tos" type="text" value="Soccer" placeholder="Type of Sport" />
+  </div>
+  <div class="row clearfix">
+    <label for="league">League:</label>
+    <input id="league" type="text" value="Soccer League" placeholder="League" />
+  </div>
+  <div class="row clearfix">
+    <label for="date">Date:</label>
+    <input id="date" type="text" value="2015-12-16" placeholder="Date: YYYY-MM-DD" />
+  </div>
+  <div class="row clearfix">
+    <label for="actions">&nbsp;</label>
+    <div id="actions">
+      <button id="has-results-button">Has Results</button>
+      <button id="get-results-button">Get Results</button>
+    </div>
+  </div>
+  <div id="results">Results</div>
+  <script type="text/javascript">
+  var service = new tournamentws_TournamentWS();
+  service.url = "http://ec2-52-29-11-191.eu-central-1.compute.amazonaws.com:8080/jax-ws-server/TournamentWSService";
+
+  function onError(error){
+    console.log("error: ", error);
+  }
+
+
+  </script>
+  <script defer type="text/javascript">
+    'use strict';
+    const hasResultsButton = document.querySelector('#has-results-button');
+    const getResultsButton = document.querySelector('#get-results-button');
+
+    function getParams() {
+      const tos = document.querySelector('#tos').value;
+      const league = document.querySelector('#league').value;
+      const date = document.querySelector('#date').value;
+      return {
+        tos: tos,
+        league: league,
+        date: date
+      };
+    }
+
+    function renderTournament(tournament) {
+      const div = document.createElement('div');
+      const h4 = document.createElement('h4');
+      h4.textContent = tournament._name;
+      div.appendChild(h4);
+      tournament._matches.forEach(function(match) {
+        div.appendChild(renderMatch(match));
+      });
+      return div;
+    }
+
+    function renderMatch(match) {
+      const div = document.createElement('div');
+      div.textContent = match._teamOne + ' (' + match._resultTeamOne +  ':' + match._resultTeamTwo + ') ' + match._teamTwo;
+      return div;
+    }
+
+    function clearResultsArea() {
+      document.querySelector('#results').innerHTML = '';
+    }
+
+    function onSuccess(response){
+    if (response && response._return && response._return._data && response._return._data.length > 0) {
+      response._return._data.forEach(function(tournament) {
+        clearResultsArea();
+        document.querySelector('#results').appendChild(renderTournament(tournament));
+      });
+    } else {
+      alert('oh no');
+    }
+  }
+
+    function hasResults() {
+      const params = getParams();
+      clearResultsArea();
+      service.hasResults(console.log.bind(console), onError, params.tos, params.league, params.date);
+    }
+
+    function getResults() {
+      const params = getParams();
+      clearResultsArea();
+      service.getResults(onSuccess, onError, params.tos, params.league, params.date);
+    }
+
+    hasResultsButton.addEventListener('click', hasResults);
+    getResultsButton.addEventListener('click', getResults);
+  </script>
+</body>
+</html>

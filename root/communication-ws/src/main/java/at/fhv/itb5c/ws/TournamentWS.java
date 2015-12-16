@@ -28,6 +28,7 @@ public class TournamentWS implements ILogger {
 			LocalDate date = getDate(dateString);
 
 			if (tos != null || league != null || date != null) {
+				log.debug("Webservice called with params tos " + tos + ", league: " + league + ", date " + date);
 				return _appFacade.hasResults(tos, league, date);
 			} else {
 				log.debug("One of the parameter was null. Returning null!");

@@ -60,7 +60,7 @@ public class TournamentWS implements ILogger {
 		}
 	}
 
-	public TypeOfSport getTos(String typeOfSport) {
+	private TypeOfSport getTos(String typeOfSport) {
 		if (typeOfSport != null) {
 			try {
 				return TypeOfSport.fromString(typeOfSport);
@@ -71,7 +71,7 @@ public class TournamentWS implements ILogger {
 		return null;
 	}
 
-	public LeagueDTO getLeague(String leagueName) {
+	private LeagueDTO getLeague(String leagueName) {
 		if (leagueName != null) {
 			try {
 				for (LeagueDTO l : _appFacade.findLeagues(leagueName)) {
@@ -84,7 +84,7 @@ public class TournamentWS implements ILogger {
 		return null;
 	}
 
-	public LocalDate getDate(String date) {
+	private LocalDate getDate(String date) {
 		if (date != null) {
 			try {
 				return LocalDate.parse(date);

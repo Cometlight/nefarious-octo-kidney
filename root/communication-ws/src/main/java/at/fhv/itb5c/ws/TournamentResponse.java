@@ -12,7 +12,7 @@ import at.fhv.itb5c.commons.dto.TournamentDTO;
 
 @XmlRootElement
 public class TournamentResponse {
-	// TODO wrap in <tournaments>
+	// TODO wrap in <tournaments> XML Tag
 	private Collection<TournamentData> _data;
 
 	public TournamentResponse() {

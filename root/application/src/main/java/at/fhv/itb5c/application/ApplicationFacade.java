@@ -331,7 +331,7 @@ public class ApplicationFacade implements ILogger, IApplicationFacade {
 
 	@Override
 	public Boolean hasRole(String sessionId, UserRole... roles) {
-		if(sessionId.equals("webservice_request_session")){
+		if (sessionId.equals("webservice_request_session")) {
 			return true;
 		}
 		for (UserRole role : roles) {
@@ -528,23 +528,27 @@ public class ApplicationFacade implements ILogger, IApplicationFacade {
 			log.debug("One of the parameter was null. Returning null!");
 			return false;
 		}
-		log.debug("start");
-		for (TournamentDTO t : getTournaments(tos, league, tournamentDate)) {
+
+		Collection<TournamentDTO> tournaments = getTournaments(tos, league, tournamentDate);
+
+		if (tournaments.isEmpty()) {
+			return false;
+		}
+
+		for (TournamentDTO t : tournaments) {
 			log.debug("Processing tournament: " + t.getName());
-			if (t.getDone() == null || !t.getDone()) {
-				log.debug("Tournament not finished yet!");
-				return false;
+			if (t.getDone() != null && t.getDone()) {
+				log.debug("Tournament finished!");
+				return true;
 			}
 		}
-		log.debug("end");
-		return true;
+
+		return false;
 	}
 
 	public Collection<TournamentDTO> getResults(TypeOfSport tos, LeagueDTO league, LocalDate date) {
 		// TODO security?
-		// TODO change to custom Response class
-		// http://stackoverflow.com/questions/11107875/jax-ws-how-to-make-a-soap-response-return-a-hashmap-object
-		Collection<TournamentDTO> resultSet = null;
+		Collection<TournamentDTO> resultSet = new HashSet<>();
 
 		if (tos == null || league == null || date == null) {
 			log.debug("One of the parameter was null. Returning null!");
@@ -552,7 +556,6 @@ public class ApplicationFacade implements ILogger, IApplicationFacade {
 		}
 
 		if (hasResults(tos, league, date)) {
-			resultSet = new HashSet<>();
 			for (TournamentDTO t : getTournaments(tos, league, date)) {
 				resultSet.add(t);
 			}

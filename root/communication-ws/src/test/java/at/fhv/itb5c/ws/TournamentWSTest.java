@@ -164,6 +164,9 @@ public class TournamentWSTest {
 		TournamentWS ws = new TournamentWS();
 		assertTrue(ws.hasResults("Soccer", "Soccer League", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
 		assertNotNull(ws.getResults("Soccer", "Soccer League", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+		
+		assertFalse(ws.hasResults("Soccer", "Soccer League", LocalDate.now().minusDays(14).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+		assertNotNull(ws.getResults("Soccer", "Soccer League", LocalDate.now().minusDays(14).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
 	}
 
 	@After

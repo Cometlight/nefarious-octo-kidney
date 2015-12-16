@@ -16,10 +16,11 @@ import at.fhv.itb5c.commons.dto.UserDTO;
 import at.fhv.itb5c.commons.enums.TeamInvitationStatus;
 import at.fhv.itb5c.commons.enums.TypeOfSport;
 import at.fhv.itb5c.commons.enums.UserRole;
+import at.fhv.itb5c.logging.ILogger;
 
 @Startup
 @Singleton
-public class ApplicationFacadeEJB implements ApplicationFacadeEJBLocal {
+public class ApplicationFacadeEJB implements ApplicationFacadeEJBLocal, ILogger {
 	private ApplicationFacade applicationFacade;
 	
 	public ApplicationFacadeEJB() {
@@ -125,6 +126,7 @@ public class ApplicationFacadeEJB implements ApplicationFacadeEJBLocal {
 
 	@Override
 	public String loginLDAP(String username, String password) {
+		log.debug("trying to login user " + username);
 		return applicationFacade.loginLDAP(username, password);
 	}
 

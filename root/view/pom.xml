@@ -56,7 +56,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>at.fhv.itb5c.Program</mainClass>
+							<mainClass>at.fhv.itb5c.view.Program</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

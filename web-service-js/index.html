@@ -116,10 +116,25 @@
     }
   }
 
+  function renderHasResults(hasResults) {
+    const div = document.createElement('div');
+    if (!!hasResults) {
+      div.innerHTML = '<span style="color:green;font-weight:bold">YES</span>';
+    } else {
+      div.innerHTML = '<span style="color:red;font-weight:bold">NO</span>';
+    }
+    return div;
+  }
+
+  function onHasResults(response) {
+    clearResultsArea();
+    document.querySelector('#results').appendChild(renderHasResults(!!response._return));
+  }
+
     function hasResults() {
       const params = getParams();
       clearResultsArea();
-      service.hasResults(console.log.bind(console), onError, params.tos, params.league, params.date);
+      service.hasResults(onHasResults, onError, params.tos, params.league, params.date);
     }
 
     function getResults() {

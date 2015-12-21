@@ -25,6 +25,10 @@ public class LDAPAuth implements ILogger {
 			SearchControls ctls = new SearchControls();
 			String filter = "(&(uid=" + username + ")(cn=*))";
 			NamingEnumeration<SearchResult> res = ctx.search("ou=fhv, ou=People", filter, ctls);
+			if(!res.hasMore()) {
+				// user isn't a student; let's search under ou=apps, maybe we find sht. there:
+				res = ctx.search("ou=apps", filter, ctls);
+			}
 			log.debug("LDAP results found for username " + username + ": " + res.hasMore());
 			if (res.hasMore()) {
 				SearchResult sr = res.next();

@@ -1180,6 +1180,6 @@ function tournamentws_getResultsResponse_deserializeResponse(cxfjsutils, partEle
     return returnObject;
 }
 function tournamentws_TournamentWS_tournamentws_TournamentWSPort () {
-  this.url = 'http://ec2-52-29-11-191.eu-central-1.compute.amazonaws.com:8080/jax-ws-server/TournamentWSService';
+  this.url = 'http://ec2-52-29-176-124.eu-central-1.compute.amazonaws.com:8080/jax-ws-server/TournamentWSService';
 }
 tournamentws_TournamentWS_tournamentws_TournamentWSPort.prototype = new tournamentws_TournamentWS;
